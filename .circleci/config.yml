@@ -39,15 +39,10 @@ jobs:
       - run:
           name: Run all bazel tests
           command: |
-            bazel run amd:test
             bazel run collections:test
-            bazel run config:test
             bazel run kernel:test
-            bazel run rpc:test
-            bazel run scene-api:test
             bazel run synced-ecs:test
             bazel run utils:test
-            bazel run webb:test 
 
       - save_cache:
           paths:
