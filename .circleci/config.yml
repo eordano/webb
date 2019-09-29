@@ -10,10 +10,10 @@ jobs:
       - run:
           name: Install Bazel
           command: |
-            apt-get install openjdk-11-jdk -y
+            sudo apt install openjdk-11-jdk -y
             echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
             curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
-            apt-get update -y && apt-get install bazel -y
+            sudo apt update -y && sudo apt install bazel -y
 
       # checkout the actual code
       - checkout
