@@ -1,0 +1,35 @@
+import { Alias } from '../comms/actions'
+import { Vector3, ReadOnlyQuaternion } from '@dcl/utils'
+
+export type UserId = string
+export type LastSeenTimestamp = number
+export type Timestamp = number
+export type TopicId = string
+export type TargetLocation = string
+
+export type PeerPresence = {
+  userId: UserId
+  peerAlias: Alias
+  profileVersion: number
+  position: Vector3
+  rotation: ReadOnlyQuaternion
+  reportedVisible: boolean
+  hasData: boolean
+  hasPosition: boolean
+  /**
+   * For future reference
+   *  animation: string
+   *  animationStarted: string
+   *  animationQueue: string[]
+   */
+}
+
+export type PresenceState = {
+  commsAliasToUserId: Record<Alias, UserId>
+  lastTimestampReceivedByUserId: Record<UserId, Timestamp>
+  presenceByUserId: Record<UserId, PeerPresence>
+}
+
+export type RootPresenceState = {
+  presence: PresenceState
+}

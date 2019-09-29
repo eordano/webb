@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "outDir": "scene-api",
+    "strictNullChecks": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
+    "removeComments": false,
+    "noUnusedLocals": true,
+    "allowUmdGlobalAccess": true,
+    "baseUrl": ".."
+  },
+  "exclude": ["scene-api/extract.ts"],
+  "include": ["./utils/**/*.ts", "./rpc/**/*.ts", "./scene-api/**/*.ts"]
+}

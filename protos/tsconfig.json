@@ -1,0 +1,20 @@
+{
+  "bazelOptions": {
+    "devmodeTargetOverride": "esnext"
+  },
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "target": "esnext",
+    "removeComments": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "stripInternal": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitOnError": true
+  }
+}

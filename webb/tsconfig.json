@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "baseUrl": "src",
+    "experimentalDecorators": true,
+    "paths": {
+      "~/*": ["./*"],
+      "@dcl/*": ["../../bazel-genfiles/*", "../../bazel-bin/*"]
+    },
+    "downlevelIteration": true
+  }
+}

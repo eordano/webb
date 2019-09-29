@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "projectFolder": ".",
+  "mainEntryPointFilePath": "index.d.ts",
+  "compiler": {
+    "tsconfigFilePath": "tsconfig.json",
+    "overrideTsconfig": {
+      "types": [
+        "env"
+      ],
+      "typeRoots": [
+        "types/env"
+      ]
+    },
+    "skipLibCheck": false
+  },
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>"
+  },
+  "docModel": {
+    "enabled": true,
+    "apiJsonFilePath": "scene-api.json"
+  },
+  "dtsRollup": {
+    "enabled": true,
+    "untrimmedFilePath": "scene-api-full.d.ts",
+    "betaTrimmedFilePath": "scene-api-beta.d.ts",
+    "publicTrimmedFilePath": "cene-api.d.ts"
+  },
+  "tsdocMetadata": {
+    "enabled": true
+  },
+  "messages": {
+    "compilerMessageReporting": {
+      "default": {
+        "logLevel": "warning"
+      }
+    },
+    "extractorMessageReporting": {
+      "default": {
+        "logLevel": "warning"
+      }
+    },
+    "tsdocMessageReporting": {
+      "default": {
+        "logLevel": "warning"
+      }
+    }
+  }
+}

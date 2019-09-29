@@ -1,0 +1,6 @@
+{
+  "name": "@dcl/utils",
+  "dependencies": {
+    "fp-future": "*"
+  }
+}

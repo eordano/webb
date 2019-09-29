@@ -1,0 +1,16 @@
+node_modules/
+npm-debug.log
+.DS_Store
+.decentraland
+*.tgz
+*.sw[a-z]
+
+**/.decentraland
+
+.idea
+coverage
+.tsbuildinfo
+webb/external
+
+bazel-*
+dist

@@ -1,0 +1,33 @@
+{
+  "name": "@dcl/kernel",
+  "version": "0.0.0",
+  "description": "Client libraries for Decentraland",
+  "repository": "https://github.com/decentraland/explorer",
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120
+  },
+  "devDependencies": {
+    "@microsoft/api-documenter": "^7.3.8",
+    "@microsoft/api-extractor": "^7.3.2",
+    "@types/google-protobuf": "^3.7.1",
+    "@types/auth0-js": "^9.10.2",
+    "dcl-tslint-config-standard": "^2.0.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@dcl/utils": "$DCL_VERSION",
+    "@dcl/protos": "$DCL_VERSION",
+    "@dcl/scene-api": "$DCL_VERSION",
+    "@dcl/rpc": "$DCL_VERSION",
+    "auth0-js": "^9.11.2",
+    "decentraland-auth-protocol": "^0.3.2",
+    "devtools-protocol": "0.0.678025",
+    "fp-future": "^1.0.1",
+    "google-protobuf": "^3.9.0",
+    "webrtc-adapter": "^7.2.8"
+  },
+  "license": "Apache-2.0"
+}
