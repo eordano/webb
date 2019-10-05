@@ -36,7 +36,7 @@ export type chatSystemInitializingAction = ReturnType<typeof chatSystemInitializ
 export const chatSystemSuccessfulStart = () => action(CHAT_SYSTEM_SUCCESSFUL_START)
 export type chatSystemSuccessfulStartAction = ReturnType<typeof chatSystemSuccessfulStart>
 
-export const chatCommand = () => action(CONSOLE_COMMAND)
+export const chatCommand = (command: string) => action(CONSOLE_COMMAND, { command })
 export type chatCommandAction = ReturnType<typeof chatCommand>
 export const chatCommandFailure = () => action(CONSOLE_COMMAND_FAILURE)
 export type chatCommandFailureAction = ReturnType<typeof chatCommandFailure>
@@ -47,7 +47,7 @@ export type chatCommandSuccessAction = ReturnType<typeof chatCommandSuccess>
 export const chatCommandUnknown = () => action(CONSOLE_COMMAND_UNKNOWN)
 export type chatCommandUnknownAction = ReturnType<typeof chatCommandUnknown>
 
-export const chatSystemMessage = () => action(SYSTEM_MESSAGE)
+export const chatSystemMessage = (message: string) => action(SYSTEM_MESSAGE, { message })
 export type chatSystemMessageAction = ReturnType<typeof chatSystemMessage>
 export const chatOtherUserPrivate = (from: UserId, message: string) => action(OTHER_USER_PRIVATE, { from, message })
 export type chatOtherUserPrivateAction = ReturnType<typeof chatOtherUserPrivate>
@@ -57,3 +57,24 @@ export const chatSelfPrivate = (to: UserId, message: string) => action(SELF_USER
 export type chatSelfPrivateAction = ReturnType<typeof chatSelfPrivate>
 export const chatSelfYell = (message: string) => action(SELF_USER_YELL, { message })
 export type chatSelfYellAction = ReturnType<typeof chatSelfYell>
+
+export type ChatAction = 
+    chatFocusAction |
+    chatLostFocusAction |
+    chatMaximizedAction |
+    chatMinimizedAction |
+    chatSystemFailureAction |
+    chatSystemInitializingAction |
+    chatSystemSuccessfulStartAction |
+
+    chatCommandAction |
+    chatCommandFailureAction |
+    chatCommandInvalidAction |
+    chatCommandSuccessAction |
+    chatCommandUnknownAction |
+
+    chatSystemMessageAction |
+    chatOtherUserPrivateAction |
+    chatOtherUserYellAction |
+    chatSelfPrivateAction |
+    chatSelfYellAction

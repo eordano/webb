@@ -6,8 +6,15 @@ export function getPresenceByUserId(root: RootPresenceState, userId: UserId): Pe
 }
 
 export function shouldUserRender(root: RootPresenceState, userId: UserId): boolean {
-  const presence = getPresenceByUserId(root, userId)
+  return isPresenceRendereable(getPresenceByUserId(root, userId))
+}
+
+export function isPresenceRendereable(presence: PeerPresence) {
   return presence.hasData && presence.reportedVisible && presence.hasPosition
+}
+
+export function getAllRenderablePresences(root: RootPresenceState): PeerPresence[] {
+  return Object.values(root.presence.presenceByUserId).filter(isPresenceRendereable)
 }
 
 export function getPresenceByAlias(root: RootPresenceState, peerAlias: Alias): PeerPresence | undefined {

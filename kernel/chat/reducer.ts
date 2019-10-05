@@ -1,4 +1,3 @@
-import { AnyAction } from 'redux'
 import {
   ChatState,
   CHAT_FOCUS,
@@ -19,7 +18,7 @@ import {
   SELF_USER_YELL,
   SYSTEM_MESSAGE
 } from './types'
-import { chatOtherUserPrivateAction } from './actions'
+import { chatOtherUserPrivateAction, ChatAction } from './actions'
 
 export const INITIAL_CHAT_STATE: ChatState = {
   status: 'not started',
@@ -32,8 +31,9 @@ export const INITIAL_CHAT_STATE: ChatState = {
 export const SYSTEM = 'System Message'
 export const MAIN_LOBBY = 'Main chat thread'
 export const SELF = 'me'
+export const YOUR_MESSAGE = 'You: '
 
-export function chatReducer(state?: ChatState, action?: AnyAction): ChatState {
+export function chatReducer(state?: ChatState, action?: ChatAction): ChatState {
   if (!state) {
     return INITIAL_CHAT_STATE
   }
@@ -41,7 +41,7 @@ export function chatReducer(state?: ChatState, action?: AnyAction): ChatState {
   if (!action) {
     return state
   }
-  if (!action.startsWith('[Chat]')) {
+  if (!action.type && action.type.startsWith('[Chat]')) {
     return state
   }
 
@@ -86,7 +86,7 @@ export function chatReducer(state?: ChatState, action?: AnyAction): ChatState {
     case SELF_USER_PRIVATE:
       return {
         ...state,
-        messages: [{ timestamp: 1, from: SYSTEM, channel: MAIN_LOBBY, message: action.payload }, ...state.messages]
+        messages: [{ timestamp: 1, from: YOUR_MESSAGE, channel: MAIN_LOBBY, message: action.payload.message }, ...state.messages]
       }
     case CHAT_MINIMIZED:
       return {
@@ -114,7 +114,7 @@ export function chatReducer(state?: ChatState, action?: AnyAction): ChatState {
       return {
         ...state,
         command: {
-          command: action.payload,
+          command: action.payload.command,
           status: 'executing'
         }
       }

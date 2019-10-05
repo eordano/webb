@@ -4,7 +4,7 @@ export interface ParcelSightState {
   currentPosition?: Vector2
   isTargetPlaced: boolean
   currentlySightedList: string[]
-  currentlySightedMap: Record<string, Boolean>
+  currentlySightedMap: Record<string, boolean>
   delta: DeltaParcelSightSeeingReport
   lineOfSightRadius: number
 }

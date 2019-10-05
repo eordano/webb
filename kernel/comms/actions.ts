@@ -143,7 +143,7 @@ export const PROTOCOL_OUT_SCENE = '[Protocol:Out] Scene event'
 
 export const protocolOutPosition = (positionData: PositionReport) => action(PROTOCOL_OUT_POSITION, positionData)
 export type ProtocolOutPositionAction = ReturnType<typeof protocolOutPosition>
-export const protocolOutProfile = () => action(PROTOCOL_OUT_PROFILE)
+export const protocolOutProfile = (topics: string[]) => action(PROTOCOL_OUT_PROFILE, { topics })
 export type ProtocolOutProfileAction = ReturnType<typeof protocolOutProfile>
 export const protocolOutPing = () => action(PROTOCOL_OUT_PING)
 export type ProtocolOutPingAction = ReturnType<typeof protocolOutPing>
@@ -166,14 +166,11 @@ export type ProtocolOutActionType =
   | ProtocolOutSceneAction
 
 export const PROTOCOL_SUBSCRIPTION = '[Protocol] Requesting topic subscription'
-export const PROTOCOL_UNSUBSCRIBE = '[Protocol] Removing subscription'
 
 export const protocolSubscription = (topic: string) => action(PROTOCOL_SUBSCRIPTION, { topic })
 export type ProtocolSubscriptionAction = ReturnType<typeof protocolSubscription>
-export const protocolUnsubscribe = (topic: string) => action(PROTOCOL_UNSUBSCRIBE, { topic })
-export type ProtocolUnsubscribeAction = ReturnType<typeof protocolUnsubscribe>
 
-export type ProtocolSubscriptionActionType = ProtocolSubscriptionAction | ProtocolUnsubscribeAction
+export type ProtocolSubscriptionActionType = ProtocolSubscriptionAction
 
 // All Actions
 
