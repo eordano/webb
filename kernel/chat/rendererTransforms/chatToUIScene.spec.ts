@@ -14,7 +14,7 @@ const uiTemplate = {
 }
  */
 
-describe('chat scene', () => {
+xdescribe('chat scene', () => {
     function setup(...actions: ChatAction[]) {
         return actions.reduce(chatReducer, null)
     }
