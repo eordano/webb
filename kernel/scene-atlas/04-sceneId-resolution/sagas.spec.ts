@@ -8,7 +8,10 @@ import { allInSight } from '../02-parcel-sight/selectors'
 describe('position to scene id saga', () => {
   it('dispatches on setPosition', () => {
     expectSaga(fetchMissingSceneIdMappings)
-      .provide([[select(allInSight), ['1,1']], [select(multipleNeedsResolution, ['1,1']), { '1,1': true }]])
+      .provide([
+        [select(allInSight), ['1,1']],
+        [select(multipleNeedsResolution, ['1,1']), { '1,1': true }]
+      ])
       .put(positionLoadRequest(['1,1']))
       .run()
 

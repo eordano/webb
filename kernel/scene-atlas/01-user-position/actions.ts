@@ -1,13 +1,16 @@
+import { parcelSize } from '@dcl/utils'
 import { action } from 'typesafe-actions'
-import { TELEPORT, SETTLE_POSITION, UNSETTLE_POSITION } from './types'
+import { GridPosition, SET_WORLD_POSITION, WorldPosition } from './types'
 
-export const teleport = (position: string) => action(TELEPORT, { position })
-export type TeleportAction = ReturnType<typeof teleport>
+export const setGridPosition = (gridPosition: GridPosition) =>
+  action(SET_WORLD_POSITION, {
+    x: (gridPosition.x + 0.5) * parcelSize,
+    y: 0,
+    z: (gridPosition.x + 0.5) * parcelSize
+  })
+export type SetGridPositionAction = ReturnType<typeof setGridPosition>
 
-export const settlePosition = () => action(SETTLE_POSITION)
-export type SettlePositionAction = ReturnType<typeof settlePosition>
+export const setWorldPosition = (userPosition: WorldPosition) => action(SET_WORLD_POSITION, userPosition)
+export type SetWorldAction = ReturnType<typeof setWorldPosition>
 
-export const unsettlePosition = () => action(UNSETTLE_POSITION)
-export type UnsettlePositionAction = ReturnType<typeof unsettlePosition>
-
-export type PositionSettlementAction = SettlePositionAction | UnsettlePositionAction | TeleportAction
+export type UserPositionAction = SetWorldAction

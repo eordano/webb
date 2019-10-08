@@ -72,8 +72,6 @@ export function* passportSaga(): any {
   yield takeLatest(SAVE_AVATAR_REQUEST, handleSaveAvatar)
 
   yield takeLatest(INVENTORY_REQUEST, handleFetchInventory)
-
-  yield fork(routinelyCheckInventory)
 }
 
 export function* initialLoad(): any {

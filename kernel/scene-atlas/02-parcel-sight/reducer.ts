@@ -1,10 +1,12 @@
 import { ParcelSightState } from './types'
-import { ParcelSightAction, SET_POSITION, CONFIGURE_LINE_OF_SIGHT_RADIUS } from './actions'
-import { parcelsInScope } from './parcelsInScope'
+import { ParcelSightAction, CONFIGURE_LINE_OF_SIGHT_RADIUS } from './actions'
+import { SET_WORLD_POSITION } from '../01-user-position/types'
+import { UserPositionAction } from '../01-user-position/actions'
+import { INITIAL_USER_POSITION, userPositionReducer } from '../01-user-position/reducer'
+import { parcelsInScope } from './sightRadius/parcelsInScope'
 
 export const INITIAL_PARCEL_SIGHT_STATE: ParcelSightState = {
-  currentPosition: { x: 0, y: 0 },
-  isTargetPlaced: false,
+  ...INITIAL_USER_POSITION,
   lineOfSightRadius: 4,
   currentlySightedList: [],
   currentlySightedMap: {},
@@ -14,15 +16,17 @@ export const INITIAL_PARCEL_SIGHT_STATE: ParcelSightState = {
     currentlyInSight: []
   }
 }
-export function parcelSightReducer(state?: ParcelSightState, action?: ParcelSightAction): ParcelSightState {
+
+export function parcelSightReducer(state?: ParcelSightState, action?: ParcelSightAction | UserPositionAction): ParcelSightState {
   if (!state) {
     return INITIAL_PARCEL_SIGHT_STATE
   }
   if (!action) {
     return state
   }
-  let lineOfSightRadius = state.lineOfSightRadius
-  let newPosition = state.currentPosition
+  const newState = (action.type === "Set user position in the 3D world") ? { ...state, ...userPositionReducer(state, action) } : state
+  let { lineOfSightRadius, grid } = newState
+  const newPosition = grid
   switch (action.type) {
     case CONFIGURE_LINE_OF_SIGHT_RADIUS:
       if (state.lineOfSightRadius === action.payload) {
@@ -30,24 +34,16 @@ export function parcelSightReducer(state?: ParcelSightState, action?: ParcelSigh
       }
       lineOfSightRadius = action.payload
       break
-    case SET_POSITION:
-      if (
-        state.isTargetPlaced &&
-        state.currentPosition &&
-        state.currentPosition.x === action.payload.x &&
-        state.currentPosition.y === action.payload.y &&
-        state.delta.sighted.length === 0 &&
-        state.delta.lostSight.length === 0
-      ) {
+    case SET_WORLD_POSITION:
+      if (newPosition.x === state.grid.x && newPosition.y === state.grid.y && state.lineOfSightRadius === newState.lineOfSightRadius) {
         return state
       }
-      newPosition = action.payload
       break
     default:
       return state
   }
   const nextSightedList = parcelsInScope(lineOfSightRadius, newPosition)
-  const nextSightedMap: Record<string, Boolean> = {}
+  const nextSightedMap: Record<string, boolean> = {}
   nextSightedList.forEach(pos => (nextSightedMap[pos] = true))
 
   let { currentlySightedList, currentlySightedMap } = state
@@ -63,8 +59,7 @@ export function parcelSightReducer(state?: ParcelSightState, action?: ParcelSigh
     currentlyInSight: currentlySightedList
   }
   return {
-    currentPosition: newPosition,
-    isTargetPlaced: true,
+    ...newState,
     lineOfSightRadius,
     currentlySightedList,
     currentlySightedMap,

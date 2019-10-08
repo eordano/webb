@@ -1,10 +1,10 @@
 import { expectSaga } from 'redux-saga-test-plan'
 import { select } from 'redux-saga/effects'
 import { getSightedScenesRunningReport, isSceneAtPositionRendereable } from '../../scene-runner/selectors'
-import { settlePosition, teleport, unsettlePosition } from './actions'
+import { setGridPosition, setWorldPosition } from '../01-user-position/actions'
+import { settlePosition, teleportToGridString, unsettlePosition } from './actions'
 import { handleTeleport, tryToSettle } from './sagas'
 import { isPositionSettled } from './selectors'
-import { setPosition } from '../02-parcel-sight/actions'
 
 describe('position settlement saga', () => {
   it('do settle if running', async () => {
@@ -20,17 +20,17 @@ describe('position settlement saga', () => {
       .run()
   })
   it('handles teleport gracefully if teleporting to running scene: dont trigger unsettle', async () => {
-    await expectSaga(handleTeleport, teleport('1,1'))
+    await expectSaga(handleTeleport, teleportToGridString('1,1'))
       .provide([[select(isSceneAtPositionRendereable, '1,1'), true], [select(isPositionSettled), true]])
       .not.put(unsettlePosition())
-      .put(setPosition({ x: 1, y: 1 }))
+      .put(setWorldPosition({ x: 17, z: 17, y: 0 }))
       .run()
   })
   it('handles teleport gracefully: triggers unsettle if it was settled before', async () => {
-    await expectSaga(handleTeleport, teleport('1,1'))
+    await expectSaga(handleTeleport, teleportToGridString('1,1'))
       .provide([[select(isSceneAtPositionRendereable, '1,1'), false], [select(isPositionSettled), true]])
       .put(unsettlePosition())
-      .put(setPosition({ x: 1, y: 1 }))
+      .put(setGridPosition({ x: 1, y: 1 }))
       .run()
   })
 })

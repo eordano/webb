@@ -1,16 +1,14 @@
-import { Vector2 } from '@dcl/utils'
+import  { UserPosition } from '../01-user-position/types'
 
-export interface ParcelSightState {
-  currentPosition?: Vector2
-  isTargetPlaced: boolean
+export interface ParcelSightState extends UserPosition {
   currentlySightedList: string[]
   currentlySightedMap: Record<string, boolean>
   delta: DeltaParcelSightSeeingReport
   lineOfSightRadius: number
-}
+} 
 
 export interface RootParcelSightState {
-  parcelSight: ParcelSightState
+  userPosition: ParcelSightState
 }
 
 export type DeltaParcelSightSeeingReport = {
