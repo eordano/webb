@@ -1,5 +1,5 @@
-import { RootUserPosition } from './types'
+import { RootSettlementState } from './types'
 
-export function isPositionSettled(state: RootUserPosition) {
-  return state.userPosition.isSettled
+export function isPositionSettled(state: RootSettlementState) {
+  return state.settlement.isSettled
 }

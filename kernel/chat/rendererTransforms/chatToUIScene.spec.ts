@@ -2,6 +2,8 @@ import { chatReducer } from '../reducer'
 import { ChatAction, chatSystemInitializing, chatSystemSuccessfulStart, chatSystemMessage } from '../actions'
 import { chatToUIScene } from './chatToUIScene'
 
+/**
+ * 
 const uiTemplate = {
     name: null,
     visible: true,
@@ -10,6 +12,7 @@ const uiTemplate = {
     vAlign: 'center',
     width: { type: 1, value: 100 } 
 }
+ */
 
 describe('chat scene', () => {
     function setup(...actions: ChatAction[]) {
@@ -21,7 +24,7 @@ describe('chat scene', () => {
         expect(render).toEqual([
             ['CreateUIScene', { id: 'dcl-ui-scene', 'baseUrl': '/'}],
             ['SendSceneMessage', 'dcl-ui-scene', 'ComponentCreated', { id: 'Cb', classId: 40 }],
-            ['SendSceneMessage', 'dcl-ui-scene', 'ComponentUpdated', { id: 'Cb', json:  }],
+            ['SendSceneMessage', 'dcl-ui-scene', 'ComponentUpdated', { id: 'Cb', json: '' }],
 
             ['SendSceneMessage', 'dcl-ui-scene', 'ComponentCreated', { id: 'Cb', classId: 40 }],
             ['SendSceneMessage', 'dcl-ui-scene', 'ComponentCreated', { id: 'Cb', classId: 40 }],
