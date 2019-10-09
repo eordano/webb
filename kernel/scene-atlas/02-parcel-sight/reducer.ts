@@ -1,6 +1,6 @@
 import { ParcelSightState } from './types'
 import { ParcelSightAction, CONFIGURE_LINE_OF_SIGHT_RADIUS } from './actions'
-import { SET_WORLD_POSITION } from '../01-user-position/types'
+import { SET_WORLD_POSITION, USER_ENTERED_COORDINATE } from '../01-user-position/types'
 import { UserPositionAction } from '../01-user-position/actions'
 import { INITIAL_USER_POSITION, userPositionReducer } from '../01-user-position/reducer'
 import { parcelsInScope } from './sightRadius/parcelsInScope'
@@ -11,38 +11,53 @@ export const INITIAL_PARCEL_SIGHT_STATE: ParcelSightState = {
   currentlySightedList: [],
   currentlySightedMap: {},
   delta: {
-    sighted: [],
+    newlySighted: [],
     lostSight: [],
     currentlyInSight: []
   }
 }
-
 export function parcelSightReducer(state?: ParcelSightState, action?: ParcelSightAction | UserPositionAction): ParcelSightState {
+  const innerState = wrappedPositionReducer(state, action)
+  const shouldContinue = shouldUpdateDelta(state, innerState, action)
+  if (!shouldContinue) {
+    return innerState
+  }
+  return deltaReducer(innerState, action)
+}
+
+function wrappedPositionReducer(state?: ParcelSightState, action?: ParcelSightAction | UserPositionAction): ParcelSightState {
   if (!state) {
     return INITIAL_PARCEL_SIGHT_STATE
   }
   if (!action) {
     return state
   }
-  const newState = (action.type === "Set user position in the 3D world") ? { ...state, ...userPositionReducer(state, action) } : state
-  let { lineOfSightRadius, grid } = newState
-  const newPosition = grid
+  return { ...state, ...userPositionReducer(state, action) }
+}
+
+/**
+ * Interlude: Simple reducer to deal with 
+ */
+function shouldUpdateDelta(initialState: ParcelSightState, state: ParcelSightState, action: ParcelSightAction | UserPositionAction): boolean {
   switch (action.type) {
     case CONFIGURE_LINE_OF_SIGHT_RADIUS:
       if (state.lineOfSightRadius === action.payload) {
-        return state
+        return false
       }
-      lineOfSightRadius = action.payload
-      break
-    case SET_WORLD_POSITION:
-      if (newPosition.x === state.grid.x && newPosition.y === state.grid.y && state.lineOfSightRadius === newState.lineOfSightRadius) {
-        return state
+      return true
+    case USER_ENTERED_COORDINATE:
+      const newPosition = state.grid
+      if (newPosition.x === initialState.grid.x && newPosition.y === initialState.grid.y && initialState.lineOfSightRadius === state.lineOfSightRadius) {
+        return false
       }
-      break
-    default:
-      return state
   }
-  const nextSightedList = parcelsInScope(lineOfSightRadius, newPosition)
+  return (action as any).type === CONFIGURE_LINE_OF_SIGHT_RADIUS || action.type === SET_WORLD_POSITION
+}
+
+function deltaReducer(state: ParcelSightState, action: ParcelSightAction| UserPositionAction): ParcelSightState {
+  const { grid } = state
+  const lineOfSightRadius = action.type === CONFIGURE_LINE_OF_SIGHT_RADIUS ? action.payload : state.lineOfSightRadius
+  const nextSightedList = parcelsInScope(lineOfSightRadius, grid)
   const nextSightedMap: Record<string, boolean> = {}
   nextSightedList.forEach(pos => (nextSightedMap[pos] = true))
 
@@ -54,13 +69,12 @@ export function parcelSightReducer(state?: ParcelSightState, action?: ParcelSigh
   currentlySightedMap = nextSightedMap
 
   const delta = {
-    sighted: newlySightedParcels,
+    newlySighted: newlySightedParcels,
     lostSight: newlyHiddenParcels,
     currentlyInSight: currentlySightedList
   }
   return {
-    ...newState,
-    lineOfSightRadius,
+    ...state,
     currentlySightedList,
     currentlySightedMap,
     delta

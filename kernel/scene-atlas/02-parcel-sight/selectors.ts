@@ -28,7 +28,7 @@ export function deltaSighted(state: RootParcelSightState): DeltaParcelSightSeein
 }
 
 export function newlySighted(state: RootParcelSightState): string[] {
-  return state.userPosition.delta.sighted
+  return state.userPosition.delta.newlySighted
 }
 
 export function allInSight(state: RootParcelSightState): string[] {

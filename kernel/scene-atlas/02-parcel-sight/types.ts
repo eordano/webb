@@ -12,7 +12,7 @@ export interface RootParcelSightState {
 }
 
 export type DeltaParcelSightSeeingReport = {
-  sighted: string[]
+  newlySighted: string[]
   lostSight: string[]
   currentlyInSight: string[]
 }

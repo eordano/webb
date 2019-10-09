@@ -1,35 +1,33 @@
-import { UserPosition, SET_WORLD_POSITION } from './types'
+import { AnyAction } from 'redux'
+import { encodeParcelPositionFromCoordinates } from '@dcl/utils'
 import { UserPositionAction } from './actions'
-import { worldToGrid, MVector2, encodeParcelPosition } from '@dcl/utils'
+import { SET_WORLD_POSITION, UserPosition, USER_ENTERED_COORDINATE } from './types'
 
 export const INITIAL_USER_POSITION: UserPosition = {
-  world: { x: 0, y: 0, z: 0 },
-  grid: { x: 0, y: 0 },
-  stringGrid: '0,0',
+  world: { x: undefined, y: undefined, z: undefined },
+  grid: { x: undefined, y: undefined },
+  stringGrid: undefined
 }
 
-const tempVector = new MVector2(0, 0)
-
-export function userPositionReducer(
-  state?: UserPosition,
-  action?: UserPositionAction
-): UserPosition {
+export function userPositionReducer(state?: UserPosition, action?: UserPositionAction | AnyAction): UserPosition {
   if (!state) {
     return INITIAL_USER_POSITION
   }
   if (!action) {
     return state
   }
-  switch(action.type) {
-    case SET_WORLD_POSITION:
-      worldToGrid(action.payload, tempVector)
-      const { x, y } = tempVector
-      return {
-        grid: { x, y },
-        world: action.payload,
-        stringGrid: encodeParcelPosition(tempVector)
-      }
-    default:
-      return state
+  if (action.type === USER_ENTERED_COORDINATE) {
+    return {
+      ...state,
+      grid: action.payload,
+      stringGrid: encodeParcelPositionFromCoordinates(action.payload.x, action.payload.y)
+    }
   }
+  if (action.type === SET_WORLD_POSITION) {
+    return {
+      ...state,
+      world: action.payload
+    }
+  }
+  return state
 }

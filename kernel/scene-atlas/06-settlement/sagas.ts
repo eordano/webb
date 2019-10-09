@@ -2,7 +2,7 @@ import { put, select, takeLatest } from 'redux-saga/effects'
 import { SCENE_RUNNING, SCENE_SCRIPT_SOURCED_FATAL_ERROR } from '../../scene-runner/actions'
 import { getSightedScenesRunningReport, isSceneAtPositionRendereable } from '../../scene-runner/selectors'
 import { SceneLifeCycleState } from '../../scene-runner/types'
-import { setGridPosition } from '../01-user-position/actions'
+import { userEnteredCoordinate } from '../01-user-position/actions'
 import { SET_WORLD_POSITION } from '../01-user-position/types'
 import { getCurrentGridPosition } from '../02-parcel-sight/selectors'
 import { settlePosition, TeleportAction, unsettlePosition } from './actions'
@@ -28,7 +28,7 @@ export function* handleTeleport(action: TeleportAction): any {
       yield put(unsettlePosition())
     }
   }
-  yield put(setGridPosition(action.payload.teleportTarget))
+  yield put(userEnteredCoordinate(action.payload.teleportTarget))
 }
 
 export function* tryToSettle(): any {

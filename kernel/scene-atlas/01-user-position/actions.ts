@@ -1,16 +1,10 @@
-import { parcelSize } from '@dcl/utils'
 import { action } from 'typesafe-actions'
-import { GridPosition, SET_WORLD_POSITION, WorldPosition } from './types'
+import { GridPosition, SET_WORLD_POSITION, USER_ENTERED_COORDINATE, WorldPosition } from './types'
 
-export const setGridPosition = (gridPosition: GridPosition) =>
-  action(SET_WORLD_POSITION, {
-    x: (gridPosition.x + 0.5) * parcelSize,
-    y: 0,
-    z: (gridPosition.x + 0.5) * parcelSize
-  })
-export type SetGridPositionAction = ReturnType<typeof setGridPosition>
+export const userEnteredCoordinate = (gridPosition: GridPosition) => action(USER_ENTERED_COORDINATE, gridPosition)
+export type UserEnteredCoordinateAction = ReturnType<typeof userEnteredCoordinate>
 
 export const setWorldPosition = (userPosition: WorldPosition) => action(SET_WORLD_POSITION, userPosition)
 export type SetWorldAction = ReturnType<typeof setWorldPosition>
 
-export type UserPositionAction = SetWorldAction
+export type UserPositionAction = SetWorldAction | UserEnteredCoordinateAction

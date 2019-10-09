@@ -1,7 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan'
 import { select } from 'redux-saga/effects'
 import { getSightedScenesRunningReport, isSceneAtPositionRendereable } from '../../scene-runner/selectors'
-import { setGridPosition, setWorldPosition } from '../01-user-position/actions'
+import { userEnteredCoordinate, setWorldPosition } from '../01-user-position/actions'
 import { settlePosition, teleportToGridString, unsettlePosition } from './actions'
 import { handleTeleport, tryToSettle } from './sagas'
 import { isPositionSettled } from './selectors'
@@ -30,7 +30,7 @@ describe('position settlement saga', () => {
     await expectSaga(handleTeleport, teleportToGridString('1,1'))
       .provide([[select(isSceneAtPositionRendereable, '1,1'), false], [select(isPositionSettled), true]])
       .put(unsettlePosition())
-      .put(setGridPosition({ x: 1, y: 1 }))
+      .put(userEnteredCoordinate({ x: 1, y: 1 }))
       .run()
   })
 })

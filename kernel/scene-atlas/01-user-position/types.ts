@@ -20,3 +20,4 @@ export type RootUserPosition = {
 }
 
 export const SET_WORLD_POSITION = 'Set user position in the 3D world'
+export const USER_ENTERED_COORDINATE = 'User entered a new parcel'
