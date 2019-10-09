@@ -7,8 +7,8 @@ import { rendererSaga } from './renderer/sagas'
 import { parcelSightSaga } from './scene-atlas/02-parcel-sight/sagas'
 import { positionToSceneIdSaga } from './scene-atlas/04-sceneId-resolution/sagas'
 import { sceneIdToManifestSaga } from './scene-atlas/05-sceneManifest-resolution/sagas'
-import { positionSettlementSaga } from './scene-atlas/06-settlement/sagas'
-import { rootSceneLifecycleSaga } from './scene-runner/sagas'
+import { positionSettlementSaga } from './scene-atlas/07-settlement/sagas'
+import { rootSceneLifecycleSaga } from './scene-atlas/06-scripts/sagas'
 
 export function* rootSaga(): any {
   yield fork(authSaga)

@@ -1,9 +1,9 @@
 import { getKeysMappingToTrue } from '@dcl/utils'
 import { RootSceneLifeCycleState, SceneLifeCycleState } from './types'
-import { RootParcelSightState } from '../scene-atlas/02-parcel-sight/types'
-import { RootPositionToSceneIdState } from '../scene-atlas/04-sceneId-resolution/types'
-import { allInSight } from '../scene-atlas/02-parcel-sight/selectors'
-import { getSceneCountForPosition, getSceneIdForPosition } from '../scene-atlas/04-sceneId-resolution/selectors'
+import { RootParcelSightState } from '../02-parcel-sight/types'
+import { RootPositionToSceneIdState } from '../04-sceneId-resolution/types'
+import { allInSight } from '../02-parcel-sight/selectors'
+import { getSceneCountForPosition, getSceneIdForPosition } from '../04-sceneId-resolution/selectors'
 
 export const getLoadingScenes = (state: RootSceneLifeCycleState) => getKeysMappingToTrue(state.sceneLifeCycle.loading)
 export const getAwakeScenes = (state: RootSceneLifeCycleState) => getKeysMappingToTrue(state.sceneLifeCycle.awake)

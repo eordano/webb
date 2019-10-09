@@ -1,16 +1,15 @@
-import { encodeParcelPositionFromCoordinates, ISceneManifest, Vector2 } from '@dcl/utils'
+import { encodeParcelPositionFromCoordinates, ISceneManifest } from '@dcl/utils'
 import { EventEmitter } from 'events'
 import future from 'fp-future'
 import { Store } from 'redux'
-import { RootParcelSightState } from '../scene-atlas/02-parcel-sight/types'
-import { RootParcelLoadingState } from '../scene-atlas/03-parcel-status/types'
-import { positionLoadRequest } from '../scene-atlas/04-sceneId-resolution/actions'
-import { getEmptyStatus, getPositionError, getSceneIdForPosition } from '../scene-atlas/04-sceneId-resolution/selectors'
-import { RootPositionToSceneIdState } from '../scene-atlas/04-sceneId-resolution/types'
-import { getSceneError, getSceneManifest } from '../scene-atlas/05-sceneManifest-resolution/selectors'
-import { RootSceneIdToSceneManifestState, sceneByIdRequest } from '../scene-atlas/05-sceneManifest-resolution/types'
+import { RootParcelSightState } from '../02-parcel-sight/types'
+import { RootParcelLoadingState } from '../03-parcel-status/types'
+import { positionLoadRequest } from '../04-sceneId-resolution/actions'
+import { getEmptyStatus, getPositionError, getSceneIdForPosition } from '../04-sceneId-resolution/selectors'
+import { RootPositionToSceneIdState } from '../04-sceneId-resolution/types'
+import { getSceneError, getSceneManifest } from '../05-sceneManifest-resolution/selectors'
+import { RootSceneIdToSceneManifestState, sceneByIdRequest } from '../05-sceneManifest-resolution/types'
 import { RootSceneLifeCycleState } from './types'
-import { teleportToTarget } from '../scene-atlas/06-settlement/actions'
 
 export type RootState = RootParcelLoadingState &
   RootParcelSightState &
@@ -24,10 +23,6 @@ export class SceneLifeCycleHelper extends EventEmitter {
   async getSceneForCoordinates(x: number, y: number): Promise<ISceneManifest> {
     const sceneId = await this.getSceneIdByCoordinates(x, y)
     return this.getSceneById(sceneId)
-  }
-
-  teleport(position: Vector2) {
-    this.store.dispatch(teleportToTarget(position))
   }
 
   protected getSceneById(sceneId: string): Promise<ISceneManifest> {

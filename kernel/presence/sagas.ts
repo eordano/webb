@@ -1,5 +1,5 @@
 import { SET_WORLD_POSITION } from '../scene-atlas/01-user-position/types'
-import { SETTLE_POSITION } from '../scene-atlas/06-settlement/types'
+import { SETTLE_POSITION } from '../scene-atlas/07-settlement/types'
 import { put, select, takeLatest } from 'redux-saga/effects'
 import { getCurrentUserId } from '../auth/selectors'
 import { chatOtherUserYell } from '../chat/actions'

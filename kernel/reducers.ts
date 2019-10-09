@@ -20,8 +20,8 @@ import { positionToSceneIdReducer as positionToSceneId } from './scene-atlas/04-
 import { RootPositionToSceneIdState } from './scene-atlas/04-sceneId-resolution/types'
 import { sceneIdToSceneManifestReducer as sceneIdToManifest } from './scene-atlas/05-sceneManifest-resolution/reducer'
 import { RootSceneIdToSceneManifestState, SceneByIdAction } from './scene-atlas/05-sceneManifest-resolution/types'
-import { sceneLifeCycleReducer as sceneLifeCycle } from './scene-runner/reducer'
-import { RootSceneLifeCycleState, SceneLifeCycleAction } from './scene-runner/types'
+import { sceneLifeCycleReducer as sceneLifeCycle } from './scene-atlas/06-scripts/reducer'
+import { RootSceneLifeCycleState, SceneLifeCycleAction } from './scene-atlas/06-scripts/types'
 
 export type RootState = RootParcelLoadingState &
   RootParcelSightState &

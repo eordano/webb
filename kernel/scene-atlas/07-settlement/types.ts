@@ -1,4 +1,4 @@
-import { Vector2 } from "@dcl/utils"
+import { Vector2 } from '@dcl/utils'
 
 export type SettlementState = {
   isSettled: boolean

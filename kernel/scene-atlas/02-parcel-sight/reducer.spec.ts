@@ -2,7 +2,7 @@ import { INITIAL_PARCEL_SIGHT_STATE, parcelSightReducer } from './reducer'
 import { userEnteredCoordinate } from '../01-user-position/actions'
 import { configureLineOfSightRadius } from './actions'
 
-fdescribe('parcel sight behavior', () => {
+describe('parcel sight behavior', () => {
   it('changing the line of sight triggers new seen parcels', () => {
     let state = INITIAL_PARCEL_SIGHT_STATE
     state = parcelSightReducer(state, userEnteredCoordinate({ x: 0, y: 0 }))
@@ -17,7 +17,6 @@ fdescribe('parcel sight behavior', () => {
     let state = INITIAL_PARCEL_SIGHT_STATE
     state = parcelSightReducer(state, userEnteredCoordinate({ x: 0, y: 0 }))
     state = parcelSightReducer(state, userEnteredCoordinate({ x: 0, y: 1 }))
-    console.log(state)
     expect(state.delta.newlySighted.length).toBe(state.lineOfSightRadius * 2 + 1)
     expect(state.delta.lostSight.length).toBe(state.lineOfSightRadius * 2 + 1)
   })
@@ -26,8 +25,14 @@ fdescribe('parcel sight behavior', () => {
     state = parcelSightReducer(state, userEnteredCoordinate({ x: 0, y: 0 }))
     expect(state.delta.newlySighted.length).toBe(49)
     state = parcelSightReducer(state, userEnteredCoordinate({ x: 0, y: 0 }))
-    expect(state.delta.newlySighted.length).toBe(0)
     expect(state.delta.lostSight.length).toBe(0)
+  })
+  it('moving to a very different part triggers a lot of changes', () => {
+    let state = INITIAL_PARCEL_SIGHT_STATE
+    state = parcelSightReducer(state, userEnteredCoordinate({ x: 0, y: 0 }))
+    state = parcelSightReducer(state, userEnteredCoordinate({ x: 10, y: 0 }))
+    expect(state.delta.lostSight.length).toBe(49)
+    expect(state.delta.newlySighted.length).toBe(49)
   })
   it('starting position is empty', () => {
     const state = INITIAL_PARCEL_SIGHT_STATE

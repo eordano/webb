@@ -1,8 +1,8 @@
 import { ISceneManifest } from '@dcl/utils'
 import future from 'fp-future'
 import { call, delay, put, race, select, spawn, take, takeLatest } from 'redux-saga/effects'
-import { ISceneWorker } from '../scene-scripts/interface/ISceneWorker'
-import { SceneWorkersManager } from '../scene-scripts/SceneWorkersManager'
+import { ISceneWorker } from '../../scene-scripts/interface/ISceneWorker'
+import { SceneWorkersManager } from '../../scene-scripts/SceneWorkersManager'
 import {
   rendererSentLoaded,
   reportSceneSightDelta,
@@ -17,9 +17,9 @@ import {
 } from './actions'
 import { getSceneDeltaPositionReport, shouldTriggerLoading } from './selectors'
 import { SceneSightDeltaAction, StopScene } from './types'
-import { SCENE_BY_ID_SUCCESS } from '../scene-atlas/05-sceneManifest-resolution/types'
-import { PARCEL_SIGHT_DELTA } from '../scene-atlas/02-parcel-sight/actions'
-import { getSceneManifest } from '../scene-atlas/05-sceneManifest-resolution/selectors'
+import { SCENE_BY_ID_SUCCESS } from '../05-sceneManifest-resolution/types'
+import { PARCEL_SIGHT_DELTA } from '../02-parcel-sight/actions'
+import { getSceneManifest } from '../05-sceneManifest-resolution/selectors'
 
 export function* rootSceneLifecycleSaga(): any {
   yield takeLatest(SCENE_BY_ID_SUCCESS, triggerSceneSightDelta)

@@ -1,5 +1,5 @@
 import { setWorldPosition } from './actions'
-import { userPositionReducer, INITIAL_USER_POSITION } from './reducer'
+import { INITIAL_USER_POSITION, userPositionReducer } from './reducer'
 
 describe('user position reducer', () => {
   it('setting the world position updates the user position in the grid', () => {
