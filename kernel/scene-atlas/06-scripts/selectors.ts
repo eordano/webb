@@ -83,7 +83,7 @@ export function internalGetSceneStatus(state: SceneLifeCycleState, sceneId: stri
 export function isSceneAtPositionRendereable(
   state: RootSceneLifeCycleState & RootPositionToSceneIdState,
   position: string
-) {
+): boolean {
   const sceneId = state.positionToSceneId.positionToScene[position]
   const status = internalGetSceneStatus(state.sceneLifeCycle, sceneId)
   return status === 'running' || status === 'error'

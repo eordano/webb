@@ -1,10 +1,10 @@
 import { put, select, takeLatest } from 'redux-saga/effects'
+import { encodeParcelPositionFromCoordinates } from '@dcl/utils'
+import { userEnteredCoordinate } from '../01-user-position/actions'
+import { SET_WORLD_POSITION } from '../01-user-position/types'
 import { SCENE_RUNNING, SCENE_SCRIPT_SOURCED_FATAL_ERROR } from '../06-scripts/actions'
 import { getSightedScenesRunningReport, isSceneAtPositionRendereable } from '../06-scripts/selectors'
 import { SceneLifeCycleState } from '../06-scripts/types'
-import { userEnteredCoordinate } from '../01-user-position/actions'
-import { SET_WORLD_POSITION } from '../01-user-position/types'
-import { getCurrentGridPosition } from '../02-parcel-sight/selectors'
 import { settlePosition, TeleportAction, unsettlePosition } from './actions'
 import { isPositionSettled } from './selectors'
 import { TELEPORT } from './types'
@@ -17,7 +17,12 @@ export function* positionSettlementSaga(): any {
 }
 
 export function* handleTeleport(action: TeleportAction): any {
-  const isRendereable: string = yield select(isSceneAtPositionRendereable, yield select(getCurrentGridPosition))
+  const isRendereable: boolean = yield select(
+    isSceneAtPositionRendereable,
+    encodeParcelPositionFromCoordinates(
+      action.payload.teleportTarget.x, action.payload.teleportTarget.y
+    )
+  )
   if (isRendereable) {
     const isSettled = yield select(isPositionSettled)
     if (!isSettled) {

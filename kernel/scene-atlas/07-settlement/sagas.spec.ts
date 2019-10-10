@@ -1,16 +1,19 @@
 import { expectSaga } from 'redux-saga-test-plan'
 import { select } from 'redux-saga/effects'
-import { setWorldPosition, userEnteredCoordinate } from '../01-user-position/actions'
-import { getCurrentGridPosition } from '../02-parcel-sight/selectors'
+import { userEnteredCoordinate } from '../01-user-position/actions'
+import { getCurrentStringPosition } from '../02-parcel-sight/selectors'
 import { getSightedScenesRunningReport, isSceneAtPositionRendereable } from '../06-scripts/selectors'
 import { settlePosition, teleportToGridString, unsettlePosition } from './actions'
 import { handleTeleport, tryToSettle } from './sagas'
 import { isPositionSettled } from './selectors'
 
-fdescribe('position settlement saga', () => {
+describe('position settlement saga', () => {
   it('do settle if running', async () => {
     await expectSaga(tryToSettle)
-      .provide([[select(isPositionSettled), false], [select(getSightedScenesRunningReport), { '1,1': 'running' }]])
+      .provide([
+        [select(isPositionSettled), false],
+        [select(getSightedScenesRunningReport), { '1,1': 'running' }]
+      ])
       .put(settlePosition())
       .run()
   })
@@ -23,18 +26,18 @@ fdescribe('position settlement saga', () => {
   it('handles teleport gracefully if teleporting to running scene: dont trigger unsettle', async () => {
     await expectSaga(handleTeleport, teleportToGridString('1,1'))
       .provide([
-        [select(getCurrentGridPosition), { x: 0, y: 0 }],
+        [select(getCurrentStringPosition), '0,0'],
         [select(isSceneAtPositionRendereable, '1,1'), true],
         [select(isPositionSettled), true]
       ])
       .not.put(unsettlePosition())
-      .put(setWorldPosition({ x: 17, z: 17, y: 0 }))
+      .put(userEnteredCoordinate({ x: 1, y: 1 }))
       .run()
   })
   it('handles teleport gracefully: triggers unsettle if it was settled before', async () => {
     await expectSaga(handleTeleport, teleportToGridString('1,1'))
       .provide([
-        [select(getCurrentGridPosition), { x: 0, y: 0 }],
+        [select(getCurrentStringPosition), '0,0'],
         [select(isSceneAtPositionRendereable, '1,1'), false],
         [select(isPositionSettled), true]
       ])
