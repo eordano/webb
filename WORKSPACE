@@ -18,7 +18,7 @@ bazel_skylib_workspace()
 
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
-versions.check(minimum_bazel_version = "0.28.0")
+versions.check(minimum_bazel_version = "0.29.1")
 
 git_repository(
     name = "bazel_javascript",

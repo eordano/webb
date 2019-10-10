@@ -35,6 +35,7 @@
         "chai": "^4.2.0",
         "connected-react-router": "^6.5.2",
         "decentraland-auth-protocol": "^0.3.2",
+        "decentraland-renderer": "^1.7.837",
         "decentraland-ui": "^2.6.3",
         "devtools-protocol": "^0.0.681005",
         "fp-future": "^1.0.1",
