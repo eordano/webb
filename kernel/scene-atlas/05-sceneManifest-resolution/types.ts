@@ -1,5 +1,5 @@
-import { action } from 'typesafe-actions'
 import { ISceneManifest } from '@dcl/utils'
+import { action } from 'typesafe-actions'
 
 export type SceneIdToSceneManifestState = {
   downloadServer: string

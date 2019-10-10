@@ -1,11 +1,18 @@
 import { Alias } from '../comms/actions'
 import { Vector3, ReadOnlyQuaternion } from '@dcl/utils'
+import { Profile } from '../passports/types'
 
 export type UserId = string
 export type LastSeenTimestamp = number
 export type Timestamp = number
 export type TopicId = string
 export type TargetLocation = string
+
+export type RendereablePeer = {
+  userId: UserId
+  presence: PeerPresence
+  profile: Profile
+}
 
 export type PeerPresence = {
   userId: UserId

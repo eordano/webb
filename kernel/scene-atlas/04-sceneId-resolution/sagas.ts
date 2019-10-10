@@ -10,12 +10,12 @@ import {
   setPositionsAsResolved
 } from './actions'
 import { getDownloadServer, multipleNeedsResolution, needsResolution } from './selectors'
-import { SET_POSITION } from '../02-parcel-sight/actions'
+import { SET_WORLD_POSITION } from '../01-user-position/types'
 import { allInSight } from '../02-parcel-sight/selectors'
 
 export function* positionToSceneIdSaga(): any {
   yield takeLatest(FORGET_POSITION, fetchMissingSceneIdMappings)
-  yield takeLatest(SET_POSITION, fetchMissingSceneIdMappings)
+  yield takeLatest(SET_WORLD_POSITION, fetchMissingSceneIdMappings)
   yield takeLatest(POSITION_LOADING_REQUEST, handleLoadPositionMapping)
 }
 

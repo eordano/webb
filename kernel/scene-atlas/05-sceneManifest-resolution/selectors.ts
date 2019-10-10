@@ -1,3 +1,4 @@
+import { encodeParcelPosition } from '@dcl/utils'
 import { RootSceneIdToSceneManifestState, SceneIdToSceneManifestState } from './types'
 
 export function needsResolutionToManifest(state: RootSceneIdToSceneManifestState, sceneId: string): boolean {
@@ -22,4 +23,12 @@ export function getSceneManifest(state: RootSceneIdToSceneManifestState, sceneId
 
 export function getSceneError(state: RootSceneIdToSceneManifestState, sceneId: string) {
   return state.sceneIdToManifest.errors[sceneId]
+}
+
+export function getSceneIdToBaseParcelMap(state: RootSceneIdToSceneManifestState) {
+  const keys = Object.keys(state.sceneIdToManifest.scenesById)
+  return keys.reduce((cumm: Record<string, string>, sceneId: string) => {
+    cumm[sceneId] = encodeParcelPosition(state.sceneIdToManifest.scenesById[sceneId].baseParcel)
+    return cumm
+  }, {})
 }

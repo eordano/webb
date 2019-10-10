@@ -1,7 +1,7 @@
-import { Vector2 } from '@dcl/utils'
-import { calculateCachedDeltas, cachedDeltas } from './calculateCachedDeltas'
+import { GridPosition } from '../../01-user-position/types'
+import { cachedDeltas, calculateCachedDeltas } from './calculateCachedDeltas'
 
-export function parcelsInScope(radius: number, position: Vector2): string[] {
+export function parcelsInScope(radius: number, position: GridPosition): string[] {
   const result: string[] = []
   let length = cachedDeltas[radius] && cachedDeltas[radius].length
   if (!length) {

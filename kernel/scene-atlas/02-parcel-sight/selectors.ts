@@ -1,7 +1,8 @@
-import { RootParcelSightState } from './types'
+import { RootParcelSightState, DeltaParcelSightSeeingReport } from './types'
+import { GridPosition, StringPosition } from '../01-user-position/types'
 
 export function isAnyParcelInSight(state: RootParcelSightState, parcels: string[]) {
-  const currentlySighted = state.parcelSight.currentlySightedMap
+  const currentlySighted = state.userPosition.currentlySightedMap
   for (let parcel of parcels) {
     if (currentlySighted[parcel]) {
       return true
@@ -10,22 +11,26 @@ export function isAnyParcelInSight(state: RootParcelSightState, parcels: string[
   return false
 }
 
-export function isParcelInSight(state: RootParcelSightState, parcel: string) {
-  return state.parcelSight.currentlySightedMap[parcel]
+export function isParcelInSight(state: RootParcelSightState, parcel: string): boolean {
+  return state.userPosition.currentlySightedMap[parcel]
 }
 
-export function getCurrentPosition(state: RootParcelSightState) {
-  return state.parcelSight.isTargetPlaced ? state.parcelSight.currentPosition! : null
+export function getCurrentStringPosition(state: RootParcelSightState): StringPosition {
+  return state.userPosition.stringGrid
 }
 
-export function deltaSighted(state: RootParcelSightState) {
-  return state.parcelSight.delta
+export function getCurrentGridPosition(state: RootParcelSightState): GridPosition {
+  return state.userPosition.grid
 }
 
-export function newlySighted(state: RootParcelSightState) {
-  return state.parcelSight.delta.sighted
+export function deltaSighted(state: RootParcelSightState): DeltaParcelSightSeeingReport {
+  return state.userPosition.delta
 }
 
-export function allInSight(state: RootParcelSightState) {
-  return state.parcelSight.currentlySightedList
+export function newlySighted(state: RootParcelSightState): string[] {
+  return state.userPosition.delta.newlySighted
+}
+
+export function allInSight(state: RootParcelSightState): string[] {
+  return state.userPosition.currentlySightedList
 }

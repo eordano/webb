@@ -3,13 +3,11 @@ import { createLogger, defaultLogger } from '@dcl/utils'
 import { call, put, race, select, take, takeLatest } from 'redux-saga/effects'
 import { Auth } from '../auth'
 import { tokenRequest, TokenSuccessAction, TOKEN_SUCCESS } from '../auth/actions'
-import { EphemeralKey, MessageInput } from '../auth/ephemeral'
+import { MessageInput } from '../auth/ephemeral'
 import { getCurrentUserId } from '../auth/selectors'
 import { getProfile } from '../passports/selectors'
 import { Profile } from '../passports/types'
-import { getTopicForPosition } from '../presence/mine/getTopicForPosition'
 import { marshalPositionReport } from '../presence/wireTransforms/marshalPositionReport'
-import { getCurrentPosition } from '../scene-atlas/02-parcel-sight/selectors'
 import { store } from '../store'
 import {
   CLOSE_COMMS,
@@ -33,19 +31,19 @@ import {
   SET_BROKER_CONNECTION
 } from './actions'
 import { CliBrokerConnection } from './brokers/CliBrokerConnection'
+import { createWebRTCBroker } from './brokers/createWebRTCBroker'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
-import { WebRTCBrokerConnection } from './brokers/WebRTCBrokerConnection'
 import { handleMessage } from './handleMessage'
 import { sendPing } from './senders/broker/ping'
-import { sendChatMessage } from './senders/chat'
-import { sendPosition } from './senders/position'
-import { sendProfileMessage } from './senders/profile'
+import { sendChatMessage } from './senders/protocol/chat'
+import { sendProfileMessage } from './senders/protocol/profile'
 
 export const logger = createLogger('ProtocolConnection')
 
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
   yield takeLatest(SET_BROKER_CONNECTION, function*(connectionAction: SetBrokerConnectionAction) {
+
     const connection = connectionAction.payload
     yield takeLatest(PROTOCOL_OUT_POSITION, handleSendPositionRequest(connection))
     yield takeLatest(PROTOCOL_OUT_PROFILE, handleSendProfileRequest(connection))
@@ -63,39 +61,42 @@ export function* commsSaga(): any {
   })
 }
 
-export function handleSendPositionRequest(connection: IBrokerConnection) {
-  return function*(action: ProtocolOutPositionAction): any {
-    const position = yield select(getCurrentPosition)
-    const topic = getTopicForPosition(position)
-    sendPosition(connection, topic, marshalPositionReport(action.payload) as any)
-  }
-}
-
 export function handleSendProfileRequest(connection: IBrokerConnection): any {
   return function*(_: ProtocolOutProfileAction): any {
-    const position = yield select(getCurrentPosition)
     const myUserId = yield select(getCurrentUserId)
     const myProfile = (yield select(getProfile, myUserId)) as Profile
-    sendProfileMessage(connection, position, myProfile.version)
+    yield call(sendProfileMessage, connection, _.payload.topics.join(' '), myProfile.version)
   }
 }
 
 export function handleSendPingRequest(connection: IBrokerConnection): any {
   return function*(_: ProtocolOutPingAction): any {
-    sendPing(connection)
+    yield call(sendPing, connection)
   }
 }
 
 var currentMessageId = 0
 export function handlePrivateMessageRequest(connection: IBrokerConnection): any {
   return function*(action: ProtocolOutPrivateMessageAction): any {
-    sendChatMessage(connection, action.payload.to, '' + ++currentMessageId, action.payload.message)
+    yield call(
+      sendChatMessage,
+      connection,
+      'inbox-' + action.payload.to,
+      '' + ++currentMessageId,
+      action.payload.message
+    )
   }
 }
 
 export function handleYellRequest(connection: IBrokerConnection): any {
   return function*(action: ProtocolOutYellAction): any {
-    yield sendMessageToCurrentPosition(connection, action.payload.message)
+    yield call(sendControlMessageOnOwnChannel, connection, action.payload.message)
+  }
+}
+
+export function handleSendPositionRequest(connection: IBrokerConnection) {
+  return function*(action: ProtocolOutPositionAction): any {
+    yield call(sendControlMessageOnOwnChannel, connection, marshalPositionReport(action.payload) as any)
   }
 }
 
@@ -105,19 +106,19 @@ export function handleYellRequest(connection: IBrokerConnection): any {
 export function handleSendChatRequest(connection: IBrokerConnection): any {
   return function*(action: ProtocolOutChatAction) {
     defaultLogger.debug('sendChatMessage is deprecated -- please use Yell or PrivateMessage')
-    yield sendMessageToCurrentPosition(connection, action.payload.message)
+    yield call(sendControlMessageOnOwnChannel, connection, action.payload.message)
   }
 }
 
 export function handleSendSceneRequest(connection: IBrokerConnection): any {
   return function*(action: ProtocolOutSceneAction): any {
-    yield sendMessageToCurrentPosition(connection, action.payload.message)
+    yield call(sendControlMessageOnOwnChannel, connection, action.payload.message)
   }
 }
 
-export function* sendMessageToCurrentPosition(connection: IBrokerConnection, message: string): any {
-  const position = yield select(getCurrentPosition)
-  sendChatMessage(connection, 'r-' + position, '' + ++currentMessageId, message)
+export function* sendControlMessageOnOwnChannel(connection: IBrokerConnection, message: string): any {
+  const userId = yield select(getCurrentUserId)
+  sendChatMessage(connection, userId, '' + ++currentMessageId, message)
 }
 
 export function* handleCommsStart(): any {
@@ -146,29 +147,6 @@ export function* setupWebRTCBroker(): any {
 
   const msg = Buffer.from(body)
   const input = MessageInput.fromMessage(msg)
-  const connection = yield call(() => setupNewBrokerConnection(coordinatorURL, input, accessToken, ephemeral, auth))
+  const connection = yield call(async () => createWebRTCBroker(coordinatorURL, input, accessToken, ephemeral, auth))
   yield setBrokerConnection(connection)
-}
-
-async function setupNewBrokerConnection(
-  coordinatorURL: string,
-  input: MessageInput,
-  accessToken: string,
-  ephemeral: EphemeralKey,
-  auth: Auth
-) {
-  const credentials = await ephemeral.makeMessageCredentials(input, accessToken)
-
-  const qs = new URLSearchParams({
-    signature: credentials.get('x-signature'),
-    identity: credentials.get('x-identity'),
-    timestamp: credentials.get('x-timestamp'),
-    'access-token': credentials.get('x-access-token')
-  })
-
-  const url = new URL(coordinatorURL)
-
-  url.search = qs.toString()
-
-  return new WebRTCBrokerConnection(url.toString(), auth)
 }

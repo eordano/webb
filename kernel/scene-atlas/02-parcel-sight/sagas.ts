@@ -1,10 +1,10 @@
-import { takeLatest, select, put } from 'redux-saga/effects'
+import { put, select, takeLatest } from 'redux-saga/effects'
+import { USER_ENTERED_COORDINATE } from '../01-user-position/types'
 import { parcelSightChanged } from './actions'
-import { SET_POSITION } from './actions'
 import { deltaSighted } from './selectors'
 
 export function* parcelSightSaga(): any {
-  yield takeLatest(SET_POSITION, handleNewPosition)
+  yield takeLatest(USER_ENTERED_COORDINATE, handleNewPosition)
 }
 
 export function* handleNewPosition(): any {

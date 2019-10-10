@@ -1,13 +1,10 @@
 import { action } from 'typesafe-actions'
-import { TELEPORT, SETTLE_POSITION, UNSETTLE_POSITION } from './types'
+import { GridPosition, SET_WORLD_POSITION, USER_ENTERED_COORDINATE, WorldPosition } from './types'
 
-export const teleport = (position: string) => action(TELEPORT, { position })
-export type TeleportAction = ReturnType<typeof teleport>
+export const userEnteredCoordinate = (gridPosition: GridPosition) => action(USER_ENTERED_COORDINATE, gridPosition)
+export type UserEnteredCoordinateAction = ReturnType<typeof userEnteredCoordinate>
 
-export const settlePosition = () => action(SETTLE_POSITION)
-export type SettlePositionAction = ReturnType<typeof settlePosition>
+export const setWorldPosition = (userPosition: WorldPosition) => action(SET_WORLD_POSITION, userPosition)
+export type SetWorldAction = ReturnType<typeof setWorldPosition>
 
-export const unsettlePosition = () => action(UNSETTLE_POSITION)
-export type UnsettlePositionAction = ReturnType<typeof unsettlePosition>
-
-export type PositionSettlementAction = SettlePositionAction | UnsettlePositionAction | TeleportAction
+export type UserPositionAction = SetWorldAction | UserEnteredCoordinateAction

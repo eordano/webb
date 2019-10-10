@@ -1,8 +1,8 @@
 import { Category, PositionData } from '@dcl/protos'
 
-import { Pose } from '../types/Pose'
-import { sendTopicMessage } from './topic'
-import { IBrokerConnection } from '../brokers/IBrokerConnection'
+import { Pose } from '../../types/Pose'
+import { sendTopicMessage } from '../topic'
+import { IBrokerConnection } from '../../brokers/IBrokerConnection'
 
 export function sendPosition(comms: IBrokerConnection, topic: string, p: Pose) {
   const d = new PositionData()

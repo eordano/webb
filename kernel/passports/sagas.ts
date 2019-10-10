@@ -1,8 +1,9 @@
-import { call, put, race, select, take, takeEvery, takeLatest } from 'redux-saga/effects'
-import { defaultLogger } from '@dcl/utils'
 import { getServerConfigurations } from '@dcl/config'
-
+import { defaultLogger } from '@dcl/utils'
+import { call, put, race, select, take, takeLatest } from 'redux-saga/effects'
 import { getAccessToken, getCurrentUserId, getEmail } from '../auth/selectors'
+import { isInitialized } from '../renderer/selectors'
+import { RENDERER_INITIALIZED } from '../renderer/types'
 import {
   addCatalog,
   AddCatalogAction,
@@ -32,19 +33,17 @@ import {
   SAVE_AVATAR_REQUEST,
   setProfileServer
 } from './actions'
-import { generateRandomUserProfile } from './requests/generateRandomUserProfile'
 import { sendLoadProfileToRenderer } from './renderer/sendLoadProfileToRenderer'
 import { sendWearablesCatalog } from './renderer/sendWearablesCatalog'
 import { fetchCatalog } from './requests/fetchCatalog'
 import { fetchInventoryItemsByAddress } from './requests/fetchInventoryItemsByAddress'
 import { fetchProfileFromServer } from './requests/fetchProfileFromServer'
+import { generateRandomUserProfile } from './requests/generateRandomUserProfile'
 import { modifyAvatar } from './requests/modifyAvatar'
 import { baseCatalogsLoaded, getProfile, getProfileDownloadServer } from './selectors'
 import { processServerProfile } from './transformations/processServerProfile'
 import { profileToRendererFormat } from './transformations/profileToRendererFormat'
 import { Profile } from './types'
-import { RENDERER_INITIALIZED } from '../renderer/types'
-import { isInitialized } from '../renderer/selectors'
 
 /**
  * This saga handles both passports and assets required for the renderer to show the
@@ -62,7 +61,7 @@ import { isInitialized } from '../renderer/selectors'
  */
 export function* passportSaga(): any {
   yield put(setProfileServer(getServerConfigurations().profile))
-  yield takeEvery(RENDERER_INITIALIZED, initialLoad)
+  yield takeLatest(RENDERER_INITIALIZED, initialLoad)
 
   yield takeLatest(ADD_CATALOG, handleAddCatalog)
 
