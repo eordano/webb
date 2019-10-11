@@ -1,4 +1,4 @@
-import { configureStore } from '@dcl/kernel/store'
+import { configureStore } from '@dcl/kernel/core/store'
 
 const path = require('path')
 const fs = require('fs')

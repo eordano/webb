@@ -1,7 +1,7 @@
 import { getConfiguration, getServerConfigurations } from '@dcl/config'
 import auth0 from 'auth0-js'
 import jwt from 'jsonwebtoken'
-import { all, call, fork, put, select, takeLatest } from 'redux-saga/effects'
+import { all, call, put, select, takeLatest } from 'redux-saga/effects'
 import { v4 as uuid } from 'uuid'
 import {
   authFailure,
@@ -30,7 +30,6 @@ export const webAuth = new auth0.WebAuth({
 })
 
 export function* authSaga(): any {
-  yield fork(tryRestoreSession)
   yield all([
     takeLatest(LOGIN, handleLogin),
     takeLatest(LOGOUT, handleLogout),

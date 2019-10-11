@@ -8,7 +8,7 @@ import { getCurrentUserId } from '../auth/selectors'
 import { getProfile } from '../passports/selectors'
 import { Profile } from '../passports/types'
 import { marshalPositionReport } from '../presence/wireTransforms/marshalPositionReport'
-import { store } from '../store'
+import { store } from '../core/store'
 import {
   CLOSE_COMMS,
   COMMS_STARTED,

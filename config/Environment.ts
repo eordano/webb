@@ -1,5 +1,5 @@
 declare var global: any
-const location = global.location || { search: '', hostname: '' }
+const location = global.location = global.location || { search: '', hostname: '' }
 
 // Entry points
 export const PREVIEW: boolean = !!(global as any).preview
@@ -20,10 +20,12 @@ export const SCENE_DEBUG_PANEL = location.search.indexOf('SCENE_DEBUG_PANEL') !=
 
 export const isRunningTest: boolean = (global as any)['isRunningTests'] === true
 
-declare var window: any
 export function getTLD() {
-  if (window) {
-    return window.location.hostname.match(/(\w+)$/)[0]
+  const tld = global.location.hostname.match(/(\w+)$/)
+  if (tld) {
+      return tld[0]
+  } else {
+      return 'org'
   }
 }
 

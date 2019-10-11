@@ -1,5 +1,6 @@
 export const Communications = {
   debug: true,
+
   commRadius: 4,
 
   peerTtlMs: 60000,

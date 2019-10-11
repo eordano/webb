@@ -19,7 +19,7 @@ import {
 import { SocketReadyState } from '../types/SocketReadyState'
 import { IBrokerConnection, BrokerMessage } from './IBrokerConnection'
 import { Auth } from '../../auth'
-import { store } from '../../store'
+import { store } from '../../core/store'
 import {
   protocolUnknown,
   commsWelcome,
