@@ -10,7 +10,7 @@ import { RendererParcelSceneToScript } from './kernelSpace/RendererParcelSceneTo
 
 {
   ;[EnvironmentAPI, RendererParcelSceneToScript, DevTools].forEach(api =>
-    console.log('Loaded API accessible by scripts:', api.name, name)
+    console.log('Loaded API accessible by scripts:', api.name)
   )
 }
 

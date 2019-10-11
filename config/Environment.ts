@@ -1,4 +1,5 @@
 declare var global: any
+const location = global.location || { search: '', hostname: '' }
 
 // Entry points
 export const PREVIEW: boolean = !!(global as any).preview
