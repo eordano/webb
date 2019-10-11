@@ -1,33 +1,29 @@
-import { Store } from 'redux'
-import { RootState } from '../reducers'
+import { createBrowserHistory } from 'history'
+import { applyMiddleware, compose, createStore } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import { createReducer } from './reducers'
+import { setProfileServer } from './passports/actions'
+import { rootSaga } from './rootSaga'
+import { configureLineOfSightRadius } from './scene-atlas/02-parcel-sight/actions'
+import { DEBUG_REDUX } from '@dcl/config'
 
-import { Profile } from '../passports/types'
-import { getProfile } from '../passports/selectors'
-import { passportRequest } from '../passports/actions'
+export const history: any = createBrowserHistory()
 
-/**
- * This API provides a different way to access the redux store which would be more familiar
- * to users expecting a Object-Oriented access mechanism to the data stored by the kernel.
- */
-
-export class ClientKernel {
-  constructor(private store: Store<RootState>) {}
-
-  profile(userId: string, version?: number): Promise<Profile | undefined> {
-    const existingProfile = getProfile(this.store.getState(), userId)
-    if (existingProfile && (!version || existingProfile.version >= version)) {
-      return Promise.resolve(existingProfile)
-    }
-    return new Promise(resolve => {
-      const unsubscribe = this.store.subscribe(() => {
-        const profile = getProfile(this.store.getState(), userId)
-        if (profile) {
-          unsubscribe()
-          return resolve(profile)
-        }
-        // TODO (eordano, 16/Sep/2019): Timeout or catch errors
+declare var window: any
+const enhance =
+  typeof window === 'object' && (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && DEBUG_REDUX)
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        name: 'webb'
       })
-      this.store.dispatch(passportRequest(userId))
-    })
-  }
+    : compose
+
+export var store
+
+export const configureStore: any = (state: any) => {
+  const sagasMiddleware = createSagaMiddleware()
+  store = createStore(createReducer(history), state, enhance(applyMiddleware(sagasMiddleware)))
+  store.dispatch(configureLineOfSightRadius(4))
+  store.dispatch(setProfileServer('https://avatars-api.decentraland.org/'))
+  sagasMiddleware.run(rootSaga)
+  return store
 }
