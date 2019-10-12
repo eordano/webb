@@ -4,25 +4,26 @@ import { FetchFunction } from '../logic/lib/FetchFunction'
 export type SceneMappingRecord = Record<string, string>
 
 export function netSceneIdMappings(fetchFun: FetchFunction, targetUrl: string) {
-  return async function(_: SceneIdString[]): Promise<SceneMappingRecord> {
-    const raw = await fetchFun(`${targetUrl}/parcel_info?cids=${_.join(',')}`).then(_ => _.json())
+  return async function(_: SceneIdString): Promise<SceneMappingRecord> {
+    const raw = await fetchFun(`${targetUrl}/parcel_info?cids=${_}`).then(_ => _.json())
     if (
       !raw ||
       !raw.data ||
-      !raw.data.content ||
-      !raw.data.content.contents ||
+      !raw.data[0] ||
+      !raw.data[0].content ||
+      !raw.data[0].content.contents ||
       !Array.isArray(raw.data.content.contents)
     ) {
       throw new TypeError('Invalid response from server: missing `data` param')
     }
-    for (let content of raw.data.content.contents) {
+    for (let content of raw.data[0].content.contents) {
       const keys = Object.keys(content).sort()
       if (keys.length !== 2 || keys[0] !== 'file' || keys[1] !== 'hash') {
         throw new TypeError('Invalid response from server: mapping contains other keys than `file` and `hash`')
       }
     }
     const response = {} as Record<string, string>
-    for (let content of raw.data.content.contents) {
+    for (let content of raw.data[0].content.contents) {
       response[content.file] = content.hash
     }
     return response

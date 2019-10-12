@@ -12,6 +12,16 @@ export function diskPositionToSceneId(directory: string) {
   }
   return async function(_: FourCoordinates) {
     const coordinates = []
+    if (_.x1 > _.x2) {
+      const c = _.x1
+      _.x1 = _.x2
+      _.x2 = c
+    }
+    if (_.y1 > _.y2) {
+      const c = _.y1
+      _.y1 = _.y2
+      _.y2 = c
+    }
     for (let i = _.x1; i <= _.x2; i++) {
       for (let j = _.y1; j <= _.y2; j++) {
         coordinates.push(`${i},${j}`)

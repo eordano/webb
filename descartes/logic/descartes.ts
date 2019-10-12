@@ -5,7 +5,7 @@ import { SceneMappingRecord } from './lib/SceneMappingRecord'
 
 export type Descartes = {
   getSceneIdForCoordinates(_: Coordinate[]): Promise<PositionToSceneIdRecord>
-  getMappingForSceneIds(_: SceneIdString[]): Promise<SceneMappingRecord>
+  getMappingForSceneId(_: SceneIdString): Promise<SceneMappingRecord>
   getSceneJson(sceneId: string): Promise<IScene>
   getContent(content: string): Promise<Buffer>
 }

@@ -15,7 +15,7 @@ const descartes = configureDescartes(fetch as any, targetUrl, target)
 ;(async function() {
   if (mode === 'mappings') {
     console.log('a')
-    await descartes.getSceneIdForCoordinates([{ x: -150, y: -150 }, { x: 150, y: 150 }]).then(_ => console.log(_))
+    await descartes.getSceneIdForCoordinates([{ x: -15, y: -15 }, { x: 15, y: 15 }]).then(_ => console.log(_))
   } else {
     console.log('a')
     // TODO
