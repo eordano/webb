@@ -20,6 +20,7 @@ ts_library(
         "//utils",
         "@npm//@types",
         "@npm//@types/node",
+        "@npm//@types/node-fetch",
         "@npm//@types/events",
         "@npm//fp-future",
         "@npm//google-protobuf",
@@ -51,5 +52,5 @@ nodejs_binary(
         "@npm//typesafe-actions",
         "@npm//typescript",
     ],
-    entry_point = "main.ts",
+    entry_point = "bin/main.ts",
 )

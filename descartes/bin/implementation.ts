@@ -6,12 +6,12 @@ import { diskSaveSceneIdMappings, diskSceneIdMappings } from '../disk/sceneIdMap
 import { netPositionToSceneId } from '../net/positionToSceneId'
 import { netRawContentData } from '../net/rawContentData'
 import { netSceneIdMappings } from '../net/sceneIdMappings'
-import { Descartes } from './descartes'
-import { FetchFunction } from './lib/FetchFunction'
-import { PositionToSceneIdRecord } from './lib/PositionToSceneIdRecord'
-import { SceneMappingRecord } from './lib/SceneMappingRecord'
-import { FourCoordinates } from './lib/validateXY12'
-import { resolveWithStrategies } from './resolveWithStrategies'
+import { Descartes } from '../logic/descartes'
+import { FetchFunction } from '../logic/lib/FetchFunction'
+import { PositionToSceneIdRecord } from '../logic/lib/PositionToSceneIdRecord'
+import { SceneMappingRecord } from '../logic/lib/SceneMappingRecord'
+import { FourCoordinates } from '../logic/lib/validateXY12'
+import { resolveWithStrategies } from '../logic/resolveWithStrategies'
 
 export function configureDescartes(fetchFun: FetchFunction, url: string, storageDirectory: string): Descartes {
   const macros = {
