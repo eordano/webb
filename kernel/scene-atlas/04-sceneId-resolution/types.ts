@@ -1,10 +1,10 @@
 export type coordinateString = string
-export type sceneIdString = string
+export type SceneIdString = string
 
 export type PositionToSceneIdState = {
   downloadServer: string
-  sceneIdToPositions: Record<sceneIdString, coordinateString[]>
-  positionToScene: Record<coordinateString, sceneIdString>
+  sceneIdToPositions: Record<SceneIdString, coordinateString[]>
+  positionToScene: Record<coordinateString, SceneIdString>
 }
 
 export type RootPositionToSceneIdState = {
