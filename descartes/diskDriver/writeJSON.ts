@@ -1,6 +1,6 @@
 import { writeFile } from 'fs'
 
-export async function writeJSON(filePath: string, data: object) {
+export async function writeJSON(filePath: string, data: object | string) {
   return new Promise(async (resolve, reject) => {
     try {
       writeFile(filePath, JSON.stringify(data, null, 2), err => {
