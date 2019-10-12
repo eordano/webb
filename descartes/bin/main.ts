@@ -1,4 +1,3 @@
-import { configureStore } from '@dcl/kernel/core/store'
 
 const path = require('path')
 const fs = require('fs')
@@ -12,32 +11,3 @@ export type DescartesMode = 'mappings' | 'content'
 const targetUrl = env.length <= 4 ? `https://content.decentraland.${env}` : env
 export type StringCoordinate = string
 export type SceneId = string
-
-export type ConfiguredDescartes = {
-    getPositionToSceneInfo(squareDefinition: FourCoordinates): Record<StringCoordinate, SceneId>
-}
-
-export function configureDescartes(fetchFun: FetchJsonFunction): ConfiguredDescartes {
-    return {
-        getPositionToSceneInfo: (squareDefinition: FourCoordinates) => getPositionToSceneInfo(fetchFun)
-    }
-}
-
-
-async function storePositions(positions: any) {
-    for (let mapping of positions) {
-        for (position of mapping.positions) {
-            storePosition(position, mapping.sceneId)
-        }
-    }
-}
-
-function storeManifests(positions: any) {
-    const positions = await getAllPositionToSceneInfo()
-    for (let scene of positions.scenes) {
-        storeManifest(scene, )
-    }
-}
-
-function storeContent() {
-}

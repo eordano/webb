@@ -9,7 +9,7 @@ export type StorePositionRecord = (_: PositionToSceneIdRecord) => Promise<void>
 
 export type RetrieveAndSaveStrategy<R, S> = {
   retrieve?: (_: R) => Promise<S>
-  save?: (_: S) => Promise<void>
+  save?: ($: R, _: S) => Promise<void>
 }
 
 export type PositionToSceneIdStrategy = RetrieveAndSaveStrategy<FourCoordinates, PositionToSceneIdRecord>

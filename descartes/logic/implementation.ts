@@ -1,5 +1,11 @@
 import { Coordinate } from '@dcl/utils'
-import { SceneIdString } from 'kernel/scene-atlas/04-sceneId-resolution/types'
+import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
+import { diskPositionToSceneId, diskSavePositionToSceneId } from '../disk/positionToSceneId'
+import { diskRawContent, diskSaveRawContent } from '../disk/rawContentData'
+import { diskSaveSceneIdMappings, diskSceneIdMappings } from '../disk/sceneIdMappings'
+import { netPositionToSceneId } from '../net/positionToSceneId'
+import { netRawContentData } from '../net/rawContentData'
+import { netSceneIdMappings } from '../net/sceneIdMappings'
 import { Descartes } from './descartes'
 import { FetchFunction } from './lib/FetchFunction'
 import { PositionToSceneIdRecord } from './lib/PositionToSceneIdRecord'
@@ -8,7 +14,38 @@ import { FourCoordinates } from './lib/validateXY12'
 import { resolveWithStrategies } from './resolveWithStrategies'
 
 export function configureDescartes(fetchFun: FetchFunction, url: string, storageDirectory: string): Descartes {
+  const macros = {
+    getSceneIdForCoordinates: resolveWithStrategies<FourCoordinates, PositionToSceneIdRecord>([
+      {
+        retrieve: diskPositionToSceneId(storageDirectory),
+        save: diskSavePositionToSceneId(storageDirectory)
+      },
+      {
+        retrieve: netPositionToSceneId(fetchFun, url)
+      }
+    ]),
+    getMappingForSceneIds: resolveWithStrategies<SceneIdString[], SceneMappingRecord>([
+      {
+        retrieve: diskSceneIdMappings(storageDirectory),
+        save: diskSaveSceneIdMappings(storageDirectory)
+      },
+      {
+        retrieve: netSceneIdMappings(fetchFun, url)
+      }
+    ]),
+    getContent: resolveWithStrategies<string, Buffer>([
+      {
+        retrieve: diskRawContent(storageDirectory),
+        save: diskSaveRawContent(storageDirectory)
+      },
+      {
+        retrieve: netRawContentData(fetchFun, url)
+      }
+    ])
+  }
   return {
+    getMappingForSceneIds: macros.getMappingForSceneIds,
+    getContent: macros.getContent,
     getSceneIdForCoordinates: (_: Coordinate[]) => {
       const coordinatesAsRange = _.reduce(
         (prev, coord) => {
@@ -26,42 +63,12 @@ export function configureDescartes(fetchFun: FetchFunction, url: string, storage
           y2: -Infinity
         }
       )
-      return resolveWithStrategies<FourCoordinates, PositionToSceneIdRecord>([
-        {
-          retrieve: diskPositionToSceneId(storageDirectory),
-          save: diskSavePositionRecord(storageDirectory)
-        },
-        {
-          retrieve: netPositionToSceneId(fetchFun, url)
-        }
-      ])(coordinatesAsRange)
-    },
-    getMappingForSceneIds: (_: SceneIdString[]) => {
-      return resolveWithStrategies<SceneIdString[], SceneMappingRecord>([
-        {
-          retrieve: diskContentMapping(storageDirectory),
-          save: diskSaveContentMapping(storageDirectory)
-        },
-        {
-          retrieve: netContentMapping(fetchFun, url)
-        }
-      ])
+      return macros.getSceneIdForCoordinates(coordinatesAsRange)
     },
     getSceneJson: async (sceneId: string) => {
-      const mapping = await this.getMappingForSceneIds([sceneId])
+      const mapping = await macros.getMappingForSceneIds([sceneId])
       const cid = mapping['scene.json']
-      return JSON.parse(await this.getContent(cid))
+      return JSON.parse((await macros.getContent(cid)).toString())
     },
-    getContent: (content: string) => {
-      return resolveWithStrategies<string, Buffer>([
-        {
-          retrieve: diskContent(storageDirectory),
-          save: diskSaveContent(storageDirectory)
-        },
-        {
-          retrieve: netContent(fetchFun, url)
-        }
-      ])
-    }
   }
 }
