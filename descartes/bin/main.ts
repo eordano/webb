@@ -12,13 +12,12 @@ export type StringCoordinate = string
 export type SceneId = string
 
 const descartes = configureDescartes(fetch as any, targetUrl, target)
-
-if (!module.parent) {
-  ;(async function() {
-    if (mode === 'mappings') {
-      descartes.getSceneIdForCoordinates([{ x: -150, y: -150 }, { x: 150, y: 150 }])
-    } else {
-      // TODO
-    }
-  })().catch(e => console.log(e))
-}
+;(async function() {
+  if (mode === 'mappings') {
+    console.log('a')
+    await descartes.getSceneIdForCoordinates([{ x: -150, y: -150 }, { x: 150, y: 150 }]).then(_ => console.log(_))
+  } else {
+    console.log('a')
+    // TODO
+  }
+})().catch(e => console.log(e))

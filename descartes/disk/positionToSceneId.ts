@@ -1,10 +1,10 @@
-import { readJSON } from 'descartes/disk/driver/readJSON'
-import { join } from 'path'
-import { FourCoordinates } from 'descartes/logic/lib/validateXY12'
-import { PositionToSceneIdRecord } from 'descartes/logic/lib/PositionToSceneIdRecord'
-import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
-import { safeWriteJSON } from 'descartes/disk/driver/safeWriteJSON'
 import { StringPosition } from '@dcl/kernel/scene-atlas/01-user-position/types'
+import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
+import { join } from 'path'
+import { readJSON } from '../disk/driver/readJSON'
+import { safeWriteJSON } from '../disk/driver/safeWriteJSON'
+import { PositionToSceneIdRecord } from '../logic/lib/PositionToSceneIdRecord'
+import { FourCoordinates } from '../logic/lib/validateXY12'
 
 export function diskPositionToSceneId(directory: string) {
   function fetchOne(coords: number[]) {

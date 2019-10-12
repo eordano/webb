@@ -1,8 +1,8 @@
 import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
-import { safeWriteJSON } from 'descartes/disk/driver/safeWriteJSON'
 import { resolve } from 'path'
-import { readJSON } from './driver/readJSON'
+import { safeWriteJSON } from '../disk/driver/safeWriteJSON'
 import { SceneMappingRecord } from '../logic/lib/SceneMappingRecord'
+import { readJSON } from './driver/readJSON'
 
 export function diskSceneIdMappings(dir: string) {
   return async function(_: SceneIdString[]): Promise<SceneMappingRecord> {
@@ -19,8 +19,6 @@ export function diskSceneIdMappings(dir: string) {
 
 export function diskSaveSceneIdMappings(dir: string) {
   return async function(_: any, mapping: SceneMappingRecord) {
-    await Promise.all(
-      Object.keys(mapping).map(sceneId => safeWriteJSON(resolve(dir, 'm', sceneId), mapping[sceneId]))
-    )
+    await Promise.all(Object.keys(mapping).map(sceneId => safeWriteJSON(resolve(dir, 'm', sceneId), mapping[sceneId])))
   }
 }

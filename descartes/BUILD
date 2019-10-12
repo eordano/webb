@@ -47,6 +47,7 @@ nodejs_binary(
         "@npm//fp-future",
         "@npm//google-protobuf",
         "@npm//redux",
+        "@npm//node-fetch",
         "@npm//redux-saga",
         "@npm//reselect",
         "@npm//typesafe-actions",

@@ -6,7 +6,7 @@ export async function ensureDir(dirPath: string) {
   if (dirPath === '/') {
     return true
   }
-  ensureDir(path.dirname(dirPath))
+  await ensureDir(path.dirname(dirPath))
   const dirExists = await exists(dirPath)
   if (!dirExists) {
     await createDir(dirPath)
