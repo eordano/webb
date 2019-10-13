@@ -25,18 +25,3 @@ ts_library(
         "@npm//react-dom",
     ]
 )
-
-load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
-
-ts_devserver(
-    name = "devserver",
-    port = 9999,
-    entry_point = "/main.js",
-    serving_path = "/main.js",
-    deps = [":webb_code"],
-    static_files = [
-        ":index.html",
-        "@npm//react:react__umd",
-        "@npm//react-dom:react-dom__umd"
-    ],
-)

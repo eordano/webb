@@ -28,16 +28,14 @@ git_repository(
 
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "1447312c8570e8916da0f5f415186e7098cdd4ce48e04b8e864f793c766959c3",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.38.2/rules_nodejs-0.38.2.tar.gz"],
+    sha256 = "ad4be2c6f40f5af70c7edf294955f9d9a0222c8e2756109731b25f79ea2ccea0",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.38.3/rules_nodejs-0.38.3.tar.gz"],
 )
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
-
 node_repositories(package_json = ["//:package.json"])
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
-
 yarn_install(
     name = "npm",
     package_json = "//:package.json",
@@ -52,24 +50,13 @@ load("@npm_bazel_typescript//:index.bzl", "ts_setup_workspace")
 ts_setup_workspace()
 
 http_archive(
-    name = "com_github_bazelbuild_buildtools",
-    sha256 = "68f5245048c899a50047ebf8015ace16345ffc6610e5431964464b612da7941f",
-    strip_prefix = "buildtools-609ca6e8a79750cf4c6ce37bb92ae8d54876f9e1",
-    url = "https://github.com/bazelbuild/buildtools/archive/609ca6e8a79750cf4c6ce37bb92ae8d54876f9e1.zip",
-)
-
-http_archive(
     name = "ts_protoc_gen",
-    sha256 = "bcba3fc4e5bea89c534367ad3ca86e384662c0c48491173ffbfaca540cf7caa7",
-    strip_prefix = "ts-protoc-gen-8b902e1eb03e40deaec6805922b5e92c1b216b29",
-    urls = ["https://github.com/Dig-Doug/ts-protoc-gen/archive/8b902e1eb03e40deaec6805922b5e92c1b216b29.zip"],
+    strip_prefix = "ts-protoc-gen-0.11.3",
+    urls = ["https://github.com/eordano/ts-protoc-gen/archive/0.11.3.tar.gz"],
 )
 
 load("@ts_protoc_gen//:defs.bzl", "typescript_proto_dependencies")
-
 typescript_proto_dependencies()
-
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_webtesting",
@@ -84,6 +71,3 @@ web_test_repositories()
 
 load("@io_bazel_rules_webtesting//web/versioned:browsers-0.3.1.bzl", "browser_repositories")
 browser_repositories(chromium=True)
-
-load("@npm_bazel_karma//:package.bzl", "rules_karma_dependencies")
-rules_karma_dependencies()
