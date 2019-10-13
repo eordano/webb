@@ -33,7 +33,13 @@ http_archive(
 )
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
-node_repositories(package_json = ["//:package.json"])
+node_repositories(
+    package_json = ["//:package.json"],
+    node_version = "10.16.0",
+    node_urls = [
+        "https://nodejs.org/dist/v{version}/{filename}",
+    ],
+)
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
 yarn_install(
