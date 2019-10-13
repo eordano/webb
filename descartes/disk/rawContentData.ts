@@ -1,6 +1,6 @@
 import { join } from 'path'
 import { readRaw } from '../disk/driver/readRaw'
-import { safeWriteJSON } from '../disk/driver/safeWriteJSON'
+import { safeWriteRaw } from './driver/safeWriteRaw'
 
 export function diskRawContent(directory: string) {
   return async function(cid: string) {
@@ -10,6 +10,6 @@ export function diskRawContent(directory: string) {
 
 export function diskSaveRawContent(directory: string) {
   return async function(cid: string, data: Buffer) {
-    await safeWriteJSON(join(directory, 'c', cid), data)
+    await safeWriteRaw(join(directory, 'c', cid), data)
   }
 }

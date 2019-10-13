@@ -7,11 +7,10 @@ import { PositionToSceneIdRecord } from '../logic/lib/PositionToSceneIdRecord'
 import { FourCoordinates } from '../logic/lib/validateXY12'
 
 export function diskPositionToSceneId(directory: string) {
-  function fetchOne(coords: number[]) {
-    return readJSON(join(directory, 'p', '' + coords[0], '' + coords[1]))
+  function fetchOne(coords: StringPosition) {
+    return readJSON(join(directory, 'p', coords))
   }
   return async function(_: FourCoordinates) {
-    const coordinates = []
     if (_.x1 > _.x2) {
       const c = _.x1
       _.x1 = _.x2
@@ -22,16 +21,18 @@ export function diskPositionToSceneId(directory: string) {
       _.y1 = _.y2
       _.y2 = c
     }
+    const result = {}
     for (let i = _.x1; i <= _.x2; i++) {
       for (let j = _.y1; j <= _.y2; j++) {
-        coordinates.push(`${i},${j}`)
+        try {
+          const coord = `${i},${j}`
+          result[coord] = await fetchOne(coord)
+        } catch (e) {
+          return null
+        }
       }
     }
-    const data = await Promise.all(coordinates.map(_ => [_, fetchOne(_)]))
-    return data.reduce((prev, _) => {
-      prev[_[0]] = _[1]
-      return prev
-    }, {} as PositionToSceneIdRecord)
+    return result
   }
 }
 

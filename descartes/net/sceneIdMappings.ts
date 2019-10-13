@@ -4,15 +4,16 @@ import { FetchFunction } from '../logic/lib/FetchFunction'
 export type SceneMappingRecord = Record<string, string>
 
 export function netSceneIdMappings(fetchFun: FetchFunction, targetUrl: string) {
-  return async function(_: SceneIdString): Promise<SceneMappingRecord> {
-    const raw = await fetchFun(`${targetUrl}/parcel_info?cids=${_}`).then(_ => _.json())
+  return async function(sceneId: SceneIdString): Promise<SceneMappingRecord> {
+    const req = await fetchFun(`${targetUrl}/parcel_info?cids=${sceneId}`)
+    const raw = await req.json()
     if (
       !raw ||
       !raw.data ||
       !raw.data[0] ||
       !raw.data[0].content ||
       !raw.data[0].content.contents ||
-      !Array.isArray(raw.data.content.contents)
+      !Array.isArray(raw.data[0].content.contents)
     ) {
       throw new TypeError('Invalid response from server: missing `data` param')
     }

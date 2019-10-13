@@ -2,6 +2,9 @@ import { RetrieveAndSaveStrategy } from './Strategies'
 
 export function resolveWithStrategies<R, S>(strategies: RetrieveAndSaveStrategy<R, S>[]) {
   return async function(keys: R) {
+    if (keys === undefined) {
+      return
+    }
     let result: S = undefined
     // Traverse the retrieve functions
     for (let i = 0; i < strategies.length; i++) {

@@ -4,8 +4,9 @@ import { FourCoordinates } from '../logic/lib/validateXY12'
 
 export function netPositionToSceneId(fetchFun: FetchFunction, server: string) {
   return async function(_: FourCoordinates) {
-    const result = await fetchFun(`${server}/scenes?x1=${_.x1}&x2=${_.x2}&y1=${_.y1}&y2=${_.y2}`)
-    if (!result.success) {
+    const url = `${server}/scenes?x1=${_.x1}&x2=${_.x2}&y1=${_.y1}&y2=${_.y2}`
+    const result = await fetchFun(url)
+    if (result.status !== 200) {
       throw new Error(`Error fetching ${JSON.stringify(_)}: ${result.status}`)
     }
     const data = await result.json()

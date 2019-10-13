@@ -1,3 +1,4 @@
+import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
 import { Coordinate } from '@dcl/utils'
 import { diskPositionToSceneId, diskSavePositionToSceneId } from '../disk/positionToSceneId'
 import { diskRawContent, diskSaveRawContent } from '../disk/rawContentData'
@@ -32,7 +33,7 @@ export function configureDescartes(fetchFun: FetchFunction, url: string, storage
     getContent: diskAndNet(diskRawContent, diskSaveRawContent, netRawContentData)
   }
   return {
-    getMappingForSceneId: macros.getMappingForSceneId,
+    getMappingForSceneId: (sceneId: SceneIdString) => macros.getMappingForSceneId(sceneId),
     getContent: macros.getContent,
     getSceneIdForCoordinates: (_: Coordinate[]) => {
       const coordinatesAsRange = _.reduce(
@@ -55,8 +56,10 @@ export function configureDescartes(fetchFun: FetchFunction, url: string, storage
     },
     getSceneJson: async (sceneId: string) => {
       const mapping = await macros.getMappingForSceneId(sceneId)
-      const cid = mapping[sceneId]['scene.json']
-      return JSON.parse((await macros.getContent(cid)).toString())
+      if (mapping) {
+        const cid = mapping['scene.json']
+        return JSON.parse((await macros.getContent(cid)).toString())
+      }
     }
   }
 }
