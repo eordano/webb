@@ -1,24 +1,10 @@
 import React from 'react'
-import { Segment } from '~/components/liteui/dcl'
-import { Auth } from '~/kernel/auth'
-import { commsStarted } from '~/kernel/comms/actions'
-import { passportRequest } from '~/kernel/passports/actions'
-import { SceneLifeCycleHelper } from '~/kernel/scene-runner/SceneLifeCycleHelper'
-import { SceneWorkersManager } from '~/kernel/scene-scripts/SceneWorkersManager'
-import { store } from '~/kernel/store'
-import { teleport } from '~/kernel/userLocation/PositionSettlement/actions'
-import { initializeUnity } from '~/unity/incoming'
+import { Segment } from '../../liteui/dcl'
 const Terminal = require('react-console-emulator').default
 
-const auth = new Auth()
 var term = null
 var commands = {}
-function makeCommands(that) {
-  auth.store = store
-  const sceneManager = new SceneWorkersManager()
-  const Loader = new SceneLifeCycleHelper()
-  Loader.store = store
-
+function makeCommands(that: any) {
   if (!term) {
     term = that
     Object.assign(commands, {
@@ -26,63 +12,36 @@ function makeCommands(that) {
         description: 'Start the unity renderer',
         usage: 'start',
         fn: function() {
-          initializeUnity(document.getElementById('renderer'))
-          document.getElementById('root').remove()
         }
       },
       getProfile: {
         description: 'Get a profile using a userId',
         usage: 'getProfile <userId>',
-        fn: function(userId: string) {
-          store.dispatch(passportRequest(userId))
-          return 'Fetching profile for user ' + userId + '...'
+        fn: function() {
         }
       },
       connect: {
         description: 'Connect to the comms server',
         usage: 'status',
         fn: function() {
-          store.dispatch(commsStarted())
-          return 'Getting comms access token'
         }
       },
       status: {
         description: 'Print your position and the current scene',
         usage: 'status',
         fn: function() {
-          const c = store.getState().parcelSight.currentPosition
-          const sceneId = store.getState().positionToSceneId.resolvedPositionToScene[`${c.x},${c.y}`]
-          return `${c.x},${c.y}: ${sceneId}`
         }
       },
       goto: {
         description: 'Teleport to another position',
         usage: 'goto <x> <y>',
-        fn: function(x, y) {
-          try {
-            store.dispatch(teleport(x + ',' + y))
-            return `Teleporting to ${x}, ${y}`
-          } catch (e) {
-            return `Error on teleport: ${e.stack}`
-          }
+        fn: function() {
         }
       },
       run: {
         description: 'Run scene at coordinates',
         usage: 'run <x> <y>',
-        fn: function(x, y) {
-          try {
-            Loader.getSceneForCoordinates(x, y).then(scene => {
-              try {
-                sceneManager.loadScene(scene)
-              } catch (e) {
-                console.log(e)
-              }
-            })
-            return `Loading scene at ${x}, ${y}...`
-          } catch (e) {
-            return `Error on teleport: ${e.stack}`
-          }
+        fn: function() {
         }
       },
       list: {

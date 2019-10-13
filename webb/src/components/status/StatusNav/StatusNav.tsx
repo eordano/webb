@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { LinkReactComponent } from '~/components/Reusable/LinkReactComponent'
 import { Push } from 'connected-react-router'
-import { Segment } from '~/components/liteui/dcl'
+import { Segment } from '../../liteui/dcl'
+import { LinkReactComponent } from '../../Reusable/LinkReactComponent'
 
 export class StatusNav extends React.Component<{
   current: string

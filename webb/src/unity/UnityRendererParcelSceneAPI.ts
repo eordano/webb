@@ -1,13 +1,11 @@
+import { ISceneWorker } from '@dcl/kernel/scene-scripts/interface/ISceneWorker'
 import { EventDispatcher } from '@dcl/rpc/common/core/EventDispatcher'
 import { IEventNames, IEvents } from '@dcl/scene-api'
 import { createLogger, EntityAction, gridToWorld, ILogger, MVector3 } from '@dcl/utils'
-import { IRendererParcelSceneAPI } from '~/kernel/renderer/IRendererParcelSceneAPI'
-import { ISceneWorker } from '~/kernel/scene-scripts/interface/ISceneWorker'
-import { SceneManifest } from '~/kernel/worldMap/scene'
 import { UnityGlobals } from './globals'
-import { DevTools } from '~/kernel/scene-scripts/kernelSpace/DevTools'
+import { SceneManifest } from '@dcl/kernel/scene-manifest'
 
-export class UnityRendererParcelSceneAPI implements IRendererParcelSceneAPI {
+export class UnityRendererParcelSceneAPI {
   eventDispatcher = new EventDispatcher()
   worker!: ISceneWorker
   position: MVector3

@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Navbar as UINavbar, Menu, Button, Segment } from '../liteui/dcl'
-
 export type NavbarProps = {
   currentPage: string
   isLoggedIn: boolean

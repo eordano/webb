@@ -1,14 +1,13 @@
 import { ConnectedRouter } from 'connected-react-router'
 import * as React from 'react'
 import { Route, Switch } from 'react-router'
-import Navbar from '~/components/navbar'
-import Status from '~/components/status/StatusFrame'
-import { history } from '~/kernel/store'
+import Navbar from './components/navbar'
+import Status from './components/status/StatusFrame'
 import { Container } from './components/liteui/dcl'
 
 export const Routes = (
   <>
-    <ConnectedRouter history={history}>
+    <ConnectedRouter history={{} as any}>
       <>
         <Container>
           <Navbar />

@@ -1,21 +1,20 @@
 import { UnityGlobals } from './globals'
 import { defaultLogger, Vector3 } from '@dcl/utils'
-import { SceneManifest } from '~/kernel/worldMap/scene'
-import { _V1_Profile } from './types'
-import { ResolvedProfile } from '~/kernel/passports/passportTypes'
+import { SceneManifest } from '@dcl/kernel/scene-manifest'
+import { Profile } from '@dcl/kernel/passports/types'
 
 export const unityInterface = {
   debug: false,
   SetDebug() {
     UnityGlobals.gameInstance.SendMessage('SceneController', 'SetDebug')
   },
-  LoadProfile(profile: ResolvedProfile) {
+  LoadProfile(profile: Profile) {
     const profileData = {
-      created_at: profile.created_at,
+      created_at: profile.createdAt,
       description: profile.description,
       email: profile.email,
       name: profile.name,
-      updated_at: profile.updated_at,
+      updated_at: profile.updatedAt,
       userId: profile.userId,
       version: profile.version,
       avatar: JSON.parse(

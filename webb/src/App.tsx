@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import { Provider } from 'react-redux'
 
-import { configureStore } from '~/kernel/store'
+import { configureStore } from '@dcl/kernel/core/store'
 
 const store = configureStore()
 

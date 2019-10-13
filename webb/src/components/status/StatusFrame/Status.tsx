@@ -1,11 +1,10 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
-import { RootState } from '~/kernel/store'
 import Console from '../Console'
 import { StatusNav } from '../StatusNav'
-import { Page, Grid, Row, Column } from '~/components/liteui/dcl'
+import { Page, Grid, Row, Column } from '../../liteui/dcl'
 
-export default (_: RootState) => (
+export default (_: any) => (
   <Page>
     <StatusNav />
     <Grid>

@@ -13,7 +13,6 @@
     "baseUrl": "src",
     "experimentalDecorators": true,
     "paths": {
-      "~/*": ["./*"],
       "@dcl/*": ["../../bazel-genfiles/*", "../../bazel-bin/*"]
     },
     "downlevelIteration": true

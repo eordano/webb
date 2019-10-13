@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { JSONTheme } from '~/components/Reusable/theme'
+import { JSONTheme } from './theme'
 import { Segment } from '../liteui/dcl'
 const JSONTree = require('react-json-tree').default
 
