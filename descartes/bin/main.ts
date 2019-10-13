@@ -25,7 +25,8 @@ const descartes = configureDescartes(fetch as any, targetUrl, target)
           for (let id of cids) {
             await descartes.getContent(mapping[id])
           }
-          console.log(`Secured ${cids.length} files for scene ${scene}`)
+          const sceneJson = await descartes.getSceneJson(scene)
+          console.log(`Secured ${cids.length} files for scene ${scene} (${sceneJson.scene.base})`)
         } else {
           const sceneJson = await descartes.getSceneJson(scene)
           await descartes.getContent(mapping[sceneJson.main])
