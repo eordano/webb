@@ -28,8 +28,8 @@ git_repository(
 
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "6625259f9f77ef90d795d20df1d0385d9b3ce63b6619325f702b6358abb4ab33",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.35.0/rules_nodejs-0.35.0.tar.gz"],
+    sha256 = "1447312c8570e8916da0f5f415186e7098cdd4ce48e04b8e864f793c766959c3",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.38.2/rules_nodejs-0.38.2.tar.gz"],
 )
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
@@ -57,10 +57,6 @@ http_archive(
     strip_prefix = "buildtools-609ca6e8a79750cf4c6ce37bb92ae8d54876f9e1",
     url = "https://github.com/bazelbuild/buildtools/archive/609ca6e8a79750cf4c6ce37bb92ae8d54876f9e1.zip",
 )
-
-load("@com_github_bazelbuild_buildtools//buildifier:deps.bzl", "buildifier_dependencies")
-
-buildifier_dependencies()
 
 http_archive(
     name = "ts_protoc_gen",

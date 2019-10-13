@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>webb - Experimental Decentraland Client</title>
+    <link rel="style" href="index.css" />
+    <link rel="style" href="decentraland-ui/lib/styles.css" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript" src="/main.js"></script>
+    <script>
+      require.config({ paths: { 'react-dom': 'react-dom.development' } })
+      require.config({ paths: { react: 'react.development' } })
+      require(['main'])
+    </script>
+  </body>
+</html>
