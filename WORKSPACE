@@ -58,6 +58,7 @@ ts_setup_workspace()
 http_archive(
     name = "ts_protoc_gen",
     strip_prefix = "ts-protoc-gen-0.11.3",
+    sha256 = "3bcadb0e79697dcc310119db7bd3cb3bca3967dafe13c96e5c26966f982270bd",
     urls = ["https://github.com/eordano/ts-protoc-gen/archive/0.11.3.tar.gz"],
 )
 
