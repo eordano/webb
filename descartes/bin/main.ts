@@ -13,8 +13,8 @@ export type SceneId = string
 
 const descartes = configureDescartes(fetch as any, targetUrl, target)
 ;(async function() {
-  for (let i = -150; i <= 150; i++) {
-    for (let j = -150; j <= 150; j++) {
+  for (let i = 150; i >= -150; i--) {
+    for (let j = 150; j >= -150; j--) {
       const record = await descartes.getSceneIdForCoordinates([{ x: i -1, y: j -1 }, { x: i, y: j}])
       if (!record) continue
       const scene = record[`${i},${j}`]

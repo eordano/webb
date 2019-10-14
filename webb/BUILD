@@ -32,6 +32,7 @@ ts_library(
         "@npm//react",
         "@npm//redux",
         "@npm//react-dom",
+        "@npm//react-redux",
     ]
 )
 
@@ -42,6 +43,7 @@ ts_devserver(
     port = 3000,
     entry_module = "dcl/webb/src/main",
     deps = [
+        ":static",
         ":webb_code",
         "@npm//react:react__umd",
         "@npm//react-dom:react-dom__umd",
@@ -49,4 +51,5 @@ ts_devserver(
     ],
     serving_path = "/main.js",
     static_files = ["index.html"],
+    additional_root_paths = [":static"],
 )
