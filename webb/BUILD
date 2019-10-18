@@ -26,13 +26,20 @@ ts_library(
     srcs = ["src/main.tsx"],
     tsconfig = ":tsconfig.json",
     deps = [
+        "@dcl//kernel",
         # App Dependencies
+        "@npm//@types/history",
         "@npm//@types/react",
         "@npm//@types/react-dom",
+        "@npm//connected-react-router",
+        "@npm//history",
         "@npm//react",
-        "@npm//redux",
         "@npm//react-dom",
         "@npm//react-redux",
+        "@npm//react-router",
+        "@npm//react-console-emulator",
+        "@npm//redux",
+        "@npm//redux-saga",
     ]
 )
 
@@ -45,9 +52,12 @@ ts_devserver(
     deps = [
         ":static",
         ":webb_code",
+        "@npm//history:history__umd",
         "@npm//react:react__umd",
         "@npm//react-dom:react-dom__umd",
-        "@npm//redux:redux__umd"
+        "@npm//react-router:react-router__umd",
+        "@npm//redux:redux__umd",
+        "@npm//redux-saga:redux-saga__umd",
     ],
     serving_path = "/main.js",
     static_files = ["index.html"],
