@@ -1,5 +1,6 @@
 import { action } from 'typesafe-actions'
-import { ChatData, PingMessage, ProfileData, PositionData } from '@dcl/protos'
+import { PingMessage } from 'dcl/protos/broker_pb'
+import { ChatData, ProfileData, PositionData } from 'dcl/protos/comms_pb'
 import { PositionReport } from '../presence/types/PositionReport'
 import { UserId } from '../auth/types'
 import { IBrokerConnection } from './brokers/IBrokerConnection'

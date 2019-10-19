@@ -4,31 +4,27 @@ load("@npm_bazel_typescript//:index.bzl", "ts_library")
 load("@ts_protoc_gen//:defs.bzl", "typescript_proto_library")
 
 proto_library(
-    name = "protos_lib",
+    name = "broker_lib",
     srcs = [
         "broker.proto",
+    ],
+)
+
+typescript_proto_library(
+    name = "broker",
+    proto = ":broker_lib",
+)
+
+proto_library(
+    name = "comms_lib",
+    srcs = [
         "comms.proto",
     ],
 )
 
 typescript_proto_library(
-    name = "ts_protos",
-    proto = ":protos_lib",
-)
-
-ts_library(
-    name = "protos",
-    srcs = glob([
-        "**/*.ts",
-    ]),
-    module_name = "@dcl/protos",
-    tsconfig = ":tsconfig.json",
-    deps = [
-        "//protos:ts_protos",
-        "@npm//@bazel/typescript",
-        "@npm//@types/node",
-        "@npm//protobufjs",
-    ],
+    name = "comms",
+    proto = ":comms_lib",
 )
 
 load("//tools/npm:package.bzl", "dcl_npm_package")
@@ -36,13 +32,13 @@ load("//tools/npm:package.bzl", "dcl_npm_package")
 dcl_npm_package(
     name = "package",
     srcs = [
-        "broker.proto",
-        "comms.proto",
+        "broker",
+        "comms",
     ],
     package_layers = [
         "//:common.package.json",
         "protos.package.json",
     ],
-    deps = [":protos"],
+    deps = [":broker", ":comms"],
 )
 

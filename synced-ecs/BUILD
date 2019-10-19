@@ -28,7 +28,6 @@ ts_library(
     module_name = "@dcl/synced-ecs",
     deps = [
         "//config",
-        "//protos",
         "//rpc",
         "//scene-api",
         "//utils",

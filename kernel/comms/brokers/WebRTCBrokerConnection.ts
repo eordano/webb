@@ -5,7 +5,7 @@ import { Communications } from '@dcl/config'
 import { ILogger, createLogger } from '@dcl/utils'
 import { Observable } from '@dcl/utils'
 
-import { AuthData } from '@dcl/protos'
+import { AuthData } from 'dcl/protos/comms_pb'
 import {
   WelcomeMessage,
   WebRtcMessage,
@@ -14,7 +14,7 @@ import {
   MessageType,
   AuthMessage,
   Role
-} from '@dcl/protos'
+} from 'dcl/protos/broker_pb'
 
 import { SocketReadyState } from '../types/SocketReadyState'
 import { IBrokerConnection, BrokerMessage } from './IBrokerConnection'

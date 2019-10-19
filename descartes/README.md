@@ -1,6 +1,7 @@
 # descartes
 
 > Divide each difficulty into as many parts as is feasible and necessary to resolve it.
+>
 > René Descartes
 
 ## Decentraland Content Server Snapshot & Caching

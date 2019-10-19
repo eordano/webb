@@ -1,4 +1,4 @@
-import { PingMessage, MessageType } from '@dcl/protos'
+import { PingMessage, MessageType } from 'dcl/protos/broker_pb'
 import { IBrokerConnection } from '../../brokers/IBrokerConnection'
 
 /**

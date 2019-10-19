@@ -28,7 +28,8 @@ ts_library(
     module_name = "@dcl/kernel",
     deps = [
         "//config",
-        "//protos",
+        "//protos:comms",
+        "//protos:broker",
         "//rpc",
         "//scene-api",
         "//utils",
