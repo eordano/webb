@@ -5,10 +5,10 @@ import { Auth } from '../auth'
 import { tokenRequest, TokenSuccessAction, TOKEN_SUCCESS } from '../auth/actions'
 import { MessageInput } from '../auth/ephemeral'
 import { getCurrentUserId } from '../auth/selectors'
+import { store } from '../core/store'
 import { getProfile } from '../passports/selectors'
 import { Profile } from '../passports/types'
 import { marshalPositionReport } from '../presence/wireTransforms/marshalPositionReport'
-import { store } from '../core/store'
 import {
   CLOSE_COMMS,
   COMMS_STARTED,
@@ -43,7 +43,6 @@ export const logger = createLogger('ProtocolConnection')
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
   yield takeLatest(SET_BROKER_CONNECTION, function*(connectionAction: SetBrokerConnectionAction) {
-
     const connection = connectionAction.payload
     yield takeLatest(PROTOCOL_OUT_POSITION, handleSendPositionRequest(connection))
     yield takeLatest(PROTOCOL_OUT_PROFILE, handleSendProfileRequest(connection))
@@ -147,6 +146,8 @@ export function* setupWebRTCBroker(): any {
 
   const msg = Buffer.from(body)
   const input = MessageInput.fromMessage(msg)
-  const connection = yield call(async () => createWebRTCBroker(coordinatorURL, input, accessToken, ephemeral, auth))
+  const connection = yield call(async () =>
+    createWebRTCBroker(store, coordinatorURL, input, accessToken, ephemeral, auth)
+  )
   yield setBrokerConnection(connection)
 }

@@ -1,11 +1,11 @@
 import { DEBUG_REDUX } from '@dcl/config'
-import { applyMiddleware, compose, createStore } from 'redux'
+import { applyMiddleware, compose, createStore, Store } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import { createReducer } from './reducers'
-import { setProfileServer } from '../passports/actions'
-import { rootSaga } from './rootSaga'
-import { configureLineOfSightRadius } from '../scene-atlas/02-parcel-sight/actions'
 import { tryRestoreSession } from '../auth/sagas'
+import { setProfileServer } from '../passports/actions'
+import { configureLineOfSightRadius } from '../scene-atlas/02-parcel-sight/actions'
+import { createReducer, RootState } from './reducers'
+import { rootSaga } from './rootSaga'
 
 declare var window: any
 const enhance =
@@ -14,12 +14,12 @@ const enhance =
         name: 'webb'
       })
     : compose
+  
+export let store: Store<RootState>
 
-export var store
-
-export const configureStore: any = (state: any) => {
+export const configureStore: (state?: any) => { store: Store<RootState>; sagasMiddleware: any } = (state?: any) => {
   const sagasMiddleware = createSagaMiddleware()
-  store = createStore(createReducer(), state, enhance(applyMiddleware(sagasMiddleware)))
+  store = createStore(createReducer(), state, enhance(applyMiddleware(sagasMiddleware))) as Store<RootState>
   store.dispatch(configureLineOfSightRadius(4))
   store.dispatch(setProfileServer('https://avatars-api.decentraland.org/'))
   sagasMiddleware.run(rootSaga)

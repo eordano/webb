@@ -1,39 +1,15 @@
+import { Communications } from '@dcl/config'
+import { createLogger, ILogger, Observable } from '@dcl/utils'
+import { AuthMessage, ConnectMessage, CoordinatorMessage, MessageType, Role, WebRtcMessage, WelcomeMessage } from 'dcl/protos/broker_pb'
+import { AuthData } from 'dcl/protos/comms_pb'
 import { future, IFuture } from 'fp-future'
 import { Message } from 'google-protobuf'
-
-import { Communications } from '@dcl/config'
-import { ILogger, createLogger } from '@dcl/utils'
-import { Observable } from '@dcl/utils'
-
-import { AuthData } from 'dcl/protos/comms_pb'
-import {
-  WelcomeMessage,
-  WebRtcMessage,
-  ConnectMessage,
-  CoordinatorMessage,
-  MessageType,
-  AuthMessage,
-  Role
-} from 'dcl/protos/broker_pb'
-
-import { SocketReadyState } from '../types/SocketReadyState'
-import { IBrokerConnection, BrokerMessage } from './IBrokerConnection'
+import { Store } from 'redux'
 import { Auth } from '../../auth'
-import { store } from '../../core/store'
-import {
-  protocolUnknown,
-  commsWelcome,
-  commsWebrtcIceCandidate,
-  commsWebrtcIceOffer,
-  commsWebrtcIceAnswer,
-  commsWebrtcSignalingState,
-  commsWebrtcIceState,
-  commsWebrtcError,
-  commsDatachannelReliableLost,
-  commsDatachannelUnreliableLost,
-  commsDatachannelReliable,
-  commsDatachannelUnreliable
-} from '../actions'
+import { commsDatachannelReliable, commsDatachannelReliableLost, commsDatachannelUnreliable, commsDatachannelUnreliableLost, commsWebrtcError, commsWebrtcIceAnswer, commsWebrtcIceCandidate, commsWebrtcIceOffer, commsWebrtcIceState, commsWebrtcSignalingState, commsWelcome, protocolUnknown } from '../actions'
+import { RootCommsState } from '../reducer'
+import { SocketReadyState } from '../types/SocketReadyState'
+import { BrokerMessage, IBrokerConnection } from './IBrokerConnection'
 
 export class WebRTCBrokerConnection implements IBrokerConnection {
   public alias: number | null = null
@@ -71,7 +47,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
 
   private ws: WebSocket | null = null
 
-  constructor(public url: string, public auth: Auth) {
+  constructor(private store: Store<RootCommsState>, public url: string, public auth: Auth) {
     this.connectRTC()
     this.connectWS()
 
@@ -131,7 +107,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
 
     switch (msgType) {
       case MessageType.UNKNOWN_MESSAGE_TYPE: {
-        store.dispatch(protocolUnknown(msgType as any))
+        this.store.dispatch(protocolUnknown(msgType as any))
         this.logger.log('unsopported message')
         break
       }
@@ -155,7 +131,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
         this.commServerAlias = serverAlias
         this.alias = alias
         this.logger.info('my alias is', alias)
-        store.dispatch(commsWelcome({ alias, serverAlias, availableServers }))
+        this.store.dispatch(commsWelcome({ alias, serverAlias, availableServers }))
 
         const connectMessage = new ConnectMessage()
         connectMessage.setType(MessageType.CONNECT)
@@ -185,7 +161,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
         if (msgType === MessageType.WEBRTC_ICE_CANDIDATE) {
           try {
             const candidate = JSON.parse(sessionData)
-            store.dispatch(commsWebrtcIceCandidate(candidate))
+            this.store.dispatch(commsWebrtcIceCandidate(candidate))
             await this.webRtcConn!.addIceCandidate(candidate)
           } catch (err) {
             this.logger.error(err)
@@ -197,7 +173,9 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
             await this.webRtcConn!.setLocalDescription(desc)
 
             let localDescription = this.webRtcConn!.localDescription
-            store.dispatch(commsWebrtcIceOffer({ serverAlias: this.commServerAlias, sessionData, localDescription }))
+            this.store.dispatch(
+              commsWebrtcIceOffer({ serverAlias: this.commServerAlias, sessionData, localDescription })
+            )
             let answer = this.webRtcConn!.localDescription
 
             if (answer && answer.sdp) {
@@ -208,14 +186,14 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
               const data = encoder.encode(JSON.stringify(answer))
               msg.setData(data)
               this.sendCoordinatorMessage((msg as any) as Message)
-              store.dispatch(commsWebrtcIceAnswer({ ...answer, weAuthored: true }))
+              this.store.dispatch(commsWebrtcIceAnswer({ ...answer, weAuthored: true }))
             }
           } catch (err) {
             this.logger.error(err)
           }
         } else if (msgType === MessageType.WEBRTC_ANSWER) {
           try {
-            store.dispatch(commsWebrtcIceAnswer({ sessionData, weAuthored: false }))
+            this.store.dispatch(commsWebrtcIceAnswer({ sessionData, weAuthored: false }))
             await this.webRtcConn!.setRemoteDescription(JSON.parse(sessionData))
           } catch (err) {
             this.logger.error(err)
@@ -246,7 +224,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
     })
 
     this.webRtcConn.onsignalingstatechange = (e: Event) => {
-      store.dispatch(
+      this.store.dispatch(
         commsWebrtcSignalingState({
           event: e,
           iceState: this.webRtcConn!.iceConnectionState,
@@ -257,7 +235,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
     }
 
     this.webRtcConn.oniceconnectionstatechange = (e: Event) => {
-      store.dispatch(
+      this.store.dispatch(
         commsWebrtcIceState({
           event: e,
           iceState: this.webRtcConn!.iceConnectionState,
@@ -281,14 +259,14 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
     this.ws.binaryType = 'arraybuffer'
 
     this.ws.onerror = event => {
-      store.dispatch(commsWebrtcError({ event, message: 'Could not establish communications' }))
+      this.store.dispatch(commsWebrtcError({ event, message: 'Could not establish communications' }))
       this.logger.error('socket error', event)
       this.ws = null
     }
 
     this.ws.onmessage = event => {
       this.onWsMessage(event).catch(err => {
-        store.dispatch(commsWebrtcError({ context: event, err, message: 'Fatal: connection lost' }))
+        this.store.dispatch(commsWebrtcError({ context: event, err, message: 'Fatal: connection lost' }))
         this.logger.error(err)
       })
     }
@@ -315,14 +293,14 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
     let dc = e.channel
 
     dc.onclose = () => {
-      store.dispatch(dc.label === 'reliable' ? commsDatachannelReliableLost(e) : commsDatachannelUnreliableLost(e))
+      this.store.dispatch(dc.label === 'reliable' ? commsDatachannelReliableLost(e) : commsDatachannelUnreliableLost(e))
       this.logger.log(`DataChannel ${JSON.stringify(dc.label)} has closed`)
     }
 
     dc.onopen = async (e: any) => {
       const label = dc.label
       this.logger.log(`DataChannel ${JSON.stringify(dc.label)} has opened`)
-      store.dispatch(label === 'reliable' ? commsDatachannelReliable(e) : commsDatachannelUnreliable(e))
+      this.store.dispatch(label === 'reliable' ? commsDatachannelReliable(e) : commsDatachannelUnreliable(e))
 
       if (label === 'reliable') {
         this.reliableDataChannel = dc

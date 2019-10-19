@@ -30,8 +30,7 @@ import {
   saveAvatarFailure,
   SaveAvatarRequest,
   saveAvatarSuccess,
-  SAVE_AVATAR_REQUEST,
-  setProfileServer
+  SAVE_AVATAR_REQUEST
 } from './actions'
 import { sendLoadProfileToRenderer } from './renderer/sendLoadProfileToRenderer'
 import { sendWearablesCatalog } from './renderer/sendWearablesCatalog'
@@ -60,7 +59,6 @@ import { Profile } from './types'
  * It's *very* important for the renderer to never receive a passport with items that have not been loaded into the catalog.
  */
 export function* passportSaga(): any {
-  yield put(setProfileServer(getServerConfigurations().profile))
   yield takeLatest(RENDERER_INITIALIZED, initialLoad)
 
   yield takeLatest(ADD_CATALOG, handleAddCatalog)

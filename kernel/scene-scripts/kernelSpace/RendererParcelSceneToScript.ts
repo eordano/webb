@@ -53,9 +53,9 @@ export class RendererParcelSceneToScript extends ExposableAPI {
    * Notify the Renderer of ECS Actions
    *
    * +---------------+          +--------------------+          +------------+
-   * |               |          |     (kernel)       |          |            |
+   * |               |          |      (kernel)      |          |            |
    * |   Scene ECS   | -------> | sendBatch(actions) | -------> |  Renderer  |
-   * |               |          |   (you are here)   |          |            |
+   * |   (worker)    |          |   (you are here)   |          |            |
    * +---------------+          +--------------------+          +------------+
    */
   @exposeMethod
@@ -70,12 +70,12 @@ export class RendererParcelSceneToScript extends ExposableAPI {
    * This is one of the most important functions of the project. This is the method that gets called by the renderer
    * whenever something that the user initiates happens.
    *
-   * In other words, this carries over things like clicks so your scenes can be interactive.
+   * Events include all user input actions, like clicks and buttons.
    *
    * +--------------+          +-----------------------+          +-----------------------------+
-   * |              |          |        (kernel)       |          |                             |
+   * |              |          |       (kernel)        |          |                             |
    * |   Renderer   | -------> | sendSubscriptionEvent | -------> | Scene Coded by Parcel Owner |
-   * |              |          |     (you are here)    |          |                             |
+   * |              |          |    (you are here)     |          |          (worker)           |
    * +--------------+          +-----------------------+          +-----------------------------+
    */
   sendSubscriptionEvent<K extends IEventNames>(event: K, data: IEvents[K]) {
