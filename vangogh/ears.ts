@@ -111,9 +111,7 @@ export class PlainGameKit extends GamekitScene {
 async function main() {
   global['fetch'] = fetch
 
-  // TODO: Take these from arguments
-  const x = 0
-  const y = 0
+  const [x, y] = process.argv[process.argv.length - 1].split(',').map(_ => parseInt(_, 10))
 
   try {
     const { store } = configureStore()
