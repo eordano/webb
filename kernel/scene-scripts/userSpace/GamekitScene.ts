@@ -1,11 +1,8 @@
-import { ILogOpts, ScriptingTransport } from '@dcl/rpc'
-import { inject, Script } from '@dcl/rpc/client'
 import { DecentralandInterface, DevTools } from '@dcl/scene-api'
 import { defaultLogger, EntityAction } from '@dcl/utils'
 
 import { BuildDCLInterface } from './DCLInterface/BuildDCLInterface'
 import { BuildECSInterface } from './DCLInterface/BuildECSInterface'
-import { loadGamekitEntrypoint } from './loadGamekitEntrypoint'
 import { customEval, getES5Context } from './sandbox'
 import { IRendererParcelSceneToScript } from '../kernelSpace/IRendererParcelSceneToScript'
 import { ISceneRunningScript } from '../interface/ISceneRunningScript'
@@ -20,11 +17,10 @@ const RUNNING = 'running'
  *
  * This is the class that runs all the magic (see `runFirstRound`)
  */
-export class GamekitScene extends Script implements ISceneRunningScript {
-  @inject('EngineAPI')
+export abstract class GamekitScene implements ISceneRunningScript {
+
   engine: IRendererParcelSceneToScript
 
-  @inject('DevTools')
   devTools: any
   devToolsAdapter?: DevTools
 
@@ -33,11 +29,10 @@ export class GamekitScene extends Script implements ISceneRunningScript {
 
   dcl: DecentralandInterface
 
-  constructor(transport: ScriptingTransport, opt?: ILogOpts) {
-    super(transport, opt)
-  }
-
-  async systemDidEnable() {
+  /**
+   * Main lifecycle of the GamekitScene
+   */
+  async setupLifecycle() {
     this.setupDCLInterface()
     this.setupDevtools()
     this.sendBatch()
@@ -69,10 +64,12 @@ export class GamekitScene extends Script implements ISceneRunningScript {
     }
   }
 
+  abstract getSource(): Promise<string>
+
   async runFirstRound() {
     let source: string
     try {
-      source = await this.downloadEntrypoint()
+      source = await this.getSource()
     } catch (e) {
       throw new Error(e)
     }
@@ -84,6 +81,27 @@ export class GamekitScene extends Script implements ISceneRunningScript {
     }
 
     this.setupSceneStartSignalResponse()
+  }
+
+  runStartFunctions() {
+    for (let startFunction of this.onStartFunctions) {
+      try {
+        startFunction()
+      } catch (e) {
+        this.onError(e)
+      }
+    }
+  }
+
+  update(dt: number) {
+    for (let updateFunction of this.onUpdateFunctions) {
+      try {
+        updateFunction(dt)
+      } catch (e) {
+        this.onError(e)
+      }
+    }
+    this.sendBatch()
   }
 
   protected setupSceneStartSignalResponse() {
@@ -106,27 +124,6 @@ export class GamekitScene extends Script implements ISceneRunningScript {
     this.onStartFunctions.push(() => {
       this.engine.startSignal().catch((e: Error) => this.onError(e))
     })
-  }
-
-  protected runStartFunctions() {
-    for (let startFunction of this.onStartFunctions) {
-      try {
-        startFunction()
-      } catch (e) {
-        this.onError(e)
-      }
-    }
-  }
-
-  protected update(dt: number) {
-    for (let updateFunction of this.onUpdateFunctions) {
-      try {
-        updateFunction(dt)
-      } catch (e) {
-        this.onError(e)
-      }
-    }
-    this.sendBatch()
   }
 
   currentTimeout: number = undefined
@@ -157,10 +154,6 @@ export class GamekitScene extends Script implements ISceneRunningScript {
     this.currentTimeout = undefined
   }
 
-  protected async downloadEntrypoint() {
-    return loadGamekitEntrypoint(names => this.loadAPIs(names))
-  }
-
   onStartFunctions: Array<Function> = []
   onUpdateFunctions: Array<(dt: number) => void> = []
   onEventFunctions: Array<(event: any) => void> = []
@@ -176,7 +169,7 @@ export class GamekitScene extends Script implements ISceneRunningScript {
   }
 
   setupDevtools() {
-    this.devToolsAdapter = new DevTools(this.devTools)
+    // this.devToolsAdapter = new DevTools(this.devTools)
   }
 
   /**

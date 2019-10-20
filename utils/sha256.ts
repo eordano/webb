@@ -1,6 +1,6 @@
 export function sha256asString(data: string) {
   const hash = sha256(data)
-  const crypto = window.crypto || require('crypto')
+  const crypto = global['crypto'] || require('crypto')
   if (crypto.createHash) {
     return hash.toString('hex')
   } else {
@@ -11,7 +11,7 @@ export function sha256asString(data: string) {
 }
 
 export function sha256(data: string | Buffer | Uint8Array | ArrayBuffer) {
-  const crypto = window.crypto || require('crypto')
+  const crypto = global['crypto'] || require('crypto')
   if (crypto.createHash) {
     return crypto
       .createHash('sha256')

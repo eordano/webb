@@ -1,4 +1,4 @@
-export function deepCompare(a: any, b: any) {
+export function deepCompare(a: any, b: any): boolean {
   if (typeof a !== typeof b) {
     return false
   }

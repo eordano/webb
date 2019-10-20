@@ -23,6 +23,7 @@ export interface ISceneManifest {
   baseParcel: Coordinate
   spawnPoints: SpawnPointDefinition[]
   pickSpawnPoint: () => SpawnPointSelection
+  getCIDForFilePath: (path: string) => string
   title: string
   screenshot: string
 }

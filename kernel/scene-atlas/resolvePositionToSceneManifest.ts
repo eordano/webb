@@ -3,6 +3,7 @@ import { Store } from 'redux'
 import { getSceneIdForPosition } from './04-sceneId-resolution/selectors'
 import { getSceneManifest } from './05-sceneManifest-resolution/selectors'
 import { RootState } from './06-scripts/SceneLifeCycleHelper'
+import { positionLoadRequest } from './04-sceneId-resolution/actions'
 
 export function resolvePositionToSceneManifest(store: Store<RootState>) {
   return function(x: number, y: number) {
@@ -20,6 +21,7 @@ export function resolvePositionToSceneManifest(store: Store<RootState>) {
         }
       }
       const unsubscribe = store.subscribe(listener)
+      store.dispatch(positionLoadRequest([asString]))
     })
   }
 }

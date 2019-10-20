@@ -71,6 +71,7 @@
         "typescript": "^3.6.4",
         "uuid": "^3.3.3",
         "webrtc-adapter": "^7.3.0",
+        "webworker-threads": "^0.7.17",
         "yargs": "^14.2.0"
     }
 }

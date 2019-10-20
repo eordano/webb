@@ -79,7 +79,7 @@ async function _injectAPIs(target: Script) {
 class Script extends Client {
   static inject = inject
 
-  loadedAPIs: { [key: string]: API } = {}
+  public loadedAPIs: { [key: string]: API } = {}
 
   protected started = false
 

@@ -15,9 +15,10 @@ export class SceneWorkersManager {
   loadedSceneWorkers = new Map<string, ISceneWorker>()
   sceneManifests = new Map<string, ISceneManifest>()
   parcelSceneClass: any = MemoryRendererParcelScene
+  public gamekitPath = './gamekit.js'
 
   newSceneWorker(scene: ISceneManifest, transport?: ScriptingTransport) {
-    return new SceneWorker(new this.parcelSceneClass(scene), transport, './gamekit.js')
+    return new SceneWorker(new this.parcelSceneClass(scene), transport, this.gamekitPath)
   }
 
   getSceneWorkerBySceneID(sceneId: string) {

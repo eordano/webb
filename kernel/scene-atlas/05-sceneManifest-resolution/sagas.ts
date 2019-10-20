@@ -33,14 +33,14 @@ export function* handleFetchRequest(action: SceneByIdRequest): any {
       yield put(sceneByIdSuccess(sceneId, mapping))
     }
   } catch (error) {
-    console.log(error)
+    defaultLogger.error(error)
     yield put(sceneByIdFailure(sceneId, error))
   }
 }
 
 export async function fetchManifestForSceneId(downloadServer: string, sceneId: string) {
   try {
-    const actualResponse = await memoize(downloadServer + `parcel_info?cids=${sceneId}`)(fetch)
+    const actualResponse = await memoize(downloadServer + `/parcel_info?cids=${sceneId}`)(fetch)
     const mappings = actualResponse as {
       data: ParcelInfoResponse[]
     }

@@ -58,6 +58,7 @@ export function getSceneIdForPosition(state: RootPositionToSceneIdState, positio
   if (status === 'loading' || status === 'empty' || status === 'error') {
     return undefined
   }
+  return state.positionToSceneId.positionToScene[position]
 }
 
 export function getPositionError(state: RootPositionToSceneIdState, position: string) {

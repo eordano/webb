@@ -5,7 +5,9 @@ import {
   AssetDefinition,
   AssetTagDefinition,
   ReferenceSystem,
-  SpawnPointDefinition
+  SpawnPointDefinition,
+  NamedAsset,
+  URIAsset
 } from '@dcl/utils/scene/SceneManifestTypes'
 
 import { stableStringify } from '@dcl/utils/pure/stableStringify'
@@ -27,6 +29,7 @@ export class SceneManifest implements ISceneManifest {
   private _positionStrings?: string[]
   private _baseParcel?: Coordinate
   private _version?: number
+  private _mapping?: Record<string, string>
   private _cannonicalCID?: string
 
   constructor(raw: any) {
@@ -152,6 +155,16 @@ export class SceneManifest implements ISceneManifest {
       },
       camera: spawnArea.camera
     }
+  }
+
+  getCIDForFilePath(path: string) {
+    if (!this._mapping) {
+      this._mapping = {}
+      for (let asset of this.assets) {
+        this._mapping[asset.name] = (asset as NamedAsset).hash || (asset as URIAsset).uri
+      }
+    }
+    return this._mapping[path]
   }
 
   get referenceSystem(): ReferenceSystem {

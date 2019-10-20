@@ -8,7 +8,7 @@ filegroup(
         include = ["**/*.ts"],
         exclude = [
             "node_modules/**/*",
-            "scene-runner/userSpace/**/*",
+            "**/*.spec.ts",
         ],
     ),
 )
@@ -21,7 +21,6 @@ ts_library(
             "**/*.ts",
         ],
         exclude = [
-            "scene-runner/userSpace/**/*",
             "**/*.spec.ts",
         ],
     ),
@@ -47,6 +46,7 @@ ts_library(
         "@npm//typesafe-actions",
         "@npm//uuid",
         "@npm//webrtc-adapter",
+        "@npm//webworker-threads",
     ],
 )
 
@@ -67,6 +67,7 @@ ts_library(
         "@npm//redux-saga",
         "@npm//redux-saga-test-plan",
         "@npm//sinon",
+        "@npm//webworker-threads",
     ],
 )
 

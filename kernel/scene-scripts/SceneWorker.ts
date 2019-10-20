@@ -1,18 +1,12 @@
 import { ScriptingHost, ScriptingTransport, WebWorkerTransport } from '@dcl/rpc'
 import { createLogger, ISceneManifest, Observable } from '@dcl/utils'
 import future, { IFuture } from 'fp-future'
+import { Worker } from 'webworker-threads'
 import { IRendererParcelSceneAPI } from '../renderer/parcelScene/IRendererParcelSceneAPI'
 import { ISceneWorker } from './interface/ISceneWorker'
 
-import { DevTools } from './kernelSpace/DevTools'
 import { EnvironmentAPI } from './kernelSpace/EnvironmentAPI'
 import { RendererParcelSceneToScript } from './kernelSpace/RendererParcelSceneToScript'
-
-{
-  ;[EnvironmentAPI, RendererParcelSceneToScript, DevTools].forEach(api =>
-    console.log('Loaded API accessible by scripts:', api.name)
-  )
-}
 
 const logger = createLogger('SceneWorker')
 
@@ -76,9 +70,7 @@ export class SceneWorker implements ISceneWorker {
         `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
       )
     }
-    const worker = new (Worker as any)(gamekit, {
-      name: `ParcelSceneWorker(${this.parcelScene.sceneManifest.id})`
-    })
+    const worker = new Worker(gamekit)
     return this.startSystem(transport || WebWorkerTransport(worker))
   }
 

@@ -17,14 +17,14 @@ export const sceneByIdRequest = (sceneId: string) => action(SCENE_BY_ID_REQUEST,
 export const sceneByIdSuccess = (sceneId: string, scene: ISceneManifest) =>
   action(SCENE_BY_ID_SUCCESS, { sceneId, scene })
 export const sceneByIdFailure = (sceneId: string, error: any) => action(SCENE_BY_ID_FAILURE, { sceneId, error })
-export const configureDownloadServer = (downloadServer: string) => action(CONFIGURE_DOWNLOAD_SERVER, { downloadServer })
+export const configureManifestDownloadServer = (downloadServer: string) => action(CONFIGURE_DOWNLOAD_SERVER, { downloadServer })
 
 export type SceneByIdRequest = ReturnType<typeof sceneByIdRequest>
 export type SceneByIdSuccess = ReturnType<typeof sceneByIdSuccess>
 export type SceneByIdFailure = ReturnType<typeof sceneByIdFailure>
-export type ConfigureDownloadServer = ReturnType<typeof configureDownloadServer>
+export type ConfigureManifestDownloadServer = ReturnType<typeof configureManifestDownloadServer>
 
-export type SceneByIdAction = SceneByIdRequest | SceneByIdFailure | SceneByIdSuccess | ConfigureDownloadServer
+export type SceneByIdAction = SceneByIdRequest | SceneByIdFailure | SceneByIdSuccess | ConfigureManifestDownloadServer
 
 export type RootSceneIdToSceneManifestState = {
   sceneIdToManifest: SceneIdToSceneManifestState
