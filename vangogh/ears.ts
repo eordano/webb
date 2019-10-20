@@ -13,7 +13,10 @@ import { changeEntityParent } from '@dcl/synced-ecs/ecs/reducers/changeEntityPar
 import { getComponentClassId } from '@dcl/synced-ecs/ecs/reducers/removeComponent'
 import { updateComponent } from '@dcl/synced-ecs/ecs/reducers/updateComponent'
 import { entityExists } from '@dcl/synced-ecs/ecs/selectors/entityExists'
+import { getAllComponentsForEntity } from '@dcl/synced-ecs/ecs/selectors/getAllComponentsForEntity'
 import { getComponent } from '@dcl/synced-ecs/ecs/selectors/getComponent'
+import { getComponentName } from '@dcl/synced-ecs/ecs/selectors/getComponentName'
+import { getEntityChildren } from '@dcl/synced-ecs/ecs/selectors/getEntityChildren'
 import { getEntityParent } from '@dcl/synced-ecs/ecs/selectors/getEntityParent'
 import { deepCompare } from '@dcl/synced-ecs/ecs/util/deepCompare'
 import fetch from 'node-fetch'
@@ -64,7 +67,8 @@ export class SyncedECS extends MemoryRendererParcelScene implements IRendererPar
       }
       if (action.type === 'AttachEntityComponent') {
         const p = JSON.parse(action.payload)
-        components[p.id] = { ...components[p.id], entityId: p.entityId }
+        const id = p.entityId + '_' + p.id
+        components[id] = { ...components[p.id], entityId: p.entityId }
       }
       if (action.type === 'CreateEntity') {
         entities[action.tag] = { id: action.tag }
@@ -83,16 +87,24 @@ export class SyncedECS extends MemoryRendererParcelScene implements IRendererPar
     }
     for (let componentId of Object.keys(components)) {
       const component = components[componentId]
-      let current
-      if (!getComponentClassId(this.ecs, '' + component.classId)) {
-        this.ecs = addComponentClass(this.ecs, '' + component.classId, componentName(component.classId))
-      }
-      if ((current = getComponent(this.ecs, componentId))) {
-        if (!deepCompare(current, component.component)) {
-          this.ecs = updateComponent(this.ecs, componentId, component.component)
+      if (component.entityId) {
+        let current
+        if (!getComponentClassId(this.ecs, '' + component.classId)) {
+          this.ecs = addComponentClass(this.ecs, '' + component.classId, componentName(component.classId))
         }
-      } else {
-        this.ecs = addComponent(this.ecs, component.entityId, '' + component.classId, component.component, componentId)
+        if ((current = getComponent(this.ecs, componentId))) {
+          if (!deepCompare(current, component.component)) {
+            this.ecs = updateComponent(this.ecs, componentId, component.component)
+          }
+        } else {
+          this.ecs = addComponent(
+            this.ecs,
+            component.entityId,
+            '' + component.classId,
+            component.component,
+            componentId
+          )
+        }
       }
     }
     return Promise.resolve()
@@ -106,6 +118,27 @@ export class PlainGameKit extends GamekitScene {
   getSource(): Promise<string> {
     return Promise.resolve(this.source)
   }
+}
+
+export function renderComponents(ecs: ECS, entity: string, depth: string) {
+  const comps = getAllComponentsForEntity(ecs, entity)
+  return comps
+    .map(
+      _ =>
+        `${depth}  -> ${_} (${getComponentName(ecs, getComponentClassId(ecs, _))}): ${JSON.stringify(
+          getComponent(ecs, _)
+        )}`
+    )
+    .join('\n')
+}
+
+export function renderEntity(ecs: ECS, entity: string, depth: string) {
+  const components = renderComponents(ecs, entity, depth)
+  const entities = getEntityChildren(ecs, entity)
+    .filter(_ => _ !== entity)
+    .map(_ => renderEntity(ecs, _, depth + '  '))
+    .join('\n')
+  return `${depth}* ${entity}${components ? `\n${components}` : ''}${entities ? `\n${entities}` : ''}`
 }
 
 async function main() {
@@ -134,7 +167,7 @@ async function main() {
     await kit.setupLifecycle()
     await kit.update(0)
 
-    console.log(JSON.stringify(sync.ecs, null, 2))
+    console.log(renderEntity(sync.ecs, '0', ''))
 
     process.exit(0)
   } catch (e) {
