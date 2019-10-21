@@ -4,13 +4,13 @@ import {
   PingMessage,
   TopicFWMessage,
   TopicIdentityFWMessage
-} from '@dcl/protos/broker_pb'
+} from 'dcl/protos/broker_pb'
 import {
   Category,
   ChatData,
   PositionData,
   ProfileData
-} from '@dcl/protos/comms_pb'
+} from 'dcl/protos/comms_pb'
 import { put } from 'redux-saga/effects'
 import { protocolChat, protocolPing, protocolPosition, protocolProfile, protocolUnknown } from './actions'
 import { BrokerMessage } from './brokers/IBrokerConnection'

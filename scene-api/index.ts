@@ -11,6 +11,8 @@ export * from './ecs/IEntity'
 export * from './ecs/UIValue'
 export * from './ecs/EventManager'
 
+export * from '@dcl/utils'
+
 // DECENTRALAND DEPENDENCIES
 export * from './engine/Types'
 export * from './engine/Components'

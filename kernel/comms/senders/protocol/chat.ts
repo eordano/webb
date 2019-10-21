@@ -1,4 +1,4 @@
-import { ChatData, Category } from '@dcl/protos/comms_pb'
+import { ChatData, Category } from 'dcl/protos/comms_pb'
 import { sendTopicMessage } from '../topic'
 import { IBrokerConnection } from '../../brokers/IBrokerConnection'
 

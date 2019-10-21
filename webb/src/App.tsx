@@ -11,7 +11,7 @@ const App = async () => {
   const routes = await import('./routes')
   ReactDOM.render(
     <>
-      <Provider store={store}>{routes.Routes}</Provider>
+      <Provider store={store.store}>{routes.Routes}</Provider>
     </>,
     document.getElementById('root')
   )

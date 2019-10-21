@@ -1,4 +1,4 @@
-import { PositionData } from '@dcl/protos/comms_pb'
+import { PositionData } from 'dcl/protos/comms_pb'
 import { PositionReport } from '../types/PositionReport'
 import { playerConfigurations } from '@dcl/utils'
 

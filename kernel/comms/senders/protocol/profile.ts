@@ -1,4 +1,4 @@
-import { Category, ProfileData } from '@dcl/protos/comms_pb'
+import { Category, ProfileData } from 'dcl/protos/comms_pb'
 import { IBrokerConnection } from '../../brokers/IBrokerConnection'
 import { sendTopicIdentityMessage } from '../topicIdentity'
 

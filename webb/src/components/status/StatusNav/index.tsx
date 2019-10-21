@@ -3,7 +3,7 @@ import { push } from 'connected-react-router'
 
 import { StatusNav as StatusNavComponent } from './StatusNav'
 
-export const StatusNav = connect(
+export const StatusNav: any = connect(
   (state: any) => ({
     current: window.location.pathname,
     systems: state.systems
