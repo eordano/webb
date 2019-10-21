@@ -1,8 +1,5 @@
 /// <amd-module name="@dcl/scene-api"/>
 
-// UTILS
-export * from '../utils'
-
 // Library
 export * from './lib/DevTools'
 

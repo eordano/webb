@@ -1,4 +1,4 @@
-import { Category, PositionData } from 'dcl/protos/comms_pb'
+import { Category, PositionData } from '@dcl/protos/comms_pb'
 
 import { Pose } from '../../types/Pose'
 import { sendTopicMessage } from '../topic'

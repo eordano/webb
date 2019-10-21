@@ -3,11 +3,11 @@ import { future, IFuture } from 'fp-future'
 import { ILogger, createLogger } from '@dcl/utils'
 import { Observable } from '@dcl/utils'
 
-import { MessageType, CoordinatorMessage, WelcomeMessage, ConnectMessage } from 'dcl/protos/broker_pb'
+import { MessageType, CoordinatorMessage, WelcomeMessage, ConnectMessage } from '@dcl/protos/broker_pb'
 import { SocketReadyState } from '../types/SocketReadyState'
 import { IBrokerConnection, BrokerMessage } from './IBrokerConnection'
 
-export class CliBrokerConnection implements IBrokerConnection {
+export class WebSocketBrokerConnection implements IBrokerConnection {
   public alias: number | null = null
 
   public logger: ILogger = createLogger('Broker: ')

@@ -1,4 +1,4 @@
-import { MessageType, TopicMessage } from 'dcl/protos/broker_pb'
+import { MessageType, TopicMessage } from '@dcl/protos/broker_pb'
 import { Message } from 'google-protobuf'
 import { IBrokerConnection } from '../brokers/IBrokerConnection'
 import { sendMessage } from './sendMessage'

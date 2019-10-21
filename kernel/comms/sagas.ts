@@ -30,7 +30,7 @@ import {
   SetBrokerConnectionAction,
   SET_BROKER_CONNECTION
 } from './actions'
-import { CliBrokerConnection } from './brokers/CliBrokerConnection'
+import { WebSocketBrokerConnection } from './brokers/WebSocketBrokerConnection'
 import { createWebRTCBroker } from './brokers/createWebRTCBroker'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
 import { handleMessage } from './handleMessage'
@@ -131,7 +131,7 @@ export function* handleCommsStart(): any {
 export function* setupCliBroker(): any {
   const commsUrl = document.location.toString().replace(/^http/, 'ws')
   defaultLogger.log('Using WebSocket comms: ' + commsUrl)
-  yield setBrokerConnection(new CliBrokerConnection(commsUrl))
+  yield setBrokerConnection(new WebSocketBrokerConnection(commsUrl))
 }
 
 export function* setupWebRTCBroker(): any {
