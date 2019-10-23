@@ -1,5 +1,6 @@
 import { Coordinate } from '@dcl/utils'
 import express from 'express'
+import cors from 'cors'
 import { Descartes } from '../logic/descartes'
 
 function everythingInside(x1: number, x2: number, y1: number, y2: number) {
@@ -14,6 +15,7 @@ function everythingInside(x1: number, x2: number, y1: number, y2: number) {
 
 export function createServer(descartes: Descartes, port: number = 1337) {
   const app = express()
+  app.use(cors())
 
   app.get('/scenes', async (req, res) => {
     if (!req.query.x1 || !req.query.x2 || !req.query.y1 || !req.query.y2) {
