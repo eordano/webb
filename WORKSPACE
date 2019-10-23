@@ -50,13 +50,7 @@ http_archive(
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
 node_repositories(
     package_json = ["//:package.json"],
-    node_version = "12.13.0",
-
-    node_repositories = {
-        "12.13.0-darwin_amd64": ("node-v12.13.0-darwin-x64.tar.gz", "node-v12.13.0-darwin-x64", "49a7374670a111b033ce16611b20fd1aafd3296bbc662b184fe8fb26a29c22cc"),
-        "12.13.0-linux_amd64": ("node-v12.13.0-linux-x64.tar.gz", "node-v12.13.0-linux-x64", "c69671c89d0faa47b64bd5f37079e4480852857a9a9366ee86cdd8bc9670074a"),
-        "12.13.0-windows_amd64": ("node-v12.13.0-win-x64.zip", "node-v12.13.0-win-x64", "6f920cebeecb4957b4ef0def6d9b04c49d4582864f8d1a207ce8d0665865781a"),
-    },
+    node_version = "10.16.0",
     node_urls = [
         "https://nodejs.org/dist/v{version}/{filename}",
     ],
