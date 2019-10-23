@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
-import Console from '../Console'
-import { StatusNav } from '../StatusNav'
+import Console from '../Console/index'
+import { StatusNav } from '../StatusNav/index'
 import { Page, Grid, Row, Column } from '../../liteui/dcl'
 
 export default (_: any) => (

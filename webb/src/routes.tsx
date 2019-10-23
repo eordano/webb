@@ -1,8 +1,8 @@
 import { ConnectedRouter } from 'connected-react-router'
 import * as React from 'react'
 import { Route, Switch } from 'react-router'
-import Navbar from './components/navbar'
-import Status from './components/status/StatusFrame'
+import { Navbar } from './components/navbar/index'
+import { Status } from './components/status/StatusFrame/index'
 import { Container } from './components/liteui/dcl'
 
 export const Routes = (

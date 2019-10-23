@@ -18,7 +18,22 @@ bazel_skylib_workspace()
 
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
-versions.check(minimum_bazel_version = "0.29.1")
+versions.check(minimum_bazel_version = "1.1.0")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "rules_proto",
+    sha256 = "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208",
+    strip_prefix = "rules_proto-97d8af4dc474595af3900dd85cb3a29ad28cc313",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz",
+        "https://github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz",
+    ],
+)
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+rules_proto_dependencies()
+rules_proto_toolchains()
 
 git_repository(
     name = "bazel_javascript",
@@ -56,14 +71,17 @@ load("@npm_bazel_typescript//:index.bzl", "ts_setup_workspace")
 ts_setup_workspace()
 
 http_archive(
-    name = "ts_protoc_gen",
-    strip_prefix = "ts-protoc-gen-0.11.3",
-    sha256 = "3bcadb0e79697dcc310119db7bd3cb3bca3967dafe13c96e5c26966f982270bd",
-    urls = ["https://github.com/eordano/ts-protoc-gen/archive/0.11.3.tar.gz"],
+    name = "rules_typescript_proto",
+    sha256 = "dc5c66ae8adac62a8fa36a49180e9ef54fc8d53a61a44abfa4b1e3c5faedb6ca",
+    strip_prefix = "rules_typescript_proto-9bcb491d0c074cba737725e9086293cd7f1c7bf7",
+    urls = [
+        "https://github.com/Dig-Doug/rules_typescript_proto/archive/9bcb491d0c074cba737725e9086293cd7f1c7bf7.tar.gz",
+    ],
 )
 
-load("@ts_protoc_gen//:defs.bzl", "typescript_proto_dependencies")
-typescript_proto_dependencies()
+load("@rules_typescript_proto//:index.bzl", "rules_typescript_proto_dependencies")
+
+rules_typescript_proto_dependencies()
 
 http_archive(
     name = "io_bazel_rules_webtesting",

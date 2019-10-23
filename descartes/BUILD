@@ -14,16 +14,22 @@ ts_library(
     deps = [
         "//config",
         "//kernel",
-        "//protos",
+        "//protos:broker",
+        "//protos:comms",
         "//rpc",
         "//scene-api",
         "//utils",
         "@npm//@types",
+        "@npm//@types/express",
+        "@npm//@types/cors",
         "@npm//@types/node",
         "@npm//@types/node-fetch",
         "@npm//@types/events",
         "@npm//fp-future",
         "@npm//google-protobuf",
+        "@npm//express",
+        "@npm//cors",
+        "@npm//serve",
         "@npm//redux",
         "@npm//redux-saga",
         "@npm//reselect",
@@ -31,6 +37,32 @@ ts_library(
         "@npm//typescript",
     ],
 )
+
+nodejs_binary(
+    name = "content",
+    data = [
+        ":descartes",
+        "//kernel",
+        "//rpc",
+        "//utils",
+        "//config",
+        "//protos:broker",
+        "//protos:comms",
+        # App Dependencies
+        "@npm//express",
+        "@npm//history",
+        "@npm//fp-future",
+        "@npm//google-protobuf",
+        "@npm//redux",
+        "@npm//node-fetch",
+        "@npm//redux-saga",
+        "@npm//reselect",
+        "@npm//typesafe-actions",
+        "@npm//typescript",
+    ],
+    entry_point = "bin/server.ts",
+)
+
 
 nodejs_binary(
     name = "snapshot",
@@ -41,7 +73,8 @@ nodejs_binary(
         "//rpc",
         "//utils",
         "//config",
-        "//protos",
+        "//protos:broker",
+        "//protos:comms",
         # App Dependencies
         "@npm//history",
         "@npm//fp-future",

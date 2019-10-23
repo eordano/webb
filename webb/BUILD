@@ -58,13 +58,26 @@ ts_library(
 
 load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+
+rollup_bundle(
+    name='webb_roll',
+    srcs = [
+        ":webb_code"
+    ],
+    deps = [
+        ":webb_code",
+    ],
+    entry_point = "src/main.tsx",
+)
+
 ts_devserver(
     name = "devserver",
     port = 3000,
     entry_module = "dcl/webb/src/main",
     deps = [
         ":static",
-        ":webb_code",
+        ":webb_roll",
         "//utils",
         "//config",
         "//rpc",

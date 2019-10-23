@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@npm_bazel_typescript//:index.bzl", "ts_library")
-load("@ts_protoc_gen//:defs.bzl", "typescript_proto_library")
+load("@rules_typescript_proto//:index.bzl", "typescript_proto_library")
 
 proto_library(
     name = "broker_lib",
