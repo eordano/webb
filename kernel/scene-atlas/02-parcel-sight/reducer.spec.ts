@@ -42,7 +42,7 @@ describe('parcel sight behavior', () => {
     const state = INITIAL_PARCEL_SIGHT_STATE
     const newState = parcelSightReducer(state, userEnteredCoordinate({ x: 0, y: 0 }))
     expect(newState.grid).toEqual({ x: 0, y: 0 })
-    expect(newState.currentlySightedList).toEqual([
+    expect(newState.currentlySightedList.sort()).toEqual([
       '0,0',
       '-1,0',
       '0,-1',
@@ -92,6 +92,6 @@ describe('parcel sight behavior', () => {
       '0,-4',
       '0,4',
       '4,0'
-    ])
+    ].sort())
   })
 })
