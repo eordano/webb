@@ -18,7 +18,7 @@ bazel_skylib_workspace()
 
 load("@bazel_skylib//lib:versions.bzl", "versions")
 
-versions.check(minimum_bazel_version = "1.1.0")
+versions.check(minimum_bazel_version = "1.0.0")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
