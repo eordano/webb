@@ -13,7 +13,7 @@ function everythingInside(x1: number, x2: number, y1: number, y2: number) {
   return res
 }
 
-export function createServer(descartes: Descartes, port: number = 1337) {
+export function createServer(descartes: Descartes, port: number = 1338) {
   const app = express()
   app.use(cors())
 
