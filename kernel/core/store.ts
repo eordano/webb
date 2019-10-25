@@ -31,6 +31,6 @@ export const configureStore: (state?: any) => { store: Store<RootState>; sagasMi
   return { store, sagasMiddleware }
 }
 
-export const initialActions = (store: any, sagasMiddleware: any) => {
+export const initialActions = (sagasMiddleware: any) => {
   sagasMiddleware.run(tryRestoreSession)
 }

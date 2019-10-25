@@ -1,4 +1,5 @@
 declare var global: any
+var global = window as any
 const location = global.location = global.location || { search: '', hostname: '' }
 
 // Entry points

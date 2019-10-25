@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import App from './App'
 
 App().then((Main: any) => {
+  console.log('a')
   ReactDOM.render(
     <>
       <h1>Hello world!</h1>

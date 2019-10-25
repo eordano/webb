@@ -9,8 +9,14 @@
   <body>
     <div id="root"></div>
     <script type="text/javascript" src="/main.js"></script>
+    <script type="text/javascript" src="/static/vendor-uuid/uuid.umd.js"></script>
+    <script type="text/javascript" src="/static/vendor-events/events.umd.js"></script>
+    <script type="text/javascript" src="/static/vendor-jsonwebtoken-8.5.1/jsonwebtoken.umd.js"></script>
+    <script type="text/javascript" src="/static/vendor-react-redux-5.11.0/react-redux.js"></script>
+    <script type="text/javascript" src="/static/vendor-redux-saga-1.1.1/redux-saga-effects.umd.js"></script>
     <script>
-      require.config({ paths: { 'react-redux': 'static/vendor-react-redux-5.11.0/react-redux' } })
+
+      requirejs(['dcl/webb/src/main'], () => ({}));
     </script>
   </body>
 </html>

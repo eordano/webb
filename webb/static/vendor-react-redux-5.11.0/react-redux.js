@@ -1,9 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('redux')) :
   typeof define === 'function' && define.amd ? define('react-redux', ['exports', 'react', 'redux'], factory) :
-  (factory((global.ReactRedux = {}),global.React,global.Redux));
+  (factory((global.React = {}),global.React,global.Redux));
 }(this, (function (exports,React,redux) { 'use strict';
 
+debugger;
   var React__default = 'default' in React ? React['default'] : React;
 
   function _inheritsLoose(subClass, superClass) {
