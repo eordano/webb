@@ -1,6 +1,5 @@
 import { action } from 'typesafe-actions'
 import { AuthData } from './types'
-import { EphemeralKey } from './ephemeral'
 
 // Logout
 export const LOGIN = 'Login'
@@ -30,7 +29,7 @@ export const TOKEN_REQUEST = '[Request] Comms token request'
 export const TOKEN_SUCCESS = '[Success] Comms token request'
 export const TOKEN_FAILURE = '[Failure] Comms token request'
 
-export const tokenRequest = (ephemeral: EphemeralKey) => action(TOKEN_REQUEST, { ephemeral })
+export const tokenRequest = () => action(TOKEN_REQUEST)
 export const tokenSuccess = (commsToken: string) => action(TOKEN_SUCCESS, { commsToken })
 export const tokenFailure = (error: string) => action(TOKEN_FAILURE, { error })
 

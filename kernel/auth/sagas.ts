@@ -3,20 +3,8 @@ import auth0 from 'auth0-js'
 import jwt from 'jsonwebtoken'
 import { all, call, put, select, takeLatest } from 'redux-saga/effects'
 import { v4 as uuid } from 'uuid'
-import {
-  authFailure,
-  authSuccess,
-  AUTH_FAILURE,
-  AUTH_REQUEST,
-  LOGIN,
-  LoginAction,
-  LOGOUT,
-  tokenFailure,
-  TokenRequestAction,
-  tokenSuccess,
-  TOKEN_REQUEST
-} from './actions'
-import { EphemeralKey } from './ephemeral'
+import { authFailure, authSuccess, AUTH_FAILURE, AUTH_REQUEST, LOGIN, LoginAction, LOGOUT, tokenFailure, tokenSuccess, TOKEN_REQUEST } from './actions'
+import { BasicEphemeralKey, EphemeralKey } from './ephemeral'
 import { getAccessToken } from './selectors'
 import { AuthData } from './types'
 
@@ -144,9 +132,9 @@ export function handleCallback(): Promise<CallbackResult> {
   })
 }
 
-export function* handleTokenRequest(action: TokenRequestAction): any {
+export function* handleTokenRequest(): any {
   const accessToken = yield select(getAccessToken)
-  const { ephemeral } = action.payload
+  const ephemeral = BasicEphemeralKey.generateNewKey(600)
   try {
     const request = yield call(fetchToken, accessToken, ephemeral)
     yield put(tokenSuccess(request))

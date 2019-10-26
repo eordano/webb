@@ -1,11 +1,9 @@
 import { getServerConfigurations, USE_LOCAL_COMMS } from '@dcl/config'
-import { createLogger, defaultLogger } from '@dcl/utils'
+import { defaultLogger } from '@dcl/utils'
 import { call, put, race, select, take, takeLatest } from 'redux-saga/effects'
-import { Auth } from '../auth'
 import { tokenRequest, TokenSuccessAction, TOKEN_SUCCESS } from '../auth/actions'
 import { MessageInput } from '../auth/ephemeral'
 import { getCurrentUserId } from '../auth/selectors'
-import { store } from '../core/store'
 import { getProfile } from '../passports/selectors'
 import { Profile } from '../passports/types'
 import { marshalPositionReport } from '../presence/wireTransforms/marshalPositionReport'
@@ -30,15 +28,13 @@ import {
   SetBrokerConnectionAction,
   SET_BROKER_CONNECTION
 } from './actions'
-import { WebSocketBrokerConnection } from './brokers/WebSocketBrokerConnection'
 import { createWebRTCBroker } from './brokers/createWebRTCBroker'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
+import { WebSocketBrokerConnection } from './brokers/WebSocketBrokerConnection'
 import { handleMessage } from './handleMessage'
 import { sendPing } from './senders/broker/ping'
 import { sendChatMessage } from './senders/protocol/chat'
 import { sendProfileMessage } from './senders/protocol/profile'
-
-export const logger = createLogger('ProtocolConnection')
 
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
@@ -137,17 +133,12 @@ export function* setupCliBroker(): any {
 export function* setupWebRTCBroker(): any {
   const coordinatorURL = getServerConfigurations().worldInstanceUrl
   const body = `GET:${coordinatorURL}`
-  const auth = new Auth()
-  auth.store = store
-  yield put(tokenRequest(auth.getEphemeralKey()))
+  yield put(tokenRequest())
   const tokenSuccessAction = (yield take(TOKEN_SUCCESS)) as TokenSuccessAction
   const accessToken = tokenSuccessAction.payload.commsToken
-  const ephemeral = auth.getEphemeralKey()
 
   const msg = Buffer.from(body)
   const input = MessageInput.fromMessage(msg)
-  const connection = yield call(async () =>
-    createWebRTCBroker(store, coordinatorURL, input, accessToken, ephemeral, auth)
-  )
+  const connection = yield call(async () => createWebRTCBroker(coordinatorURL, input, accessToken, null as any))
   yield setBrokerConnection(connection)
 }

@@ -62,7 +62,7 @@ load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
 
 rollup_bundle(
     name = "webb_roll",
-    entry_point = "src/main.tsx",
+    entry_point = "src/main.tsx__es6",
     config_file = ":rollup.config.js",
     deps = [
         ":webb_code",

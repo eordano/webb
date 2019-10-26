@@ -1,6 +1,6 @@
 import { Message } from 'google-protobuf'
 import { IBrokerConnection } from '../brokers/IBrokerConnection'
-import { logger } from '../sagas'
+import { logger } from "../logger"
 
 export function sendReliableMessage(connection: IBrokerConnection, msg: Message) {
   if (!connection.hasReliableChannel) {

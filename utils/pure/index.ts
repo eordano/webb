@@ -1,6 +1,5 @@
 export * from './buildArray'
 export * from './deepEqual'
-export * from './quaternionToRotation'
 export * from './unsafeUUID'
 export * from './vectorHelpers'
 export * from './stableStringify'

@@ -39,7 +39,7 @@ export class Auth {
       }
     })
     try {
-      this.store.dispatch(tokenRequest(this.getEphemeralKey()))
+      this.store.dispatch(tokenRequest())
     } catch (e) {
       console.log(e)
     }

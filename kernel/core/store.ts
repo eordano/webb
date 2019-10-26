@@ -6,8 +6,9 @@ import { setProfileServer } from '../passports/actions'
 import { configureLineOfSightRadius } from '../scene-atlas/02-parcel-sight/actions'
 import { configureDownloadServer } from '../scene-atlas/04-sceneId-resolution/actions'
 import { configureManifestDownloadServer } from '../scene-atlas/05-sceneManifest-resolution/types'
-import { createReducer, RootState } from './reducers'
+import { createReducer } from './reducers'
 import { rootSaga } from './rootSaga'
+import { RootState } from './types'
 
 declare var window: any
 const enhance =
