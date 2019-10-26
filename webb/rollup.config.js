@@ -1,17 +1,10 @@
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import globals from 'rollup-plugin-node-globals'
-import nodelib from 'rollup-plugin-node-builtins'
+console.log(process.env)
+const commonjs = require('rollup-plugin-commonjs')
+const nodelib = require('rollup-plugin-node-builtins')
+const resolve = require('rollup-plugin-node-resolve')
+const globals = require('rollup-plugin-node-globals')
 
 export default {
-  external: [
-    'jsonwebtoken'
-  ],
-  plugins: [
-    resolve(),
-    commonjs(),
-    globals(),
-    nodelib(),
-    isProduction && (await import('rollup-plugin-terser')).terser()
-  ]
+  external: ['jsonwebtoken'],
+  plugins: [resolve(), commonjs(), globals(), nodelib()]
 }

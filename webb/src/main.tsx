@@ -1,14 +1,22 @@
+import { configureStore } from '@dcl/kernel/core/store'
+import { ConnectedRouter } from 'connected-react-router'
+import { createBrowserHistory } from 'history'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import App from './App'
+import { Provider } from 'react-redux'
 
-App().then((Main: any) => {
-  console.log('a')
+(async function() {
+  const store = configureStore()
+  const routes = await import('./routes')
   ReactDOM.render(
     <>
+    <ConnectedRouter history={createBrowserHistory()}>
+      { routes }
+    </ConnectedRouter>
+    <Provider store={store.store}>
       <h1>Hello world!</h1>
-      <Main />
+      </Provider>
     </>,
     document.getElementById('root')
   )
-})
+})()
