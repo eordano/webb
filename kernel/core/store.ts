@@ -28,10 +28,10 @@ export const configureStore: (state?: any) => { store: Store<RootState>; sagasMi
   store.dispatch(configureDownloadServer(config.content))
   store.dispatch(configureManifestDownloadServer(config.content))
   store.dispatch(setProfileServer(config.avatar.server))
-  sagasMiddleware.run(rootSaga)
-  return { store, sagasMiddleware }
-}
 
-export const initialActions = (sagasMiddleware: any) => {
-  sagasMiddleware.run(tryRestoreSession)
+  function start (sagasMiddleware: any) {
+    sagasMiddleware.run(rootSaga)
+    sagasMiddleware.run(tryRestoreSession)
+  }
+  return { store, sagasMiddleware, start }
 }

@@ -64,8 +64,9 @@ rollup_bundle(
     name = "main_roll",
     config_file = ":rollup.config.js",
     entry_point = "src/main.tsx",
-    format = "umd",
-    output_dir = False,
+    output_dir = True,
+    format = "amd",
+    sourcemap = 'true',
     deps = [
         "//config",
         "//kernel",
@@ -83,6 +84,35 @@ rollup_bundle(
     ],
 )
 
+ts_library(
+    name = "secp256k1_lib",
+    srcs = glob(
+        include = [
+            "static/vendor-secp256k1/secp256k1.ts"
+        ],
+    ),
+    deps = [
+        "@npm//secp256k1"
+    ],
+)
+rollup_bundle(
+    name = "secp256k1",
+    entry_point = "static/vendor-secp256k1/secp256k1.ts",
+    config_file = ":rollup.secp256k1.js",
+    output_dir = False,
+    format = "amd",
+    sourcemap = 'false',
+    deps = [
+        ":secp256k1_lib",
+        "@npm//secp256k1",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-json",
+        "@npm//rollup-plugin-node-globals",
+        "@npm//rollup-plugin-node-resolve",
+        "@npm//rollup-plugin-node-builtins",
+    ],
+)
+
 ts_devserver(
     name = "devserver",
     additional_root_paths = [":static", ":main_roll__files"],
@@ -93,16 +123,26 @@ ts_devserver(
     deps = [
         "static/r.js",
         "static/config.js",
+        "//protos:broker",
+        "//protos:comms",
         "@npm//babel-runtime:babel-runtime",
+        "@npm//typesafe-actions:typesafe-actions__umd",
+        "@npm//fp-future:fp-future__umd",
         "@npm//react-is:react-is__umd",
         "@npm//react-fast-compare:react-fast-compare__umd",
         "@npm//react-inner-html:react-inner-html__umd",
+        "@npm//uuid:uuid__umd",
+        "@npm//history:history__umd",
+        "@npm//events:events__umd",
+        "@npm//google-protobuf:google-protobuf__umd",
+        "@npm//auth0-js:auth0-js__umd",
     ],
     data = [
         ":main_roll",
         ":webb_code",
         ":static",
         "//:node_modules",
+        "@npm//secp256k1",
         "@npm//react",
         "@npm//react-dom",
         "@npm//redux",

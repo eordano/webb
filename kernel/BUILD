@@ -14,6 +14,44 @@ filegroup(
 )
 
 ts_library(
+    name = "kernel_node",
+    srcs = glob(
+        include = [
+            "index.ts",
+            "**/*.ts",
+        ],
+        exclude = [
+            "**/*.spec.ts",
+        ],
+    ),
+    module_name = "@dcl/kernel_node",
+    deps = [
+        "//config",
+        "//protos:comms",
+        "//protos:broker",
+        "//rpc",
+        "//scene-api",
+        "//utils",
+        "@npm//@types",
+        "@npm//@types/auth0-js",
+        "@npm//@types/events",
+        "@npm//auth0-js",
+        "@npm//decentraland-auth-protocol",
+        "@npm//devtools-protocol",
+        "@npm//fp-future",
+        "@npm//google-protobuf",
+        "@npm//redux",
+        "@npm//redux-saga",
+        "@npm//reselect",
+        "@npm//typesafe-actions",
+        "@npm//uuid",
+        "@npm//webrtc-adapter",
+        "@npm//webworker-threads",
+    ],
+)
+
+
+ts_library(
     name = "kernel",
     srcs = glob(
         include = [
@@ -46,7 +84,6 @@ ts_library(
         "@npm//typesafe-actions",
         "@npm//uuid",
         "@npm//webrtc-adapter",
-        "@npm//webworker-threads",
     ],
 )
 
@@ -58,7 +95,7 @@ ts_library(
         "**/*.spec.ts",
     ]),
     deps = [
-        ":kernel",
+        ":kernel_node",
         "//utils",
         "@npm//@types/jasmine",
         "@npm//@types/node",

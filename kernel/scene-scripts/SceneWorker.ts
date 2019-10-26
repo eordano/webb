@@ -1,9 +1,9 @@
 import { ScriptingHost, ScriptingTransport, WebWorkerTransport } from 'dcl/rpc'
 import { createLogger, ISceneManifest, Observable } from 'dcl/utils'
 import future, { IFuture } from 'fp-future'
-import { Worker } from 'webworker-threads'
 import { IRendererParcelSceneAPI } from '../renderer/parcelScene/IRendererParcelSceneAPI'
 import { ISceneWorker } from './interface/ISceneWorker'
+import { createWorker } from './Worker'
 
 import { EnvironmentAPI } from './kernelSpace/EnvironmentAPI'
 import { RendererParcelSceneToScript } from './kernelSpace/RendererParcelSceneToScript'
@@ -70,7 +70,7 @@ export class SceneWorker implements ISceneWorker {
         `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
       )
     }
-    const worker = new Worker(gamekit)
+    const worker = createWorker(gamekit)
     return this.startSystem(transport || WebWorkerTransport(worker))
   }
 
