@@ -1,5 +1,6 @@
 import React from 'react'
 import { Segment } from '../../liteui/dcl'
+import 'react-console-emulator'
 const Terminal = require('react-console-emulator').default
 
 var term = null

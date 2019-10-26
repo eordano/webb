@@ -65,8 +65,8 @@ rollup_bundle(
     config_file = ":rollup.config.js",
     entry_point = "src/main.tsx",
     format = "umd",
+    output_dir = False,
     deps = [
-        ":webb_code",
         "//config",
         "//kernel",
         "//protos:broker_lib",
@@ -74,6 +74,7 @@ rollup_bundle(
         "//rpc",
         "//scene-api",
         "//utils",
+        ":webb_code",
         "@npm//rollup-plugin-commonjs",
         "@npm//rollup-plugin-json",
         "@npm//rollup-plugin-node-builtins",
@@ -84,14 +85,15 @@ rollup_bundle(
 
 ts_devserver(
     name = "devserver",
-    additional_root_paths = [":static"],
-    entry_module = "main_roll",
+    additional_root_paths = [":static", ":main_roll__files"],
+    entry_module = "webb/main_roll/main_roll",
     port = 3000,
     serving_path = "/bundle.js",
     static_files = ["index.html"],
     deps = [
         "static/r.js",
         "static/config.js",
+        "@npm//babel-runtime:babel-runtime",
         "@npm//react-is:react-is__umd",
         "@npm//react-fast-compare:react-fast-compare__umd",
         "@npm//react-inner-html:react-inner-html__umd",
