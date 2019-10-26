@@ -1,4 +1,4 @@
-import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
+import { SceneIdString } from 'dcl/kernel/scene-atlas/04-sceneId-resolution/types'
 import { resolve } from 'path'
 import { safeWriteJSON } from '../disk/driver/safeWriteJSON'
 import { SceneMappingRecord } from '../logic/lib/SceneMappingRecord'

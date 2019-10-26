@@ -1,5 +1,5 @@
-import { DEBUG, ENGINE_DEBUG_PANEL, SCENE_DEBUG_PANEL } from '@dcl/config'
-import { defaultLogger } from '@dcl/utils'
+import { DEBUG, ENGINE_DEBUG_PANEL, SCENE_DEBUG_PANEL } from 'dcl/config'
+import { defaultLogger } from 'dcl/utils'
 import { unityInterface } from './outgoing'
 
 export const UnityGlobals = {

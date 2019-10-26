@@ -1,4 +1,4 @@
-import { encodeParcelPositionFromCoordinates, ISceneManifest } from '@dcl/utils'
+import { encodeParcelPositionFromCoordinates, ISceneManifest } from 'dcl/utils'
 import { EventEmitter } from 'events'
 import future from 'fp-future'
 import { Store } from 'redux'

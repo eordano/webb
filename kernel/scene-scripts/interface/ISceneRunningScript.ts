@@ -1,4 +1,4 @@
-import { EntityAction } from '@dcl/utils'
+import { EntityAction } from 'dcl/utils'
 
 /**
  * We make this interface explicit not because we need it, but because changing it might make some users to report that

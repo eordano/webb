@@ -6,16 +6,12 @@
       "dom.iterable",
       "esnext"
     ],
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
     "baseUrl": "src",
     "experimentalDecorators": true,
-    "paths": {
-      "@dcl/*": ["../../bazel-genfiles/*", "../../bazel-bin/*"]
-    },
     "downlevelIteration": true
   }
 }

@@ -1,4 +1,4 @@
-import { parcelSize } from '@dcl/utils'
+import { parcelSize } from 'dcl/utils'
 import { put, takeLatest } from 'redux-saga/effects'
 import { SetWorldAction, userEnteredCoordinate } from './actions'
 import { SET_WORLD_POSITION } from './types'

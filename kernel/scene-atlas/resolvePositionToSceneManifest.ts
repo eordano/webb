@@ -1,4 +1,4 @@
-import { encodeParcelPositionFromCoordinates, ISceneManifest } from '@dcl/utils'
+import { encodeParcelPositionFromCoordinates, ISceneManifest } from 'dcl/utils'
 import { Store } from 'redux'
 import { getSceneIdForPosition } from './04-sceneId-resolution/selectors'
 import { getSceneManifest } from './05-sceneManifest-resolution/selectors'

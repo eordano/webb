@@ -1,4 +1,4 @@
-import { ISceneManifest } from '@dcl/utils'
+import { ISceneManifest } from 'dcl/utils'
 import { action } from 'typesafe-actions'
 
 export type SceneIdToSceneManifestState = {

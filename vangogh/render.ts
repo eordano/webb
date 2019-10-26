@@ -1,9 +1,9 @@
-import { ECS } from '@dcl/synced-ecs/ecs/EntityComponentState'
-import { getComponentClassId } from '@dcl/synced-ecs/ecs/reducers/removeComponent'
-import { getAllComponentsForEntity } from '@dcl/synced-ecs/ecs/selectors/getAllComponentsForEntity'
-import { getComponent } from '@dcl/synced-ecs/ecs/selectors/getComponent'
-import { getComponentName } from '@dcl/synced-ecs/ecs/selectors/getComponentName'
-import { getEntityChildren } from '@dcl/synced-ecs/ecs/selectors/getEntityChildren'
+import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
+import { getComponentClassId } from 'dcl/synced-ecs/ecs/reducers/removeComponent'
+import { getAllComponentsForEntity } from 'dcl/synced-ecs/ecs/selectors/getAllComponentsForEntity'
+import { getComponent } from 'dcl/synced-ecs/ecs/selectors/getComponent'
+import { getComponentName } from 'dcl/synced-ecs/ecs/selectors/getComponentName'
+import { getEntityChildren } from 'dcl/synced-ecs/ecs/selectors/getEntityChildren'
 
 export function renderComponents(ecs: ECS, entity: string, depth: string) {
   const comps = getAllComponentsForEntity(ecs, entity);

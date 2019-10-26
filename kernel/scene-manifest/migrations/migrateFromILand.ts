@@ -1,4 +1,4 @@
-import { ILand, ISceneManifest } from '@dcl/utils'
+import { ILand, ISceneManifest } from 'dcl/utils'
 import { SceneManifest } from '..'
 import { isValidSceneInput, getInvalidReason } from '../validation'
 

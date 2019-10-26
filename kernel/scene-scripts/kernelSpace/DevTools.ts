@@ -1,10 +1,10 @@
 import { ProtocolMapping } from 'devtools-protocol/types/protocol-mapping'
 import Protocol from 'devtools-protocol'
 
-import { registerAPI } from '@dcl/rpc/host'
-import { DEBUG } from '@dcl/config'
-import { ILogger, defaultLogger } from '@dcl/utils'
-import { exposeMethod, API } from '@dcl/rpc/common/API'
+import { registerAPI } from 'dcl/rpc/host'
+import { DEBUG } from 'dcl/config'
+import { ILogger, defaultLogger } from 'dcl/utils'
+import { exposeMethod, API } from 'dcl/rpc/common/API'
 
 @registerAPI('DevTools')
 export class DevTools extends API {

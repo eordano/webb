@@ -1,4 +1,4 @@
-import { encodeParcelPositionFromCoordinates } from '@dcl/utils'
+import { encodeParcelPositionFromCoordinates } from 'dcl/utils'
 import { PositionToSceneIdState, RootPositionToSceneIdState } from './types'
 
 export function multipleNeedsResolution(

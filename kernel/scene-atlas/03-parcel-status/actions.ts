@@ -1,4 +1,4 @@
-import { Vector2 } from '@dcl/utils'
+import { Vector2 } from 'dcl/utils'
 import { action } from 'typesafe-actions'
 
 export const SHOW_PARCEL_LOADING = 'Show parcel loading'

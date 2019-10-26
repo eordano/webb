@@ -1,4 +1,4 @@
-import { DEBUG_REDUX, getServerConfigurations } from '@dcl/config'
+import { DEBUG_REDUX, getServerConfigurations } from 'dcl/config'
 import { applyMiddleware, compose, createStore, Store } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { tryRestoreSession } from '../auth/sagas'

@@ -1,4 +1,4 @@
-import { EntityAction, ISceneManifest } from '@dcl/utils'
+import { EntityAction, ISceneManifest } from 'dcl/utils'
 import { ISceneWorker } from '../../scene-scripts/interface/ISceneWorker'
 
 /**

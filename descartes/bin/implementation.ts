@@ -1,5 +1,5 @@
-import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
-import { Coordinate } from '@dcl/utils'
+import { SceneIdString } from 'dcl/kernel/scene-atlas/04-sceneId-resolution/types'
+import { Coordinate } from 'dcl/utils'
 import { diskPositionToSceneId, diskSavePositionToSceneId } from '../disk/positionToSceneId'
 import { diskRawContent, diskSaveRawContent } from '../disk/rawContentData'
 import { diskSaveSceneIdMappings, diskSceneIdMappings } from '../disk/sceneIdMappings'

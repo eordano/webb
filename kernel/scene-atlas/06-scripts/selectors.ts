@@ -1,4 +1,4 @@
-import { getKeysMappingToTrue } from '@dcl/utils'
+import { getKeysMappingToTrue } from 'dcl/utils'
 import { RootSceneLifeCycleState, SceneLifeCycleState } from './types'
 import { RootParcelSightState } from '../02-parcel-sight/types'
 import { RootPositionToSceneIdState } from '../04-sceneId-resolution/types'

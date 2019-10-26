@@ -1,4 +1,4 @@
-import { getConfiguration } from '@dcl/config'
+import { getConfiguration } from 'dcl/config'
 import future from 'fp-future'
 import { Store } from 'redux'
 import { tokenRequest } from './actions'

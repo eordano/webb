@@ -1,6 +1,6 @@
-import { registerAPI, ExposableAPI } from '@dcl/rpc/host'
-import { ISceneManifest } from '@dcl/utils'
-import { exposeMethod } from '@dcl/rpc/common/API'
+import { registerAPI, ExposableAPI } from 'dcl/rpc/host'
+import { ISceneManifest } from 'dcl/utils'
+import { exposeMethod } from 'dcl/rpc/common/API'
 
 export type GamekitRequiredBootstrapInfo = {
   main: string

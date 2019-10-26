@@ -1,5 +1,5 @@
-import { Communications } from '@dcl/config'
-import { createLogger, ILogger, Observable } from '@dcl/utils'
+import { Communications } from 'dcl/config'
+import { createLogger, ILogger, Observable } from 'dcl/utils'
 import {
   AuthMessage,
   ConnectMessage,

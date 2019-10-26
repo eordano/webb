@@ -1,6 +1,6 @@
-import { ScriptingTransport } from '@dcl/rpc/common/json-rpc/types'
-import { ScriptingHost } from '@dcl/rpc/host'
-import { Observable, ISceneManifest } from '@dcl/utils'
+import { ScriptingTransport } from 'dcl/rpc/common/json-rpc/types'
+import { ScriptingHost } from 'dcl/rpc/host'
+import { Observable, ISceneManifest } from 'dcl/utils'
 
 /**
  * Interface to keep track of the Workers we run with their scenes on top. This is useful for alternative renderers,

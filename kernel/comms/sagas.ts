@@ -1,5 +1,5 @@
-import { getServerConfigurations, USE_LOCAL_COMMS } from '@dcl/config'
-import { defaultLogger } from '@dcl/utils'
+import { getServerConfigurations, USE_LOCAL_COMMS } from 'dcl/config'
+import { defaultLogger } from 'dcl/utils'
 import { call, put, race, select, take, takeLatest } from 'redux-saga/effects'
 import { tokenRequest, TokenSuccessAction, TOKEN_SUCCESS } from '../auth/actions'
 import { MessageInput } from '../auth/ephemeral'

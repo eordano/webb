@@ -1,4 +1,4 @@
-import { getConfiguration, getServerConfigurations } from '@dcl/config'
+import { getConfiguration, getServerConfigurations } from 'dcl/config'
 import auth0 from 'auth0-js'
 import jwt from 'jsonwebtoken'
 import { all, call, put, select, takeLatest } from 'redux-saga/effects'

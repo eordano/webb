@@ -1,4 +1,4 @@
-import { booleanMap } from '@dcl/utils'
+import { booleanMap } from 'dcl/utils'
 import {
   sceneLoading,
   scriptSentAwake,

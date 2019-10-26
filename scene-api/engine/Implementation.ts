@@ -12,7 +12,7 @@ import {
 } from '../ecs/Component'
 
 import { DecentralandInterface } from './Types'
-import { stableStringify } from '@dcl/utils'
+import { stableStringify } from 'dcl/utils'
 
 // This number is defined in the protocol ECS.SetEntityParent.3
 const ROOT_ENTITY_ID = '0'

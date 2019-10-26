@@ -1,4 +1,4 @@
-import { ReadOnlyVector3, ReadOnlyQuaternion } from '@dcl/utils'
+import { ReadOnlyVector3, ReadOnlyQuaternion } from 'dcl/utils'
 
 export type PositionReport = {
   /** Camera position, world space */

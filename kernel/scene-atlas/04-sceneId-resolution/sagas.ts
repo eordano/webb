@@ -1,4 +1,4 @@
-import { defaultLogger, getKeysMappingToTrue, memoize } from '@dcl/utils'
+import { defaultLogger, getKeysMappingToTrue, memoize } from 'dcl/utils'
 import { all, call, put, select, takeLatest } from 'redux-saga/effects'
 import {
   FORGET_POSITION,

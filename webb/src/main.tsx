@@ -1,4 +1,4 @@
-import { configureStore } from '@dcl/kernel/core/store'
+import { configureStore } from 'dcl/kernel/core/store'
 import { ConnectedRouter } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import * as React from 'react'

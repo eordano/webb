@@ -1,4 +1,4 @@
-import { encodeParcelPosition } from '@dcl/utils'
+import { encodeParcelPosition } from 'dcl/utils'
 
 import { ParcelLoadingState } from './types'
 import { ParcelLoadingActionType, SHOW_PARCEL_LOADING } from './actions'

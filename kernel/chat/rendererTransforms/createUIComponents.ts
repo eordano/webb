@@ -1,4 +1,4 @@
-import { Color4, UIText } from '@dcl/scene-api'
+import { Color4, UIText } from 'dcl/scene-api'
 import { ChatMessage, ChatState, SYSTEM_MESSAGE } from '../types'
 
 export function createUIComponents(state: ChatState) {

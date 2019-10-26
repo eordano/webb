@@ -1,4 +1,4 @@
-import { encodeParcelPosition } from '@dcl/utils'
+import { encodeParcelPosition } from 'dcl/utils'
 import { RootSceneIdToSceneManifestState, SceneIdToSceneManifestState } from './types'
 
 export function needsResolutionToManifest(state: RootSceneIdToSceneManifestState, sceneId: string): boolean {

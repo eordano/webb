@@ -1,5 +1,5 @@
-import { ScriptingHost, ScriptingTransport, WebWorkerTransport } from '@dcl/rpc'
-import { createLogger, ISceneManifest, Observable } from '@dcl/utils'
+import { ScriptingHost, ScriptingTransport, WebWorkerTransport } from 'dcl/rpc'
+import { createLogger, ISceneManifest, Observable } from 'dcl/utils'
 import future, { IFuture } from 'fp-future'
 import { Worker } from 'webworker-threads'
 import { IRendererParcelSceneAPI } from '../renderer/parcelScene/IRendererParcelSceneAPI'

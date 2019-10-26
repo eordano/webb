@@ -1,5 +1,5 @@
-import { DecentralandInterface, DevTools } from '@dcl/scene-api'
-import { defaultLogger, EntityAction } from '@dcl/utils'
+import { DecentralandInterface, DevTools } from 'dcl/scene-api'
+import { defaultLogger, EntityAction } from 'dcl/utils'
 
 import { BuildDCLInterface } from './DCLInterface/BuildDCLInterface'
 import { BuildECSInterface } from './DCLInterface/BuildECSInterface'

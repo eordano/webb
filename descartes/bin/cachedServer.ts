@@ -1,4 +1,4 @@
-import { Coordinate } from '@dcl/utils'
+import { Coordinate } from 'dcl/utils'
 import express from 'express'
 import cors from 'cors'
 import { Descartes } from '../logic/descartes'

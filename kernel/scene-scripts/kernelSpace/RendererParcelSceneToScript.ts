@@ -1,6 +1,6 @@
-import { ExposableAPI, registerAPI } from '@dcl/rpc/host'
-import { exposeMethod } from '@dcl/rpc/common/API'
-import { EntityAction, IEventNames, IEvents } from '@dcl/scene-api'
+import { ExposableAPI, registerAPI } from 'dcl/rpc/host'
+import { exposeMethod } from 'dcl/rpc/common/API'
+import { EntityAction, IEventNames, IEvents } from 'dcl/scene-api'
 import { IRendererParcelSceneAPI } from '../../renderer/parcelScene/IRendererParcelSceneAPI'
 
 /**

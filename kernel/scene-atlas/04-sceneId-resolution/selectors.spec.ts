@@ -1,4 +1,4 @@
-import { getKeysMappingToTrue } from '@dcl/utils'
+import { getKeysMappingToTrue } from 'dcl/utils'
 import { multipleNeedsResolution } from './selectors'
 
 describe('position to sceneid selectors', () => {

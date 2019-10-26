@@ -8,13 +8,13 @@ import {
   SpawnPointDefinition,
   NamedAsset,
   URIAsset
-} from '@dcl/utils/scene/SceneManifestTypes'
+} from 'dcl/utils/scene/SceneManifestTypes'
 
-import { stableStringify } from '@dcl/utils/pure/stableStringify'
-import { parcelLimits, getMinimum, parseCoordinate, decideFloat, encodeParcelPosition } from '@dcl/utils/scene'
+import { stableStringify } from 'dcl/utils/pure/stableStringify'
+import { parcelLimits, getMinimum, parseCoordinate, decideFloat, encodeParcelPosition } from 'dcl/utils/scene'
 import { isValidSceneInput, getInvalidReason } from './validation'
-import { ISceneManifest } from '@dcl/utils/scene/ISceneManifest'
-import { sha256 } from '@dcl/utils'
+import { ISceneManifest } from 'dcl/utils/scene/ISceneManifest'
+import { sha256 } from 'dcl/utils'
 
 export class SceneManifest implements ISceneManifest {
   raw: UnsanitizedSceneManifest

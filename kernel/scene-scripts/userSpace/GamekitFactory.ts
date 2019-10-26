@@ -1,6 +1,6 @@
 import { Script } from "@dcl/rpc/client"
-import { ILogOpts, ScriptingTransport } from '@dcl/rpc'
-import { inject } from '@dcl/rpc/client'
+import { ILogOpts, ScriptingTransport } from 'dcl/rpc'
+import { inject } from 'dcl/rpc/client'
 import { GamekitScene } from './GamekitScene'
 import { loadGamekitEntrypoint } from './loadGamekitEntrypoint'
 import { IRendererParcelSceneToScript } from "../kernelSpace/IRendererParcelSceneToScript"

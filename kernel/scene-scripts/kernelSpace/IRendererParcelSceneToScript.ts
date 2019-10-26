@@ -1,4 +1,4 @@
-import { EntityAction } from '@dcl/utils'
+import { EntityAction } from 'dcl/utils'
 
 /**
  * Interface used by the Renderer to communicate with the Script directly

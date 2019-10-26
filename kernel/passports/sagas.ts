@@ -1,5 +1,5 @@
-import { getServerConfigurations } from '@dcl/config'
-import { defaultLogger } from '@dcl/utils'
+import { getServerConfigurations } from 'dcl/config'
+import { defaultLogger } from 'dcl/utils'
 import { call, put, race, select, take, takeLatest } from 'redux-saga/effects'
 import { getAccessToken, getCurrentUserId, getEmail } from '../auth/selectors'
 import { isInitialized } from '../renderer/selectors'

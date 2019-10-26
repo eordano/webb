@@ -1,5 +1,5 @@
 import { put, select, takeLatest } from 'redux-saga/effects'
-import { encodeParcelPositionFromCoordinates } from '@dcl/utils'
+import { encodeParcelPositionFromCoordinates } from 'dcl/utils'
 import { userEnteredCoordinate } from '../01-user-position/actions'
 import { SET_WORLD_POSITION } from '../01-user-position/types'
 import { SCENE_RUNNING, SCENE_SCRIPT_SOURCED_FATAL_ERROR } from '../06-scripts/actions'

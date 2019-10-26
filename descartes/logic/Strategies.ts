@@ -1,6 +1,6 @@
 import { FourCoordinates } from './lib/validateXY12'
 import { PositionToSceneIdRecord } from './lib/PositionToSceneIdRecord'
-import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
+import { SceneIdString } from 'dcl/kernel/scene-atlas/04-sceneId-resolution/types'
 import { SceneMappingRecord } from './lib/SceneMappingRecord'
 
 export type ResolveFourCoordinatesToSceneId = (_: FourCoordinates) => Promise<PositionToSceneIdRecord>

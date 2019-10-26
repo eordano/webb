@@ -1,5 +1,5 @@
 import { Alias } from '../comms/actions'
-import { Vector3, ReadOnlyQuaternion } from '@dcl/utils'
+import { Vector3, ReadOnlyQuaternion } from 'dcl/utils'
 import { Profile } from '../passports/types'
 
 export type UserId = string

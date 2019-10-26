@@ -1,4 +1,4 @@
-import { ILand, ISceneManifest, encodeParcelPosition } from '@dcl/utils'
+import { ILand, ISceneManifest, encodeParcelPosition } from 'dcl/utils'
 
 export function downgradeToILand(
   scene: ISceneManifest

@@ -1,5 +1,5 @@
 import { ISceneWorker } from '../../scene-scripts/interface/ISceneWorker'
-import { ScriptingHost } from '@dcl/rpc/host'
+import { ScriptingHost } from 'dcl/rpc/host'
 import { IRendererParcelSceneAPI } from './IRendererParcelSceneAPI'
 import { EventEmitter } from 'events'
 

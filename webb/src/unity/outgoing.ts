@@ -1,7 +1,7 @@
 import { UnityGlobals } from './globals'
-import { defaultLogger, Vector3 } from '@dcl/utils'
-import { SceneManifest } from '@dcl/kernel/scene-manifest'
-import { Profile } from '@dcl/kernel/passports/types'
+import { defaultLogger, Vector3 } from 'dcl/utils'
+import { SceneManifest } from 'dcl/kernel/scene-manifest'
+import { Profile } from 'dcl/kernel/passports/types'
 
 export const unityInterface = {
   debug: false,

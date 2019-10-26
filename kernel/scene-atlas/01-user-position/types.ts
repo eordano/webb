@@ -1,4 +1,4 @@
-import { Vector2, Vector3 } from '@dcl/utils'
+import { Vector2, Vector3 } from 'dcl/utils'
 
 export type WorldPosition = Vector3
 export type GridPosition = Vector2

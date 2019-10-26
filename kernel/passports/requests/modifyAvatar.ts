@@ -1,4 +1,4 @@
-import { getServerConfigurations } from '@dcl/config'
+import { getServerConfigurations } from 'dcl/config'
 import { saveSnapshots } from './saveSnapshots'
 import { ensureServerFormat } from '../transformations/profileToServerFormat'
 import { Avatar } from '../types'

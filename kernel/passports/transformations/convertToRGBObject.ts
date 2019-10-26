@@ -1,4 +1,4 @@
-import { ReadOnlyColor4 } from '@dcl/utils'
+import { ReadOnlyColor4 } from 'dcl/utils'
 
 export function convertToRGBObject(colorString: any): ReadOnlyColor4 {
   if (typeof colorString !== 'string') {

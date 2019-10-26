@@ -8,7 +8,7 @@ import {
   ComponentCreatedPayload,
   ComponentDisposedPayload,
   ComponentUpdatedPayload
-} from '@dcl/utils'
+} from 'dcl/utils'
 
 const engineMethodMatches = /^(engine\.)/
 

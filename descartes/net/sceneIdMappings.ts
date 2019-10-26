@@ -1,4 +1,4 @@
-import { SceneIdString } from '@dcl/kernel/scene-atlas/04-sceneId-resolution/types'
+import { SceneIdString } from 'dcl/kernel/scene-atlas/04-sceneId-resolution/types'
 import { FetchFunction } from '../logic/lib/FetchFunction'
 
 export type SceneMappingRecord = Record<string, string>

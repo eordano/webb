@@ -1,4 +1,4 @@
-import { encodeParcelPositionFromCoordinates } from '@dcl/utils'
+import { encodeParcelPositionFromCoordinates } from 'dcl/utils'
 import { AnyAction } from 'redux'
 import { UserPositionAction } from './actions'
 import { SET_WORLD_POSITION, UserPosition, USER_ENTERED_COORDINATE } from './types'

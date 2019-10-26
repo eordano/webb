@@ -1,4 +1,4 @@
-import { ISceneManifest } from '@dcl/utils'
+import { ISceneManifest } from 'dcl/utils'
 import { call, delay, put, race, select, spawn, take } from 'redux-saga/effects'
 import { getSceneManifest } from '../05-sceneManifest-resolution/selectors'
 import { SCENE_BY_ID_SUCCESS } from '../05-sceneManifest-resolution/types'

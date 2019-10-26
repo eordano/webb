@@ -1,4 +1,4 @@
-import { getServerConfigurations } from '@dcl/config'
+import { getServerConfigurations } from 'dcl/config'
 
 export async function fetchInventoryItemsByAddress(address: string) {
   const result = await fetch(getServerConfigurations().wearablesApi + '/address/' + address)

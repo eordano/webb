@@ -1,4 +1,4 @@
-import { defaultLogger, IScene, memoize, ParcelInfoResponse } from '@dcl/utils'
+import { defaultLogger, IScene, memoize, ParcelInfoResponse } from 'dcl/utils'
 import { call, put, select, takeLatest, takeEvery } from 'redux-saga/effects'
 import { getDownloadServer, isMappingResolved } from './selectors'
 import { sceneByIdFailure, sceneByIdRequest, SceneByIdRequest, sceneByIdSuccess, SCENE_BY_ID_REQUEST } from './types'

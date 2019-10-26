@@ -1,4 +1,4 @@
-import { parseParcelPosition, Vector2 } from '@dcl/utils'
+import { parseParcelPosition, Vector2 } from 'dcl/utils'
 import { action } from 'typesafe-actions'
 import { StringPosition } from '../01-user-position/types'
 import { SETTLE_POSITION, SPAWN_USER_AT, TELEPORT, UNSETTLE_POSITION } from './types'
