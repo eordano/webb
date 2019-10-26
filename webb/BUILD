@@ -70,6 +70,7 @@ rollup_bundle(
         "@npm//rollup-plugin-node-builtins",
         "@npm//rollup-plugin-node-globals",
         "@npm//rollup-plugin-node-resolve",
+        "@npm//rollup-plugin-json",
     ],
 )
 
@@ -88,13 +89,11 @@ ts_devserver(
         "//rpc",
         "//scene-api",
         "//utils",
-        "@npm//events:events__umd",
         "@npm//history:history__umd",
         "@npm//react:react__umd",
         "@npm//react-dom:react-dom__umd",
         "@npm//react-router:react-router__umd",
         "@npm//redux:redux__umd",
         "@npm//redux-saga:redux-saga__umd",
-        "@npm//uuid:uuid__umd",
     ],
 )

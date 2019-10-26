@@ -1,5 +1,5 @@
 import { Angle } from './Angle'
-import { MVector2 } from './MVector2'
+import { MVector2 } from './Vectors'
 import { Orientation } from './types'
 
 /**

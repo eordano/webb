@@ -1,6 +1,6 @@
-import { MVector3 } from './MVector3'
-import { Matrix } from './Matrix'
-import { MathTmp } from './preallocatedVariables'
+import { MVector3 } from './Vectors'
+import { Matrix } from './Vectors'
+import { MathTmp } from './Vectors'
 
 /**
  * Represens a plane by the equation ax + by + cz + d = 0

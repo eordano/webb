@@ -1,4 +1,4 @@
-import { MVector3 } from './MVector3'
+import { MVector3 } from './Vectors'
 import { Epsilon, Nullable } from './types'
 import { Scalar } from './Scalar'
 

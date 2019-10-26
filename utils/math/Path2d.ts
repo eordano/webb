@@ -1,4 +1,4 @@
-import { MVector2 } from './MVector2'
+import { MVector2 } from './Vectors'
 import { Arc2 } from './Arc2'
 import { Orientation } from './types'
 

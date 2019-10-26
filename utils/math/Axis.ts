@@ -1,4 +1,4 @@
-import { MVector3 } from './MVector3'
+import { MVector3 } from './Vectors'
 
 /**
  * Defines the 3 main axes

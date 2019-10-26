@@ -1,4 +1,4 @@
-import { MVector3, Quaternion, Matrix, MathTmp, Color3 } from '@dcl/utils'
+import { MVector3, MQuaternion, Matrix, MathTmp, Color3 } from '@dcl/utils'
 
 import { Component, ObservableComponent, DisposableComponent } from '../ecs/Component'
 import { AnimationState } from './AnimationState'
@@ -8,7 +8,7 @@ import { IEvents } from './Types'
 /** @public */
 export type TranformConstructorArgs = {
   position?: MVector3
-  rotation?: Quaternion
+  rotation?: MQuaternion
   scale?: MVector3
 }
 
@@ -69,7 +69,7 @@ export class Transform extends ObservableComponent {
   position!: MVector3
 
   @ObservableComponent.field
-  rotation!: Quaternion
+  rotation!: MQuaternion
 
   @ObservableComponent.field
   scale!: MVector3
@@ -77,7 +77,7 @@ export class Transform extends ObservableComponent {
   constructor(args: TranformConstructorArgs = {}) {
     super()
     this.position = args.position || MVector3.Zero()
-    this.rotation = args.rotation || Quaternion.Identity
+    this.rotation = args.rotation || MQuaternion.Identity
     this.scale = args.scale || new MVector3(1, 1, 1)
   }
 
@@ -97,7 +97,7 @@ export class Transform extends ObservableComponent {
     const result = new Matrix()
     Matrix.LookAtLHToRef(this.position, target, worldUp, result)
     result.invert()
-    Quaternion.FromRotationMatrixToRef(result, this.rotation)
+    MQuaternion.FromRotationMatrixToRef(result, this.rotation)
     return this
   }
 

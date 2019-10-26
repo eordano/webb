@@ -1,4 +1,4 @@
-import { MVector3 } from '../math/MVector3'
+import { MVector3 } from '../math/Vectors'
 import { Vector3, Vector2 } from '../Vector'
 
 export function isEqual2(a: Vector2, b: Vector2) {

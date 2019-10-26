@@ -1,4 +1,4 @@
-import { MVector3 } from './MVector3'
+import { MVector3 } from './Vectors'
 
 /**
  * A Curve3 object is a logical object, so not a mesh, to handle curves in the 3D geometric space.

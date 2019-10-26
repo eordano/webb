@@ -1,5 +1,5 @@
-import { Quaternion } from '../math/Quaternion'
-import { MVector3 } from '../math/MVector3'
+import { MQuaternion } from '../math/Vectors'
+import { MVector3 } from '../math/Vectors'
 import { RAD2DEG } from '../math'
 
 export function quaternionToRotation(x: number, y: number, z: number, w: number) {
@@ -10,7 +10,7 @@ export function quaternionToRotation(x: number, y: number, z: number, w: number)
   return { x: pitch, y: roll, z: yaw }
 }
 
-export function quaternionToRotationBABYLON(quat: Quaternion, rotation: MVector3) {
+export function quaternionToRotationBABYLON(quat: MQuaternion, rotation: MVector3) {
   const { x, y, z, w } = quat
 
   const roll = Math.atan2(2 * y * w - 2 * x * z, 1 - 2 * y * y - 2 * z * z) * RAD2DEG

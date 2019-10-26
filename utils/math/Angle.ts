@@ -1,4 +1,4 @@
-import { MVector2 } from './MVector2'
+import { MVector2 } from './Vectors'
 
 /**
  * Defines angle representation
