@@ -1,22 +1,37 @@
-import { configureStore } from 'dcl/kernel/core/store'
-import { ConnectedRouter } from 'connected-react-router'
-import { createBrowserHistory } from 'history'
+import { createStore, AnyAction } from 'redux'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { connect, Provider } from 'react-redux'
 
-(async function() {
-  const store = configureStore()
-  const routes = await import('./routes')
-  ReactDOM.render(
+import { createReducer } from 'dcl/kernel/core/reducers'
+type State = { count: number }
+const INITIAL: State = { count: 1 }
+const store = createStore((state?: State, action?: AnyAction) => {
+  if (!state) {
+    return INITIAL
+  }
+  if (!action) {
+    return state
+  }
+  return { count: state.count + 1 }
+})
+
+const Hello = connect((state: State) => state)((state: State) => {
+  const f = createReducer()
+  console.log(f)
+  return (
     <>
-    <ConnectedRouter history={createBrowserHistory()}>
-      { routes }
-    </ConnectedRouter>
-    <Provider store={store.store}>
-      <h1>Hello world!</h1>
-      </Provider>
-    </>,
-    document.getElementById('root')
+      <h1>Hello world! {state.count} </h1>
+      <button onClick={() => store.dispatch({ type: 'Increment' })}>Increment</button>
+    </>
   )
-})()
+})
+
+ReactDOM.render(
+  <Provider store={store}>
+    <>
+      <Hello />
+    </>
+  </Provider>,
+  document.getElementById('root')
+)

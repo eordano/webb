@@ -1,6 +1,7 @@
-const nodelib = require('rollup-plugin-node-builtins')
+const builtins = require('rollup-plugin-node-builtins')
 const resolve = require('rollup-plugin-node-resolve')
 const globals = require('rollup-plugin-node-globals')
+const commonjs = require('rollup-plugin-commonjs')
 const json = require('rollup-plugin-json')
 
 const allExternals = [
@@ -31,7 +32,6 @@ const allExternals = [
   'devtools-protocol',
   'google-protobuf',
   'webrtc-adapter',
-  'url',
   'gud',
   /**
    * Web dependencies
@@ -55,12 +55,12 @@ export default {
     name: 'main_roll',
   },
   plugins: [
+    json(),
     resolve({
       preferBuiltins: true,
       browser: true,
     }),
-    json(),
-    globals(),
-    nodelib(),
+    commonjs(),
+    builtins(),
   ]
 }
