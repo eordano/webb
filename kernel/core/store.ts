@@ -1,5 +1,5 @@
 import { DEBUG_REDUX, getServerConfigurations } from 'dcl/config'
-import { applyMiddleware, compose, createStore, Store } from 'redux'
+import { applyMiddleware, compose, createStore, Store, Reducer } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { setProfileServer } from '../passports/actions'
 import { configureLineOfSightRadius } from '../scene-atlas/02-parcel-sight/actions'
@@ -12,7 +12,7 @@ import { RootState } from './types'
 declare var window: any
 export let store: Store<RootState>
 
-export const configureStore: (state?: any) => { store: Store<RootState>; sagasMiddleware: any; start: () => void } = (state?: any) => {
+export const configureStore: (otherReducers: Record<string, Reducer>, state?: any) => { store: Store<RootState>; sagasMiddleware: any; start: () => void } = (otherReducers: Record<string, Reducer>, state?: any) => {
   const enhance =
     typeof window === 'object' && (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && DEBUG_REDUX)
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
@@ -20,7 +20,7 @@ export const configureStore: (state?: any) => { store: Store<RootState>; sagasMi
         })
       : compose
   const sagasMiddleware = createSagaMiddleware()
-  store = createStore(createReducer(), state, enhance(applyMiddleware(sagasMiddleware))) as Store<RootState>
+  store = createStore(createReducer(otherReducers), state, enhance(applyMiddleware(sagasMiddleware))) as Store<RootState>
   const config = getServerConfigurations()
   store.dispatch(configureLineOfSightRadius(4))
   store.dispatch(configureDownloadServer(config.content))

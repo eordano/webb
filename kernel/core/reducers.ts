@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers, Reducer } from 'redux'
 /**
  * Begin import reducers
  */
@@ -12,7 +12,7 @@ import { positionToSceneIdReducer as positionToSceneId } from '../scene-atlas/04
 import { sceneIdToSceneManifestReducer as sceneIdToManifest } from '../scene-atlas/05-sceneManifest-resolution/reducer'
 import { sceneLifeCycleReducer as sceneLifeCycle } from '../scene-atlas/06-scripts/reducer'
 
-export const createReducer: any = () => {
+export const createReducer: any = (otherReducers: Record<string, Reducer> = {}) => {
   return combineReducers({
     auth,
     comms,
@@ -22,6 +22,7 @@ export const createReducer: any = () => {
     sceneIdToManifest,
     sceneLifeCycle,
     renderer,
-    passports
+    passports,
+    ...otherReducers
   })
 }
