@@ -27,6 +27,10 @@ export const COMMS_REQUEST_AUTHENTICATION = '[Comms] Sending Authentication'
 export const COMMS_SUCCESS_AUTHENTICATION = '[Comms] Successfully Authenticated'
 export const COMMS_FAILURE_AUTHENTICATION = '[Comms] Failure Authenticating'
 
+export const COMMS_SUCCESSFULLY_STARTED = '[Comms] Communications established'
+export const commsSuccessfullyStarted = () => action(COMMS_SUCCESSFULLY_STARTED)
+export type CommsSuccessfullyStartedAction = ReturnType<typeof commsSuccessfullyStarted>
+
 export const SET_BROKER_CONNECTION = '[Comms] Set Broker Connection'
 export const setBrokerConnection = (connection: IBrokerConnection) => action(SET_BROKER_CONNECTION, connection)
 export type SetBrokerConnectionAction = ReturnType<typeof setBrokerConnection>
@@ -104,6 +108,7 @@ export type CommsConnectionAction =
   | CommsRequestAuthenticationAction
   | CommsSuccessAuthenticationAction
   | CommsFailureAuthenticationAction
+  | CommsSuccessfullyStartedAction
 
 export const PROTOCOL_POSITION = '[Protocol:In] Position update'
 export const PROTOCOL_PROFILE = '[Protocol:In] Profile update'
@@ -169,12 +174,14 @@ export type ProtocolOutActionType =
   | ProtocolOutPrivateMessageAction
   | ProtocolOutSceneAction
 
-export const PROTOCOL_SUBSCRIPTION = '[Protocol] Requesting topic subscription'
-
+export const PROTOCOL_SUBSCRIPTION = '[Protocol] Topic: Subscribe'
 export const protocolSubscription = (topic: string) => action(PROTOCOL_SUBSCRIPTION, { topic })
 export type ProtocolSubscriptionAction = ReturnType<typeof protocolSubscription>
+export const PROTOCOL_UNSUBSCRIBE = '[Protocol] Topic: Unsubscribe'
+export const protocolUnsubscribe = (topic: string) => action(PROTOCOL_UNSUBSCRIBE, { topic })
+export type ProtocolUnsubscribeAction = ReturnType<typeof protocolUnsubscribe>
 
-export type ProtocolSubscriptionActionType = ProtocolSubscriptionAction
+export type ProtocolSubscriptionActionType = ProtocolSubscriptionAction | ProtocolUnsubscribeAction
 
 // All Actions
 

@@ -17,17 +17,7 @@ export const Communications = {
       urls: 'stun:stun2.l.google.com:19302'
     },
     {
-      urls: 'turn:18.212.100.131:3478',
-      credential: 'passworddcl',
-      username: 'usernamedcl'
-    },
-    {
-      urls: 'turn:54.156.44.154:3478',
-      credential: 'passworddcl',
-      username: 'usernamedcl'
-    },
-    {
-      urls: 'turn:3.219.30.175:3478',
+      urls: 'turn:stun.decentraland.org:3478',
       credential: 'passworddcl',
       username: 'usernamedcl'
     }

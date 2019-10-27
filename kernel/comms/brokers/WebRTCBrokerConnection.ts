@@ -63,7 +63,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
     this.connectWS()
 
     setTimeout(() => {
-      if (this.reliableFuture.isPending) {
+      if (!this.hasReliableChannel) {
         this.reliableFuture.reject(new Error('Communications link cannot be established (Timeout)'))
       }
     }, 10000)

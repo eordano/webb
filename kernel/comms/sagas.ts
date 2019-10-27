@@ -1,6 +1,6 @@
 import { USE_LOCAL_COMMS } from 'dcl/config'
 import { defaultLogger } from 'dcl/utils'
-import { call, race, select, takeLatest } from 'redux-saga/effects'
+import { call, put, race, select, takeLatest } from 'redux-saga/effects'
 import { getCurrentUserId } from '../auth/selectors'
 import { getProfile } from '../passports/selectors'
 import { Profile } from '../passports/types'
@@ -23,7 +23,10 @@ import {
   PROTOCOL_OUT_SCENE,
   PROTOCOL_OUT_YELL,
   SetBrokerConnectionAction,
-  SET_BROKER_CONNECTION
+  SET_BROKER_CONNECTION,
+  COMMS_DATACHANNEL_RELIABLE,
+  commsSuccessfullyStarted,
+  COMMS_DATACHANNEL_UNRELIABLE
 } from './actions'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
 import { handleMessage } from './handleMessage'
@@ -32,9 +35,13 @@ import { sendChatMessage } from './senders/protocol/chat'
 import { sendProfileMessage } from './senders/protocol/profile'
 import { setupWebRTCBroker } from './brokers/WebRTCSaga'
 import { setupCliBroker } from './brokers/WebSocketSaga'
+import { shouldAnnounceConnected } from './selectors'
 
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
+  yield takeLatest(COMMS_DATACHANNEL_RELIABLE, checkConnected)
+  yield takeLatest(COMMS_DATACHANNEL_UNRELIABLE, checkConnected)
+
   yield takeLatest(SET_BROKER_CONNECTION, function*(connectionAction: SetBrokerConnectionAction) {
     const connection = connectionAction.payload
     yield takeLatest(PROTOCOL_OUT_POSITION, handleSendPositionRequest(connection))
@@ -118,5 +125,11 @@ export function* handleCommsStart(): any {
     yield setupCliBroker()
   } else {
     yield setupWebRTCBroker()
+  }
+}
+
+export function* checkConnected(): any {
+  if (yield select(shouldAnnounceConnected)) {
+    yield put(commsSuccessfullyStarted())
   }
 }

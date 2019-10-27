@@ -62,7 +62,6 @@ export class Auth {
     const msg = message === null ? null : Buffer.from(message)
     const input = MessageInput.fromMessage(msg)
     const accessToken = commsToken || await this.getCommsToken()
-    debugger
     const credentials = await this.getEphemeralKey().makeMessageCredentials(input, accessToken)
 
     let result: Record<string, string> = {}
