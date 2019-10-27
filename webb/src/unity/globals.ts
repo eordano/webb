@@ -5,7 +5,7 @@ import { unityInterface } from './outgoing'
 export const UnityGlobals = {
   gameInstance: {} as any,
   unityInterface: {} as any,
-  browserInterface: {} as any,
+  browserInterface: {} as any
 }
 
 export async function initializeEngine(_gameInstance: any) {

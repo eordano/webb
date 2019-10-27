@@ -6,7 +6,7 @@ import { Router, Switch, Route } from 'react-router'
 import { Container, Navbar } from './components/liteui/dcl'
 import Status from './components/status/StatusFrame'
 import { context } from './context'
-import { store } from 'store'
+import { store } from './store'
 
 const history = createBrowserHistory()
 store.start()

@@ -1,10 +1,9 @@
 import React from 'react'
 import { Segment } from '../../liteui/dcl'
-import 'react-console-emulator'
-const Terminal = require('react-console-emulator').default
+import Terminal from '../../ConsoleEmulator/components/Terminal'
 
 var term = null
-var commands = {}
+var commands: any = {}
 function makeCommands(that: any) {
   if (!term) {
     term = that
@@ -65,7 +64,7 @@ function makeCommands(that: any) {
 }
 
 export class MyTerminal extends React.Component {
-  terminal = React.createRef()
+  terminal: any = React.createRef()
   render() {
     return (
       <Segment>

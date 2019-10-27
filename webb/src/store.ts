@@ -1,2 +1,2 @@
 import { configureStore } from 'dcl/kernel/core/store'
-export const store = configureStore({})
+export const store: any = configureStore({})
