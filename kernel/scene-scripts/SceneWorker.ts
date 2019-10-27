@@ -46,7 +46,7 @@ export class SceneWorker implements ISceneWorker {
 
       this.parcelScene.dispose()
 
-      this.onDisposeObservable.notifyObservers(this.sceneManifest.cannonicalCID)
+      this.onDisposeObservable.notifyObservers(this.sceneManifest.id)
     }
   }
 

@@ -26,14 +26,14 @@ export class SceneWorkersManager {
   }
 
   stopSceneWorker(scene: string | ISceneManifest) {
-    const worker = this.loadedSceneWorkers.get(typeof scene === 'string' ? scene : scene.cannonicalCID)
+    const worker = this.loadedSceneWorkers.get(typeof scene === 'string' ? scene : scene.id)
     if (worker && !worker.persistent) {
       this._forceStopSceneWorker(worker)
     }
   }
 
   forceStopSceneWorker(scene: string | ISceneManifest) {
-    const worker = this.loadedSceneWorkers.get(typeof scene === 'string' ? scene : scene.cannonicalCID)
+    const worker = this.loadedSceneWorkers.get(typeof scene === 'string' ? scene : scene.id)
     this._forceStopSceneWorker(worker)
   }
 
@@ -42,7 +42,7 @@ export class SceneWorkersManager {
   }
 
   loadScene(scene: ISceneManifest, transport?: ScriptingTransport): ISceneWorker {
-    const sceneId = scene.cannonicalCID
+    const sceneId = scene.id
 
     let worker = this.loadedSceneWorkers.get(sceneId)
     if (!worker) {

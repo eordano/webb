@@ -1,6 +1,8 @@
 {
     "files.exclude": {
-        "bazel*": true
+        "bazel*": true,
+        "node_modules": true,
+        "data*": true
     },
     "typescript.tsdk": "node_modules/typescript/lib"
 }

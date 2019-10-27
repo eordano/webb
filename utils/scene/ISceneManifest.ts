@@ -15,7 +15,6 @@ export interface ISceneManifest {
   legacyMappings: { file: string; hash: string }[]
   assetTags: AssetTagDefinition[]
   requiredAssets: AssetDefinition[]
-  cannonicalCID: string
   main: string
   referenceSystem: ReferenceSystem
   parcels: NonEmptyCoordinateArray

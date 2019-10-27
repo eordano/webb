@@ -4,7 +4,7 @@ export function downgradeToILand(
   scene: ISceneManifest
 ): ILand<{ main: string; scene: { parcels: string[]; base: string }; communications: any }> {
   return {
-    sceneId: scene.cannonicalCID,
+    sceneId: scene.id,
     baseUrl: '',
     scene: {
       main: scene.main,
@@ -12,8 +12,8 @@ export function downgradeToILand(
       communications: ''
     },
     mappingsResponse: {
-      parcel_id: scene.cannonicalCID,
-      root_cid: scene.cannonicalCID,
+      parcel_id: scene.id,
+      root_cid: scene.id,
       publisher: '',
       contents: scene.assets.map(asset => ({
         file: asset.name,

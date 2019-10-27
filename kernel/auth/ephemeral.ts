@@ -4,6 +4,8 @@ import crypto from 'crypto'
 import secp256k1 from 'secp256k1'
 const { sign, publicKeyCreate, privateKeyVerify } = secp256k1
 
+export { Buffer }
+
 export function getCurrentEpoch(): number {
   return parseInt((Date.now() / 1000).toString(), 10) // GetTime retrieves milliseconds
 }
@@ -41,14 +43,23 @@ export class MessageInput {
     return m
   }
 
-  timeBasedHash(timestamp: number): Promise<Buffer> {
+  async timeBasedHash(timestamp: number): Promise<Buffer> {
     const toHash: Buffer[] = []
-    if (this.method != null) toHash.push(Buffer.from(this.method))
-    if (this.url != null) toHash.push(Buffer.from(this.url))
+    if (this.method !== null) {
+      toHash.push(Buffer.from(this.method))
+    }
+    if (this.url !== null) {
+      toHash.push(Buffer.from(this.url))
+    }
     toHash.push(Buffer.from(timestamp.toString()))
-    if (this.content !== null) toHash.push(this.content)
+    if (this.content !== null) {
+      toHash.push(this.content)
+    }
+    console.log(toHash)
 
-    return digest(Buffer.concat(toHash))
+    const hash = Buffer.concat(toHash)
+    const result = await digest(hash)
+    return result
   }
 }
 
@@ -71,17 +82,20 @@ export class BasicEphemeralKey implements EphemeralKey {
     return new BasicEphemeralKey(keys, expDate)
   }
 
-  async makeMessageCredentials(params: MessageInput, accessToken: string): Promise<Map<string, string>> {
+  async makeMessageCredentials(params: MessageInput, accessToken: string, timeHint?: number): Promise<Map<string, string>> {
     const credentials = new Map<string, string>()
-    const timestamp = getCurrentEpoch()
-    const signature = this.sign(await params.timeBasedHash(timestamp))
+    const timestamp = timeHint !== undefined ? timeHint : getCurrentEpoch()
+    const hash = await params.timeBasedHash(timestamp)
+    const signature = this.sign(hash)
 
+    credentials.set('x-hash', hash as any)
     credentials.set('x-signature', signature)
     credentials.set('x-timestamp', timestamp.toString())
     credentials.set('x-identity', this.getIdentity())
     credentials.set('x-auth-type', 'third-party')
     credentials.set('x-access-token', accessToken)
 
+    console.log(window['storeCred'] = credentials)
     return credentials
   }
 

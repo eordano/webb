@@ -41,7 +41,8 @@ export class SceneManifest implements ISceneManifest {
 
   get id(): string {
     if (!this._id) {
-      this._id = this.cannonicalCID
+      this._id = this.raw['id']
+      this.cannonicalCID().then(id => this._id = id)
     }
     return this._id
   }
@@ -195,11 +196,11 @@ export class SceneManifest implements ISceneManifest {
     return this._cannonicalRepresentation
   }
 
-  get cannonicalCID(): string {
+  async cannonicalCID(): Promise<string> {
     if (!this._cannonicalCID) {
       // TODO: Use CIDv0 encoding
-      this._cannonicalCID = sha256(this.cannonicalSerialization).toString('hex')
+      this._cannonicalCID = (await sha256(this.cannonicalSerialization)).toString('hex')
     }
-    return this._cannonicalCID
+    return Promise.resolve(this._cannonicalCID)
   }
 }

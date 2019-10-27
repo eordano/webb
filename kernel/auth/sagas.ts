@@ -134,7 +134,11 @@ export function* authSaga(): any {
 
   function* handleTokenRequest(): any {
     const accessToken = yield select(getAccessToken)
-    const ephemeral = BasicEphemeralKey.generateNewKey(600)
+    let ephemeral = yield select(getEphemeralKey)
+    if (!ephemeral) {
+      yield put(ephemeralGet())
+      ephemeral = (yield take(EPHEMERAL_PRESENT)).payload
+    }
     try {
       const request = yield call(fetchToken, accessToken, ephemeral)
       yield put(tokenSuccess(request))

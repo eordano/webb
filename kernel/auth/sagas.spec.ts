@@ -1,6 +1,7 @@
+import { ephemeralPresent } from 'dcl/kernel/auth/actions'
 import { expectSaga } from 'redux-saga-test-plan'
 import { select } from 'redux-saga/effects'
-import { ephemeralPut, EPHEMERAL_PUT } from './actions'
+import { EPHEMERAL_PUT } from './actions'
 import { handleGetEphemeral } from './sagas'
 import { getEphemeralKey } from './selectors'
 
@@ -17,7 +18,7 @@ describe('auth saga: ephemeral', () => {
     }
     await expectSaga(handleGetEphemeral)
       .provide([[select(getEphemeralKey), token]])
-      .put(ephemeralPut(token as any))
+      .put(ephemeralPresent(token as any))
       .run()
   })
 })
