@@ -59,7 +59,7 @@ export default {
       browser: true,
     }),
     commonjs(),
-    builtins(),
     globals(),
+    builtins(),
   ]
 }

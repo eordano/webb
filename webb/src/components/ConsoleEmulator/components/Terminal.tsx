@@ -12,8 +12,6 @@ import scrollHistory from '../handlers/scrollHistory'
 
 // Definitions
 import sourceStyles from '../defs/styles/Terminal'
-import types from '../defs/types/Terminal'
-
 export default class Terminal extends Component<any, any> {
   terminalRoot: any
   terminalInput: any

@@ -1,5 +1,5 @@
 import * as secp256k1 from 'secp256k1'
-
+import { Buffer } from 'buffer'
 import { sha256 as digest } from 'dcl/utils'
 
 export function getCurrentEpoch(): number {

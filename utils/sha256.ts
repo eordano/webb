@@ -11,7 +11,7 @@ export function sha256asString(data: string) {
 }
 
 export function sha256(data: string | Buffer | Uint8Array | ArrayBuffer) {
-  const crypto = global['crypto'] || require('crypto')
+  const crypto = typeof global === undefined ? window['crypto'] : require('crypto')
   if (crypto.createHash) {
     return crypto
       .createHash('sha256')

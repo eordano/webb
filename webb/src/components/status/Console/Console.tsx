@@ -5,11 +5,11 @@ import { store } from '../../../store'
 import { restoreSession } from 'dcl/kernel/auth/actions'
 import { SceneManifest } from 'dcl/kernel/scene-manifest/SceneManifest'
 import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
+import { commsStarted } from 'dcl/kernel/comms/actions'
 import { PassportAsPromise } from 'dcl/kernel/passports/PassportAsPromise'
 import { Profile } from 'dcl/kernel/passports/types'
 import { RunScene } from './vangogh/ears'
 import { renderEntity } from 'dcl/synced-ecs/ecs/render'
-
 
 var term = null
 var commands: any = {}
@@ -34,7 +34,9 @@ function makeCommands(that: any) {
         usage: 'getScene <x> <y>',
         fn: (x: any, y: any) => {
           resolvePositionToSceneManifest(store)(x, y).then((scene: SceneManifest) => {
-            term.terminal.current.pushToStdout(<pre>{JSON.stringify(JSON.parse(scene.cannonicalSerialization), null, 2)}</pre>)
+            term.terminal.current.pushToStdout(
+              <pre>{JSON.stringify(JSON.parse(scene.cannonicalSerialization), null, 2)}</pre>
+            )
           })
         }
       },
@@ -49,8 +51,10 @@ function makeCommands(that: any) {
       },
       connect: {
         description: 'Connect to the comms server',
-        usage: 'status',
-        fn: function() {}
+        usage: 'connect',
+        fn: function() {
+          store.dispatch(commsStarted())
+        }
       },
       status: {
         description: 'Print your position and the current scene',

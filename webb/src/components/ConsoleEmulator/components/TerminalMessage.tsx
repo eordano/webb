@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import html from 'react-inner-html'
 
-import types from '../defs/types/TerminalMessage'
 import sourceStyles from '../defs/styles/TerminalMessage'
 
 export default class TerminalMessage extends Component<{ content: any; key: any; dangerMode?: boolean }> {

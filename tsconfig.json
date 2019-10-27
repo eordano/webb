@@ -6,7 +6,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "dcl/*": ["bazel-genfiles/*"]
+      "dcl/*": ["bazel-genfiles/*", "bazel-bin/*"]
     },
     "module": "esnext",
     "diagnostics": false,

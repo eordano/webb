@@ -30,7 +30,6 @@ ts_library(
             "src/**/*.tsx",
         ],
     ),
-    tsconfig = ":tsconfig.json",
     deps = [
         "//kernel",
         "//protos:comms",
@@ -80,6 +79,7 @@ rollup_bundle(
         "//protos:broker_lib",
         "//protos:comms_lib",
         "//rpc",
+        "//synced-ecs",
         "//scene-api",
         "//utils",
         ":webb_code",

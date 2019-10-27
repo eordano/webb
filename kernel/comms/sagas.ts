@@ -1,8 +1,6 @@
-import { getServerConfigurations, USE_LOCAL_COMMS } from 'dcl/config'
+import { USE_LOCAL_COMMS } from 'dcl/config'
 import { defaultLogger } from 'dcl/utils'
-import { call, put, race, select, take, takeLatest } from 'redux-saga/effects'
-import { tokenRequest, TokenSuccessAction, TOKEN_SUCCESS } from '../auth/actions'
-import { MessageInput } from '../auth/ephemeral'
+import { call, race, select, takeLatest } from 'redux-saga/effects'
 import { getCurrentUserId } from '../auth/selectors'
 import { getProfile } from '../passports/selectors'
 import { Profile } from '../passports/types'
@@ -24,17 +22,16 @@ import {
   PROTOCOL_OUT_PROFILE,
   PROTOCOL_OUT_SCENE,
   PROTOCOL_OUT_YELL,
-  setBrokerConnection,
   SetBrokerConnectionAction,
   SET_BROKER_CONNECTION
 } from './actions'
-import { createWebRTCBroker } from './brokers/createWebRTCBroker'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
-import { WebSocketBrokerConnection } from './brokers/WebSocketBrokerConnection'
 import { handleMessage } from './handleMessage'
 import { sendPing } from './senders/broker/ping'
 import { sendChatMessage } from './senders/protocol/chat'
 import { sendProfileMessage } from './senders/protocol/profile'
+import { setupWebRTCBroker } from './brokers/WebRTCSaga'
+import { setupCliBroker } from './brokers/WebSocketSaga'
 
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
@@ -122,23 +119,4 @@ export function* handleCommsStart(): any {
   } else {
     yield setupWebRTCBroker()
   }
-}
-
-export function* setupCliBroker(): any {
-  const commsUrl = document.location.toString().replace(/^http/, 'ws')
-  defaultLogger.log('Using WebSocket comms: ' + commsUrl)
-  yield setBrokerConnection(new WebSocketBrokerConnection(commsUrl))
-}
-
-export function* setupWebRTCBroker(): any {
-  const coordinatorURL = getServerConfigurations().worldInstanceUrl
-  const body = `GET:${coordinatorURL}`
-  yield put(tokenRequest())
-  const tokenSuccessAction = (yield take(TOKEN_SUCCESS)) as TokenSuccessAction
-  const accessToken = tokenSuccessAction.payload.commsToken
-
-  const msg = Buffer.from(body)
-  const input = MessageInput.fromMessage(msg)
-  const connection = yield call(async () => createWebRTCBroker(coordinatorURL, input, accessToken, null as any))
-  yield setBrokerConnection(connection)
 }

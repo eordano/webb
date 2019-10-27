@@ -6,6 +6,7 @@ import { UserId } from '../auth/types'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
 
 export const COMMS_STARTED = '[Comms] Starting connection'
+export const COMMS_CONNECTING = '[Comms] Connecting'
 export const COMMS_TIMEOUT = '[Comms] Connection timed out'
 export const COMMS_RETRY = '[Comms] Connection retry trigger'
 export const COMMS_CLOSED = '[Comms] Connection closed'
@@ -36,6 +37,8 @@ export type CloseCommsAction = ReturnType<typeof closeComms>
 
 export const commsStarted = () => action(COMMS_STARTED)
 export type CommsStartedAction = ReturnType<typeof commsStarted>
+export const commsConnecting = () => action(COMMS_CONNECTING)
+export type CommsConnecting = ReturnType<typeof commsConnecting>
 export const commsTimeout = () => action(COMMS_TIMEOUT)
 export type CommsTimeoutAction = ReturnType<typeof commsTimeout>
 export const commsRetry = () => action(COMMS_RETRY)

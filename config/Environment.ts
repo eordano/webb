@@ -1,6 +1,8 @@
-declare var global: any
-var global = window as any
-const location = global.location || { search: '', hostname: '' }
+var global = typeof window === 'undefined' ? global : window
+if (!global.location) {
+  global.location = { search: '', hostname: '' }
+}
+const location = global.location
 
 // Entry points
 export const PREVIEW: boolean = !!(global as any).preview
