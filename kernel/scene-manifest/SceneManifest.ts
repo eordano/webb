@@ -198,7 +198,7 @@ export class SceneManifest implements ISceneManifest {
   get cannonicalCID(): string {
     if (!this._cannonicalCID) {
       // TODO: Use CIDv0 encoding
-      this._cannonicalCID = sha256(this.cannonicalSerialization)
+      this._cannonicalCID = sha256(this.cannonicalSerialization).toString('hex')
     }
     return this._cannonicalCID
   }

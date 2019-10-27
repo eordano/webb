@@ -10,7 +10,9 @@ import {
   TokenSuccessAction,
   TokenFailureAction,
   TOKEN_SUCCESS,
-  TOKEN_FAILURE
+  TOKEN_FAILURE,
+  EphemeralPut,
+  EPHEMERAL_PUT
 } from './actions'
 import { AuthState } from './types'
 
@@ -63,6 +65,7 @@ export type AuthReducerAction =
   | TokenRequestAction
   | TokenSuccessAction
   | TokenFailureAction
+  | EphemeralPut
 
 export function authReducer(state: AuthState = INITIAL_STATE, action: AuthReducerAction): AuthState {
   switch (action.type) {
@@ -109,6 +112,11 @@ export function authReducer(state: AuthState = INITIAL_STATE, action: AuthReduce
         error: action.payload.error
       }
     }
+    case EPHEMERAL_PUT:
+      return {
+        ...state,
+        ephemeral: (action as EphemeralPut).payload.token
+      }
     default: {
       return state
     }

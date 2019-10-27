@@ -129,6 +129,7 @@ ts_library(
         ],
     ),
     deps = [
+        "@npm//assert",
         "@npm//secp256k1"
     ],
 )

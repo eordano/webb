@@ -1,6 +1,9 @@
+import nodeCrypto from 'crypto'
+import { Buffer } from 'buffer'
+
 export function sha256asString(data: string) {
   const hash = sha256(data)
-  const crypto = typeof global === undefined ? window['crypto'] : require('crypto')
+  const crypto = typeof window !== 'undefined' && window.crypto || nodeCrypto as any
   if (crypto.createHash) {
     return hash.toString('hex')
   } else {
@@ -11,7 +14,7 @@ export function sha256asString(data: string) {
 }
 
 export function sha256(data: string | Buffer | Uint8Array | ArrayBuffer) {
-  const crypto = typeof global === undefined ? window['crypto'] : require('crypto')
+  const crypto = typeof window !== 'undefined' && window.crypto || nodeCrypto as any
   if (crypto.createHash) {
     return crypto
       .createHash('sha256')

@@ -10,7 +10,7 @@ const allExternals = [
    */
   'uuid',
   'typesafe-actions',
-  'secp256k1',
+  // 'secp256k1',
   'events',
   'fp-future',
   'history',

@@ -7,6 +7,7 @@ export type BrokerMessage = {
 
 export interface IBrokerConnection {
   onMessageObservable: Observable<BrokerMessage>
+  onUpdateObservable: Observable<any>
   readonly hasUnreliableChannel: boolean
   readonly hasReliableChannel: boolean
   readonly isAuthenticated: boolean

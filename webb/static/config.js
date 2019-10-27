@@ -10,7 +10,6 @@ require.config({
     'react-dom': 'npm/node_modules/react-dom/umd/react-dom.development',
     'react-router-dom': 'npm/node_modules/react-router-dom/umd/react-router-dom',
     'react-redux': 'npm/node_modules/react-redux/dist/react-redux',
-    'secp256k1': 'static/vendor-secp256k1/secp256k1',
     'jsonwebtoken': 'static/vendor-jsonwebtoken/jsonwebtoken',
     redux: 'npm/node_modules/redux/dist/redux',
     'redux-saga': 'npm/node_modules/redux-saga/dist/redux-saga.umd',

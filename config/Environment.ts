@@ -1,16 +1,16 @@
-var global = typeof window === 'undefined' ? global : window
-if (!global.location) {
-  global.location = { search: '', hostname: '' }
+var scope: any = typeof window !== 'undefined' && window || global
+if (!scope.location) {
+  scope.location = { search: '', hostname: '' }
 }
-const location = global.location
+const location = scope.location
 
 // Entry points
-export const PREVIEW: boolean = !!(global as any).preview
-export const EDITOR: boolean = !!(global as any).isEditor
+export const PREVIEW: boolean = scope.preview
+export const EDITOR: boolean = scope.isEditor
 
 // Development
-export const AVOID_WEB3: boolean = !!(global as any).avoidWeb3 || EDITOR
-export const DEBUG = location.search.indexOf('DEBUG_MODE') !== -1 || !!(global as any).mocha || PREVIEW || EDITOR
+export const AVOID_WEB3: boolean = scope.avoidWeb3 || EDITOR
+export const DEBUG = location.search.indexOf('DEBUG_MODE') !== -1 || scope.mocha || PREVIEW || EDITOR
 export const USE_LOCAL_COMMS = location.search.indexOf('LOCAL_COMMS') !== -1 || PREVIEW
 export const DEBUG_ANALYTICS = location.search.indexOf('DEBUG_ANALYTICS') !== -1
 export const DEBUG_MOBILE = location.search.indexOf('DEBUG_MOBILE') !== -1
@@ -21,10 +21,10 @@ export const DISABLE_AUTH = location.search.indexOf('DISABLE_AUTH') !== -1 || DE
 export const ENGINE_DEBUG_PANEL = location.search.indexOf('ENGINE_DEBUG_PANEL') !== -1
 export const SCENE_DEBUG_PANEL = location.search.indexOf('SCENE_DEBUG_PANEL') !== -1 && !ENGINE_DEBUG_PANEL
 
-export const isRunningTest: boolean = (global as any)['isRunningTests'] === true
+export const isRunningTest: boolean = scope['isRunningTests'] === true
 
 export function getTLD() {
-  const tld = global.location.hostname.match(/(\w+)$/)
+  const tld = scope.location.hostname.match(/(\w+)$/)
   if (tld) {
       return tld[0]
   } else {

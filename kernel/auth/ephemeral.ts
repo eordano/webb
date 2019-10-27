@@ -1,6 +1,8 @@
-import * as secp256k1 from 'secp256k1'
 import { Buffer } from 'buffer'
 import { sha256 as digest } from 'dcl/utils'
+import crypto from 'crypto'
+import secp256k1 from 'secp256k1'
+const { sign, publicKeyCreate, privateKeyVerify } = secp256k1
 
 export function getCurrentEpoch(): number {
   return parseInt((Date.now() / 1000).toString(), 10) // GetTime retrieves milliseconds
@@ -90,7 +92,7 @@ export class BasicEphemeralKey implements EphemeralKey {
 
   sign(hash: Buffer | ArrayBuffer): string {
     const value = Buffer.isBuffer(hash) ? hash : Buffer.from(hash)
-    return secp256k1.sign(value, this.key.privateKey).signature.toString('hex')
+    return sign(value, this.key.privateKey).signature.toString('hex')
   }
 
   private getIdentity(): string {
@@ -104,17 +106,22 @@ export class EcdsaKeyPair {
 
   constructor(privateK: Buffer) {
     this.privateKey = privateK
-    this.publicKey = secp256k1.publicKeyCreate(privateK)
+    this.publicKey = publicKeyCreate(privateK)
   }
 
   public static generateRandomKey(): EcdsaKeyPair {
-    const pvKey = new Buffer(32)
-    let retries = 0
-    do {
-      crypto.getRandomValues(pvKey)
-      retries++
-    } while (!secp256k1.privateKeyVerify(pvKey) || retries < 10)
-    return new EcdsaKeyPair(pvKey)
+    if (crypto.randomBytes) {
+      const pvKey = crypto.randomBytes(32)
+      return new EcdsaKeyPair(pvKey)
+    } else {
+      const browser = new Buffer(32)
+      let retries = 0
+      do {
+        window.crypto.getRandomValues(browser)
+        retries++
+      } while (!privateKeyVerify(browser) && retries < 10)
+      return new EcdsaKeyPair(browser)
+    }
   }
 
   public privateKeyAsHexString(): string {

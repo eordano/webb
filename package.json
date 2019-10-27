@@ -36,6 +36,7 @@
         "@types/stringify-object": "^3.2.0",
         "@types/tmp": "^0.1.0",
         "@types/yargs": "^13.0.3",
+        "assert": "^2.0.0",
         "async-iterator-all": "^1.0.0",
         "auth0-js": "^9.11.3",
         "aws-sdk": "^2.556.0",

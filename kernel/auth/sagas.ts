@@ -1,5 +1,5 @@
-import { getConfiguration, getServerConfigurations } from 'dcl/config'
 import auth0 from 'auth0-js'
+import { getConfiguration, getServerConfigurations } from 'dcl/config'
 import jwt from 'jsonwebtoken'
 import { all, call, put, select, takeLatest } from 'redux-saga/effects'
 import { v4 as uuid } from 'uuid'
@@ -8,20 +8,23 @@ import {
   authSuccess,
   AUTH_FAILURE,
   AUTH_REQUEST,
+  ephemeralPut,
+  EPHEMERAL_GET,
   LOGIN,
+  login,
   LoginAction,
   LOGOUT,
+  RESTORE_SESSION,
   tokenFailure,
   tokenSuccess,
-  TOKEN_REQUEST,
-  login,
-  RESTORE_SESSION
+  TOKEN_REQUEST
 } from './actions'
 import { BasicEphemeralKey, EphemeralKey } from './ephemeral'
-import { getAccessToken } from './selectors'
+import { getAccessToken, getEphemeralKey } from './selectors'
 import { AuthData } from './types'
 
 export function* authSaga(): any {
+  yield takeLatest(EPHEMERAL_GET, handleGetEphemeral)
   const webAuth = new auth0.WebAuth({
     clientID: getConfiguration('AUTH0_CLIENT_ID'),
     domain: getConfiguration('AUTH0_DOMAIN'),
@@ -42,9 +45,7 @@ export function* authSaga(): any {
     try {
       const result = yield call(restoreSession)
       yield put(authSuccess(result, ''))
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
   function restoreSession(): Promise<AuthData> {
@@ -173,6 +174,16 @@ export function* authSaga(): any {
       throw new Error('Returned ephemeral key does not match our public key')
     }
     return token.access_token
+  }
+}
+
+export function* handleGetEphemeral(): any {
+  const token = yield select(getEphemeralKey)
+  if (!token || (token as BasicEphemeralKey).hasExpired()) {
+    const newEphemeral = BasicEphemeralKey.generateNewKey(getConfiguration('EPHEMERAL_KEY_TTL'))
+    yield put(ephemeralPut(newEphemeral))
+  } else {
+    yield put(ephemeralPut(token))
   }
 }
 

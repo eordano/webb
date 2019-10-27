@@ -13,6 +13,7 @@ export class WebSocketBrokerConnection implements IBrokerConnection {
   public logger: ILogger = createLogger('Broker: ')
 
   public onMessageObservable = new Observable<BrokerMessage>()
+  public onUpdateObservable = new Observable<any>()
 
   private connected = future<void>()
 
@@ -35,6 +36,7 @@ export class WebSocketBrokerConnection implements IBrokerConnection {
   private ws: WebSocket | null = null
 
   constructor(public url: string) {
+    this.onMessageObservable.add(_ => this.onUpdateObservable.notifyObservers(_))
     this.connectWS()
   }
 

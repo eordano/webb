@@ -1,5 +1,6 @@
 import { action } from 'typesafe-actions'
 import { AuthData } from './types'
+import { EphemeralKey } from './ephemeral'
 
 // Logout
 export const LOGIN = 'Login'
@@ -28,7 +29,7 @@ export const RESTORE_SESSION = '[Auth] Restore session'
 export const restoreSession = () => action(RESTORE_SESSION)
 export type RestoreSession = ReturnType<typeof restoreSession>
 
-// Token
+// Comms Token
 export const TOKEN_REQUEST = '[Request] Comms token request'
 export const TOKEN_SUCCESS = '[Success] Comms token request'
 export const TOKEN_FAILURE = '[Failure] Comms token request'
@@ -40,3 +41,13 @@ export const tokenFailure = (error: string) => action(TOKEN_FAILURE, { error })
 export type TokenRequestAction = ReturnType<typeof tokenRequest>
 export type TokenSuccessAction = ReturnType<typeof tokenSuccess>
 export type TokenFailureAction = ReturnType<typeof tokenFailure>
+
+// Ephemeral Token
+export const EPHEMERAL_GET = '[Ephemeral] Ensure token'
+export const EPHEMERAL_PUT = '[Ephemeral] Setting token'
+
+export const ephemeralGet = () => action(EPHEMERAL_GET)
+export const ephemeralPut = (token: EphemeralKey) => action(EPHEMERAL_PUT, { token })
+
+export type EphemeralGet = ReturnType<typeof ephemeralGet>
+export type EphemeralPut = ReturnType<typeof ephemeralPut>
