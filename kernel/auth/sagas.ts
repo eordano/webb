@@ -1,30 +1,20 @@
 import auth0 from 'auth0-js'
 import { getConfiguration, getServerConfigurations } from 'dcl/config'
+import { AuthMessage, MessageType, Role } from 'dcl/protos/broker_pb'
+import { AuthData as AuthDataProto } from 'dcl/protos/comms_pb'
 import jwt from 'jsonwebtoken'
-import { all, call, put, select, takeLatest } from 'redux-saga/effects'
+import { all, call, put, select, take, takeLatest } from 'redux-saga/effects'
 import { v4 as uuid } from 'uuid'
-import {
-  authFailure,
-  authSuccess,
-  AUTH_FAILURE,
-  AUTH_REQUEST,
-  ephemeralPut,
-  EPHEMERAL_GET,
-  LOGIN,
-  login,
-  LoginAction,
-  LOGOUT,
-  RESTORE_SESSION,
-  tokenFailure,
-  tokenSuccess,
-  TOKEN_REQUEST
-} from './actions'
-import { BasicEphemeralKey, EphemeralKey } from './ephemeral'
-import { getAccessToken, getEphemeralKey } from './selectors'
+import { authFailure, authSuccess, AUTH_FAILURE, AUTH_REQUEST, commsSignatureRequestAction, commsSignatureSuccess, COMMS_SIGNATURE_REQUEST, ephemeralGet, ephemeralPut, EPHEMERAL_GET, EPHEMERAL_PUT, LOGIN, login, LoginAction, LOGOUT, RESTORE_SESSION, tokenFailure, tokenSuccess, TOKEN_REQUEST, EphemeralPut } from './actions'
+import { BasicEphemeralKey, EphemeralKey, getCurrentEpoch, MessageInput } from './ephemeral'
+import { getAccessToken, getCommsToken, getEphemeralKey } from './selectors'
 import { AuthData } from './types'
+import { ephemeralPresent, EPHEMERAL_PRESENT } from 'dcl/kernel/auth/actions'
 
 export function* authSaga(): any {
   yield takeLatest(EPHEMERAL_GET, handleGetEphemeral)
+  yield takeLatest(EPHEMERAL_PUT, handlePutEphemeralToPresent)
+  yield takeLatest(COMMS_SIGNATURE_REQUEST, handleSignCommsMessage)
   const webAuth = new auth0.WebAuth({
     clientID: getConfiguration('AUTH0_CLIENT_ID'),
     domain: getConfiguration('AUTH0_DOMAIN'),
@@ -183,8 +173,11 @@ export function* handleGetEphemeral(): any {
     const newEphemeral = BasicEphemeralKey.generateNewKey(getConfiguration('EPHEMERAL_KEY_TTL'))
     yield put(ephemeralPut(newEphemeral))
   } else {
-    yield put(ephemeralPut(token))
+    yield put(ephemeralPresent(token))
   }
+}
+export function* handlePutEphemeralToPresent(action: EphemeralPut): any {
+  yield put(ephemeralPresent(action.payload.token))
 }
 
 export type CallbackResult = { data: AuthData; redirectUrl: string | null }
@@ -195,4 +188,30 @@ export async function fetchServerPublicKey() {
 
 export function* tryRestoreSession(): any {
   yield put(login())
+}
+
+export function* handleSignCommsMessage(action: commsSignatureRequestAction): any {
+  let ephemeral = yield select(getEphemeralKey)
+  let accessToken = yield select(getCommsToken)
+  if (!ephemeral) {
+    yield put(ephemeralGet())
+    ephemeral = (yield take(EPHEMERAL_PRESENT)).payload
+  }
+  const timestamp = getCurrentEpoch()
+  const message = MessageInput.fromMessage(Buffer.from(action.payload))
+  const hash = yield call(() => message.timeBasedHash(timestamp))
+  const signature = this.sign(hash)
+
+  const authData = new AuthDataProto()
+  authData.setSignature(signature)
+  authData.setIdentity(this.getIdentity())
+  authData.setTimestamp(timestamp.toString())
+  authData.setAccessToken(accessToken)
+  const authMessage = new AuthMessage()
+  authMessage.setType(MessageType.AUTH)
+  authMessage.setRole(Role.CLIENT)
+  authMessage.setBody(authData.serializeBinary())
+  const messageBytes = authMessage.serializeBinary()
+
+  yield put(commsSignatureSuccess(messageBytes))
 }

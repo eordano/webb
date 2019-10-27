@@ -45,9 +45,22 @@ export type TokenFailureAction = ReturnType<typeof tokenFailure>
 // Ephemeral Token
 export const EPHEMERAL_GET = '[Ephemeral] Ensure token'
 export const EPHEMERAL_PUT = '[Ephemeral] Setting token'
+export const EPHEMERAL_PRESENT = '[Ephemeral] Confirmed token present'
 
 export const ephemeralGet = () => action(EPHEMERAL_GET)
 export const ephemeralPut = (token: EphemeralKey) => action(EPHEMERAL_PUT, { token })
+export const ephemeralPresent = (token: EphemeralKey) => action(EPHEMERAL_PRESENT, token)
 
 export type EphemeralGet = ReturnType<typeof ephemeralGet>
 export type EphemeralPut = ReturnType<typeof ephemeralPut>
+export type EphemeralPresent = ReturnType<typeof ephemeralPresent>
+
+// Ephemeral Token
+export const COMMS_SIGNATURE_REQUEST = '[Comms + Sign] Signature request'
+export const COMMS_SIGNATURE_SUCCESS = '[Comms + Sign] Signature success'
+
+export const commsSignatureRequest = (message: string) => action(EPHEMERAL_GET, message)
+export const commsSignatureSuccess = (bytes: Uint8Array) => action(EPHEMERAL_PUT, bytes)
+
+export type commsSignatureRequestAction = ReturnType<typeof commsSignatureRequest>
+export type commsSignatureSuccessAction = ReturnType<typeof commsSignatureSuccess>

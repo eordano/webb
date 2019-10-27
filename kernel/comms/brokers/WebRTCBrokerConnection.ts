@@ -1,14 +1,5 @@
 import { Communications } from 'dcl/config'
-import {
-  AuthMessage,
-  ConnectMessage,
-  CoordinatorMessage,
-  MessageType,
-  Role,
-  WebRtcMessage,
-  WelcomeMessage
-} from 'dcl/protos/broker_pb'
-import { AuthData } from 'dcl/protos/comms_pb'
+import { ConnectMessage, CoordinatorMessage, MessageType, WebRtcMessage, WelcomeMessage } from 'dcl/protos/broker_pb'
 import { createLogger, ILogger, Observable } from 'dcl/utils'
 import { future, IFuture } from 'fp-future'
 import { Message } from 'google-protobuf'
@@ -66,7 +57,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
 
   private ws: WebSocket | null = null
 
-  constructor(public url: string) {
+  constructor(public url: string, public getAuthenticationMessageBytes: (message: string) => Promise<Uint8Array>) {
     this.onMessageObservable.add(_ => this.onUpdateObservable.notifyObservers(_))
     this.connectRTC()
     this.connectWS()
@@ -276,24 +267,28 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
       this.ws = null
     }
 
-    this.ws = new WebSocket(this.url)
-    this.ws.binaryType = 'arraybuffer'
+    try {
+      this.ws = new WebSocket(this.url)
+      this.ws.binaryType = 'arraybuffer'
 
-    this.ws.onerror = event => {
-      this.onUpdateObservable.notifyObservers(
-        commsWebrtcError({ event, message: 'Could not establish communications' })
-      )
-      this.logger.error('socket error', event)
-      this.ws = null
-    }
-
-    this.ws.onmessage = event => {
-      this.onWsMessage(event).catch(err => {
+      this.ws.onerror = event => {
         this.onUpdateObservable.notifyObservers(
-          commsWebrtcError({ context: event, err, message: 'Fatal: connection lost' })
+          commsWebrtcError({ event, message: 'Could not establish communications' })
         )
-        this.logger.error(err)
-      })
+        this.logger.error('socket error', event)
+        this.ws = null
+      }
+
+      this.ws.onmessage = event => {
+        this.onWsMessage(event).catch(err => {
+          this.onUpdateObservable.notifyObservers(
+            commsWebrtcError({ context: event, err, message: 'Fatal: connection lost' })
+          )
+          this.logger.error(err)
+        })
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -333,7 +328,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
 
       if (label === 'reliable') {
         this.reliableDataChannel = dc
-        const bytes = await this.getAuthenticationMessageBytes()
+        const bytes = await this.getAuthenticationMessageBytes('')
         if (dc.readyState === 'open') {
           dc.send(bytes)
           this.authenticated = true
@@ -353,19 +348,5 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
 
       this.onMessageObservable.notifyObservers({ data: msg, channel: dc.label })
     }
-  }
-
-  private async getAuthenticationMessageBytes() {
-    const authData = new AuthData()
-    const credentials: any = {}
-    authData.setSignature(credentials['x-signature'])
-    authData.setIdentity(credentials['x-identity'])
-    authData.setTimestamp(credentials['x-timestamp'])
-    authData.setAccessToken(credentials['x-access-token'])
-    const authMessage = new AuthMessage()
-    authMessage.setType(MessageType.AUTH)
-    authMessage.setRole(Role.CLIENT)
-    authMessage.setBody(authData.serializeBinary())
-    return authMessage.serializeBinary()
   }
 }
