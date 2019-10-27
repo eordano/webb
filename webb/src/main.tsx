@@ -5,12 +5,12 @@ import { Provider } from 'react-redux'
 import { Router, Switch, Route } from 'react-router'
 import { Container, Navbar } from './components/liteui/dcl'
 import Status from './components/status/StatusFrame'
-import { store } from './store'
+import { store, configured } from './store'
 
 const history = createBrowserHistory()
-store.start()
+configured.start()
 ReactDOM.render(
-  <Provider store={store.store}>
+  <Provider store={store}>
     <>
       <Container>
         <Navbar />

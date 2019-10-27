@@ -1,3 +1,4 @@
+import { Store } from 'redux'
 import { RootAuthState } from '../auth/types'
 import { RootCommsState } from '../comms/reducer'
 import { RootPassportState } from '../passports/types'
@@ -26,3 +27,5 @@ export type RootAction =
   | PositionToSceneIdAction
   | SceneByIdAction
   | SceneLifeCycleAction
+
+export type RootStore = Store<RootState>

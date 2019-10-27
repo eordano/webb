@@ -1,6 +1,6 @@
 export function sha256asString(data: string) {
   const hash = sha256(data)
-  const crypto = global['crypto'] || require('crypto')
+  const crypto = typeof global === undefined ? window['crypto'] : require('crypto')
   if (crypto.createHash) {
     return hash.toString('hex')
   } else {

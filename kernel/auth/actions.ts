@@ -24,6 +24,10 @@ export type AuthRequestAction = ReturnType<typeof authRequest>
 export type AuthSuccessAction = ReturnType<typeof authSuccess>
 export type AuthFailureAction = ReturnType<typeof authFailure>
 
+export const RESTORE_SESSION = '[Auth] Restore session'
+export const restoreSession = () => action(RESTORE_SESSION)
+export type RestoreSession = ReturnType<typeof restoreSession>
+
 // Token
 export const TOKEN_REQUEST = '[Request] Comms token request'
 export const TOKEN_SUCCESS = '[Success] Comms token request'

@@ -50,8 +50,10 @@ export async function customEval(code: string, context: any) {
   return defer(() => new Function('code', `with (this) { ${code} }`).call(sandbox, code))
 }
 
+declare var global: any
 export function getES5Context(base: Record<string, any>) {
-  whitelistES5.forEach($ => (base[$ as any] = global[$]))
+  const module = typeof window !== undefined ? window : global
+  whitelistES5.forEach($ => (base[$ as any] = module[$]))
 
   return base
 }

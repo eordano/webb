@@ -36,6 +36,7 @@ ts_library(
         "//protos:comms",
         "//protos:broker",
         "//utils",
+        "//synced-ecs",
         "//config",
         "//rpc",
         "//scene-api",

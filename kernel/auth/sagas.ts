@@ -14,7 +14,8 @@ import {
   tokenFailure,
   tokenSuccess,
   TOKEN_REQUEST,
-  login
+  login,
+  RESTORE_SESSION
 } from './actions'
 import { BasicEphemeralKey, EphemeralKey } from './ephemeral'
 import { getAccessToken } from './selectors'
@@ -30,12 +31,21 @@ export function* authSaga(): any {
     scope: 'openid email'
   })
   yield all([
+    takeLatest(RESTORE_SESSION, handleRestoreSession),
     takeLatest(LOGIN, handleLogin),
     takeLatest(LOGOUT, handleLogout),
     takeLatest(AUTH_REQUEST, handleAuthRequest),
     takeLatest(AUTH_FAILURE, handleLogin),
     takeLatest(TOKEN_REQUEST, handleTokenRequest)
   ])
+  function* handleRestoreSession() {
+    try {
+      const result = yield call(restoreSession)
+      yield put(authSuccess(result, ''))
+    } catch (e) {
+
+    }
+  }
 
   function restoreSession(): Promise<AuthData> {
     return new Promise((resolve, reject) => {

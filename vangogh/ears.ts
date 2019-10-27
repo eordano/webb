@@ -4,7 +4,7 @@ import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePo
 import { GamekitScene } from 'dcl/kernel/scene-scripts/userSpace/GamekitScene'
 import fetch from 'node-fetch'
 import { SyncedECS } from './SyncedECS'
-import { renderEntity } from './render'
+import { renderEntity } from 'dcl/synced-ecs/ecs/render'
 
 export class PlainGameKit extends GamekitScene {
   constructor(public source: string) {
