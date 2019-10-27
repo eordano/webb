@@ -6,6 +6,10 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "@dcl/*": ["../../bazel-genfiles/*", "../../bazel-out/*"],
+      "dcl/*": ["../../bazel-genfiles/*", "../../bazel-out/*"]
+    },
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "node",

@@ -160,7 +160,6 @@ ts_devserver(
         "static/config.js",
         "//protos:broker",
         "//protos:comms",
-        "@npm//babel-runtime:babel-runtime",
         "@npm//typesafe-actions:typesafe-actions__umd",
         "@npm//fp-future:fp-future__umd",
         "@npm//react-is:react-is__umd",

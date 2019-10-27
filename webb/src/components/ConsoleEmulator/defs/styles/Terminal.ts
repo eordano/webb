@@ -7,14 +7,14 @@ export default {
     borderRadius: '5px',
     overflow: 'auto',
     cursor: 'text',
-    background: '#212121',
+    background: '#fafafa',
     backgroundSize: 'cover'
   },
   content: {
     padding: '20px',
     height: '100%',
     fontSize: '15px',
-    color: '#FFFFFF',
+    color: '#2e2e2e',
     fontFamily: 'monospace'
   },
   inputArea: {
@@ -23,7 +23,7 @@ export default {
   },
   promptLabel: {
     paddingTop: '3px',
-    color: '#EE9C34'
+    color: '#ccefcc'
   },
   input: {
     border: '0',
@@ -34,7 +34,7 @@ export default {
     height: '22px',
     background: 'transparent',
     fontSize: '15px',
-    color: '#F0BF81',
+    color: '#203F21',
     fontFamily: 'monospace',
     outline: 'none' // Fix for outline showing up on some browsers
   }
