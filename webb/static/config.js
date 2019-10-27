@@ -3,7 +3,6 @@ require.config({
     // 'connected-react-router': 'static/vendor-connected-react-router-6.5.2/ConnectedReactRouter',
     '@babel/runtime/helpers/inheritsLoose': 'static/fixups/inheritsLoose',
     'gud': 'static/fixups/gud',
-    'path-to-regexp': 'static/fixups/path-to-regexp',
     history: 'npm/node_modules/history/umd/history',
     react: 'npm/node_modules/react/umd/react.development',
     'hoist-non-react-statics': 'npm/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.min',

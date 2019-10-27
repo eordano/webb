@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 
 import { Navbar } from './Navbar'
 
@@ -13,7 +12,4 @@ function mapState(state: any) {
   }
 }
 
-export default connect(
-  mapState,
-  { login: () => push('/login'), pushLocation: (key: string) => push(key) }
-)(Navbar)
+export default connect(mapState)(Navbar)

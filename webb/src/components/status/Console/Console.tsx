@@ -12,38 +12,32 @@ function makeCommands(that: any) {
       start: {
         description: 'Start the unity renderer',
         usage: 'start',
-        fn: function() {
-        }
+        fn: function() {}
       },
       getProfile: {
         description: 'Get a profile using a userId',
         usage: 'getProfile <userId>',
-        fn: function() {
-        }
+        fn: function() {}
       },
       connect: {
         description: 'Connect to the comms server',
         usage: 'status',
-        fn: function() {
-        }
+        fn: function() {}
       },
       status: {
         description: 'Print your position and the current scene',
         usage: 'status',
-        fn: function() {
-        }
+        fn: function() {}
       },
       goto: {
         description: 'Teleport to another position',
         usage: 'goto <x> <y>',
-        fn: function() {
-        }
+        fn: function() {}
       },
       run: {
         description: 'Run scene at coordinates',
         usage: 'run <x> <y>',
-        fn: function() {
-        }
+        fn: function() {}
       },
       list: {
         description: 'List userIds around your position',

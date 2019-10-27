@@ -1,15 +1,18 @@
-define("path-to-regexp", [], function(require, exports) {
-
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define('path-to-regexp', ['exports'], factory) :
+	(global = global || self, factory(global['path-to-regexp'] = {}, global.react, global.reactFastCompare, global.reactInnerHtml, global.reactIs));
+}(this, (function (module) { 'use strict';
 var isarray = Array.isArray;
 
 /**
  * Expose `pathToRegexp`.
  */
-exports = pathToRegexp
-exports.parse = parse
-exports.compile = compile
-exports.tokensToFunction = tokensToFunction
-exports.tokensToRegExp = tokensToRegExp
+module = pathToRegexp
+module.parse = parse
+module.compile = compile
+module.tokensToFunction = tokensToFunction
+module.tokensToRegExp = tokensToRegExp
 
 /**
  * The main path matching regexp utility.
@@ -427,4 +430,4 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 
-})
+})))

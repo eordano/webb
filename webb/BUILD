@@ -158,6 +158,7 @@ ts_devserver(
         "@npm//react-is:react-is__umd",
         "@npm//react-fast-compare:react-fast-compare__umd",
         "@npm//react-inner-html:react-inner-html__umd",
+        "@npm//path-to-regexp:path-to-regexp__umd",
         "@npm//uuid:uuid__umd",
         "@npm//history:history__umd",
         "@npm//events:events__umd",
