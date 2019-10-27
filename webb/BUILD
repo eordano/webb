@@ -76,6 +76,7 @@ rollup_bundle(
         "//scene-api",
         "//utils",
         ":webb_code",
+        "@npm//jsonwebtoken",
         "@npm//rollup-plugin-commonjs",
         "@npm//rollup-plugin-json",
         "@npm//rollup-plugin-node-builtins",
@@ -84,6 +85,35 @@ rollup_bundle(
     ],
 )
 
+ts_library(
+    name = "jsonwebtoken_lib",
+    srcs = glob(
+        include = [
+            "static/vendor-jsonwebtoken/jsonwebtoken.ts"
+        ],
+    ),
+    deps = [
+        "@npm//secp256k1",
+        "@npm//jsonwebtoken",
+    ],
+)
+rollup_bundle(
+    name = "jsonwebtoken",
+    entry_point = "static/vendor-jsonwebtoken/jsonwebtoken.ts",
+    config_file = ":rollup.jsonwebtoken.js",
+    output_dir = False,
+    format = "amd",
+    sourcemap = 'false',
+    deps = [
+        ":jsonwebtoken_lib",
+        "@npm//jsonwebtoken",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-json",
+        "@npm//rollup-plugin-node-globals",
+        "@npm//rollup-plugin-node-resolve",
+        "@npm//rollup-plugin-node-builtins",
+    ],
+)
 ts_library(
     name = "secp256k1_lib",
     srcs = glob(
@@ -121,7 +151,6 @@ ts_devserver(
     serving_path = "/bundle.js",
     static_files = ["index.html"],
     deps = [
-        "static/r.js",
         "static/config.js",
         "//protos:broker",
         "//protos:comms",
@@ -142,7 +171,6 @@ ts_devserver(
         ":webb_code",
         ":static",
         "//:node_modules",
-        "@npm//secp256k1",
         "@npm//react",
         "@npm//react-dom",
         "@npm//redux",

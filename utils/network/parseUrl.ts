@@ -1,4 +1,4 @@
-const URL = require('url')
+import { resolve } from 'url'
 
 export function resolveUrl(baseUrl: string, url: string): string
 export function resolveUrl(baseUrl: string, url: URL): URL
@@ -21,9 +21,9 @@ export function resolveUrl(baseUrl: string, url: string | URL) {
     } else if (url.match(/^test-local:/)) {
       const folder = url.replace('test-local:', '')
 
-      return URL.resolve(baseUrl, `/test-parcels/${folder}/`)
+      return resolve(baseUrl, `/test-parcels/${folder}/`)
     } else {
-      return URL.resolve(baseUrl, url)
+      return resolve(baseUrl, url)
     }
   } else if (url instanceof URL) {
     return url

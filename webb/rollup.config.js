@@ -1,8 +1,8 @@
 const builtins = require('rollup-plugin-node-builtins')
 const resolve = require('rollup-plugin-node-resolve')
-const globals = require('rollup-plugin-node-globals')
 const commonjs = require('rollup-plugin-commonjs')
 const json = require('rollup-plugin-json')
+const globals = require('rollup-plugin-node-globals')
 
 const allExternals = [
   /**
@@ -21,7 +21,6 @@ const allExternals = [
   'redux',
   'redux-saga',
   'redux-saga/effects',
-  '@redux-saga/effects',
   '@babel/runtime/helpers/inheritsLoose',
   'prop-types',
   'hoist-non-react-statics',
@@ -36,7 +35,6 @@ const allExternals = [
   /**
    * Web dependencies
    */
-  'jsonwebtoken',
   'react',
   'react-redux',
   'react-dom',
@@ -62,5 +60,6 @@ export default {
     }),
     commonjs(),
     builtins(),
+    globals(),
   ]
 }

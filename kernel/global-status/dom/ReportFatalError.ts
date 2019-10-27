@@ -39,4 +39,5 @@ export function ReportFatalError(event: ExecutionLifecycleEvent) {
   bringDownClientAndShowError(event)
 }
 
+debugger;
 ;(global as any).ReportFatalError = ReportFatalError

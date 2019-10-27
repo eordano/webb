@@ -1,13 +1,12 @@
 import { call, fork, put } from 'redux-saga/effects'
 import { signalRendererInitialized } from './actions'
 
-declare var global: any
-
 export function* rendererSaga(): any {
   yield fork(awaitRendererInitialSignal)
 }
 
 export function* awaitRendererInitialSignal(): any {
+  var global: any = typeof window !== undefined ? window : global
   yield call(waitForRenderer)
   if (global.unityInterface) {
     yield put(signalRendererInitialized(global.unityInterface))
@@ -15,6 +14,7 @@ export function* awaitRendererInitialSignal(): any {
 }
 
 export async function waitForRenderer() {
+  var global: any = typeof window !== undefined ? window : global
   return new Promise(resolve => {
     const interval = setInterval(() => {
       if (global.unityInterface && global.unityInterface.SendMessage) {
