@@ -45,7 +45,6 @@ ts_library(
         "@npm//@types/react-dom",
         "@npm//@types/react-redux",
         "@npm//@types/react-router",
-        "@npm//connected-react-router",
         "@npm//history",
         "@npm//react",
         "@npm//react-dom",
