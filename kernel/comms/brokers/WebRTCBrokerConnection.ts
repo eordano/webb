@@ -58,6 +58,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
   private ws: WebSocket | null = null
 
   constructor(public url: string, public getAuthenticationMessageBytes: (message: string) => Promise<Uint8Array>) {
+    this.logger.setLogLevel(1)
     this.onMessageObservable.add(_ => this.onUpdateObservable.notifyObservers(_))
     this.connectRTC()
     this.connectWS()

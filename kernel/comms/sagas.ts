@@ -1,63 +1,23 @@
 import { USE_LOCAL_COMMS } from 'dcl/config'
 import { defaultLogger } from 'dcl/utils'
-import { call, put, race, select, takeLatest } from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { getCurrentUserId } from '../auth/selectors'
 import { getProfile } from '../passports/selectors'
 import { Profile } from '../passports/types'
 import { marshalPositionReport } from '../presence/wireTransforms/marshalPositionReport'
-import {
-  CLOSE_COMMS,
-  COMMS_STARTED,
-  ProtocolOutChatAction,
-  ProtocolOutPingAction,
-  ProtocolOutPositionAction,
-  ProtocolOutPrivateMessageAction,
-  ProtocolOutProfileAction,
-  ProtocolOutSceneAction,
-  ProtocolOutYellAction,
-  PROTOCOL_OUT_CHAT,
-  PROTOCOL_OUT_PING,
-  PROTOCOL_OUT_POSITION,
-  PROTOCOL_OUT_PRIVATE_MESSAGE,
-  PROTOCOL_OUT_PROFILE,
-  PROTOCOL_OUT_SCENE,
-  PROTOCOL_OUT_YELL,
-  SetBrokerConnectionAction,
-  SET_BROKER_CONNECTION,
-  COMMS_DATACHANNEL_RELIABLE,
-  commsSuccessfullyStarted,
-  COMMS_DATACHANNEL_UNRELIABLE
-} from './actions'
+import { commsSuccessfullyStarted, COMMS_DATACHANNEL_RELIABLE, COMMS_DATACHANNEL_UNRELIABLE, COMMS_STARTED, ProtocolOutChatAction, ProtocolOutPingAction, ProtocolOutPositionAction, ProtocolOutPrivateMessageAction, ProtocolOutProfileAction, ProtocolOutSceneAction, ProtocolOutYellAction } from './actions'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
-import { handleMessage } from './handleMessage'
-import { sendPing } from './senders/broker/ping'
-import { sendChatMessage } from './senders/protocol/chat'
-import { sendProfileMessage } from './senders/protocol/profile'
 import { setupWebRTCBroker } from './brokers/WebRTCSaga'
 import { setupCliBroker } from './brokers/WebSocketSaga'
 import { shouldAnnounceConnected } from './selectors'
+import { sendPing } from './senders/broker/ping'
+import { sendChatMessage } from './senders/protocol/chat'
+import { sendProfileMessage } from './senders/protocol/profile'
 
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
   yield takeLatest(COMMS_DATACHANNEL_RELIABLE, checkConnected)
   yield takeLatest(COMMS_DATACHANNEL_UNRELIABLE, checkConnected)
-
-  yield takeLatest(SET_BROKER_CONNECTION, function*(connectionAction: SetBrokerConnectionAction) {
-    const connection = connectionAction.payload
-    yield takeLatest(PROTOCOL_OUT_POSITION, handleSendPositionRequest(connection))
-    yield takeLatest(PROTOCOL_OUT_PROFILE, handleSendProfileRequest(connection))
-    yield takeLatest(PROTOCOL_OUT_PING, handleSendPingRequest(connection))
-    yield takeLatest(PROTOCOL_OUT_YELL, handleYellRequest(connection))
-    yield takeLatest(PROTOCOL_OUT_PRIVATE_MESSAGE, handlePrivateMessageRequest(connection))
-    yield takeLatest(PROTOCOL_OUT_CHAT, handleSendChatRequest(connection))
-    yield takeLatest(PROTOCOL_OUT_SCENE, handleSendSceneRequest(connection))
-
-    connection.onMessageObservable.add(handleMessage)
-
-    yield race([SET_BROKER_CONNECTION, CLOSE_COMMS])
-
-    connection.close()
-  })
 }
 
 export function handleSendProfileRequest(connection: IBrokerConnection): any {

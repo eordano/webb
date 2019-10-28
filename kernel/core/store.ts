@@ -8,9 +8,34 @@ import { configureManifestDownloadServer } from '../scene-atlas/05-sceneManifest
 import { createReducer } from './reducers'
 import { rootSaga } from './rootSaga'
 import { RootState } from './types'
+import { restoreSession } from '../auth/actions'
+import { commsStarted } from '../comms/actions'
+import { isLoggedIn } from '../auth/selectors'
+import { isConnected } from '../comms/selectors'
 
 declare var window: any
 export let store: Store<RootState>
+
+export async function waitFor<T>(store: Store<RootState>, isFulfilled: (state: RootState) => boolean): Promise<T> {
+  return new Promise((resolve) => {
+    const unsubscribe = store.subscribe(() => {
+      if (isFulfilled(store.getState())) {
+        unsubscribe()
+        return resolve()
+      }
+    })
+  })
+}
+
+export function triggerLoginAndAwait(store: Store<RootState>) {
+  store.dispatch(restoreSession())
+  return waitFor(store, state => isLoggedIn(state))
+}
+
+export function triggerConnectAndAwait(store: Store<RootState>) {
+  store.dispatch(commsStarted())
+  return waitFor(store, state => isConnected(state))
+}
 
 export const configureStore: (otherReducers: Record<string, Reducer>, state?: any) => { store: Store<RootState>; sagasMiddleware: any; start: () => void } = (otherReducers: Record<string, Reducer>, state?: any) => {
   const enhance =
@@ -27,8 +52,10 @@ export const configureStore: (otherReducers: Record<string, Reducer>, state?: an
   store.dispatch(configureManifestDownloadServer(config.content))
   store.dispatch(setProfileServer(config.avatar.server))
 
-  function start() {
+  async function start() {
     sagasMiddleware.run(rootSaga)
+    await triggerLoginAndAwait(store)
+    await triggerConnectAndAwait(store)
   }
   return { store, sagasMiddleware, start }
 }

@@ -2,14 +2,20 @@ import React from 'react'
 import { Segment } from '../../liteui/dcl'
 import Terminal from '../../ConsoleEmulator/components/Terminal'
 import { store } from '../../../store'
-import { restoreSession } from 'dcl/kernel/auth/actions'
 import { SceneManifest } from 'dcl/kernel/scene-manifest/SceneManifest'
 import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
-import { commsStarted } from 'dcl/kernel/comms/actions'
 import { PassportAsPromise } from 'dcl/kernel/passports/PassportAsPromise'
 import { Profile } from 'dcl/kernel/passports/types'
 import { RunScene } from './vangogh/ears'
 import { renderEntity } from 'dcl/synced-ecs/ecs/render'
+import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/actions'
+import { teleportToTarget } from 'dcl/kernel/scene-atlas/07-settlement/actions'
+import {
+  protocolSubscription,
+  protocolUnsubscribe,
+  protocolOutProfile,
+  protocolOutYell
+} from 'dcl/kernel/comms/actions'
 
 var term = null
 var commands: any = {}
@@ -21,13 +27,6 @@ function makeCommands(that: any) {
         description: 'Start the unity renderer',
         usage: 'start',
         fn: function() {}
-      },
-      login: {
-        description: 'Login',
-        usage: 'login',
-        fn: function() {
-          store.dispatch(restoreSession())
-        }
       },
       getScene: {
         description: 'Get a scene based on its x,y coordinates',
@@ -49,22 +48,64 @@ function makeCommands(that: any) {
           })
         }
       },
-      connect: {
-        description: 'Connect to the comms server',
-        usage: 'connect',
-        fn: function() {
-          store.dispatch(commsStarted())
+      subscribe: {
+        description: 'subscribe to a comms topic',
+        usage: 'subscribe <topic>',
+        fn: function(topic: string) {
+          if (topic) {
+            store.dispatch(protocolSubscription(topic))
+          }
         }
       },
-      status: {
-        description: 'Print your position and the current scene',
-        usage: 'status',
-        fn: function() {}
+      protocolUnsubscribe: {
+        description: 'unsubscribe to a comms topic',
+        usage: 'protocolUnsubscribe <topic>',
+        fn: function(topic: string) {
+          if (topic) {
+            store.dispatch(protocolUnsubscribe(topic))
+          }
+        }
+      },
+      chat: {
+        description: 'send a chat message',
+        usage: 'chat <topci> <message>',
+        fn: function(...messages: string[]) {
+          store.dispatch(protocolOutYell(messages.join(' ')))
+        }
+      },
+      profile: {
+        description: 'post a profile update message on all subscribed topics',
+        usage: 'profile',
+        fn: function(version: string) {
+          if (version) {
+            store.dispatch(protocolOutProfile(Object.keys(store.getState().comms.topics)))
+          }
+        }
+      },
+      reportPosition: {
+        description: 'report a position in the world',
+        usage: 'reportPosition <x> <y> <z>',
+        fn: function(_x: string | number, _y: string | number, _z: string | number) {
+          const x = typeof _x === 'string' ? parseInt(_x, 10) : _x
+          const y = typeof _y === 'string' ? parseInt(_y, 10) : _y
+          const z = typeof _z === 'string' ? parseInt(_z, 10) : _z
+          if (isNaN(x) || isNaN(y) || isNaN(z)) {
+            return 'Invalid coordinates (must specify 3, the full position in the world in "meters")'
+          }
+          store.dispatch(setWorldPosition({ x, y, z }))
+        }
       },
       goto: {
         description: 'Teleport to another position',
         usage: 'goto <x> <y>',
-        fn: function() {}
+        fn: function(_x: string | number, _y: string | number) {
+          const x = typeof _x === 'string' ? parseInt(_x, 10) : _x
+          const y = typeof _y === 'string' ? parseInt(_y, 10) : _y
+          if (isNaN(x) || isNaN(y)) {
+            return 'Invalid coordinates (must specify 2, the X and Y coordinates in the world grid)'
+          }
+          store.dispatch(teleportToTarget({ x, y }))
+        }
       },
       run: {
         description: 'Run scene at coordinates',
@@ -79,11 +120,6 @@ function makeCommands(that: any) {
       list: {
         description: 'List userIds around your position',
         usage: 'list',
-        fn: function() {}
-      },
-      listTopics: {
-        description: 'List topics to which you are connected',
-        usage: 'listTopics',
         fn: function() {}
       },
       scenes: {

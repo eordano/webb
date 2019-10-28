@@ -55,7 +55,6 @@ export class MessageInput {
     if (this.content !== null) {
       toHash.push(this.content)
     }
-    console.log(toHash)
 
     const hash = Buffer.concat(toHash)
     const result = await digest(hash)
@@ -88,14 +87,12 @@ export class BasicEphemeralKey implements EphemeralKey {
     const hash = await params.timeBasedHash(timestamp)
     const signature = this.sign(hash)
 
-    credentials.set('x-hash', hash as any)
     credentials.set('x-signature', signature)
     credentials.set('x-timestamp', timestamp.toString())
     credentials.set('x-identity', this.getIdentity())
     credentials.set('x-auth-type', 'third-party')
     credentials.set('x-access-token', accessToken)
 
-    console.log(window['storeCred'] = credentials)
     return credentials
   }
 

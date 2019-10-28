@@ -65,7 +65,7 @@ export const INITIAL_CONNECTED_STATE = { connected: true, topics: {} }
 export function connectingReducer(state: ConnectingState, action: CommsAction): CommsState {
   switch (action.type) {
     case COMMS_WELCOME:
-      return { ...INITIAL_COMMS_STATE, status: 'server sent welcome' }
+      return { ...INITIAL_COMMS_STATE, status: 'server sent welcome', alias: action.payload.alias }
     case COMMS_WEBRTC_ICE_STATE:
       if (action.payload.iceState === 'connected') {
         return { ...state, status: 'connecting' }

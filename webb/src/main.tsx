@@ -9,6 +9,7 @@ import { store, configured } from './store'
 
 const history = createBrowserHistory()
 configured.start()
+
 ReactDOM.render(
   <Provider store={store}>
     <>
