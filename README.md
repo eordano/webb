@@ -19,6 +19,7 @@ Dive into the different aspects of this repository, in increasing order of depen
 * `kernel`: a standalone, browser/node compatible library that provides the core client functionality
 * `synced-ecs`: a library to provide different models of doing state synchronization among scenes
 * `descartes`: a content tool to make it easier to gather data and tests about deployments
+* `vangogh`: tool to "see" the world from the command line
 * `webb`: the unity/webgl explorer
 
 ## Copyright info
