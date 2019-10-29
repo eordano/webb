@@ -110,12 +110,12 @@ export type CommsConnectionAction =
   | CommsFailureAuthenticationAction
   | CommsSuccessfullyStartedAction
 
-export const PROTOCOL_POSITION = '[Protocol:In] Position update'
-export const PROTOCOL_PROFILE = '[Protocol:In] Profile update'
-export const PROTOCOL_PING = '[Protocol:In] Ping'
-export const PROTOCOL_CHAT = '[Protocol:In] Chat message'
-export const PROTOCOL_SCENE = '[Protocol:In] Scene event'
-export const PROTOCOL_UNKNOWN = '[Protocol:In] Unknown message'
+export const PROTOCOL_POSITION = '[Comms] In: Position update'
+export const PROTOCOL_PROFILE = '[Comms] In: Profile update'
+export const PROTOCOL_PING = '[Comms] In: Ping'
+export const PROTOCOL_CHAT = '[Comms] In: Chat message'
+export const PROTOCOL_SCENE = '[Comms] In: Scene event'
+export const PROTOCOL_UNKNOWN = '[Comms] In: Unknown message'
 
 export type Alias = number
 
@@ -142,13 +142,13 @@ export type ProtocolInActionType =
   | ProtocolSceneAction
   | ProtocolUnknownAction
 
-export const PROTOCOL_OUT_POSITION = '[Protocol:Out] Position update'
-export const PROTOCOL_OUT_PROFILE = '[Protocol:Out] Profile update'
-export const PROTOCOL_OUT_PING = '[Protocol:Out] Ping'
-export const PROTOCOL_OUT_YELL = '[Protocol:Out] Public message in current position'
-export const PROTOCOL_OUT_PRIVATE_MESSAGE = '[Protocol:Out] Private message to target user'
-export const PROTOCOL_OUT_CHAT = '[Protocol:Out] Chat message'
-export const PROTOCOL_OUT_SCENE = '[Protocol:Out] Scene event'
+export const PROTOCOL_OUT_POSITION = '[Comms] Out: Position update'
+export const PROTOCOL_OUT_PROFILE = '[Comms] Out: Profile update'
+export const PROTOCOL_OUT_PING = '[Comms] Out: Ping'
+export const PROTOCOL_OUT_YELL = '[Comms] Out: Public message in current position'
+export const PROTOCOL_OUT_PRIVATE_MESSAGE = '[Comms] Out: Private message to target user'
+export const PROTOCOL_OUT_CHAT = '[Comms] Out: Chat message'
+export const PROTOCOL_OUT_SCENE = '[Comms] Out: Scene event'
 
 export const protocolOutPosition = (positionData: PositionReport) => action(PROTOCOL_OUT_POSITION, positionData)
 export type ProtocolOutPositionAction = ReturnType<typeof protocolOutPosition>
@@ -174,10 +174,10 @@ export type ProtocolOutActionType =
   | ProtocolOutPrivateMessageAction
   | ProtocolOutSceneAction
 
-export const PROTOCOL_SUBSCRIPTION = '[Protocol] Topic: Subscribe'
+export const PROTOCOL_SUBSCRIPTION = '[Comms] Topic: Subscribe'
 export const protocolSubscription = (topic: string) => action(PROTOCOL_SUBSCRIPTION, { topic })
 export type ProtocolSubscriptionAction = ReturnType<typeof protocolSubscription>
-export const PROTOCOL_UNSUBSCRIBE = '[Protocol] Topic: Unsubscribe'
+export const PROTOCOL_UNSUBSCRIBE = '[Comms] Topic: Unsubscribe'
 export const protocolUnsubscribe = (topic: string) => action(PROTOCOL_UNSUBSCRIBE, { topic })
 export type ProtocolUnsubscribeAction = ReturnType<typeof protocolUnsubscribe>
 

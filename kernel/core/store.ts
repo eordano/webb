@@ -37,7 +37,7 @@ export function triggerConnectAndAwait(store: Store<RootState>) {
   return waitFor(store, state => isConnected(state))
 }
 
-export const configureStore: (otherReducers: Record<string, Reducer>, state?: any) => { store: Store<RootState>; sagasMiddleware: any; start: () => void } = (otherReducers: Record<string, Reducer>, state?: any) => {
+export const configureStore: (otherReducers?: Record<string, Reducer>, state?: any) => { store: Store<RootState>; sagasMiddleware: any; start: () => void } = (otherReducers: Record<string, Reducer>, state?: any) => {
   const enhance =
     typeof window === 'object' && (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && DEBUG_REDUX)
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({

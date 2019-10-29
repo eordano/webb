@@ -8,6 +8,7 @@ export function sendChatMessage(comms: IBrokerConnection, topic: string, message
   d.setTime(Date.now())
   d.setMessageId(messageId)
   d.setText(text)
+    console.log('sending chat2 ', d)
 
   return sendTopicMessage(comms, true, topic, d)
 }

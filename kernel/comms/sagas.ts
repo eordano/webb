@@ -1,5 +1,4 @@
 import { USE_LOCAL_COMMS } from 'dcl/config'
-import { defaultLogger } from 'dcl/utils'
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { getCurrentUserId } from '../auth/selectors'
 import { getProfile } from '../passports/selectors'
@@ -9,10 +8,11 @@ import { commsSuccessfullyStarted, COMMS_DATACHANNEL_RELIABLE, COMMS_DATACHANNEL
 import { IBrokerConnection } from './brokers/IBrokerConnection'
 import { setupWebRTCBroker } from './brokers/WebRTCSaga'
 import { setupCliBroker } from './brokers/WebSocketSaga'
-import { shouldAnnounceConnected } from './selectors'
+import { shouldAnnounceConnected, getSubscriptions } from './selectors'
 import { sendPing } from './senders/broker/ping'
 import { sendChatMessage } from './senders/protocol/chat'
 import { sendProfileMessage } from './senders/protocol/profile'
+import { sendSubscriptionUpdate } from './senders/subscription'
 
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
@@ -53,6 +53,14 @@ export function handleYellRequest(connection: IBrokerConnection): any {
   }
 }
 
+export function updateSubscriptions(connection: IBrokerConnection) {
+  return function*(): any {
+    const subscriptions = yield select(getSubscriptions)
+    yield call(sendSubscriptionUpdate, connection, true, subscriptions)
+  }
+}
+
+
 export function handleSendPositionRequest(connection: IBrokerConnection) {
   return function*(action: ProtocolOutPositionAction): any {
     yield call(sendControlMessageOnOwnChannel, connection, marshalPositionReport(action.payload) as any)
@@ -64,7 +72,6 @@ export function handleSendPositionRequest(connection: IBrokerConnection) {
  */
 export function handleSendChatRequest(connection: IBrokerConnection): any {
   return function*(action: ProtocolOutChatAction) {
-    defaultLogger.debug('sendChatMessage is deprecated -- please use Yell or PrivateMessage')
     yield call(sendControlMessageOnOwnChannel, connection, action.payload.message)
   }
 }

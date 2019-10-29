@@ -1,35 +1,11 @@
 import { Buffer } from 'buffer'
 import { getServerConfigurations } from 'dcl/config'
-import { EphemeralPresent, EPHEMERAL_PRESENT } from '../../auth/actions'
 import { EventEmitter } from 'events'
 import { call, fork, put, take, takeLatest } from 'redux-saga/effects'
-import {
-  commsSignatureSuccessAction,
-  COMMS_SIGNATURE_SUCCESS,
-  ephemeralGet,
-  tokenRequest,
-  TokenSuccessAction,
-  TOKEN_SUCCESS
-} from '../../auth/actions'
+import { commsSignatureSuccessAction, COMMS_SIGNATURE_SUCCESS, ephemeralGet, EphemeralPresent, EPHEMERAL_PRESENT, tokenRequest, TokenSuccessAction, TOKEN_SUCCESS } from '../../auth/actions'
 import { EphemeralKey, MessageInput } from '../../auth/ephemeral'
-import {
-  PROTOCOL_OUT_CHAT,
-  PROTOCOL_OUT_PING,
-  PROTOCOL_OUT_POSITION,
-  PROTOCOL_OUT_PRIVATE_MESSAGE,
-  PROTOCOL_OUT_PROFILE,
-  PROTOCOL_OUT_SCENE,
-  PROTOCOL_OUT_YELL
-} from '../actions'
-import {
-  handlePrivateMessageRequest,
-  handleSendChatRequest,
-  handleSendPingRequest,
-  handleSendPositionRequest,
-  handleSendProfileRequest,
-  handleSendSceneRequest,
-  handleYellRequest
-} from '../sagas'
+import { protocolOutPing, PROTOCOL_OUT_CHAT, PROTOCOL_OUT_PING, PROTOCOL_OUT_POSITION, PROTOCOL_OUT_PRIVATE_MESSAGE, PROTOCOL_OUT_PROFILE, PROTOCOL_OUT_SCENE, PROTOCOL_OUT_YELL, PROTOCOL_SUBSCRIPTION, PROTOCOL_UNSUBSCRIBE } from '../actions'
+import { handlePrivateMessageRequest, handleSendChatRequest, handleSendPingRequest, handleSendPositionRequest, handleSendProfileRequest, handleSendSceneRequest, handleYellRequest, updateSubscriptions } from '../sagas'
 import { IBrokerConnection } from './IBrokerConnection'
 import { WebRTCBrokerConnection } from './WebRTCBrokerConnection'
 
@@ -51,6 +27,9 @@ function* dispatcher(url: string): any {
   const rpcForThisConnection = responder()
   const connection = new WebRTCBrokerConnection(url, rpcForThisConnection.caller)
 
+  yield takeLatest(PROTOCOL_SUBSCRIPTION, updateSubscriptions(connection))
+  yield takeLatest(PROTOCOL_UNSUBSCRIBE, updateSubscriptions(connection))
+
   yield takeLatest(PROTOCOL_OUT_POSITION, handleSendPositionRequest(connection))
   yield takeLatest(PROTOCOL_OUT_PROFILE, handleSendProfileRequest(connection))
   yield takeLatest(PROTOCOL_OUT_PING, handleSendPingRequest(connection))
@@ -59,11 +38,25 @@ function* dispatcher(url: string): any {
   yield takeLatest(PROTOCOL_OUT_CHAT, handleSendChatRequest(connection))
   yield takeLatest(PROTOCOL_OUT_SCENE, handleSendSceneRequest(connection))
 
+  yield fork(pingEveryTenSeconds)
+
   while (true) {
     const eventFromConnection = yield call(awaitMessage, connection)
     yield put(eventFromConnection)
   }
   // TODO: set broker only on success -- yield put(setBrokerConnection(connection))
+}
+
+function delay(timeInMillis: number) {
+  const callback = () => new Promise(resolve => setTimeout(resolve, timeInMillis))
+  return call(callback)
+}
+
+function* pingEveryTenSeconds() {
+  while (true) {
+    yield delay(10000)
+    yield put(protocolOutPing())
+  }
 }
 
 function responder() {

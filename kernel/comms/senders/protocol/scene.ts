@@ -3,7 +3,7 @@ import { ChatData, Category } from 'dcl/protos/comms_pb'
 import { sendTopicMessage } from '../topic'
 import { IBrokerConnection } from '../../brokers/IBrokerConnection'
 
-export function sendParcelSceneMessage(comms: IBrokerConnection, sceneId: string, message: string) {
+export function sendSceneMessage(comms: IBrokerConnection, sceneId: string, message: string) {
   const topic = sceneId
 
   const d = new ChatData()

@@ -21,7 +21,8 @@ async function main() {
   const [x, y] = process.argv[process.argv.length - 1].split(',').map(_ => parseInt(_, 10))
 
   try {
-    const { store } = configureStore()
+    const { store, start } = configureStore()
+    start()
     store.subscribe(() => {
       // console.log(store.getState())
     })
