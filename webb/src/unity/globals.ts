@@ -13,7 +13,8 @@ export async function initializeEngine(_gameInstance: any) {
   ;(window as any).unityInterface = UnityGlobals.unityInterface = unityInterface
 
   UnityGlobals.unityInterface.SetPosition(0, 0, 2)
-  UnityGlobals.unityInterface.DeactivateRendering()
+  // UnityGlobals.unityInterface.DeactivateRendering()
+  UnityGlobals.unityInterface.ActivateRendering()
 
   if (DEBUG) {
     UnityGlobals.unityInterface.SetDebug()

@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+}
+
+#renderer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 640px;
+  height: 480px;
+  background: black;
+}

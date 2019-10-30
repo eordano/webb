@@ -1,4 +1,11 @@
-import { Alias, ProtocolPositionAction, ProtocolProfileAction, PROTOCOL_POSITION, PROTOCOL_PROFILE } from '../comms/actions'
+import {
+  Alias,
+  ProtocolPositionAction,
+  ProtocolProfileAction,
+  PROTOCOL_POSITION,
+  PROTOCOL_PROFILE
+} from '../comms/actions'
+import { PassportSuccessAction, PASSPORT_SUCCESS } from '../passports/actions'
 import { PeerPresence, PresenceState, UserId } from './types'
 import { PositionReport } from './types/PositionReport'
 import { unmarshalPositionReport } from './wireTransforms/marshalPositionReport'
@@ -19,7 +26,8 @@ export function presenceReducer(state?: PresenceState, action?: any): PresenceSt
   switch (action.type) {
     case PROTOCOL_POSITION:
       const positionAction: ProtocolPositionAction = action
-      const positionUserId = state.commsAliasToUserId[positionAction.payload.from]
+      const alias = positionAction.payload.from
+      const positionUserId = state.commsAliasToUserId[alias]
       if (!positionUserId) {
         return state
       }
@@ -35,7 +43,18 @@ export function presenceReducer(state?: PresenceState, action?: any): PresenceSt
           [positionUserId]: updateUserReport(state.presenceByUserId[positionUserId], report)
         }
       }
-      break
+    case PASSPORT_SUCCESS:
+      const passportAction: PassportSuccessAction = action
+      const { userId } = passportAction.payload
+      return {
+        ...state,
+        presenceByUserId: {
+          ...state.presenceByUserId,
+          [userId]: state.presenceByUserId[userId]
+            ? { ...state.presenceByUserId[userId], hasData: true }
+            : newUserPresence(userId, undefined)
+        }
+      }
     case PROTOCOL_PROFILE:
       const profileAction: ProtocolProfileAction = action
       const profileUserId = profileAction.payload.userId
@@ -50,12 +69,14 @@ export function presenceReducer(state?: PresenceState, action?: any): PresenceSt
             [profileUserId]: profileAction.payload.profile.getTime()
           },
           commsAliasToUserId: {
-            ...state.commsAliasToUserId, 
+            ...state.commsAliasToUserId,
             [profileAction.payload.alias]: profileAction.payload.userId
           },
           presenceByUserId: {
             ...state.presenceByUserId,
-            [profileUserId]: newUserPresence(profileUserId, profileAction.payload.alias)
+            [userId]: state.presenceByUserId[userId]
+              ? { ...state.presenceByUserId[userId], peerAlias: profileAction.payload.alias}
+              : newUserPresence(userId, profileAction.payload.alias)
           }
         }
       }

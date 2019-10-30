@@ -17,6 +17,7 @@ import {
   protocolOutYell
 } from 'dcl/kernel/comms/actions'
 import { waitFor } from 'dcl/kernel/core/store'
+import { initializeUnity } from '../../../unity/incoming'
 
 var term = null
 var commands: any = {}
@@ -27,7 +28,9 @@ function makeCommands(that: any) {
       start: {
         description: 'Start the unity renderer',
         usage: 'start',
-        fn: function() {}
+        fn: function() {
+          initializeUnity(document.getElementById('gameContainer'))
+        }
       },
       getScene: {
         description: 'Get a scene based on its x,y coordinates',
@@ -142,6 +145,7 @@ export class MyTerminal extends React.Component {
   terminal: any = React.createRef()
   componentDidMount() {
     (async () => {
+      await initializeUnity(document.getElementById('gameContainer'))
       await waitFor(store, (state) => {
         return state.comms.connected
       })

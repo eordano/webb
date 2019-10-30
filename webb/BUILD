@@ -51,6 +51,7 @@ ts_library(
         "@npm//defaults",
         "@npm//history",
         "@npm//prop-types",
+        "@npm//fp-future",
         "@npm//react",
         "@npm//react-dom",
         "@npm//react-fast-compare",
@@ -157,7 +158,7 @@ ts_devserver(
     entry_module = "webb/main_roll/main_roll",
     port = 3000,
     serving_path = "/bundle.js",
-    static_files = ["index.html"],
+    static_files = ["index.html", "static/index.css"],
     deps = [
         "static/config.js",
         "//protos:broker",

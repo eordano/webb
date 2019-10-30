@@ -27,7 +27,7 @@ export class SceneWorker implements ISceneWorker {
     this.sceneManifest = parcelScene.sceneManifest
     parcelScene.registerWorker(this)
 
-    this.loadSystem(transport, gamekit)
+    this.loadSystem(parcelScene.sceneManifest.id, transport, gamekit)
       .then($ => {
         this.systemPromise.resolve($)
         this.system = $
@@ -64,13 +64,13 @@ export class SceneWorker implements ISceneWorker {
     return system
   }
 
-  private async loadSystem(transport?: ScriptingTransport, gamekit?: string): Promise<ScriptingHost> {
+  private async loadSystem(id: string, transport?: ScriptingTransport, gamekit?: string): Promise<ScriptingHost> {
     if (!gamekit) {
       throw new Error(
         `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
       )
     }
-    const worker = createWorker(gamekit)
+    const worker = createWorker(id, gamekit)
     return this.startSystem(transport || WebWorkerTransport(worker))
   }
 
