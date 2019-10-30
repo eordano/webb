@@ -16,6 +16,7 @@ import {
   protocolOutProfile,
   protocolOutYell
 } from 'dcl/kernel/comms/actions'
+import { waitFor } from 'dcl/kernel/core/store'
 
 var term = null
 var commands: any = {}
@@ -139,6 +140,15 @@ function makeCommands(that: any) {
 
 export class MyTerminal extends React.Component {
   terminal: any = React.createRef()
+  componentDidMount() {
+    (async () => {
+      await waitFor(store, (state) => {
+        return state.comms.connected
+      })
+      this.terminal.current.pushToStdout('connected!')
+      store.dispatch(protocolSubscription('36:36'))
+    })()
+  }
   render() {
     return (
       <Segment>

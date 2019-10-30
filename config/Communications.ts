@@ -24,8 +24,8 @@ export const Communications = {
   ]
 }
 
-export const PUBLIC_KEY_SOURCE = 'https://auth.decentraland.org/api/v1/public_key'
+export const PUBLIC_KEY_SOURCE = 'https://auth.decentraland.today/api/v1/public_key'
 export const PINNED_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEd/4dLW7Q0Ik4sp4lKwLNofhgZqvA
-piXr3KibX8Hch8SNmzJZgFsGgQYsS7MAv40owSiL2k6a5bsQ4102Kw++Pw==
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEo/cpceJdDp1Q/37nU1Ozd7BKCmai
+MtXhbxYR8Pk84qwGBBsrdbTLC1g/GfesANgxMEgrZShP2DxeaCB0rB8p7A==
 -----END PUBLIC KEY-----`

@@ -1,15 +1,16 @@
 import auth0 from 'auth0-js'
 import { getConfiguration, getServerConfigurations } from 'dcl/config'
+import { ephemeralPresent, EPHEMERAL_PRESENT } from 'dcl/kernel/auth/actions'
 import { AuthMessage, MessageType, Role } from 'dcl/protos/broker_pb'
 import { AuthData as AuthDataProto } from 'dcl/protos/comms_pb'
 import jwt from 'jsonwebtoken'
 import { all, call, put, select, take, takeLatest } from 'redux-saga/effects'
 import { v4 as uuid } from 'uuid'
-import { authFailure, authSuccess, AUTH_FAILURE, AUTH_REQUEST, commsSignatureRequestAction, commsSignatureSuccess, COMMS_SIGNATURE_REQUEST, ephemeralGet, ephemeralPut, EPHEMERAL_GET, EPHEMERAL_PUT, LOGIN, login, LoginAction, LOGOUT, RESTORE_SESSION, tokenFailure, tokenSuccess, TOKEN_REQUEST, EphemeralPut } from './actions'
+import { authFailure, authSuccess, AUTH_FAILURE, AUTH_REQUEST, commsSignatureRequestAction, commsSignatureSuccess, COMMS_SIGNATURE_REQUEST, ephemeralGet, ephemeralPut, EphemeralPut, EPHEMERAL_GET, EPHEMERAL_PUT, LOGIN, login, LoginAction, LOGOUT, RESTORE_SESSION, tokenFailure, tokenSuccess, TOKEN_REQUEST } from './actions'
 import { BasicEphemeralKey, EphemeralKey, getCurrentEpoch, MessageInput } from './ephemeral'
 import { getAccessToken, getCommsToken, getEphemeralKey } from './selectors'
 import { AuthData } from './types'
-import { ephemeralPresent, EPHEMERAL_PRESENT } from 'dcl/kernel/auth/actions'
+import { Buffer } from 'buffer'
 
 export function* authSaga(): any {
   yield takeLatest(EPHEMERAL_GET, handleGetEphemeral)
@@ -204,11 +205,12 @@ export function* handleSignCommsMessage(action: commsSignatureRequestAction): an
   const timestamp = getCurrentEpoch()
   const message = MessageInput.fromMessage(Buffer.from(action.payload))
   const hash = yield call(() => message.timeBasedHash(timestamp))
-  const signature = this.sign(hash)
+  const signature = yield call(() => (ephemeral as BasicEphemeralKey).sign(hash))
 
   const authData = new AuthDataProto()
+  const identity = `public key derived address: ${(ephemeral as BasicEphemeralKey).key.publicKeyAsHexString()}`
   authData.setSignature(signature)
-  authData.setIdentity(this.getIdentity())
+  authData.setIdentity(identity)
   authData.setTimestamp(timestamp.toString())
   authData.setAccessToken(accessToken)
   const authMessage = new AuthMessage()

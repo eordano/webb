@@ -181,7 +181,7 @@ export function* handleSaveAvatar(saveAvatar: SaveAvatarRequest): any {
   try {
     const currentVersion = (yield select(getProfile, userId)).version || 0
     const accessToken = yield select(getAccessToken)
-    const url = getServerConfigurations().profile + '/profile/' + userId + '/avatar'
+    const url = getServerConfigurations().profile + 'profile/' + userId + '/avatar'
     const result = yield call(modifyAvatar, {
       url,
       method: 'PUT',

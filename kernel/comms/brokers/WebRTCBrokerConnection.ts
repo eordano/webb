@@ -17,6 +17,7 @@ import {
   commsWelcome,
   protocolUnknown
 } from '../actions'
+import { handleMessage } from '../handleMessage'
 import { SocketReadyState } from '../types/SocketReadyState'
 import { BrokerMessage, IBrokerConnection } from './IBrokerConnection'
 
@@ -59,7 +60,7 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
 
   constructor(public url: string, public getAuthenticationMessageBytes: (message: string) => Promise<Uint8Array>) {
     this.logger.setLogLevel(1)
-    this.onMessageObservable.add(_ => this.onUpdateObservable.notifyObservers(_))
+    this.onMessageObservable.add(ev => this.onUpdateObservable.notifyObservers(ev))
     this.connectRTC()
     this.connectWS()
 
@@ -144,10 +145,10 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
         this.alias = alias
         this.logger.info('my alias is', alias)
         this.onUpdateObservable.notifyObservers(commsWelcome({ alias, serverAlias, availableServers }))
-        this.onUpdateObservable.notifyObservers(protocolUnknown(msgType as any))
 
         const connectMessage = new ConnectMessage()
         connectMessage.setType(MessageType.CONNECT)
+        connectMessage.setFromAlias(alias)
         connectMessage.setToAlias(serverAlias)
         this.sendCoordinatorMessage((connectMessage as any) as Message)
         break
@@ -323,9 +324,6 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
     dc.onopen = async (e: any) => {
       const label = dc.label
       this.logger.log(`DataChannel ${JSON.stringify(dc.label)} has opened`)
-      this.onUpdateObservable.notifyObservers(
-        label === 'reliable' ? commsDatachannelReliable(e) : commsDatachannelUnreliable(e)
-      )
 
       if (label === 'reliable') {
         this.reliableDataChannel = dc
@@ -334,11 +332,13 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
           dc.send(bytes)
           this.authenticated = true
           this.reliableFuture.resolve()
+          this.onUpdateObservable.notifyObservers(commsDatachannelReliable(e))
         } else {
           this.logger.error('cannot send authentication, data channel is not ready')
         }
       } else if (label === 'unreliable') {
         this.unreliableFuture.resolve()
+        this.onUpdateObservable.notifyObservers(commsDatachannelUnreliable(e))
         this.unreliableDataChannel = dc
       }
     }
@@ -347,7 +347,10 @@ export class WebRTCBrokerConnection implements IBrokerConnection {
       const data = e.data
       const msg = new Uint8Array(data)
 
-      this.onMessageObservable.notifyObservers({ data: msg, channel: dc.label })
+      const message = handleMessage({ data: msg, channel: dc.label })
+      if (message && message.type) {
+        this.onMessageObservable.notifyObservers(message)
+      }
     }
   }
 }

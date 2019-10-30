@@ -1,12 +1,28 @@
 export const NETWORK_HZ = 10
 
+export const loginConfig = {
+  org: {
+    domain: 'decentraland.auth0.com',
+    client_id: 'yqFiSmQsxk3LK46JOIB4NJ3wK4HzZVxG'
+  },
+  today: {
+    domain: 'dcl-stg.auth0.com',
+    client_id: '0UB0I7w6QA3AgSvbXh9rGvDuhKrJV1C0'
+  },
+  zone: {
+    domain: 'dcl-test.auth0.com',
+    client_id: 'lTUEMnFpYb0aiUKeIRPbh7pBxKM6sccx'
+  },
+  audience: 'decentraland.org'
+}
 export const AUTH = {
-  AUTH0_CLIENT_ID: 'yqFiSmQsxk3LK46JOIB4NJ3wK4HzZVxG',
-  AUTH0_DOMAIN: 'decentraland.auth0.com',
-  AUTH0_REDIRECT: 'http://localhost:3000/',
+  AUTH0_CLIENT_ID: loginConfig.today.client_id,
+  AUTH0_DOMAIN: loginConfig.today.domain,
+  AUTH0_REDIRECT: 'http://localhost:3000/login_callback',
   AUTH0_AUDIENCE: 'decentraland.org',
   EPHEMERAL_KEY_TTL: 24 * 60 * 60 * 1000
 }
+
 
 const configuration = {
   ...AUTH

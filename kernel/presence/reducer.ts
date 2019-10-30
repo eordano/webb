@@ -1,10 +1,4 @@
-import {
-  Alias,
-  ProtocolPositionAction,
-  ProtocolProfileAction,
-  PROTOCOL_POSITION,
-  PROTOCOL_PROFILE
-} from '../comms/actions'
+import { Alias, ProtocolPositionAction, ProtocolProfileAction, PROTOCOL_POSITION, PROTOCOL_PROFILE } from '../comms/actions'
 import { PeerPresence, PresenceState, UserId } from './types'
 import { PositionReport } from './types/PositionReport'
 import { unmarshalPositionReport } from './wireTransforms/marshalPositionReport'
@@ -44,13 +38,20 @@ export function presenceReducer(state?: PresenceState, action?: any): PresenceSt
       break
     case PROTOCOL_PROFILE:
       const profileAction: ProtocolProfileAction = action
-      const profileUserId = state.commsAliasToUserId[profileAction.payload.userId]
+      const profileUserId = profileAction.payload.userId
       if (!profileUserId) {
+        return state
+      }
+      if (!state.commsAliasToUserId[profileAction.payload.alias]) {
         return {
           ...state,
           lastTimestampReceivedByUserId: {
             ...state.lastTimestampReceivedByUserId,
             [profileUserId]: profileAction.payload.profile.getTime()
+          },
+          commsAliasToUserId: {
+            ...state.commsAliasToUserId, 
+            [profileAction.payload.alias]: profileAction.payload.userId
           },
           presenceByUserId: {
             ...state.presenceByUserId,
@@ -58,6 +59,7 @@ export function presenceReducer(state?: PresenceState, action?: any): PresenceSt
           }
         }
       }
+      break
   }
   return state
 }

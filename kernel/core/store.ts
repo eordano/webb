@@ -50,7 +50,7 @@ export const configureStore: (otherReducers?: Record<string, Reducer>, state?: a
   store.dispatch(configureLineOfSightRadius(4))
   store.dispatch(configureDownloadServer(config.content))
   store.dispatch(configureManifestDownloadServer(config.content))
-  store.dispatch(setProfileServer(config.avatar.server))
+  store.dispatch(setProfileServer(config.profile))
 
   async function start() {
     sagasMiddleware.run(rootSaga)

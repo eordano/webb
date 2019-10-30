@@ -59,8 +59,8 @@ export type EphemeralPresent = ReturnType<typeof ephemeralPresent>
 export const COMMS_SIGNATURE_REQUEST = '[Comms + Sign] Signature request'
 export const COMMS_SIGNATURE_SUCCESS = '[Comms + Sign] Signature success'
 
-export const commsSignatureRequest = (message: string) => action(EPHEMERAL_GET, message)
-export const commsSignatureSuccess = (bytes: Uint8Array) => action(EPHEMERAL_PUT, bytes)
+export const commsSignatureRequest = (message: string) => action(COMMS_SIGNATURE_REQUEST, message)
+export const commsSignatureSuccess = (bytes: Uint8Array) => action(COMMS_SIGNATURE_SUCCESS, bytes)
 
 export type commsSignatureRequestAction = ReturnType<typeof commsSignatureRequest>
 export type commsSignatureSuccessAction = ReturnType<typeof commsSignatureSuccess>
