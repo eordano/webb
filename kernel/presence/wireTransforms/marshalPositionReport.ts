@@ -1,5 +1,5 @@
 import { PositionData } from 'dcl/protos/comms_pb'
-import { PositionReport } from '../types/PositionReport'
+import { PositionReport } from './PositionReport'
 import { playerConfigurations } from 'dcl/utils'
 
 export function marshalPositionReport(positionReport: PositionReport): number[] {

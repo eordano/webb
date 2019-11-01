@@ -1,7 +1,7 @@
 import { action } from 'typesafe-actions'
 import { PingMessage } from 'dcl/protos/broker_pb'
 import { ChatData, ProfileData, PositionData } from 'dcl/protos/comms_pb'
-import { PositionReport } from '../presence/types/PositionReport'
+import { PositionReport } from '../presence/wireTransforms/PositionReport'
 import { UserId } from '../auth/types'
 import { IBrokerConnection } from './brokers/IBrokerConnection'
 
@@ -150,9 +150,10 @@ export const PROTOCOL_OUT_PRIVATE_MESSAGE = '[Comms] Out: Private message to tar
 export const PROTOCOL_OUT_CHAT = '[Comms] Out: Chat message'
 export const PROTOCOL_OUT_SCENE = '[Comms] Out: Scene event'
 
-export const protocolOutPosition = (positionData: PositionReport) => action(PROTOCOL_OUT_POSITION, positionData)
+export const protocolOutPosition = (positionData: PositionReport, topic?: string) => action(PROTOCOL_OUT_POSITION, { positionData, topic })
 export type ProtocolOutPositionAction = ReturnType<typeof protocolOutPosition>
-export const protocolOutProfile = (topics: string[]) => action(PROTOCOL_OUT_PROFILE, { topics })
+export const protocolOutProfile = (userId: string, version: number, topics: string[]) =>
+  action(PROTOCOL_OUT_PROFILE, { userId, version, topics })
 export type ProtocolOutProfileAction = ReturnType<typeof protocolOutProfile>
 export const protocolOutPing = () => action(PROTOCOL_OUT_PING)
 export type ProtocolOutPingAction = ReturnType<typeof protocolOutPing>

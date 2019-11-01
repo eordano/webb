@@ -24,3 +24,17 @@ export function getSubscriptions(state: RootCommsState): string[] {
   }
   return Object.keys((state.comms as ConnectedState).topics)
 }
+
+export function getMyAlias(state: RootCommsState) {
+  if (isDisconnected) {
+    return undefined
+  }
+  return state.comms.alias!
+}
+
+export function isSubscribedToTopic(state: RootCommsState, topic: string) {
+  if (isDisconnected(state)) {
+    return false
+  }
+  return !!(state.comms as ConnectedState).topics[topic]
+}

@@ -1,13 +1,16 @@
 import { Buffer } from 'buffer'
 import { getServerConfigurations } from 'dcl/config'
-import { EventEmitter } from 'events'
-import { call, fork, put, take, takeLatest } from 'redux-saga/effects'
-import { commsSignatureRequest, commsSignatureSuccessAction, COMMS_SIGNATURE_SUCCESS, ephemeralGet, EphemeralPresent, EPHEMERAL_PRESENT, tokenRequest, TokenSuccessAction, TOKEN_SUCCESS } from '../../auth/actions'
+import { call, fork, put, take } from 'redux-saga/effects'
+import {
+  ephemeralGet,
+  EphemeralPresent,
+  EPHEMERAL_PRESENT,
+  tokenRequest,
+  TokenSuccessAction,
+  TOKEN_SUCCESS
+} from '../../auth/actions'
 import { EphemeralKey, MessageInput } from '../../auth/ephemeral'
-import { PROTOCOL_OUT_CHAT, PROTOCOL_OUT_PING, PROTOCOL_OUT_POSITION, PROTOCOL_OUT_PRIVATE_MESSAGE, PROTOCOL_OUT_PROFILE, PROTOCOL_OUT_SCENE, PROTOCOL_OUT_YELL, PROTOCOL_SUBSCRIPTION, PROTOCOL_UNSUBSCRIBE } from '../actions'
-import { handlePrivateMessageRequest, handleSendChatRequest, handleSendPingRequest, handleSendPositionRequest, handleSendProfileRequest, handleSendSceneRequest, handleYellRequest, updateSubscriptions } from '../sagas'
-import { IBrokerConnection } from './IBrokerConnection'
-import { WebRTCBrokerConnection } from './WebRTCBrokerConnection'
+import { dispatcher } from './dispatcher'
 
 export function* setupWebRTCBroker(): any {
   const coordinatorURL = getServerConfigurations().worldInstanceUrl
@@ -21,65 +24,6 @@ export function* setupWebRTCBroker(): any {
   const ephemeral = ((yield take(EPHEMERAL_PRESENT)) as EphemeralPresent).payload
   const connectionString = yield call(getConnectionString, coordinatorURL, input, accessToken, ephemeral)
   yield fork(dispatcher, connectionString)
-}
-
-function* dispatcher(url: string): any {
-  const rpcForThisConnection = responder()
-  const connection = new WebRTCBrokerConnection(url, rpcForThisConnection.caller)
-
-  yield takeLatest(PROTOCOL_SUBSCRIPTION, updateSubscriptions(connection))
-  yield takeLatest(PROTOCOL_UNSUBSCRIBE, updateSubscriptions(connection))
-
-  yield takeLatest(PROTOCOL_OUT_POSITION, handleSendPositionRequest(connection))
-  yield takeLatest(PROTOCOL_OUT_PROFILE, handleSendProfileRequest(connection))
-  yield takeLatest(PROTOCOL_OUT_PING, handleSendPingRequest(connection))
-  yield takeLatest(PROTOCOL_OUT_YELL, handleYellRequest(connection))
-  yield takeLatest(PROTOCOL_OUT_PRIVATE_MESSAGE, handlePrivateMessageRequest(connection))
-  yield takeLatest(PROTOCOL_OUT_CHAT, handleSendChatRequest(connection))
-  yield takeLatest(PROTOCOL_OUT_SCENE, handleSendSceneRequest(connection))
-
-  yield fork(rpcForThisConnection.looper)
-
-  while (true) {
-    const eventFromConnection = yield call(awaitMessage, connection)
-    yield put(eventFromConnection)
-  }
-  // TODO: set broker only on success -- yield put(setBrokerConnection(connection))
-}
-
-function responder() {
-  const event = new EventEmitter()
-  return {
-    caller: function(message: string) {
-      return new Promise<Uint8Array>(resolve => {
-        event.emit('query', message)
-        event.once('response', (result: commsSignatureSuccessAction) => {
-          resolve(result.payload)
-        })
-      })
-    },
-    looper: function*() {
-      async function awaitSignatureRequest() {
-        return new Promise<string>(resolve => {
-          event.once('query', (a, b) => {
-            resolve(a)
-          })
-        })
-      }
-      while (true) {
-        const query = yield call(awaitSignatureRequest)
-        yield put(commsSignatureRequest(query))
-        const result = yield take(COMMS_SIGNATURE_SUCCESS)
-        event.emit('response', result)
-      }
-    }
-  }
-}
-
-async function awaitMessage(connection: IBrokerConnection) {
-  return new Promise(resolve => {
-    connection.onUpdateObservable.addOnce(resolve)
-  })
 }
 
 export async function getConnectionString(

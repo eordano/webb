@@ -1,90 +1,19 @@
 import { USE_LOCAL_COMMS } from 'dcl/config'
-import { call, put, select, takeLatest } from 'redux-saga/effects'
-import { getCurrentUserId } from '../auth/selectors'
-import { getProfile } from '../passports/selectors'
-import { Profile } from '../passports/types'
-import { marshalPositionReport } from '../presence/wireTransforms/marshalPositionReport'
-import { commsSuccessfullyStarted, COMMS_DATACHANNEL_RELIABLE, COMMS_DATACHANNEL_UNRELIABLE, COMMS_STARTED, ProtocolOutChatAction, ProtocolOutPingAction, ProtocolOutPositionAction, ProtocolOutPrivateMessageAction, ProtocolOutProfileAction, ProtocolOutSceneAction, ProtocolOutYellAction } from './actions'
-import { IBrokerConnection } from './brokers/IBrokerConnection'
+import { put, select, takeLatest } from 'redux-saga/effects'
+import {
+  commsSuccessfullyStarted,
+  COMMS_DATACHANNEL_RELIABLE,
+  COMMS_DATACHANNEL_UNRELIABLE,
+  COMMS_STARTED
+} from './actions'
 import { setupWebRTCBroker } from './brokers/WebRTCSaga'
 import { setupCliBroker } from './brokers/WebSocketSaga'
-import { shouldAnnounceConnected, getSubscriptions } from './selectors'
-import { sendPing } from './senders/broker/ping'
-import { sendChatMessage } from './senders/protocol/chat'
-import { sendProfileMessage } from './senders/protocol/profile'
-import { sendSubscriptionUpdate } from './senders/subscription'
+import { shouldAnnounceConnected } from './selectors'
 
 export function* commsSaga(): any {
   yield takeLatest(COMMS_STARTED, handleCommsStart)
   yield takeLatest(COMMS_DATACHANNEL_RELIABLE, checkConnected)
   yield takeLatest(COMMS_DATACHANNEL_UNRELIABLE, checkConnected)
-}
-
-export function handleSendProfileRequest(connection: IBrokerConnection): any {
-  return function*(_: ProtocolOutProfileAction): any {
-    const myUserId = yield select(getCurrentUserId)
-    const myProfile = (yield select(getProfile, myUserId)) as Profile
-    yield call(sendProfileMessage, connection, _.payload.topics.join(' '), myProfile.version)
-  }
-}
-
-export function handleSendPingRequest(connection: IBrokerConnection): any {
-  return function*(_: ProtocolOutPingAction): any {
-    yield call(sendPing, connection)
-  }
-}
-
-var currentMessageId = 0
-export function handlePrivateMessageRequest(connection: IBrokerConnection): any {
-  return function*(action: ProtocolOutPrivateMessageAction): any {
-    yield call(
-      sendChatMessage,
-      connection,
-      'inbox-' + action.payload.to,
-      '' + ++currentMessageId,
-      action.payload.message
-    )
-  }
-}
-
-export function handleYellRequest(connection: IBrokerConnection): any {
-  return function*(action: ProtocolOutYellAction): any {
-    yield call(sendControlMessageOnOwnChannel, connection, action.payload.message)
-  }
-}
-
-export function updateSubscriptions(connection: IBrokerConnection) {
-  return function*(): any {
-    const subscriptions = yield select(getSubscriptions)
-    yield call(sendSubscriptionUpdate, connection, true, subscriptions)
-  }
-}
-
-
-export function handleSendPositionRequest(connection: IBrokerConnection) {
-  return function*(action: ProtocolOutPositionAction): any {
-    yield call(sendControlMessageOnOwnChannel, connection, marshalPositionReport(action.payload) as any)
-  }
-}
-
-/**
- * @deprecated
- */
-export function handleSendChatRequest(connection: IBrokerConnection): any {
-  return function*(action: ProtocolOutChatAction) {
-    yield call(sendControlMessageOnOwnChannel, connection, action.payload.message)
-  }
-}
-
-export function handleSendSceneRequest(connection: IBrokerConnection): any {
-  return function*(action: ProtocolOutSceneAction): any {
-    yield call(sendControlMessageOnOwnChannel, connection, action.payload.message)
-  }
-}
-
-export function* sendControlMessageOnOwnChannel(connection: IBrokerConnection, message: string): any {
-  const userId = yield select(getCurrentUserId)
-  sendChatMessage(connection, userId, '' + ++currentMessageId, message)
 }
 
 export function* handleCommsStart(): any {

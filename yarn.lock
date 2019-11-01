@@ -2046,10 +2046,10 @@ decentraland-auth-protocol@^0.3.2:
     secp256k1 "^3.5.2"
     typescript "^2.9.2"
 
-decentraland-renderer@^1.7.1037:
-  version "1.7.1037"
-  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.7.1037.tgz#eb6412859761ffba9b9373c80c57c3abf9ff0398"
-  integrity sha512-7ctibm/VTW9fjMG6eAgZBD1H6fQDAXIgihBHt+YyjyROoWVWoSVwW7U4Z1SgdZPDuT/xgWIeArdBRrW//nLOxA==
+decentraland-renderer@^1.7.952:
+  version "1.7.1073"
+  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.7.1073.tgz#48fc7138e1fe2a2955044ae25a7bc5a282a30d6c"
+  integrity sha512-6SdB20019gz9eSIt/aFaoRM+bv28l2qwS42KZPY8xbYabgBgtl7PFe7j7F9TJMldugTNy4TE/oM3QeP3iSUvyQ==
 
 decentraland-ui@^2.10.2:
   version "2.10.2"

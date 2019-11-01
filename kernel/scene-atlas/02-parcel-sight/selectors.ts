@@ -1,5 +1,7 @@
-import { RootParcelSightState, DeltaParcelSightSeeingReport } from './types'
+import { playerConfigurations } from 'dcl/utils'
+import { PositionReport } from '../../presence/wireTransforms/PositionReport'
 import { GridPosition, StringPosition } from '../01-user-position/types'
+import { DeltaParcelSightSeeingReport, RootParcelSightState } from './types'
 
 export function isAnyParcelInSight(state: RootParcelSightState, parcels: string[]) {
   const currentlySighted = state.userPosition.currentlySightedMap
@@ -21,6 +23,14 @@ export function getCurrentStringPosition(state: RootParcelSightState): StringPos
 
 export function getCurrentGridPosition(state: RootParcelSightState): GridPosition {
   return state.userPosition.grid
+}
+
+export function getCurrentWorldPosition(state: RootParcelSightState): PositionReport {
+  return {
+    playerHeight: playerConfigurations.height,
+    position: state.userPosition.world,
+    rotation: state.userPosition.rotation
+  }
 }
 
 export function deltaSighted(state: RootParcelSightState): DeltaParcelSightSeeingReport {

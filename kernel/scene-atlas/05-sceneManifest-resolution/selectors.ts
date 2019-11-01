@@ -1,4 +1,5 @@
 import { encodeParcelPosition } from 'dcl/utils'
+import { RootPositionToSceneIdState } from '../04-sceneId-resolution/types'
 import { RootSceneIdToSceneManifestState, SceneIdToSceneManifestState } from './types'
 
 export function needsResolutionToManifest(state: RootSceneIdToSceneManifestState, sceneId: string): boolean {
@@ -23,6 +24,15 @@ export function getSceneManifest(state: RootSceneIdToSceneManifestState, sceneId
 
 export function getSceneError(state: RootSceneIdToSceneManifestState, sceneId: string) {
   return state.sceneIdToManifest.errors[sceneId]
+}
+
+export function getBaseParcel(state: RootPositionToSceneIdState & RootSceneIdToSceneManifestState, position: string) {
+  const sceneId = state.positionToSceneId.positionToScene[position]
+  if (sceneId) {
+    if (state.sceneIdToManifest.scenesById[sceneId]) {
+      return state.sceneIdToManifest.scenesById[sceneId].baseParcel
+    }
+  }
 }
 
 export function getSceneIdToBaseParcelMap(state: RootSceneIdToSceneManifestState) {

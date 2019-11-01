@@ -1,3 +1,4 @@
+import { RootAuthState } from '../auth/types'
 import { Profile, RootPassportState, Wearable } from './types'
 
 export const getProfileDownloadServer = (store: RootPassportState) => store.passports.profileServer
@@ -8,6 +9,17 @@ export const getProfile = (store: RootPassportState, userId: string): Profile | 
   store.passports.userInfo[userId] &&
   store.passports.userInfo[userId].status === 'ok'
     ? (store.passports.userInfo[userId].data as Profile)
+    : null
+
+export const getMyCurrentUserProfile = (store: RootAuthState & RootPassportState): Profile | null =>
+  store.auth &&
+  store.auth.data &&
+  store.auth.data.sub &&
+  store.passports &&
+  store.passports.userInfo &&
+  store.passports.userInfo[store.auth.data.sub] &&
+  store.passports.userInfo[store.auth.data.sub].status === 'ok'
+    ? (store.passports.userInfo[store.auth.data.sub].data as Profile)
     : null
 
 export const getEthereumAddress = (store: RootPassportState, userId: string): string | undefined =>

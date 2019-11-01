@@ -6,7 +6,8 @@ import { SET_WORLD_POSITION, UserPosition, USER_ENTERED_COORDINATE } from './typ
 export const INITIAL_USER_POSITION: UserPosition = {
   world: { x: undefined, y: undefined, z: undefined },
   grid: { x: undefined, y: undefined },
-  stringGrid: undefined
+  stringGrid: undefined,
+  rotation: { x: 0, y: 0, z: 0, w: 0 }
 }
 
 export function userPositionReducer(state?: UserPosition, action?: UserPositionAction | AnyAction): UserPosition {

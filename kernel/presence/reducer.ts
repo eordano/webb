@@ -7,7 +7,7 @@ import {
 } from '../comms/actions'
 import { PassportSuccessAction, PASSPORT_SUCCESS } from '../passports/actions'
 import { PeerPresence, PresenceState, UserId } from './types'
-import { PositionReport } from './types/PositionReport'
+import { PositionReport } from './wireTransforms/PositionReport'
 import { unmarshalPositionReport } from './wireTransforms/marshalPositionReport'
 
 export const INITIAL_PRESENCE_STATE = {

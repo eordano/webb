@@ -43,7 +43,7 @@
         "chai": "^4.2.0",
         "cors": "^2.8.5",
         "decentraland-auth-protocol": "^0.3.2",
-        "decentraland-renderer": "^1.7.1037",
+        "decentraland-renderer": "^1.7.952",
         "decentraland-ui": "^2.10.2",
         "defaults": "^1.0.3",
         "devtools-protocol": "^0.0.709494",

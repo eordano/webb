@@ -1,4 +1,4 @@
-import { Vector2, Vector3 } from 'dcl/utils'
+import { Vector2, Vector3, ReadOnlyQuaternion } from 'dcl/utils'
 
 export type WorldPosition = Vector3
 export type GridPosition = Vector2
@@ -13,6 +13,7 @@ export type UserPosition = {
   world: WorldPosition
   grid: GridPosition
   stringGrid: StringPosition
+  rotation: ReadOnlyQuaternion
 }
 
 export type RootUserPosition = {

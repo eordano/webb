@@ -1,23 +1,20 @@
-import React from 'react'
-import { Segment } from '../../liteui/dcl'
-import Terminal from '../../ConsoleEmulator/components/Terminal'
-import { store } from '../../../store'
-import { SceneManifest } from 'dcl/kernel/scene-manifest/SceneManifest'
-import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
+import { protocolOutYell, protocolSubscription, protocolUnsubscribe } from 'dcl/kernel/comms/actions'
+import { waitFor } from 'dcl/kernel/core/store'
 import { PassportAsPromise } from 'dcl/kernel/passports/PassportAsPromise'
 import { Profile } from 'dcl/kernel/passports/types'
-import { RunScene } from './vangogh/ears'
-import { renderEntity } from 'dcl/synced-ecs/ecs/render'
 import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/actions'
+import { sceneManager } from 'dcl/kernel/scene-atlas/06-scripts/sceneManager'
 import { teleportToTarget } from 'dcl/kernel/scene-atlas/07-settlement/actions'
-import {
-  protocolSubscription,
-  protocolUnsubscribe,
-  protocolOutProfile,
-  protocolOutYell
-} from 'dcl/kernel/comms/actions'
-import { waitFor } from 'dcl/kernel/core/store'
+import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
+import { SceneManifest } from 'dcl/kernel/scene-manifest/SceneManifest'
+import { renderEntity } from 'dcl/synced-ecs/ecs/render'
+import React from 'react'
+import { store } from '../../../store'
 import { initializeUnity } from '../../../unity/incoming'
+import { UnityRendererParcelSceneAPI } from '../../../unity/UnityRendererParcelSceneAPI'
+import Terminal from '../../ConsoleEmulator/components/Terminal'
+import { Segment } from '../../liteui/dcl'
+import { RunScene } from './vangogh/ears'
 
 var term = null
 var commands: any = {}
@@ -29,6 +26,7 @@ function makeCommands(that: any) {
         description: 'Start the unity renderer',
         usage: 'start',
         fn: function() {
+          sceneManager.parcelSceneClass = UnityRendererParcelSceneAPI
           initializeUnity(document.getElementById('gameContainer'))
         }
       },
@@ -80,11 +78,7 @@ function makeCommands(that: any) {
       profile: {
         description: 'post a profile update message on all subscribed topics',
         usage: 'profile',
-        fn: function(version: string) {
-          if (version) {
-            store.dispatch(protocolOutProfile(Object.keys(store.getState().comms.topics)))
-          }
-        }
+        fn: function(version: string) {}
       },
       reportPosition: {
         description: 'report a position in the world',
@@ -144,9 +138,9 @@ function makeCommands(that: any) {
 export class MyTerminal extends React.Component {
   terminal: any = React.createRef()
   componentDidMount() {
-    (async () => {
+    ;(async () => {
       await initializeUnity(document.getElementById('gameContainer'))
-      await waitFor(store, (state) => {
+      await waitFor(store, state => {
         return state.comms.connected
       })
       this.terminal.current.pushToStdout('connected!')

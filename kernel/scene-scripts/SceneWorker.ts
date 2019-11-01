@@ -54,7 +54,7 @@ export class SceneWorker implements ISceneWorker {
     const system = this.system = await ScriptingHost.fromTransport(transport)
     this.transport = transport
 
-    this.engineAPI = system.getAPIInstance('EngineAPI') as any
+    this.engineAPI = await system.getAPIInstance('EngineAPI') as any
     this.engineAPI.rendererParcelSceneAPI = this.parcelScene
 
     system.getAPIInstance(EnvironmentAPI).sceneManifest = this.parcelScene.sceneManifest
