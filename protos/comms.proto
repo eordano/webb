@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package protocol;
+package dcl.protos;
 
 message AuthData {
     string signature = 1;

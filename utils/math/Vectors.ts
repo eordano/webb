@@ -1,4 +1,4 @@
-import { buildArray } from '../pure'
+import { buildArray } from '../pure/buildArray'
 import { FloatArray, Epsilon, Nullable, DEG2RAD, RAD2DEG } from './types'
 import { Plane } from './Plane'
 import { Scalar } from './Scalar'

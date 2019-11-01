@@ -69,20 +69,12 @@ load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
 
 rollup_bundle(
-    name = "main_roll",
+    name = "webb_bundle",
     config_file = ":rollup.config.js",
-    entry_point = "src/main.tsx",
+    entry_point = "src/index.tsx",
     output_dir = True,
     format = "amd",
     deps = [
-        "//config",
-        "//kernel",
-        "//protos:broker_lib",
-        "//protos:comms_lib",
-        "//rpc",
-        "//synced-ecs",
-        "//scene-api",
-        "//utils",
         ":webb_code",
         "@npm//jsonwebtoken",
         "@npm//rollup-plugin-commonjs",
@@ -152,10 +144,47 @@ rollup_bundle(
     ],
 )
 
+ts_library(
+    name = "deps",
+    srcs = glob(
+        include = [
+            "vendor/*.ts"
+        ],
+    ),
+    deps = [
+        "@npm//fp-future",
+        "@npm//secp256k1",
+        "@npm//@types/node",
+    ]
+)
+
+rollup_bundle(
+    name = "deps_bundle",
+    entry_points = {
+        "vendor/fp-future.ts": "fp-future",
+        "vendor/events.ts": "events",
+        "vendor/crypto.ts": "crypto",
+        "vendor/util.ts": "util",
+        "vendor/secp256k1.ts": "secp256k1",
+    },
+    config_file = ":rollup.deps.js",
+    output_dir = True,
+    format = "amd",
+    sourcemap = 'false',
+    deps = [
+        ":deps",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-json",
+        "@npm//rollup-plugin-node-globals",
+        "@npm//rollup-plugin-node-resolve",
+        "@npm//rollup-plugin-node-builtins",
+    ],
+)
+
 ts_devserver(
     name = "devserver",
     additional_root_paths = [":static", ":main_roll__files"],
-    entry_module = "webb/main_roll/main_roll",
+    entry_module = "webb/src/index",
     port = 3000,
     serving_path = "/bundle.js",
     static_files = ["index.html", "static/index.css"],
@@ -164,7 +193,6 @@ ts_devserver(
         "//protos:broker",
         "//protos:comms",
         "@npm//typesafe-actions:typesafe-actions__umd",
-        "@npm//fp-future:fp-future__umd",
         "@npm//react-is:react-is__umd",
         "@npm//react-fast-compare:react-fast-compare__umd",
         "@npm//react-inner-html:react-inner-html__umd",
@@ -176,12 +204,17 @@ ts_devserver(
         "@npm//auth0-js:auth0-js__umd",
     ],
     data = [
-        ":main_roll",
-        ":webb_code",
         ":static",
+        ":deps_bundle",
+        ":webb_bundle",
+        "//rpc:rpc_bundle",
+        "//config:config_bundle",
+        "//utils:utils_bundle",
+        "//kernel:kernel_bundle",
         "//:node_modules",
         "@npm//react",
         "@npm//react-dom",
+        "@npm//reselect",
         "@npm//prop-types",
         "@npm//react-redux",
         "@npm//react-router-dom",

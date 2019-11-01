@@ -10,7 +10,6 @@ import { SceneManifest } from 'dcl/kernel/scene-manifest/SceneManifest'
 import { renderEntity } from 'dcl/synced-ecs/ecs/render'
 import React from 'react'
 import { store } from '../../../store'
-import { initializeUnity } from '../../../unity/incoming'
 import { UnityRendererParcelSceneAPI } from '../../../unity/UnityRendererParcelSceneAPI'
 import Terminal from '../../ConsoleEmulator/components/Terminal'
 import { Segment } from '../../liteui/dcl'
@@ -27,7 +26,7 @@ function makeCommands(that: any) {
         usage: 'start',
         fn: function() {
           sceneManager.parcelSceneClass = UnityRendererParcelSceneAPI
-          initializeUnity(document.getElementById('gameContainer'))
+          // initializeUnity(document.getElementById('gameContainer'))
         }
       },
       getScene: {
@@ -139,7 +138,7 @@ export class MyTerminal extends React.Component {
   terminal: any = React.createRef()
   componentDidMount() {
     ;(async () => {
-      await initializeUnity(document.getElementById('gameContainer'))
+      // await initializeUnity(document.getElementById('gameContainer'))
       await waitFor(store, state => {
         return state.comms.connected
       })

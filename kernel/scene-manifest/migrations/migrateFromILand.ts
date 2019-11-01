@@ -1,5 +1,5 @@
 import { ILand, ISceneManifest } from 'dcl/utils'
-import { SceneManifest } from '..'
+import { SceneManifest } from '../SceneManifest'
 import { isValidSceneInput, getInvalidReason } from '../validation'
 
 export function migrateFromILand(scene: any, mappings?: any): ISceneManifest {

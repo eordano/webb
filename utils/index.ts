@@ -14,14 +14,12 @@ export * from './TaskQueue'
 
 export * from './Vector'
 
-export * from './math'
+export * from './math/index'
 
 export * from './memoize'
 
-export * from './network'
+export * from './pure/index'
 
-export * from './pure'
-
-export * from './scene'
+export * from './scene/index'
 
 export * from './sha256'

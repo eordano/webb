@@ -1,4 +1,3 @@
-import nodeCrypto from 'crypto'
 import { Buffer } from 'buffer'
 
 export async function sha256asString(data: string) {
@@ -7,7 +6,7 @@ export async function sha256asString(data: string) {
 }
 
 export async function sha256(data: string | Buffer | Uint8Array | ArrayBuffer) {
-  const crypto = typeof window !== 'undefined' && window.crypto || nodeCrypto as any
+  const crypto = typeof window !== 'undefined' && window.crypto || require('crypto') as any
   if (crypto.createHash) {
     return crypto
       .createHash('sha256')

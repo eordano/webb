@@ -1,16 +1,15 @@
 import auth0 from 'auth0-js'
+import { Buffer } from 'buffer'
 import { getConfiguration, getServerConfigurations } from 'dcl/config'
-import { ephemeralPresent, EPHEMERAL_PRESENT } from 'dcl/kernel/auth/actions'
 import { AuthMessage, MessageType, Role } from 'dcl/protos/broker_pb'
 import { AuthData as AuthDataProto } from 'dcl/protos/comms_pb'
 import jwt from 'jsonwebtoken'
 import { all, call, put, select, take, takeLatest } from 'redux-saga/effects'
 import { v4 as uuid } from 'uuid'
-import { authFailure, authSuccess, AUTH_FAILURE, AUTH_REQUEST, commsSignatureRequestAction, commsSignatureSuccess, COMMS_SIGNATURE_REQUEST, ephemeralGet, ephemeralPut, EphemeralPut, EPHEMERAL_GET, EPHEMERAL_PUT, LOGIN, login, LoginAction, LOGOUT, RESTORE_SESSION, tokenFailure, tokenSuccess, TOKEN_REQUEST } from './actions'
+import { authFailure, authSuccess, AUTH_FAILURE, AUTH_REQUEST, commsSignatureRequestAction, commsSignatureSuccess, COMMS_SIGNATURE_REQUEST, ephemeralGet, ephemeralPresent, ephemeralPut, EphemeralPut, EPHEMERAL_GET, EPHEMERAL_PRESENT, EPHEMERAL_PUT, LOGIN, login, LoginAction, LOGOUT, RESTORE_SESSION, tokenFailure, tokenSuccess, TOKEN_REQUEST } from './actions'
 import { BasicEphemeralKey, EphemeralKey, getCurrentEpoch, MessageInput } from './ephemeral'
 import { getAccessToken, getCommsToken, getEphemeralKey } from './selectors'
 import { AuthData } from './types'
-import { Buffer } from 'buffer'
 
 export function* authSaga(): any {
   yield takeLatest(EPHEMERAL_GET, handleGetEphemeral)

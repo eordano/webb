@@ -1,16 +1,8 @@
-const nodeResolve = require('rollup-plugin-node-resolve')
 const json = require('rollup-plugin-json')
-const commonjs = require('rollup-plugin-commonjs')
-const builtins = require('rollup-plugin-node-builtins')
-const globals = require('rollup-plugin-node-globals')
 
 const allExternals = [
-  /**
-   * Bundled dependencies -- reduce me so building this is faster
-   */
   'uuid',
   'typesafe-actions',
-  // 'secp256k1',
   'events',
   'fp-future',
   'history',
@@ -32,22 +24,32 @@ const allExternals = [
   'google-protobuf',
   'webrtc-adapter',
   'gud',
-  /**
-   * Web dependencies
-   */
-  'react',
-  'react-redux',
-  'react-dom',
+  'dcl/protos/comms_pb',
+  'dcl/protos/broker_pb',
+  'dcl/config',
   'dcl/utils',
-  'dcl/kernel',
   'dcl/protos',
-  'dcl/config'
+  'buffer',
+  'safe-buffer',
+  'util',
+  'string_decoder',
+  'stream',
+  'events',
+  'crypto',
+  'reselect',
+  'secp256k1',
+  'jsonwebtoken',
+  'dcl/rpc',
+  'dcl/utils/scene',
+  'dcl/utils/pure/stableStringify',
+  'dcl/rpc/host',
+  'dcl/rpc/common/API'
 ]
 
 export default {
   external: allExternals,
   output: {
-    name: 'webb_roll',
+    name: 'main_roll',
   },
   plugins: [
     json(),

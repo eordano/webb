@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package protocol;
+package dcl.protos;
 
 enum MessageType {
   UNKNOWN_MESSAGE_TYPE = 0;

@@ -23,6 +23,20 @@ ts_library(
     ],
 )
 
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+
+rollup_bundle(
+    name = "config_bundle",
+    config_file = ":rollup.config.js",
+    entry_point = "index.ts",
+    output_dir = True,
+    format = "amd",
+    deps = [
+        ":config",
+        "@npm//rollup-plugin-json",
+    ],
+)
+
 load("//tools/npm:package.bzl", "dcl_npm_package")
 
 dcl_npm_package(

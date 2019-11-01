@@ -87,6 +87,32 @@ jasmine_node_test(
     ],
 )
 
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+
+rollup_bundle(
+    name = "kernel_bundle",
+    config_file = ":rollup.config.js",
+    entry_point = "core/store.ts",
+    output_dir = True,
+    format = "amd",
+    deps = [
+        ":kernel",
+        "//config",
+        "//protos:broker_lib",
+        "//protos:comms_lib",
+        "//rpc",
+        "//synced-ecs",
+        "//scene-api",
+        "//utils",
+        "@npm//jsonwebtoken",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-json",
+        "@npm//rollup-plugin-node-builtins",
+        "@npm//rollup-plugin-node-globals",
+        "@npm//rollup-plugin-node-resolve",
+    ],
+)
+
 load("//tools/npm:package.bzl", "dcl_npm_package")
 
 dcl_npm_package(

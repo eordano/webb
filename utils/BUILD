@@ -48,6 +48,22 @@ jasmine_node_test(
     ],
 )
 
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+
+rollup_bundle(
+    name = "utils_bundle",
+    config_file = ":rollup.config.js",
+    entry_point = "index.ts",
+    output_dir = True,
+    format = "amd",
+    deps = [
+        ":utils",
+        ":srcs",
+        "@npm//rollup-plugin-json",
+        "@npm//rollup-plugin-node-resolve",
+    ],
+)
+
 load("//tools/npm:package.bzl", "dcl_npm_package")
 
 dcl_npm_package(
