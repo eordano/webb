@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+}
+
+.ui.segment {
+  box-shadow: 0 1px 2px 0px rgba(34,36,38,.16);
+}
+
+#renderer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 640px;
+  height: 480px;
+  background: black;
+}
