@@ -1,5 +1,7 @@
-import { MemoryRendererParcelScene } from 'dcl/kernel/renderer/parcelScene/MemoryRendererParcelScene'
-import { IRendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/interface/IRendererParcelSceneToScript'
+import { RendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/kernelSpace/RendererParcelSceneToScript'
+import { registerAPI } from 'dcl/rpc'
+import { exposeMethod } from 'dcl/rpc/common/API'
+import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import { emptyState } from 'dcl/synced-ecs/ecs/generators/emptyState'
 import { addComponent } from 'dcl/synced-ecs/ecs/reducers/addComponent'
@@ -24,13 +26,14 @@ export function componentName(name: any) {
   }
   return '' + name
 }
-
-export class SyncedECS extends MemoryRendererParcelScene implements IRendererParcelSceneToScript {
+@registerAPI('EngineAPI')
+export class SyncedECS extends RendererParcelSceneToScript implements IRendererParcelSceneToScript {
   ecs: ECS
-  constructor(_: any) {
-    super(_)
+  constructor(transport: any) {
+    super(transport)
     this.ecs = emptyState('0')
   }
+  @exposeMethod
   subscribe(_: string): Promise<void> {
     return Promise.resolve()
   }
@@ -42,6 +45,10 @@ export class SyncedECS extends MemoryRendererParcelScene implements IRendererPar
   }
   onSubscribedEvent(_: any): void {}
   sendBatch(actions: any[]) {
+    if (!actions.length) {
+      return
+    }
+    super.sendBatch(actions)
     const entities = {}
     const components = {}
     for (let action of actions) {

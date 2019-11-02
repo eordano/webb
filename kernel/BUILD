@@ -21,6 +21,7 @@ ts_library(
             "**/*.ts",
         ],
         exclude = [
+            "scene-scripts/userSpace/**/*.ts",
             "**/*.spec.ts",
         ],
     ),
@@ -62,71 +63,6 @@ jasmine_node_test(
         ":kernel_spec",
         "//utils",
         "@npm//jasmine",
-    ],
-)
-
-load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
-
-ts_library(
-    name = "gamekit",
-    srcs = glob(
-        include = [
-            "scene-scripts/userSpace/**/*.ts",
-        ],
-        exclude = [
-            "**/*.spec.ts",
-        ],
-    ),
-    deps = [
-        ":kernel",
-        "//utils",
-        "//config",
-        "//rpc",
-        "@npm//@types/node",
-    ],
-)
-
-
-rollup_bundle(
-    name = "gamekit_bundle",
-    config_file = ":rollup.config.js",
-    entry_point = "scene-scripts/userSpace/GamekitFactory.ts",
-    output_dir = True,
-    format = "amd",
-    deps = [
-        ":gamekit",
-        "//config",
-        "//rpc",
-        "//scene-api",
-        "//utils",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-json",
-        "@npm//rollup-plugin-node-builtins",
-        "@npm//rollup-plugin-node-globals",
-        "@npm//rollup-plugin-node-resolve",
-    ],
-)
-
-rollup_bundle(
-    name = "kernel_bundle",
-    config_file = ":rollup.config.js",
-    entry_point = "core/store.ts",
-    output_dir = True,
-    format = "amd",
-    deps = [
-        ":kernel",
-        "//config",
-        "//protos:broker_lib",
-        "//protos:comms_lib",
-        "//rpc",
-        "//synced-ecs",
-        "//scene-api",
-        "//utils",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-json",
-        "@npm//rollup-plugin-node-builtins",
-        "@npm//rollup-plugin-node-globals",
-        "@npm//rollup-plugin-node-resolve",
     ],
 )
 

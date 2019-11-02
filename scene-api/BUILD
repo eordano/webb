@@ -9,6 +9,7 @@ ts_library(
         include = [
             "ecs/*.ts",
             "engine/*.ts",
+            "interface/*.ts",
             "lib/*.ts",
             "schema/*.ts",
             "index.ts",

@@ -1,21 +1,17 @@
-import { ScriptingHost, ScriptingTransport, WebWorkerTransport } from 'dcl/rpc'
+import { ScriptingHost, ScriptingTransport } from 'dcl/rpc'
+import { ISceneWorker } from 'dcl/scene-api/interface/ISceneWorker'
 import { createLogger, ISceneManifest, Observable } from 'dcl/utils'
 import future, { IFuture } from 'fp-future'
 import { IRendererParcelSceneAPI } from '../renderer/parcelScene/IRendererParcelSceneAPI'
-import { ISceneWorker } from './interface/ISceneWorker'
-import { createWorker } from './Worker'
-
 import { EnvironmentAPI } from './kernelSpace/EnvironmentAPI'
 import { RendererParcelSceneToScript } from './kernelSpace/RendererParcelSceneToScript'
-import { DevTools } from 'dcl/scene-api/lib/DevTools'
-
-console.log(`Using ${DevTools} as Devtools`)
 
 const logger = createLogger('SceneWorker')
 
 export class SceneWorker implements ISceneWorker {
   public system: ScriptingHost
   public systemPromise: IFuture<ScriptingHost> = future<ScriptingHost>()
+  public startPromise: IFuture<boolean> = future<boolean>()
 
   public engineAPI: RendererParcelSceneToScript
   public enabled = true
@@ -25,9 +21,17 @@ export class SceneWorker implements ISceneWorker {
 
   public sceneManifest: ISceneManifest
 
-  constructor(public parcelScene: IRendererParcelSceneAPI, public transport: ScriptingTransport, public gamekit?: string) {
+  constructor(
+    public transport: ScriptingTransport,
+    public parcelScene: IRendererParcelSceneAPI,
+    public gamekit?: string
+  ) {
     this.sceneManifest = parcelScene.sceneManifest
-    parcelScene.registerWorker(this)
+    if (!this.gamekit) {
+      throw new Error(
+        `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
+      )
+    }
   }
 
   dispose() {
@@ -45,19 +49,9 @@ export class SceneWorker implements ISceneWorker {
     }
   }
 
-  async loadSystem(): Promise<ScriptingHost> {
-    if (!this.gamekit) {
-      throw new Error(
-        `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
-      )
-    }
-    const worker = createWorker(this.sceneManifest.id, this.gamekit)
-    this.transport = this.transport || WebWorkerTransport(worker)
-    return this.startSystem()
-  }
-
-  private async startSystem() {
-    const system = this.system = await ScriptingHost.fromTransport(this.transport)
+  async startSystem() {
+    const system = (this.system = await ScriptingHost.fromTransport(this.transport))
+    this.systemPromise.resolve(system)
     this.transport = this.transport
 
     this.engineAPI = system.getAPIInstance('EngineAPI') as any
@@ -66,7 +60,6 @@ export class SceneWorker implements ISceneWorker {
     system.getAPIInstance(EnvironmentAPI).sceneManifest = this.parcelScene.sceneManifest
 
     system.enable()
-
     return system
   }
 

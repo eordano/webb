@@ -21,7 +21,6 @@ rollup_bundle(
     format = "umd",
     deps = [
         ":rpc",
-        "@npm//jsonwebtoken",
         "@npm//rollup-plugin-json",
     ],
 )

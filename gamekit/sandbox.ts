@@ -34,7 +34,7 @@ const whitelistES5: Array<keyof typeof global> = [
 
 const defer: (fn: Function) => void = (Promise.resolve().then as any).bind(Promise.resolve() as any)
 
-export async function customEval(code: string, context: any) {
+export function customEval(code: string, context: any) {
   let sandbox: any = {}
 
   let resultKey = 'SAFE_EVAL_' + Math.floor(Math.random() * 1000000)

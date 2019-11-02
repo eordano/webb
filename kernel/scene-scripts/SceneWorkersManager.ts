@@ -1,10 +1,11 @@
 import { ScriptingTransport } from 'dcl/rpc'
-import { IWorker } from 'dcl/rpc/common/transports/WebWorker'
+import { IWorker, WebWorkerTransport } from 'dcl/rpc/common/transports/WebWorker'
+import { ISceneWorker } from 'dcl/scene-api/interface/ISceneWorker'
 import { ISceneManifest } from 'dcl/utils'
 import { IRendererParcelSceneAPI } from '../renderer/parcelScene/IRendererParcelSceneAPI'
 import { MemoryRendererParcelScene } from '../renderer/parcelScene/MemoryRendererParcelScene'
-import { ISceneWorker } from './interface/ISceneWorker'
 import { SceneWorker } from './SceneWorker'
+import { createWorker } from './Worker'
 
 export type Data<T extends IWorker, R extends IRendererParcelSceneAPI> = {
   getWorker(): T
@@ -18,9 +19,15 @@ export class SceneWorkersManager {
   public gamekitPath = './gamekit.js'
 
   newSceneWorker(scene: ISceneManifest, transport?: ScriptingTransport) {
-    const worker = new SceneWorker(new this.parcelSceneClass(scene), transport, this.gamekitPath)
-    worker.loadSystem()
-    return worker
+    const worker = createWorker(scene.id, this.gamekitPath)
+    if (!transport) {
+      transport = WebWorkerTransport(worker)
+    }
+    const parcelSceneConnector = new this.parcelSceneClass(transport, scene)
+    const sceneWorker = new SceneWorker(transport, parcelSceneConnector, this.gamekitPath)
+    parcelSceneConnector.registerWorker(sceneWorker)
+    sceneWorker.startSystem()
+    return sceneWorker
   }
 
   getSceneWorkerBySceneID(sceneId: string) {

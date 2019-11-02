@@ -1,4 +1,4 @@
-import { ISceneWorker } from 'dcl/kernel/scene-scripts/interface/ISceneWorker'
+import { ISceneWorker } from 'dcl/scene-api/interface/ISceneWorker'
 import { EventDispatcher } from 'dcl/rpc/common/core/EventDispatcher'
 import { IEventNames, IEvents } from 'dcl/scene-api'
 import { createLogger, EntityAction, gridToWorld, ILogger, MVector3 } from 'dcl/utils'

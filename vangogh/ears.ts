@@ -1,10 +1,10 @@
 import { getServerConfigurations } from 'dcl/config'
 import { configureStore } from 'dcl/kernel/core/store'
 import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
-import { GamekitScene } from 'dcl/kernel/scene-scripts/userSpace/GamekitScene'
+import { GamekitScene } from 'dcl/gamekit/GamekitScene'
+import { renderEntity } from 'dcl/synced-ecs/ecs/render'
 import fetch from 'node-fetch'
 import { SyncedECS } from './SyncedECS'
-import { renderEntity } from 'dcl/synced-ecs/ecs/render'
 
 export class PlainGameKit extends GamekitScene {
   constructor(public source: string) {

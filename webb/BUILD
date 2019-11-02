@@ -36,6 +36,7 @@ ts_library(
         "//protos:broker",
         "//utils",
         "//synced-ecs",
+        "//gamekit",
         "//config",
         "//rpc",
         "//scene-api",
@@ -73,7 +74,7 @@ rollup_bundle(
     config_file = ":rollup.config.js",
     entry_point = "src/main.tsx",
     output_dir = True,
-    format = "umd",
+    format = "amd",
     deps = [
         "//config",
         "//kernel:kernel",
@@ -82,6 +83,7 @@ rollup_bundle(
         "//rpc",
         "//synced-ecs",
         "//scene-api",
+        "//gamekit",
         "//utils",
         ":webb_code",
         "@npm//jsonwebtoken",
@@ -90,65 +92,6 @@ rollup_bundle(
         "@npm//rollup-plugin-node-builtins",
         "@npm//rollup-plugin-node-globals",
         "@npm//rollup-plugin-node-resolve",
-    ],
-)
-
-ts_library(
-    name = "jsonwebtoken_lib",
-    srcs = glob(
-        include = [
-            "static/vendor-jsonwebtoken/jsonwebtoken.ts"
-        ],
-    ),
-    deps = [
-        "@npm//secp256k1",
-        "@npm//jsonwebtoken",
-    ],
-)
-rollup_bundle(
-    name = "jsonwebtoken",
-    entry_point = "static/vendor-jsonwebtoken/jsonwebtoken.ts",
-    config_file = ":rollup.jsonwebtoken.js",
-    output_dir = False,
-    format = "amd",
-    sourcemap = 'false',
-    deps = [
-        ":jsonwebtoken_lib",
-        "@npm//jsonwebtoken",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-json",
-        "@npm//rollup-plugin-node-globals",
-        "@npm//rollup-plugin-node-resolve",
-        "@npm//rollup-plugin-node-builtins",
-    ],
-)
-ts_library(
-    name = "secp256k1_lib",
-    srcs = glob(
-        include = [
-            "static/vendor-secp256k1/secp256k1.ts"
-        ],
-    ),
-    deps = [
-        "@npm//assert",
-        "@npm//secp256k1"
-    ],
-)
-rollup_bundle(
-    name = "secp256k1",
-    entry_point = "static/vendor-secp256k1/secp256k1.ts",
-    config_file = ":rollup.secp256k1.js",
-    output_dir = False,
-    format = "amd",
-    sourcemap = 'false',
-    deps = [
-        ":secp256k1_lib",
-        "@npm//secp256k1",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-json",
-        "@npm//rollup-plugin-node-globals",
-        "@npm//rollup-plugin-node-resolve",
-        "@npm//rollup-plugin-node-builtins",
     ],
 )
 
@@ -180,7 +123,7 @@ ts_devserver(
         ":webb_code",
         ":static",
         "//:node_modules",
-        "//kernel:gamekit_bundle",
+        "//gamekit:gamekit_bundle",
         "@npm//react",
         "@npm//react-dom",
         "@npm//prop-types",

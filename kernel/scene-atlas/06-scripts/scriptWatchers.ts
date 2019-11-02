@@ -1,24 +1,14 @@
+import { ISceneWorker } from 'dcl/scene-api/interface/ISceneWorker'
 import future from 'fp-future'
-import { ISceneWorker } from '../../scene-scripts/interface/ISceneWorker'
 
 export async function watchScriptForAwake(worker: ISceneWorker) {
-  const awake = future<boolean>()
-  const system = await (worker as any).systemPromise
-  system.on('awake', () => {
-    console.log(worker.sceneManifest.id, 'awake')
-    awake.resolve(true)
-  })
-  return awake
+  await (worker as any).parcelScene.awakePromise
+  return true
 }
 
 export async function watchRendererForLoaded(worker: ISceneWorker) {
-  const loaded = future<boolean>()
-  const system = await (worker as any).system
-  system.on('loaded', () => {
-    console.log(worker.sceneManifest.id, 'loaded')
-    loaded.resolve(true)
-  })
-  return loaded
+  await (worker as any).parcelScene.readyPromise
+  return true
 }
 
 export async function watchForSceneDispose(sceneId: string, worker: ISceneWorker) {

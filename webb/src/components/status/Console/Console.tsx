@@ -7,15 +7,11 @@ import { sceneManager } from 'dcl/kernel/scene-atlas/06-scripts/sceneManager'
 import { teleportToTarget } from 'dcl/kernel/scene-atlas/07-settlement/actions'
 import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
 import { SceneManifest } from 'dcl/kernel/scene-manifest/SceneManifest'
-import { registerAPI } from 'dcl/rpc'
-import { renderEntity } from 'dcl/synced-ecs/ecs/render'
 import React from 'react'
 import { store } from '../../../store'
 import { UnityRendererParcelSceneAPI } from '../../../unity/UnityRendererParcelSceneAPI'
 import Terminal from '../../ConsoleEmulator/components/Terminal'
 import { Segment } from '../../liteui/dcl'
-import { RunScene } from './vangogh/ears'
-import { SyncedECS } from './vangogh/SyncedECS'
 
 var term = null
 var commands: any = {}
@@ -110,9 +106,8 @@ function makeCommands(that: any) {
         description: 'Run scene at coordinates',
         usage: 'run <x> <y>',
         fn: function(x: string, y: string) {
-          RunScene(store)(x, y).then((data: any) => {
-            const { sync } = data
-            term.terminal.current.pushToStdout(<pre>{renderEntity(sync.ecs, '0', '  ')}</pre>)
+          resolvePositionToSceneManifest(store)(parseInt(x, 10), parseInt(y, 10)).then((scene: SceneManifest) => {
+            sceneManager.loadScene(scene)
           })
         }
       },
@@ -141,8 +136,10 @@ export class MyTerminal extends React.Component {
   componentDidMount() {
     ;(async () => {
       // await initializeUnity(document.getElementById('gameContainer'))
-      registerAPI('EngineAPI')(SyncedECS as any)
-      sceneManager.gamekitPath = 'static/dcl/gamekit.js'
+      await import('dcl/scene-api/lib/DevTools')
+      await import('./vangogh/SyncedECS')
+      sceneManager.gamekitPath = 'gamekit/gamekit_bundle.js'
+      // sceneManager.gamekitPath = 'static/dcl/gamekit.js'
       await waitFor(store, state => {
         return state.comms.connected
       })

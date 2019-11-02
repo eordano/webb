@@ -1,5 +1,5 @@
 import { EntityAction, ISceneManifest } from 'dcl/utils'
-import { ISceneWorker } from '../../scene-scripts/interface/ISceneWorker'
+import { ISceneWorker } from 'dcl/scene-api/interface/ISceneWorker'
 
 /**
  * Renderer's API -- the kernel uses this interface to bootstrap a (RendererParcelScene) on the Renderer

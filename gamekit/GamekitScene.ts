@@ -1,10 +1,11 @@
 import { DecentralandInterface, DevTools } from 'dcl/scene-api'
 import { defaultLogger, EntityAction } from 'dcl/utils'
-import { IRendererParcelSceneToScript } from '../interface/IRendererParcelSceneToScript'
-import { ISceneRunningScript } from '../interface/ISceneRunningScript'
+import { ISceneRunningScript } from 'dcl/scene-api/interface/ISceneRunningScript'
+import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
 import { BuildDCLInterface } from './DCLInterface/BuildDCLInterface'
 import { BuildECSInterface } from './DCLInterface/BuildECSInterface'
 import { customEval, getES5Context } from './sandbox'
+
 
 const LOADING = 'loading'
 const AWAKE = 'awake'
@@ -17,7 +18,8 @@ const RUNNING = 'running'
  * This is the class that runs all the magic (see `runFirstRound`)
  */
 export abstract class GamekitScene implements ISceneRunningScript {
-  engine: IRendererParcelSceneToScript
+
+  engine!: IRendererParcelSceneToScript
 
   devTools: any
   devToolsAdapter?: DevTools
@@ -25,12 +27,12 @@ export abstract class GamekitScene implements ISceneRunningScript {
   outboundEventQueue: EntityAction[] = []
   status: typeof LOADING | typeof AWAKE | typeof RUNNING = LOADING
 
-  dcl: DecentralandInterface
+  dcl!: DecentralandInterface
 
   /**
    * Main lifecycle of the GamekitScene
    */
-  async setupLifecycle() {
+  setupLifecycle() {
     this.setupDCLInterface()
     this.setupDevtools()
     this.sendBatch()
@@ -38,8 +40,7 @@ export abstract class GamekitScene implements ISceneRunningScript {
     this.status = AWAKE
 
     try {
-      await this.runFirstRound()
-      this.runStartFunctions()
+      this.runFirstRound().then(() => this.runStartFunctions())
     } catch (error) {
       throw error
     }
@@ -62,23 +63,19 @@ export abstract class GamekitScene implements ISceneRunningScript {
     }
   }
 
-  abstract getSource(): Promise<string>
+  abstract getSource(): Promise<string | void>
 
-  async runFirstRound() {
-    let source: string
-    try {
-      source = await this.getSource()
-    } catch (e) {
-      throw new Error(e)
-    }
-
-    try {
-      await customEval(source, getES5Context({ dcl: this.dcl }))
-    } catch (e) {
-      throw new Error(e)
-    }
-
-    this.setupSceneStartSignalResponse()
+  runFirstRound() {
+    return this.getSource().then(source => {
+      if (!source) {
+        throw new Error('Could not load source')
+      }
+      return customEval(source, getES5Context({ dcl: this.dcl }))
+    }).then(() => {
+      this.setupSceneStartSignalResponse()
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   runStartFunctions() {
@@ -124,7 +121,7 @@ export abstract class GamekitScene implements ISceneRunningScript {
     })
   }
 
-  currentTimeout: number = undefined
+  currentTimeout?: number = undefined
   targetFramesPerSecond = 30
   updateInterval = 1000 / this.targetFramesPerSecond
 

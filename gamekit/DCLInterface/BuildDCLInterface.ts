@@ -52,15 +52,17 @@ export function BuildDCLInterface(that: any) {
       that.engine.unsubscribe(eventName)
     },
 
-    loadModule: async (moduleName: string) => {
+    loadModule: (moduleName: string) => {
       const moduleToLoad = moduleName.replace(/^@decentraland\//, '')
       try {
-        const proxy = (await that.loadAPIs([moduleToLoad]))[moduleToLoad]
-        const methods = await proxy._getExposedMethods()
-        return {
-          rpcHandle: moduleToLoad,
-          methods: methods.map((name: string) => ({ name }))
-        }
+        return (that.loadAPIs([moduleToLoad]))[moduleToLoad].then((proxy: any) => {
+          return proxy._getExposedMethods().then((methods: any) => {
+            return {
+              rpcHandle: moduleToLoad,
+              methods: methods.map((name: string) => ({ name }))
+            }
+          })
+        })
       } catch (e) {
         e.message = `Could not get the methods of ${moduleToLoad} -- ` + e.message
         throw e
