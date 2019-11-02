@@ -55,28 +55,6 @@ ts_library(
 
 load("@npm_bazel_jasmine//:index.bzl", "jasmine_node_test")
 
-ts_library(
-    name = "kernel_spec",
-    srcs = glob([
-        "**/*.spec.ts",
-    ]),
-    deps = [
-        ":kernel",
-        "//utils",
-        "//config",
-        "@npm//@types/jasmine",
-        "@npm//@types/node",
-        "@npm//@types/sinon",
-        "@npm//@types/secp256k1",
-        "@npm//fp-future",
-        "@npm//redux-saga",
-        "@npm//redux-saga-test-plan",
-        "@npm//secp256k1",
-        "@npm//sinon",
-        "@npm//webworker-threads",
-    ],
-)
-
 jasmine_node_test(
     name = "test",
     coverage = True,
@@ -88,6 +66,46 @@ jasmine_node_test(
 )
 
 load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+
+ts_library(
+    name = "gamekit",
+    srcs = glob(
+        include = [
+            "scene-scripts/userSpace/**/*.ts",
+        ],
+        exclude = [
+            "**/*.spec.ts",
+        ],
+    ),
+    deps = [
+        ":kernel",
+        "//utils",
+        "//config",
+        "//rpc",
+        "@npm//@types/node",
+    ],
+)
+
+
+rollup_bundle(
+    name = "gamekit_bundle",
+    config_file = ":rollup.config.js",
+    entry_point = "scene-scripts/userSpace/GamekitFactory.ts",
+    output_dir = True,
+    format = "amd",
+    deps = [
+        ":gamekit",
+        "//config",
+        "//rpc",
+        "//scene-api",
+        "//utils",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-json",
+        "@npm//rollup-plugin-node-builtins",
+        "@npm//rollup-plugin-node-globals",
+        "@npm//rollup-plugin-node-resolve",
+    ],
+)
 
 rollup_bundle(
     name = "kernel_bundle",
@@ -104,7 +122,6 @@ rollup_bundle(
         "//synced-ecs",
         "//scene-api",
         "//utils",
-        "@npm//jsonwebtoken",
         "@npm//rollup-plugin-commonjs",
         "@npm//rollup-plugin-json",
         "@npm//rollup-plugin-node-builtins",

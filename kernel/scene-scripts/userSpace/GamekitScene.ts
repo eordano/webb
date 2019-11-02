@@ -1,11 +1,10 @@
 import { DecentralandInterface, DevTools } from 'dcl/scene-api'
 import { defaultLogger, EntityAction } from 'dcl/utils'
-
+import { IRendererParcelSceneToScript } from '../interface/IRendererParcelSceneToScript'
+import { ISceneRunningScript } from '../interface/ISceneRunningScript'
 import { BuildDCLInterface } from './DCLInterface/BuildDCLInterface'
 import { BuildECSInterface } from './DCLInterface/BuildECSInterface'
 import { customEval, getES5Context } from './sandbox'
-import { IRendererParcelSceneToScript } from '../kernelSpace/IRendererParcelSceneToScript'
-import { ISceneRunningScript } from '../interface/ISceneRunningScript'
 
 const LOADING = 'loading'
 const AWAKE = 'awake'
@@ -18,7 +17,6 @@ const RUNNING = 'running'
  * This is the class that runs all the magic (see `runFirstRound`)
  */
 export abstract class GamekitScene implements ISceneRunningScript {
-
   engine: IRendererParcelSceneToScript
 
   devTools: any

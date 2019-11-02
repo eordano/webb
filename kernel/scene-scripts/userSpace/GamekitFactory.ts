@@ -1,17 +1,16 @@
-import { Script } from "@dcl/rpc/client"
 import { ILogOpts, ScriptingTransport } from 'dcl/rpc'
-import { inject } from 'dcl/rpc/client'
+import { inject, Script } from 'dcl/rpc/client'
+import { IRendererParcelSceneToScript } from '../interface/IRendererParcelSceneToScript'
 import { GamekitScene } from './GamekitScene'
 import { loadGamekitEntrypoint } from './loadGamekitEntrypoint'
-import { IRendererParcelSceneToScript } from "../kernelSpace/IRendererParcelSceneToScript"
 
 export class APILoadedScriptGamekit extends GamekitScene {
-    constructor(private factory: GamekitFactory) {
-        super()
-    }
-    async getSource(): Promise<string> {
-        return loadGamekitEntrypoint(this.factory.loadAPIs)
-    }
+  constructor(private factory: GamekitFactory) {
+    super()
+  }
+  async getSource(): Promise<string> {
+    return loadGamekitEntrypoint(this.factory.loadAPIs)
+  }
 }
 
 export class GamekitFactory extends Script {
@@ -28,15 +27,15 @@ export class GamekitFactory extends Script {
   _gamekit: GamekitScene
 
   get gamekit(): GamekitScene {
-      if (!this._gamekit) {
-        this._gamekit = new APILoadedScriptGamekit(this)
-        this._gamekit.engine = this.engine
-        this._gamekit.devTools = this.devTools
-      }
-      return this._gamekit
+    if (!this._gamekit) {
+      this._gamekit = new APILoadedScriptGamekit(this)
+      this._gamekit.engine = this.engine
+      this._gamekit.devTools = this.devTools
+    }
+    return this._gamekit
   }
 
   async systemDidEnable() {
-      return this._gamekit.startLoop()
+    return this._gamekit.startLoop()
   }
 }

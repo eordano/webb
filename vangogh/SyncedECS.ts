@@ -1,5 +1,5 @@
 import { MemoryRendererParcelScene } from 'dcl/kernel/renderer/parcelScene/MemoryRendererParcelScene'
-import { IRendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/kernelSpace/IRendererParcelSceneToScript'
+import { IRendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/interface/IRendererParcelSceneToScript'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import { emptyState } from 'dcl/synced-ecs/ecs/generators/emptyState'
 import { addComponent } from 'dcl/synced-ecs/ecs/reducers/addComponent'

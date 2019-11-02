@@ -1,9 +1,9 @@
-import { UnityGlobals } from './globals'
+import { UnityGlobals } from "./UnityGlobals"
 import { defaultLogger, Vector3 } from 'dcl/utils'
 import { SceneManifest } from 'dcl/kernel/scene-manifest'
 import { Profile } from 'dcl/kernel/passports/types'
 
-export const unityInterface = {
+export const wasmInterface = {
   debug: false,
   SetDebug() {
     UnityGlobals.gameInstance.SendMessage('SceneController', 'SetDebug')
@@ -57,7 +57,7 @@ export const unityInterface = {
     UnityGlobals.gameInstance.SendMessage('SceneController', 'UnloadScene', sceneId)
   },
   SendSceneMessage(parcelSceneId: string, method: string, payload: string, tag: string = '') {
-    if (unityInterface.debug) {
+    if (wasmInterface.debug) {
       defaultLogger.info(parcelSceneId, method, payload, tag)
     }
     UnityGlobals.gameInstance.SendMessage(

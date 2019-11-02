@@ -24,7 +24,7 @@ export class EnvironmentAPI extends ExposableAPI {
   @exposeMethod
   async getBootstrapData(): Promise<GamekitRequiredBootstrapInfo> {
     return Promise.resolve({
-      ...JSON.parse((this.sceneManifest as any)['_cannonicalRepresentation']),
+      ...this.sceneManifest,
       mappings: this.sceneManifest.legacyMappings,
       baseUrl: 'https://content.decentraland.org/contents/'
     })

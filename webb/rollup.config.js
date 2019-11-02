@@ -1,7 +1,7 @@
-const nodeResolve = require('rollup-plugin-node-resolve')
-const json = require('rollup-plugin-json')
-const commonjs = require('rollup-plugin-commonjs')
 const builtins = require('rollup-plugin-node-builtins')
+const resolve = require('rollup-plugin-node-resolve')
+const commonjs = require('rollup-plugin-commonjs')
+const json = require('rollup-plugin-json')
 const globals = require('rollup-plugin-node-globals')
 
 const allExternals = [
@@ -38,18 +38,28 @@ const allExternals = [
   'react',
   'react-redux',
   'react-dom',
-  'dcl/utils',
-  'dcl/kernel',
-  'dcl/protos',
-  'dcl/config'
+  'react-console-emulator',
+  'connected-react-router',
+  /**
+   * Other dependencies
+   */
+  'dcl/protos/comms_pb',
+  'dcl/protos/broker_pb',
 ]
 
 export default {
   external: allExternals,
   output: {
-    name: 'webb_roll',
+    name: 'main_roll',
   },
   plugins: [
     json(),
+    resolve({
+      preferBuiltins: true,
+      browser: true,
+    }),
+    commonjs(),
+    globals(),
+    builtins(),
   ]
 }

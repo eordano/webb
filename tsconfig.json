@@ -1,12 +1,12 @@
 {
   "bazelOpts": {
     "es5Mode": true,
-    "devmodeTargetOverride": "es2015"
+    "devmodeTargetOverride": "es2017"
   },
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "dcl/*": ["bazel-genfiles/*", "bazel-bin/*"]
+      "dcl/*": ["*"]
     },
     "module": "esnext",
     "diagnostics": false,
@@ -22,11 +22,11 @@
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "removeComments": false,
-    "target": "es6",
+    "target": "es2017",
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "jsx": "react",
-    "lib": ["esnext", "dom"]
+    "lib": ["esnext", "es2017", "dom"]
   },
   "exclude": ["bazel-*", "node_modules", "**/node_modules/*"]
 }

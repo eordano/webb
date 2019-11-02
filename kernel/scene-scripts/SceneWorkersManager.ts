@@ -18,7 +18,9 @@ export class SceneWorkersManager {
   public gamekitPath = './gamekit.js'
 
   newSceneWorker(scene: ISceneManifest, transport?: ScriptingTransport) {
-    return new SceneWorker(new this.parcelSceneClass(scene), transport, this.gamekitPath)
+    const worker = new SceneWorker(new this.parcelSceneClass(scene), transport, this.gamekitPath)
+    worker.loadSystem()
+    return worker
   }
 
   getSceneWorkerBySceneID(sceneId: string) {
@@ -46,7 +48,7 @@ export class SceneWorkersManager {
 
     let worker = this.loadedSceneWorkers.get(sceneId)
     if (!worker) {
-      worker = this.newSceneWorker(scene, transport)
+      worker = this.newSceneWorker(scene, transport) as any
       this.loadedSceneWorkers.set(sceneId, worker)
       worker.onDisposeObservable.addOnce(() => {
         this.loadedSceneWorkers.delete(sceneId)

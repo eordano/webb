@@ -7,6 +7,9 @@ import { createWorker } from './Worker'
 
 import { EnvironmentAPI } from './kernelSpace/EnvironmentAPI'
 import { RendererParcelSceneToScript } from './kernelSpace/RendererParcelSceneToScript'
+import { DevTools } from 'dcl/scene-api/lib/DevTools'
+
+console.log(`Using ${DevTools} as Devtools`)
 
 const logger = createLogger('SceneWorker')
 
@@ -20,19 +23,11 @@ export class SceneWorker implements ISceneWorker {
   public persistent = false
   public readonly onDisposeObservable = new Observable<string>()
 
-  public transport: ScriptingTransport
   public sceneManifest: ISceneManifest
 
-  constructor(public parcelScene: IRendererParcelSceneAPI, transport: ScriptingTransport, gamekit?: string) {
+  constructor(public parcelScene: IRendererParcelSceneAPI, public transport: ScriptingTransport, public gamekit?: string) {
     this.sceneManifest = parcelScene.sceneManifest
     parcelScene.registerWorker(this)
-
-    this.loadSystem(parcelScene.sceneManifest.id, transport, gamekit)
-      .then($ => {
-        this.systemPromise.resolve($)
-        this.system = $
-      })
-      .catch($ => this.systemPromise.reject($))
   }
 
   dispose() {
@@ -50,11 +45,22 @@ export class SceneWorker implements ISceneWorker {
     }
   }
 
-  private async startSystem(transport: ScriptingTransport) {
-    const system = this.system = await ScriptingHost.fromTransport(transport)
-    this.transport = transport
+  async loadSystem(): Promise<ScriptingHost> {
+    if (!this.gamekit) {
+      throw new Error(
+        `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
+      )
+    }
+    const worker = createWorker(this.sceneManifest.id, this.gamekit)
+    this.transport = this.transport || WebWorkerTransport(worker)
+    return this.startSystem()
+  }
 
-    this.engineAPI = await system.getAPIInstance('EngineAPI') as any
+  private async startSystem() {
+    const system = this.system = await ScriptingHost.fromTransport(this.transport)
+    this.transport = this.transport
+
+    this.engineAPI = system.getAPIInstance('EngineAPI') as any
     this.engineAPI.rendererParcelSceneAPI = this.parcelScene
 
     system.getAPIInstance(EnvironmentAPI).sceneManifest = this.parcelScene.sceneManifest
@@ -62,16 +68,6 @@ export class SceneWorker implements ISceneWorker {
     system.enable()
 
     return system
-  }
-
-  private async loadSystem(id: string, transport?: ScriptingTransport, gamekit?: string): Promise<ScriptingHost> {
-    if (!gamekit) {
-      throw new Error(
-        `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
-      )
-    }
-    const worker = createWorker(id, gamekit)
-    return this.startSystem(transport || WebWorkerTransport(worker))
   }
 
   async unmountSystem() {
