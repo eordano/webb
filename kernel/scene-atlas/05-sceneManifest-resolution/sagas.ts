@@ -3,7 +3,7 @@ import { call, put, select, takeLatest, takeEvery } from 'redux-saga/effects'
 import { getDownloadServer, isMappingResolved } from './selectors'
 import { sceneByIdFailure, sceneByIdRequest, SceneByIdRequest, sceneByIdSuccess, SCENE_BY_ID_REQUEST } from './types'
 import { SET_POSITION_AS_RESOLVED, SetPositionsAsResolvedAction } from '../04-sceneId-resolution/actions'
-import { migrateFromILand } from '../../scene-manifest/migrations/migrateFromILand'
+import { migrateFromILand } from '../../../utils/scene/migrations/migrateFromILand'
 
 export function* sceneIdToManifestSaga(): any {
   yield takeLatest(SET_POSITION_AS_RESOLVED, fetchMissingSceneManifest)

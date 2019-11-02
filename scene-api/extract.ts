@@ -38,7 +38,6 @@ export function runMain(tsConfig: string, entryPoint, dtsBundleOut): 1 | 0 {
   try {
     const data = JSON.parse(fs.readFileSync(path.resolve(tsConfig)).toString())
     const config = ts.parseJsonConfigFileContent(data, ts.sys, '.')
-    console.log(config)
   } catch (errors) {
     console.error(errors)
     return 1

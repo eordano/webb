@@ -1,20 +1,19 @@
+import { stableStringify } from '../pure/stableStringify'
+import { sha256 } from '../sha256'
+import { decideFloat, encodeParcelPosition, getMinimum, parcelLimits, parseCoordinate } from './index'
+import { ISceneManifest } from './ISceneManifest'
 import {
-  UnsanitizedSceneManifest,
-  Coordinate,
-  NonEmptyCoordinateArray,
   AssetDefinition,
   AssetTagDefinition,
+  Coordinate,
+  NamedAsset,
+  NonEmptyCoordinateArray,
   ReferenceSystem,
   SpawnPointDefinition,
-  NamedAsset,
+  UnsanitizedSceneManifest,
   URIAsset
-} from 'dcl/utils/scene/SceneManifestTypes'
-
-import { stableStringify } from 'dcl/utils/pure/stableStringify'
-import { parcelLimits, getMinimum, parseCoordinate, decideFloat, encodeParcelPosition } from 'dcl/utils/scene'
-import { isValidSceneInput, getInvalidReason } from './validation'
-import { ISceneManifest } from 'dcl/utils/scene/ISceneManifest'
-import { sha256 } from 'dcl/utils'
+} from './SceneManifestTypes'
+import { getInvalidReason, isValidSceneInput } from './validation'
 
 export class SceneManifest implements ISceneManifest {
   raw: UnsanitizedSceneManifest
@@ -42,7 +41,7 @@ export class SceneManifest implements ISceneManifest {
   get id(): string {
     if (!this._id) {
       this._id = this.raw['id']
-      this.cannonicalCID().then(id => this._id = id)
+      this.cannonicalCID().then(id => (this._id = id))
     }
     return this._id
   }

@@ -3,8 +3,8 @@ import { ISceneWorker } from 'dcl/scene-api/interface/ISceneWorker'
 import { createLogger, ISceneManifest, Observable } from 'dcl/utils'
 import future, { IFuture } from 'fp-future'
 import { IRendererParcelSceneAPI } from '../renderer/parcelScene/IRendererParcelSceneAPI'
-import { EnvironmentAPI } from './kernelSpace/EnvironmentAPI'
 import { RendererParcelSceneToScript } from './kernelSpace/RendererParcelSceneToScript'
+import { EnvironmentAPI } from './kernelSpace/EnvironmentAPI'
 
 const logger = createLogger('SceneWorker')
 
@@ -19,14 +19,12 @@ export class SceneWorker implements ISceneWorker {
   public persistent = false
   public readonly onDisposeObservable = new Observable<string>()
 
-  public sceneManifest: ISceneManifest
-
   constructor(
+    public sceneManifest: ISceneManifest,
     public transport: ScriptingTransport,
     public parcelScene: IRendererParcelSceneAPI,
     public gamekit?: string
   ) {
-    this.sceneManifest = parcelScene.sceneManifest
     if (!this.gamekit) {
       throw new Error(
         `Can't create a SceneWorker without the Gamekit Entrypoint. See SceneWorker.ts for more information`
@@ -49,18 +47,20 @@ export class SceneWorker implements ISceneWorker {
     }
   }
 
-  async startSystem() {
-    const system = (this.system = await ScriptingHost.fromTransport(this.transport))
-    this.systemPromise.resolve(system)
-    this.transport = this.transport
+  startSystem() {
+    const manifest = this.sceneManifest
+    return ScriptingHost.fromTransport(this.transport).then(system => {
+      this.system = system
+      this.systemPromise.resolve(system)
+      this.transport = this.transport
 
-    this.engineAPI = system.getAPIInstance('EngineAPI') as any
-    this.engineAPI.rendererParcelSceneAPI = this.parcelScene
+      this.engineAPI = system.getAPIInstance('EngineAPI') as any
+      this.engineAPI.rendererParcelSceneAPI = this.parcelScene
+      system.getAPIInstance(EnvironmentAPI).sceneManifest = manifest
 
-    system.getAPIInstance(EnvironmentAPI).sceneManifest = this.parcelScene.sceneManifest
-
-    system.enable()
-    return system
+      system.enable()
+      return system
+    })
   }
 
   async unmountSystem() {

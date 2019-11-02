@@ -1,7 +1,6 @@
-import { UnityGlobals } from "./UnityGlobals"
-import { defaultLogger, Vector3 } from 'dcl/utils'
-import { SceneManifest } from 'dcl/kernel/scene-manifest'
 import { Profile } from 'dcl/kernel/passports/types'
+import { defaultLogger, SceneManifest, Vector3 } from 'dcl/utils'
+import { UnityGlobals } from './UnityGlobals'
 
 export const wasmInterface = {
   debug: false,

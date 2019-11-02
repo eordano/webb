@@ -1,6 +1,7 @@
 import { RendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/kernelSpace/RendererParcelSceneToScript'
 import { registerAPI } from 'dcl/rpc'
 import { exposeMethod } from 'dcl/rpc/common/API'
+import { EventDispatcher } from 'dcl/rpc/common/core/EventDispatcher'
 import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import { emptyState } from 'dcl/synced-ecs/ecs/generators/emptyState'
@@ -29,25 +30,30 @@ export function componentName(name: any) {
 @registerAPI('EngineAPI')
 export class SyncedECS extends RendererParcelSceneToScript implements IRendererParcelSceneToScript {
   ecs: ECS
+  eventDispatcher = new EventDispatcher()
   constructor(transport: any) {
     super(transport)
     this.ecs = emptyState('0')
   }
   @exposeMethod
-  subscribe(_: string): Promise<void> {
+  on(event: string): Promise<void> {
+    console.log('subscribed to ', event)
+    super.subscribe(event as any)
     return Promise.resolve()
   }
-  unsubscribe(_: string): Promise<void> {
-    return Promise.resolve()
-  }
+  @exposeMethod
   startSignal(): Promise<void> {
+    console.log('Start signal')
+    super.startSignal()
+    setTimeout(() => this.sendSubscriptionEvent('sceneStart' as any, {}), 100)
     return Promise.resolve()
   }
-  onSubscribedEvent(_: any): void {}
+  @exposeMethod
   sendBatch(actions: any[]) {
     if (!actions.length) {
       return
     }
+    console.log(actions)
     super.sendBatch(actions)
     const entities = {}
     const components = {}

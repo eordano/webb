@@ -38,7 +38,6 @@ export class MemoryRendererParcelScene implements IRendererParcelSceneAPI {
   }
 
   dispose(): void {
-    console.log('Disposing worker')
   }
 
   on(event: string, listener: any) {

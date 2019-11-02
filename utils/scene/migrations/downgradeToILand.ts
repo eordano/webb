@@ -1,4 +1,5 @@
-import { ILand, ISceneManifest, encodeParcelPosition } from 'dcl/utils'
+import { ISceneManifest, encodeParcelPosition } from '../index'
+import { ILand } from '../../BagOfThings'
 
 export function downgradeToILand(
   scene: ISceneManifest

@@ -1,4 +1,4 @@
-import { SceneManifest } from '..'
+import { SceneManifest } from '../SceneManifest'
 
 export function buildFakeSceneBasedOnParcels(sceneId: string, positions: string[]) {
   return new SceneManifest({

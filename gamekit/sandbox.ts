@@ -51,9 +51,10 @@ export function customEval(code: string, context: any) {
 }
 
 declare var global: any
+declare var window: any
 export function getES5Context(base: Record<string, any>) {
-  const module = global // typeof window !== undefined ? window : global
-  whitelistES5.forEach($ => (base[$ as any] = module[$]))
+  const scope = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : globalThis
+  whitelistES5.forEach($ => (base[$ as any] = scope[$]))
 
   return base
 }

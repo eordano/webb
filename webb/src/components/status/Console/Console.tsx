@@ -6,12 +6,12 @@ import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/action
 import { sceneManager } from 'dcl/kernel/scene-atlas/06-scripts/sceneManager'
 import { teleportToTarget } from 'dcl/kernel/scene-atlas/07-settlement/actions'
 import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
-import { SceneManifest } from 'dcl/kernel/scene-manifest/SceneManifest'
 import React from 'react'
 import { store } from '../../../store'
 import { UnityRendererParcelSceneAPI } from '../../../unity/UnityRendererParcelSceneAPI'
 import Terminal from '../../ConsoleEmulator/components/Terminal'
 import { Segment } from '../../liteui/dcl'
+import { SceneManifest } from 'dcl/utils'
 
 var term = null
 var commands: any = {}
@@ -138,8 +138,10 @@ export class MyTerminal extends React.Component {
       // await initializeUnity(document.getElementById('gameContainer'))
       await import('dcl/scene-api/lib/DevTools')
       await import('./vangogh/SyncedECS')
+      await import('dcl/kernel/scene-scripts/kernelSpace/EnvironmentAPI')
       sceneManager.gamekitPath = 'gamekit/gamekit_bundle.js'
       // sceneManager.gamekitPath = 'static/dcl/gamekit.js'
+      store.dispatch(setWorldPosition({x: 0, y: 0, z: 0}))
       await waitFor(store, state => {
         return state.comms.connected
       })

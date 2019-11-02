@@ -14,7 +14,6 @@ export async function watchRendererForLoaded(worker: ISceneWorker) {
 export async function watchForSceneDispose(sceneId: string, worker: ISceneWorker) {
   const stop = future<void>()
   worker.onDisposeObservable.addOnce((eventType: any, eventState: any) => {
-    console.log(eventState, eventType)
     stop.resolve()
   })
   await stop

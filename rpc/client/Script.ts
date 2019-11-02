@@ -64,15 +64,15 @@ function getInjectableMap(target: Script): Map<any, string> {
   return anyTarget[injectedAPISymbol]
 }
 
-async function _injectAPIs(target: Script) {
+function _injectAPIs(target: Script) {
   let injectedMap: Map<keyof Script, string> = getInjectedAPIs(target)
 
   if (injectedMap.size === 0) return
 
-  await target.loadAPIs(Array.from(injectedMap.values()))
-
-  injectedMap.forEach(function(apiName: string, property) {
-    target[property as any] = target.loadedAPIs[apiName]
+  return target.loadAPIs(Array.from(injectedMap.values())).then(() => {
+    injectedMap.forEach(function(apiName: string, property) {
+      target[property as any] = target.loadedAPIs[apiName]
+    })
   })
 }
 
@@ -122,7 +122,7 @@ class Script extends Client {
    * @param apiName Name of the plugin we are trying to obtain
    * @returns {object} loadedAPIs
    */
-  async loadAPIs(apiName: string[]): Promise<{ [key: string]: any }> {
+  loadAPIs(apiName: string[]): Promise<{ [key: string]: any }> {
     const loadedKeys = Object.keys(this.loadedAPIs)
 
     const keysToRequest = apiName.filter(function($) {
@@ -130,15 +130,17 @@ class Script extends Client {
     })
 
     if (keysToRequest.length) {
-      await this.call(loadAPIsNotificationName, [keysToRequest])
+      const that = this
+      return this.call(loadAPIsNotificationName, [keysToRequest]).then(() => {
+        // Load / request the API
+        keysToRequest.forEach(async apiName => {
+          that.loadedAPIs[apiName] = getApi(that, apiName)
+        })
 
-      // Load / request the API
-      keysToRequest.forEach(async apiName => {
-        this.loadedAPIs[apiName] = getApi(this, apiName)
+        return that.loadedAPIs
       })
     }
-
-    return this.loadedAPIs
+    return Promise.resolve({})
   }
 
   protected didConnect() {

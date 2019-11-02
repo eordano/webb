@@ -9,7 +9,7 @@ export class APILoadedScriptGamekit extends GamekitScene {
     super()
   }
   getSource(): Promise<string | void> {
-    return loadGamekitEntrypoint(this.factory.loadAPIs)
+    return loadGamekitEntrypoint(this.factory)
   }
 }
 
@@ -39,7 +39,7 @@ export class GamekitFactory extends Script {
 
   systemDidEnable() {
     this.eventSubscriber = new EventSubscriber(this.engine)
-    return this.gamekit.startLoop()
+    return this.gamekit.setupLifecycle()
   }
 }
 

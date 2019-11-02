@@ -1,3 +1,5 @@
+import { SceneManifest } from "dcl/utils"
+
 export const dataUrlRE = /^data:[^/]+\/[^;]+;base64,/
 export const blobRE = /^blob:http/
 
@@ -15,19 +17,18 @@ export function resolveMapping(mapping: string | undefined, mappingName: string,
   return (baseUrl.endsWith('/') ? baseUrl : baseUrl + '/') + url
 }
 
-export function loadGamekitEntrypoint(loadAPIs: (apiNames: string[]) => Promise<any>) {
-  return loadAPIs(['EnvironmentAPI'])
+export function loadGamekitEntrypoint(client: { loadAPIs: (apiNames: string[]) => Promise<any> }) {
+  return client.loadAPIs(['EnvironmentAPI'])
     .then(apis => {
       const { EnvironmentAPI } = apis
       return EnvironmentAPI.getBootstrapData()
     })
     .then(bootstrapData => {
-      if (bootstrapData && bootstrapData.main) {
-        const mappingName = bootstrapData.main
-        const mapping = bootstrapData.mappings.find(($: { file: string; hash: string }) => {
-          return $.file === mappingName
-        })
-        return resolveMapping(mapping && mapping.hash, mappingName, bootstrapData.baseUrl)
+      const manifest = new SceneManifest(bootstrapData.raw)
+      if (bootstrapData && manifest.main) {
+        const mappingName = manifest.main
+        const mapping = manifest.getCIDForFilePath(mappingName)
+        return resolveMapping(mapping, mappingName, bootstrapData.baseUrl)
       }
     })
     .then(url => {

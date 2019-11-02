@@ -1,6 +1,7 @@
-import { ILand, ISceneManifest } from 'dcl/utils'
+import { ILand } from '../../BagOfThings'
+import { ISceneManifest } from '../ISceneManifest'
 import { SceneManifest } from '../SceneManifest'
-import { isValidSceneInput, getInvalidReason } from '../validation'
+import { getInvalidReason, isValidSceneInput } from '../validation'
 
 export function migrateFromILand(scene: any, mappings?: any): ISceneManifest {
   const raw = scene.mappingsResponse ? _upgradeILandToSceneManifest(scene) : _upgradeToV2(scene, mappings)

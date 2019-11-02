@@ -63,7 +63,9 @@ export class RendererParcelSceneToScript extends ExposableAPI {
   }
 
   @exposeMethod
-  async startSignal(): Promise<void> {}
+  async startSignal(): Promise<void> {
+    (this.rendererParcelSceneAPI as any).awakePromise.resolve(true)
+  }
 
   /**
    * This is one of the most important functions of the project. This is the method that gets called by the renderer

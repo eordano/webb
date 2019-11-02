@@ -38,7 +38,7 @@ export function* sceneRunner(input: string | ISceneManifest): any {
       const worker = yield call(() => sceneManager.loadScene(scene))
       const scriptLoad: any = yield race({
         awake: call(watchScriptForAwake, worker),
-        timeout: delay(10000)
+        timeout: delay(1000000)
       })
       if (scriptLoad.awake) {
         yield put(scriptSentAwake(scene.id))
@@ -49,7 +49,7 @@ export function* sceneRunner(input: string | ISceneManifest): any {
       }
       const rendererLoad: any = yield race({
         load: call(watchRendererForLoaded, worker),
-        timeout: delay(10000)
+        timeout: delay(1000000)
       })
       if (rendererLoad.load) {
         yield put(rendererSentLoaded(scene.id))

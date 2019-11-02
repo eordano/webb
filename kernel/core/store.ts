@@ -55,7 +55,7 @@ export const configureStore: (otherReducers?: Record<string, Reducer>, state?: a
   async function start() {
     sagasMiddleware.run(rootSaga)
     await triggerLoginAndAwait(store)
-    await triggerConnectAndAwait(store)
+    // await triggerConnectAndAwait(store)
   }
   return { store, sagasMiddleware, start }
 }

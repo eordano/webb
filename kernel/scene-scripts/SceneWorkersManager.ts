@@ -24,7 +24,7 @@ export class SceneWorkersManager {
       transport = WebWorkerTransport(worker)
     }
     const parcelSceneConnector = new this.parcelSceneClass(transport, scene)
-    const sceneWorker = new SceneWorker(transport, parcelSceneConnector, this.gamekitPath)
+    const sceneWorker = new SceneWorker(scene, transport, parcelSceneConnector, this.gamekitPath)
     parcelSceneConnector.registerWorker(sceneWorker)
     sceneWorker.startSystem()
     return sceneWorker
