@@ -3,25 +3,19 @@ package(default_visibility = ["//visibility:public"])
 load("@npm_bazel_typescript//:index.bzl", "ts_library")
 load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
 
-filegroup(
-    name = "datafolders",
-    srcs = glob(
-        include = [
-            "data*/**/*",
-            "old_*/**/*",
-        ],
-    ),
-)
-
 ts_library(
-    name = "descartes",
+    name = "server_lib",
     srcs = glob(
         include = [
+            "*.ts",
             "**/*.ts",
         ]
     ),
-    module_name = "@dcl/descartes",
+    module_name = "@dcl/descartes/server",
     deps = [
+        "//descartes/datadog",
+        "//descartes",
+        "//vangogh",
         "//config",
         "//kernel",
         "//protos:broker",
@@ -49,11 +43,13 @@ ts_library(
 )
 
 nodejs_binary(
-    name = "diff",
+    name = "server",
     data = [
-        ":datafolders",
-        ":descartes",
-        # Other modules
+        ":server_lib",
+        "//descartes",
+        "//descartes/datadog",
+        "//:secrets",
+        "//vangogh",
         "//kernel",
         "//rpc",
         "//utils",
@@ -61,6 +57,7 @@ nodejs_binary(
         "//protos:broker",
         "//protos:comms",
         # App Dependencies
+        "@npm//express",
         "@npm//history",
         "@npm//fp-future",
         "@npm//google-protobuf",
@@ -71,32 +68,5 @@ nodejs_binary(
         "@npm//typesafe-actions",
         "@npm//typescript",
     ],
-    entry_point = "bin/diffTwoFolders.ts",
-)
-
-
-
-nodejs_binary(
-    name = "snapshot",
-    data = [
-        ":descartes",
-        # Other modules
-        "//kernel",
-        "//rpc",
-        "//utils",
-        "//config",
-        "//protos:broker",
-        "//protos:comms",
-        # App Dependencies
-        "@npm//history",
-        "@npm//fp-future",
-        "@npm//google-protobuf",
-        "@npm//redux",
-        "@npm//node-fetch",
-        "@npm//redux-saga",
-        "@npm//reselect",
-        "@npm//typesafe-actions",
-        "@npm//typescript",
-    ],
-    entry_point = "bin/main.ts",
+    entry_point = "server.ts",
 )

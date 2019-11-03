@@ -1,8 +1,7 @@
 import { getServerConfigurations } from 'dcl/config'
+import { GamekitScene } from 'dcl/gamekit/GamekitScene'
 import { configureStore } from 'dcl/kernel/core/store'
 import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
-import { GamekitScene } from 'dcl/gamekit/GamekitScene'
-import { renderEntity } from 'dcl/synced-ecs/ecs/render'
 import fetch from 'node-fetch'
 import { SyncedECS } from './SyncedECS'
 
@@ -15,10 +14,8 @@ export class PlainGameKit extends GamekitScene {
   }
 }
 
-async function main() {
+export async function ears(x: number, y: number) {
   global['fetch'] = fetch
-
-  const [x, y] = process.argv[process.argv.length - 1].split(',').map(_ => parseInt(_, 10))
 
   try {
     const { store, start } = configureStore()
@@ -41,15 +38,13 @@ async function main() {
 
     await kit.setupLifecycle()
     await kit.update(0)
+    await kit.update(0)
+    await kit.update(0)
 
-    console.log(renderEntity(sync.ecs, '0', ''))
+    return sync.ecs
 
-    process.exit(0)
   } catch (e) {
     console.log(e)
-    process.exit(1)
     return
   }
 }
-
-main().catch(console.log)

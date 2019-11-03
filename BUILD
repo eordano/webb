@@ -38,3 +38,12 @@ filegroup(
         ],
     ),
 )
+
+filegroup(
+    name = "secrets",
+    srcs = glob(
+        include = [
+            ".secret"
+        ],
+    ),
+)

@@ -1,11 +1,14 @@
 node_modules/
-data
+data*
+old_data*
+.secret
 data_full
 npm-debug.log
 .DS_Store
 .decentraland
 *.tgz
 *.sw[a-z]
+yarn-error*
 
 **/.decentraland
 

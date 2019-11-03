@@ -17,6 +17,7 @@ ts_library(
         "//protos:broker",
         "//protos:comms",
         "//rpc",
+        "//gamekit",
         "//scene-api",
         "//synced-ecs",
         "//utils",
@@ -41,6 +42,7 @@ nodejs_binary(
         # Other modules
         "//kernel",
         "//scene-api",
+        "//gamekit",
         "//synced-ecs",
         "//rpc",
         "//utils",

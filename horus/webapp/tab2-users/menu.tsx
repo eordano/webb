@@ -1,15 +1,10 @@
 import React from 'react'
-import { Container, Item, ItemHeader, Segment } from 'decentraland-ui'
+import { HorusMenu } from '../route/HorusMenu'
 
-export const UserMenu = () => {
-  return (
-    <Container>
-      <Segment>
-        <ItemHeader>Latest Users</ItemHeader>
-        <Item>John</Item>
-        <Item>Esteban</Item>
-        <Item>Marco</Item>
-      </Segment>
-    </Container>
-  )
+export const UserMenu = (props: any) => {
+  return <HorusMenu {...props} defaultCurrent='List' names={[
+    'Search',
+    'List',
+    'Invite'
+  ]} />
 }

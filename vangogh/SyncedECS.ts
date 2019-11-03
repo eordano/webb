@@ -1,5 +1,4 @@
 import { MemoryRendererParcelScene } from 'dcl/kernel/renderer/parcelScene/MemoryRendererParcelScene'
-import { IRendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/interface/IRendererParcelSceneToScript'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import { emptyState } from 'dcl/synced-ecs/ecs/generators/emptyState'
 import { addComponent } from 'dcl/synced-ecs/ecs/reducers/addComponent'
@@ -12,6 +11,8 @@ import { entityExists } from 'dcl/synced-ecs/ecs/selectors/entityExists'
 import { getComponent } from 'dcl/synced-ecs/ecs/selectors/getComponent'
 import { getEntityParent } from 'dcl/synced-ecs/ecs/selectors/getEntityParent'
 import { deepCompare } from 'dcl/synced-ecs/ecs/util/deepCompare'
+import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
+import { EventDispatcher } from 'dcl/rpc/common/core/EventDispatcher'
 
 const names = {
   1: 'Transform',
@@ -27,17 +28,23 @@ export function componentName(name: any) {
 
 export class SyncedECS extends MemoryRendererParcelScene implements IRendererParcelSceneToScript {
   ecs: ECS
-  constructor(_: any) {
-    super(_)
+  eventDispatcher = new EventDispatcher()
+  constructor(transport: any) {
+    super(transport)
     this.ecs = emptyState('0')
   }
-  subscribe(_: string): Promise<void> {
-    return Promise.resolve()
-  }
-  unsubscribe(_: string): Promise<void> {
+  on(event: string): Promise<void> {
+    console.log('subscribed to ', event)
     return Promise.resolve()
   }
   startSignal(): Promise<void> {
+    console.log('Start signal')
+    return Promise.resolve()
+  }
+  subscribe(event: string) : Promise<void> {
+    return Promise.resolve()
+  }
+  unsubscribe(event: string) : Promise<void> {
     return Promise.resolve()
   }
   onSubscribedEvent(_: any): void {}
