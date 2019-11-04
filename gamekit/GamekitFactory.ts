@@ -43,4 +43,4 @@ export class GamekitFactory extends Script {
   }
 }
 
-export default new GamekitFactory(WebWorkerTransport(self as any))
+export const factory = new GamekitFactory(WebWorkerTransport(self as any))

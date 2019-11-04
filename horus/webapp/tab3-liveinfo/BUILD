@@ -21,6 +21,7 @@ ts_library(
         ],
     ),
     deps = [
+        "//kernel",
         "//horus/webapp/sail",
         "@npm//@types/defaults",
         "@npm//@types/react",

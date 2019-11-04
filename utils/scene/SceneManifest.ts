@@ -1,6 +1,8 @@
 import { stableStringify } from '../pure/stableStringify'
 import { sha256 } from '../sha256'
-import { decideFloat, encodeParcelPosition, getMinimum, parcelLimits, parseCoordinate } from './index'
+import { decideFloat } from './decideFloat'
+import { getMinimum } from './getMinimum'
+import { parseCoordinate } from './parseCoordinate'
 import { ISceneManifest } from './ISceneManifest'
 import {
   AssetDefinition,
@@ -14,6 +16,8 @@ import {
   URIAsset
 } from './SceneManifestTypes'
 import { getInvalidReason, isValidSceneInput } from './validation'
+import { encodeParcelPosition } from './parcel'
+import { parcelLimits } from './world'
 
 export class SceneManifest implements ISceneManifest {
   raw: UnsanitizedSceneManifest

@@ -9,6 +9,7 @@ require.config({
     'decentraland-ui': '/npm/node_modules/decentraland-ui/lib/index',
     redux: '/npm/node_modules/redux/dist/redux',
     d3: '/npm/node_modules/d3/dist/d3',
+    jsonwebtoken: 'static/jsonwebtoken.umd',
     'redux-saga': '/npm/node_modules/redux-saga/dist/redux-saga.umd',
     'redux-saga/effects': '/npm/node_modules/redux-saga/dist/redux-saga-effects.umd',
   }

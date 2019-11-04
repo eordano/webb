@@ -1,5 +1,6 @@
-import { ISceneManifest, encodeParcelPosition } from '../index'
 import { ILand } from '../../BagOfThings'
+import { ISceneManifest } from '../ISceneManifest'
+import { encodeParcelPosition } from '../parcel'
 
 export function downgradeToILand(
   scene: ISceneManifest
