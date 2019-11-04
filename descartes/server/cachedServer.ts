@@ -71,6 +71,23 @@ export function createServer(descartes: Descartes, port: number = 1338) {
     }
   })
 
+  app.get('/scene/:x/:y/*', async (req, res) => {
+    try {
+      const { x, y } = req.params
+      const path = req.path.split('/').slice(4).join('/')
+      const xx = parseInt(x, 10)
+      const yy = parseInt(y, 10)
+      const mapToScene = await descartes.getSceneIdForCoordinates(everythingInside(xx, xx, yy, yy))
+      const sceneId = mapToScene[`${xx},${yy}`]
+      const mapping = await descartes.getMappingForSceneId(sceneId)
+      const hash = mapping[path]
+      return res.redirect('https://content.decentraland.org/contents/' + hash)
+    } catch (e) {
+      console.log(e)
+      res.end({ error: 'unknown' })
+    }
+  })
+
   app.get('/scenes', async (req, res) => {
     if (!req.query.x1 || !req.query.x2 || !req.query.y1 || !req.query.y2) {
       return res.status(400).json(JSON.stringify({ error: 'Bad request, x1, y1, x2, y2 are required' }))
