@@ -49,6 +49,7 @@ export function createServer(descartes: Descartes, port: number = 1338) {
   app.get('/comms/:env/users', async (req, res) => {
     try {
       const { env } = req.params
+      console.log(`Comms: request for ${env}`)
       if (!['prod', 'stg', 'dev'].includes(env)) {
         return res.status(400).end({ error: 'invalid environment (use prod, stg or dev)' })
       }
@@ -63,7 +64,19 @@ export function createServer(descartes: Descartes, port: number = 1338) {
   app.get('/ecs/:x/:y', async (req, res) => {
     try {
       const { x, y } = req.params
+      const success = { error: false }
+      setTimeout(() => {
+        success.error = true
+        res
+          .status(500)
+          .json({ error: 'scene execution timed out ' })
+          .end()
+      }, 5000)
       const ecs = await ears(parseInt(x, 10), parseInt(y, 10))
+      if (success.error) {
+        return
+      }
+      console.log(`Ears: request for ${x},${y} ${success.error ? 'failed' : 'succeeded'}`)
       return res.json(ecs).end()
     } catch (e) {
       console.log(e)
@@ -72,18 +85,22 @@ export function createServer(descartes: Descartes, port: number = 1338) {
   })
 
   app.get('/scene/:x/:y/*', async (req, res) => {
+    const { x, y } = req.params
+    const path = req.path
+      .split('/')
+      .slice(4)
+      .join('/')
     try {
-      const { x, y } = req.params
-      const path = req.path.split('/').slice(4).join('/')
       const xx = parseInt(x, 10)
       const yy = parseInt(y, 10)
       const mapToScene = await descartes.getSceneIdForCoordinates(everythingInside(xx, xx, yy, yy))
       const sceneId = mapToScene[`${xx},${yy}`]
       const mapping = await descartes.getMappingForSceneId(sceneId)
       const hash = mapping[path]
+      console.log(`Content: ${x},${y}:${path} -> ${hash}`)
       return res.redirect('https://content.decentraland.org/contents/' + hash)
     } catch (e) {
-      console.log(e)
+      console.log(`Fetch for (${x}, ${y}: ${path}) failed:`, e)
       res.end({ error: 'unknown' })
     }
   })
