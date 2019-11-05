@@ -6,6 +6,7 @@ import { Assets } from './content'
 import { DefaultAssets } from './defaultAssets'
 import { AssetDetail } from './detail'
 import { AssetsMenu } from './menu'
+import { NewAsset } from './newAsset'
 
 export const AssetRoutes = [
   <Through
@@ -23,8 +24,18 @@ export const AssetRoutes = [
     )}
   />,
   <Through
+    key="an"
+    path={routeFor('Assets', 'New Asset')}
+    renderer={(props: any) => <Application key="al" section="Assets" Content={NewAsset} Menu={AssetsMenu} {...props} />}
+  />,
+  <Through
     key="assetlist"
-    path={_ => _.startsWith('/assets/') && !_.startsWith('/assets/detail') && !_.startsWith('/assets/admin')}
+    path={_ =>
+      _.startsWith('/assets/') &&
+      !_.startsWith('/assets/detail') &&
+      !_.startsWith('/assets/admin') &&
+      !_.startsWith('/assets/new-asset')
+    }
     renderer={(props: any) => <Application key="al" section="Assets" Content={Assets} Menu={AssetsMenu} {...props} />}
   />,
   <Through
