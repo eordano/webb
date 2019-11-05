@@ -36,15 +36,3 @@ rollup_bundle(
         "@npm//rollup-plugin-json",
     ],
 )
-
-load("//tools/npm:package.bzl", "dcl_npm_package")
-
-dcl_npm_package(
-    name = "package",
-    package_layers = [
-        "//:common.package.json",
-        "//:tslib.package.json",
-        "config.package.json",
-    ],
-    deps = [":config"],
-)

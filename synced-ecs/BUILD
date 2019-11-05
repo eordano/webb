@@ -66,15 +66,3 @@ jasmine_node_test(
         "@npm//jasmine",
     ],
 )
-
-load("//tools/npm:package.bzl", "dcl_npm_package")
-
-dcl_npm_package(
-    name = "package",
-    package_layers = [
-        "//:common.package.json",
-        "//:tslib.package.json",
-        "synced-ecs.package.json",
-    ],
-    deps = [":synced-ecs"],
-)

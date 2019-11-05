@@ -63,18 +63,3 @@ rollup_bundle(
         "@npm//rollup-plugin-node-resolve",
     ],
 )
-
-load("//tools/npm:package.bzl", "dcl_npm_package")
-
-dcl_npm_package(
-    name = "package",
-    package_layers = [
-        "//:common.package.json",
-        "//:tslib.package.json",
-        "utils.package.json",
-    ],
-    deps = [
-        ":utils",
-        "@npm//fp-future",
-    ],
-)

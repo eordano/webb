@@ -26,19 +26,3 @@ typescript_proto_library(
     name = "comms",
     proto = ":comms_lib",
 )
-
-load("//tools/npm:package.bzl", "dcl_npm_package")
-
-dcl_npm_package(
-    name = "package",
-    srcs = [
-        "broker",
-        "comms",
-    ],
-    package_layers = [
-        "//:common.package.json",
-        "protos.package.json",
-    ],
-    deps = [":broker", ":comms"],
-)
-

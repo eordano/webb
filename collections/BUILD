@@ -5,10 +5,13 @@ load("@npm_bazel_typescript//:index.bzl", "ts_library")
 filegroup(
     name = "collections_assets",
     srcs = glob(
-        ["base-avatars/**/*.*", "README.md", "LICENSE"],
+        [
+            "base-avatars/**/*.*",
+            "README.md",
+            "LICENSE",
+        ],
     ),
 )
-
 
 filegroup(
     name = "srcs",
@@ -30,7 +33,7 @@ ts_library(
             "**/*.spec.ts",
         ],
     ),
-    module_name = "@dcl/collections",
+    module_name = "dcl/collections",
     deps = [
         "@npm//@types",
         "@npm//@types/node",
@@ -53,17 +56,17 @@ ts_library(
         "@npm//@types/node",
         "@npm//@types/sinon",
         "@npm//@types/tmp",
+        "@npm//async-iterator-all",
+        "@npm//aws-sdk",
         "@npm//chai",
+        "@npm//fp-future",
         "@npm//gltf-pipeline",
+        "@npm//ipfs-unixfs-importer",
+        "@npm//ipld",
+        "@npm//ipld-in-memory",
         "@npm//redux-saga",
         "@npm//redux-saga-test-plan",
         "@npm//sinon",
-	"@npm//async-iterator-all",
-	"@npm//aws-sdk",
-	"@npm//fp-future",
-	"@npm//ipfs-unixfs-importer",
-	"@npm//ipld",
-	"@npm//ipld-in-memory",
         "@npm//tmp",
     ],
 )
@@ -76,16 +79,4 @@ jasmine_node_test(
         ":collections_spec",
         "@npm//jasmine",
     ],
-)
-
-load("//tools/npm:package.bzl", "dcl_npm_package")
-
-dcl_npm_package(
-    name = "package",
-    package_layers = [
-        "//:common.package.json",
-        "//:tslib.package.json",
-        "collections.package.json",
-    ],
-    deps = [":collections"],
 )
