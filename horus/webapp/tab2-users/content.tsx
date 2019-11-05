@@ -1,6 +1,7 @@
 import { Address, Container, Field, HeaderMenu, Pagination, Segment, Table } from 'decentraland-ui'
 import React, { useState } from 'react'
-import { redirectTo, routeFor } from '../route/redirectCache'
+import { Link } from '../route/Link'
+import { routeFor } from '../route/redirectCache'
 
 export const Users = () => {
   const rows = [
@@ -34,7 +35,7 @@ export const Users = () => {
     <Container>
       <Segment style={{ width: '100%' }}>
         <HeaderMenu>
-          <div className="ui userSearch" style={{ width: '100%'}}>
+          <div className="ui userSearch" style={{ width: '100%' }}>
             <Field
               fluid
               placeholder="Enter the user's email, ethereum address, claimed name, or userId"
@@ -61,11 +62,11 @@ export const Users = () => {
               return (
                 <tr key={userId}>
                   <Table.Cell>
-                    <a href={path} onClick={redirectTo('Users', 'detail/' + userId)}>
+                    <Link path={path}>
                       {name}
                       <br />
                       <small>{userId}</small>
-                    </a>
+                    </Link>
                   </Table.Cell>
                   <Table.Cell>{email}</Table.Cell>
                   <Table.Cell>

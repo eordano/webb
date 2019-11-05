@@ -1,5 +1,6 @@
 import { Address, Container, Header, Table, Segment } from 'decentraland-ui'
 import React from 'react'
+import { Link } from '../route/Link'
 
 export const LatestDeployments = () => {
   const data = [{ base: '11,15', parcels: 10, name: 'My Scene', deployer: '0x138572349423', time: new Date() }]
@@ -22,7 +23,7 @@ export const LatestDeployments = () => {
               <Table.Row key={_.base}>
                 <Table.Cell>
                   <Header>
-                    <a href="/deployments/scene/1">{_.name}</a>
+                    <Link path="/scene/1">{_.name}</Link>
                   </Header>
                 </Table.Cell>
                 <Table.Cell>

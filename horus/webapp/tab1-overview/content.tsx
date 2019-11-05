@@ -5,7 +5,7 @@ import { useFetch } from '../useFetch/useFetch'
 import { GraphUsersOverTime } from './graphUsersOverTime'
 
 export const Overview = () => {
-  const { data, isLoading } = useFetch('http://localhost:1338/comms/prod/users')
+  const { data, isLoading } = useFetch(`http://${window.location.hostname}:1338/comms/prod/users`)
   return (
     <>
       <Segment style={{ paddingBottom: '0px' }}>

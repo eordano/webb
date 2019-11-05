@@ -1,6 +1,6 @@
 import { Menu } from 'decentraland-ui'
 import React from 'react'
-import { redirectTo } from './redirectCache'
+import { redirectToRoute } from './redirectCache'
 import { slugify } from './slugify'
 
 const and = ($: any, _: any) => $ && _
@@ -47,7 +47,7 @@ function SimpleItem(name: string, index: number, options: any) {
   const Clazz = isHeader ? Menu.Header : Menu.Item
   const additionalOptions = isHeader ? { className: 'item' } : {}
   return (
-    <Clazz key={slug} active={active ? 'active' : ''} onClick={redirectTo(section, name)} { ...additionalOptions}>
+    <Clazz key={slug} active={active ? 'active' : ''} onClick={redirectToRoute(section, name)} { ...additionalOptions}>
       {name}
     </Clazz>
   )
