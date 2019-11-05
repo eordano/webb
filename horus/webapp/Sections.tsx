@@ -6,10 +6,8 @@ import { Overview } from './tab1-overview/content'
 import { Users } from './tab2-users/content'
 import { UserMenu } from './tab2-users/menu'
 import { UserRoutes } from './tab2-users/routes'
-import { LiveInfo } from './tab3-liveinfo/content'
-import { LiveInfoMenu } from './tab3-liveinfo/menu'
-import { Assets } from './tab4-assets/content'
-import { AssetsMenu } from './tab4-assets/menu'
+import { LiveRoutes } from './tab3-liveinfo/routes'
+import { AssetRoutes } from './tab4-assets/routes'
 import { DeploymentsRoutes } from './tab5-deployments/routes'
 
 renderApp(
@@ -27,18 +25,8 @@ renderApp(
       path="/users"
       renderer={(props: any) => <Application key="c" section={'Users'} Menu={UserMenu} Content={Users} {...props} />}
     />
-    <Through
-      path="/live-info"
-      renderer={(props: any) => (
-        <Application key="d" section={'Live info'} Menu={LiveInfoMenu} Content={LiveInfo} {...props} />
-      )}
-    />
-    <Through
-      path="/assets"
-      renderer={(props: any) => (
-        <Application key="e" section={'Assets'} Content={Assets} Menu={AssetsMenu} {...props} />
-      )}
-    />
+    {...AssetRoutes}
+    {...LiveRoutes}
     {...UserRoutes}
     {...DeploymentsRoutes}
   </Sail>

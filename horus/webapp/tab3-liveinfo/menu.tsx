@@ -1,12 +1,6 @@
 import React from 'react'
-import { Menu } from 'decentraland-ui'
+import { HorusMenu } from '../route/HorusMenu'
 
-export const LiveInfoMenu = () => {
-  return (
-    <Menu vertical>
-      <Menu.Item>Current users</Menu.Item>
-      <Menu.Item>User heatmap</Menu.Item>
-      <Menu.Item>Chat</Menu.Item>
-    </Menu>
-  )
+export const LiveInfoMenu = (props: any) => {
+  return <HorusMenu {...props} names={[{ title: 'Production' }, 'Online users', 'Activity Map']} />
 }

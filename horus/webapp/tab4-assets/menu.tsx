@@ -1,19 +1,15 @@
-import { Menu } from 'decentraland-ui'
 import React from 'react'
+import { HorusMenu } from '../route/HorusMenu'
 
-export const AssetsMenu = () => {
+export const AssetsMenu = (props: any) => {
   return (
     <>
-      <Menu vertical>
-        <Menu.Header className='item'>Wearables</Menu.Header>
-        <Menu.Item active>Basic Wearables</Menu.Item>
-        <Menu.Item>Exclusive Masks</Menu.Item>
-        <Menu.Item>Halloween</Menu.Item>
-      </Menu>
-      <Menu vertical>
-        <Menu.Header className='item'>Builder</Menu.Header>
-        <Menu.Item>Genesis City</Menu.Item>
-      </Menu>
+      <HorusMenu
+        {...props}
+        names={[{ title: 'Wearable Collections' }, 'Basic Wearables', 'Exclusive Masks', 'Halloween']}
+      />
+      <HorusMenu {...props} names={[{ title: 'Builder' }, 'Genesis City', 'Year of the Pig', 'Sci-fi', 'Fantasy']} />
+      <HorusMenu {...props} names={[{ title: 'Administration' }, 'New asset', 'New collection', 'Issue NFTs']} />
     </>
   )
 }

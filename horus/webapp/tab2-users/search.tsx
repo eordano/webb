@@ -1,7 +1,6 @@
 import { Button, Container, Field, Header, HeaderMenu, Segment } from 'decentraland-ui'
 import React, { useState } from 'react'
 
-
 export const UserSearch = () => {
   const [searchParam, triggerSearch] = useState('')
   return (
@@ -16,6 +15,7 @@ export const UserSearch = () => {
           label="Enter the user's email, ethereum address, claimed name, or userId"
           placeholder="satoshi@nakamoto.net"
           value={searchParam}
+          focus={true}
           onChange={ev => triggerSearch(ev.target.value)}
         />
         <Button primary disabled={!searchParam}>

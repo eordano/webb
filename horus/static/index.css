@@ -14,3 +14,7 @@ body {
   height: 480px;
   background: black;
 }
+
+.dcl.field .ui.input input {
+  font-size: 1.2em;
+}

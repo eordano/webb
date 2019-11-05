@@ -6,7 +6,6 @@ import { Users } from './content'
 import { UserDetail } from './detail'
 import { InviteUsers } from './invite'
 import { UserMenu } from './menu'
-import { UserSearch } from './search'
 
 export const UserRoutes = [
   <Through
@@ -18,14 +17,7 @@ export const UserRoutes = [
     key="search"
     path={routeFor('Users', 'Search')}
     renderer={(props: any) => (
-      <Application key="i" section={'Users'} subsection={'Search'} Content={UserSearch} Menu={UserMenu} {...props} />
-    )}
-  />,
-  <Through
-    key="listuser"
-    path={routeFor('Users', 'List')}
-    renderer={(props: any) => (
-      <Application key="i" section={'Users'} subsection={'List'} Content={Users} Menu={UserMenu} {...props} />
+      <Application key="i" section="Users" subsection="Search" Content={Users} Menu={UserMenu} {...props} />
     )}
   />,
   <Through

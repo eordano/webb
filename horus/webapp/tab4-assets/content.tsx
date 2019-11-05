@@ -122,10 +122,10 @@ export const Assets = () => {
             <HeaderMenu>
               <HeaderMenu.Left>
                 <Filter active={showBodyShapes}>
-                  <span onClick={() => setShowBodyShapes(!showBodyShapes)}>Show body shapes</span>{' '}
+                  <span onClick={() => setShowBodyShapes(!showBodyShapes)}>include body shapes</span>{' '}
                 </Filter>
                 <Filter active={showFaceAttributes}>
-                  <span onClick={() => setShowFaceAttributes(!showFaceAttributes)}>Head Attributes</span>{' '}
+                  <span onClick={() => setShowFaceAttributes(!showFaceAttributes)}>include Head Attributes</span>{' '}
                 </Filter>
               </HeaderMenu.Left>
               <HeaderMenu.Right>
@@ -173,7 +173,11 @@ export const Assets = () => {
                   filtered.map(item => {
                     const name = item.i18n.filter(_ => _.code === 'en')[0].text
                     return (
-                      <Table.Row key={item.id}>
+                      <Table.Row
+                        key={item.id}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => history.pushState({}, 'Assetname', '/assets/detail/' + item.id.substr(6))}
+                      >
                         <Table.Cell style={{ textAlign: 'center' }}>
                           <img src={`${item.baseUrl}${item.thumbnail}`} alt={name} width="36px" height="36px" />
                         </Table.Cell>
