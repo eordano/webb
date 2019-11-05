@@ -1,8 +1,7 @@
 import { Buffer } from 'buffer'
-import { sha256 as digest } from 'dcl/utils'
 import crypto from 'crypto'
-import secp256k1 from 'secp256k1'
-const { sign, publicKeyCreate, privateKeyVerify } = secp256k1
+import { privateKeyVerify, publicKeyCreate, sign } from 'ethereum-cryptography/secp256k1'
+import { sha256 } from 'ethereum-cryptography/sha256'
 
 export { Buffer }
 
@@ -57,7 +56,7 @@ export class MessageInput {
     }
 
     const hash = Buffer.concat(toHash)
-    const result = await digest(hash)
+    const result = await sha256(hash)
     return result
   }
 }
@@ -81,7 +80,11 @@ export class BasicEphemeralKey implements EphemeralKey {
     return new BasicEphemeralKey(keys, expDate)
   }
 
-  async makeMessageCredentials(params: MessageInput, accessToken: string, timeHint?: number): Promise<Map<string, string>> {
+  async makeMessageCredentials(
+    params: MessageInput,
+    accessToken: string,
+    timeHint?: number
+  ): Promise<Map<string, string>> {
     const credentials = new Map<string, string>()
     const timestamp = timeHint !== undefined ? timeHint : getCurrentEpoch()
     const hash = await params.timeBasedHash(timestamp)

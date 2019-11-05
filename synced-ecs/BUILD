@@ -35,7 +35,6 @@ ts_library(
         "@npm//@types/auth0-js",
         "@npm//@types/events",
         "@npm//auth0-js",
-        "@npm//decentraland-auth-protocol",
         "@npm//devtools-protocol",
         "@npm//fp-future",
         "@npm//google-protobuf",

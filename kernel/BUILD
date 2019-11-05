@@ -28,24 +28,23 @@ ts_library(
     module_name = "@dcl/kernel",
     deps = [
         "//config",
-        "//protos:comms",
         "//protos:broker",
+        "//protos:comms",
         "//rpc",
         "//scene-api",
         "//utils",
         "@npm//@types",
         "@npm//@types/auth0-js",
         "@npm//@types/events",
-        "@npm//@types/secp256k1",
         "@npm//auth0-js",
-        "@npm//decentraland-auth-protocol",
         "@npm//devtools-protocol",
+        "@npm//ethereum-cryptography",
         "@npm//fp-future",
         "@npm//google-protobuf",
+        "@npm//jsonwebtoken",
         "@npm//redux",
         "@npm//redux-saga",
         "@npm//reselect",
-        "@npm//secp256k1",
         "@npm//typesafe-actions",
         "@npm//uuid",
         "@npm//webrtc-adapter",
@@ -53,8 +52,29 @@ ts_library(
     ],
 )
 
-
 load("@npm_bazel_jasmine//:index.bzl", "jasmine_node_test")
+
+ts_library(
+    name = "kernel_spec",
+    srcs = glob([
+        "**/*.spec.ts",
+    ]),
+    deps = [
+        ":kernel",
+        "//config",
+        "//utils",
+        "@npm//@types/jasmine",
+        "@npm//@types/node",
+        "@npm//@types/sinon",
+        "@npm//ethereum-cryptography",
+        "@npm//fp-future",
+        "@npm//jsonwebtoken",
+        "@npm//redux-saga",
+        "@npm//redux-saga-test-plan",
+        "@npm//sinon",
+        "@npm//webworker-threads",
+    ],
+)
 
 jasmine_node_test(
     name = "test",

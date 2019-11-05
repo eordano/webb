@@ -20,6 +20,7 @@ ts_library(
     tsconfig = "//:global-tsconfig",
     deps = [
         "@npm//@types",
+        "@npm//ethereum-cryptography",
         "@npm//fp-future",
     ],
 )

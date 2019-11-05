@@ -21,5 +21,3 @@ export * from './memoize'
 export * from './pure/index'
 
 export * from './scene/index'
-
-export * from './sha256'

@@ -23,7 +23,6 @@
     "@dcl/scene-api": "$DCL_VERSION",
     "@dcl/rpc": "$DCL_VERSION",
     "auth0-js": "^9.11.2",
-    "decentraland-auth-protocol": "^0.3.2",
     "devtools-protocol": "0.0.678025",
     "fp-future": "^1.0.1",
     "google-protobuf": "^3.9.0",

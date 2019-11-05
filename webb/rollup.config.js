@@ -27,7 +27,6 @@ const allExternals = [
   'react-is',
   'path-to-regexp',
   'auth0-js',
-  'decentraland-auth-protocol',
   'devtools-protocol',
   'google-protobuf',
   'webrtc-adapter',

@@ -1,5 +1,5 @@
 import { stableStringify } from '../pure/stableStringify'
-import { sha256 } from '../sha256'
+import { sha256 } from 'ethereum-cryptography/sha256'
 import { decideFloat } from './decideFloat'
 import { getMinimum } from './getMinimum'
 import { parseCoordinate } from './parseCoordinate'
@@ -202,7 +202,7 @@ export class SceneManifest implements ISceneManifest {
   async cannonicalCID(): Promise<string> {
     if (!this._cannonicalCID) {
       // TODO: Use CIDv0 encoding
-      this._cannonicalCID = (await sha256(this.cannonicalSerialization)).toString('hex')
+      this._cannonicalCID = sha256(Buffer.from(this.cannonicalSerialization)).toString('hex')
     }
     return Promise.resolve(this._cannonicalCID)
   }
