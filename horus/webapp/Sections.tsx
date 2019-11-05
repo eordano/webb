@@ -9,6 +9,7 @@ import { UserRoutes } from './tab2-users/routes'
 import { LiveRoutes } from './tab3-liveinfo/routes'
 import { AssetRoutes } from './tab4-assets/routes'
 import { DeploymentsRoutes } from './tab5-deployments/routes'
+import { SceneRoutes } from './tab6-scenerepo/routes'
 
 renderApp(
   <Sail>
@@ -26,6 +27,7 @@ renderApp(
       renderer={(props: any) => <Application key="c" section={'Users'} Menu={UserMenu} Content={Users} {...props} />}
     />
     {...AssetRoutes}
+    {...SceneRoutes}
     {...LiveRoutes}
     {...UserRoutes}
     {...DeploymentsRoutes}

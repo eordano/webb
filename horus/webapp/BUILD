@@ -30,6 +30,7 @@ ts_library(
         "//horus/webapp/tab3-liveinfo",
         "//horus/webapp/tab4-assets",
         "//horus/webapp/tab5-deployments",
+        "//horus/webapp/tab6-scenerepo",
         "@npm//@types/react",
         "@npm//@types/react-dom",
         "@npm//@types/react-router",

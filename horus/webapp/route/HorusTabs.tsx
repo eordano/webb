@@ -7,7 +7,7 @@ export function HorusTabs(props: {
   subsection?: string;
 }) {
   const { section } = props;
-  const Sections = ['Overview', 'Users', 'Live info', 'Assets', 'Deployments'];
+  const Sections = ['Overview', 'Users', 'Live info', 'Assets', 'Deployments', 'Scene Repo'];
   return (<Tabs>
     {Sections.map(name => {
       const slug = slugify(name);
