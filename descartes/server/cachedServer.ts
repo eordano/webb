@@ -4,40 +4,11 @@ import { ears } from 'dcl/vangogh/ears'
 import express from 'express'
 import { DataResponse, getConnectedUsers } from '../datadog/getConnectedUsers'
 import { Descartes } from '../logic/descartes'
+import { deploys } from '../metabase/metabase'
 
-const MINS = 1
-const SEGS = 1
-const MILLIS = 1
-const ONE_HOUR_IN_MILLIS = 60 * MINS * 60 * SEGS * 1000 * MILLIS
-function everythingInside(x1: number, x2: number, y1: number, y2: number) {
-  const res: Coordinate[] = []
-  for (let i = x1; i <= x2; i++) {
-    for (let j = y1; j <= y2; j++) {
-      res.push({ x: i, y: j })
-    }
-  }
-  return res
-}
-type CachedDataResponse = {
-  lastTime: number
-  result: DataResponse
-}
-const cachedComms: {
-  prod?: CachedDataResponse
-  dev?: CachedDataResponse
-  stg?: CachedDataResponse
-} = {}
-async function cachedGetConnectedUsers(env: 'prod' | 'dev' | 'stg') {
-  const cached = cachedComms[env]
-  if (!cached || new Date().getTime() - cached.lastTime > ONE_HOUR_IN_MILLIS) {
-    const result = {
-      result: await getConnectedUsers(env),
-      lastTime: new Date().getTime()
-    }
-    cachedComms[env] = result
-  }
-  return cachedComms[env].result
-}
+const cachedGetConnectedUsers = cachedRequest((env: 'prod' | 'dev' | 'stg') => getConnectedUsers(env))
+
+const cachedDeployments = cachedRequest(() => deploys())
 
 export function createServer(descartes: Descartes, port: number = 1338) {
   const app = express()
@@ -54,6 +25,16 @@ export function createServer(descartes: Descartes, port: number = 1338) {
         return res.status(400).end({ error: 'invalid environment (use prod, stg or dev)' })
       }
       const result: DataResponse = await cachedGetConnectedUsers(env as any)
+      res.json(result).end
+    } catch (e) {
+      console.log(e)
+      res.end({ error: 'unknown' })
+    }
+  })
+
+  app.get('/dashboard/deployments', async (_, res) => {
+    try {
+      const result = await cachedDeployments('')
       res.json(result).end
     } catch (e) {
       console.log(e)
@@ -144,4 +125,41 @@ export function createServer(descartes: Descartes, port: number = 1338) {
   })
 
   return app.listen(port)
+}
+
+const MINS = 1
+const SEGS = 1
+const MILLIS = 1
+const ONE_HOUR_IN_MILLIS = 60 * MINS * 60 * SEGS * 1000 * MILLIS
+function everythingInside(x1: number, x2: number, y1: number, y2: number) {
+  const res: Coordinate[] = []
+  for (let i = x1; i <= x2; i++) {
+    for (let j = y1; j <= y2; j++) {
+      res.push({ x: i, y: j })
+    }
+  }
+  return res
+}
+type CachedDataResponse = {
+  lastTime: number
+  result: DataResponse
+}
+const cachedComms: {
+  prod?: CachedDataResponse
+  dev?: CachedDataResponse
+  stg?: CachedDataResponse
+} = {}
+function cachedRequest<T, R>(request: (params: T) => Promise<R>, serializeParams = (_: any) => _) {
+  return async (params: T) => {
+    const serialParams = serializeParams(params)
+    const cached = cachedComms[serialParams]
+    if (!cached || new Date().getTime() - cached.lastTime > ONE_HOUR_IN_MILLIS) {
+      const result = {
+        result: await request(params),
+        lastTime: new Date().getTime()
+      }
+      cachedComms[serialParams] = result
+    }
+    return cachedComms[serialParams].result
+  }
 }

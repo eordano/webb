@@ -14,6 +14,7 @@ ts_library(
     module_name = "@dcl/descartes/server",
     deps = [
         "//descartes/datadog",
+        "//descartes/metabase",
         "//descartes",
         "//vangogh",
         "//config",
@@ -48,6 +49,7 @@ nodejs_binary(
         ":server_lib",
         "//descartes",
         "//descartes/datadog",
+        "//descartes/metabase",
         "//:secrets",
         "//vangogh",
         "//kernel",

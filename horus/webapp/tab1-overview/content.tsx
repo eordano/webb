@@ -1,13 +1,15 @@
 import { DataResponse } from 'dcl/descartes/datadog/getConnectedUsers'
-import { Grid, Header, Loader, Segment, Stats, Button } from 'decentraland-ui'
+import { Button, Grid, Header, Loader, Segment, Stats } from 'decentraland-ui'
 import React from 'react'
 import { useFetch } from '../useFetch/useFetch'
 import { GraphUsersOverTime } from './graphUsersOverTime'
 
 export const Overview = () => {
   const { data, isLoading } = useFetch(`http://${window.location.hostname}:1338/comms/prod/users`)
+  const { data: dep, isLoading: depLoad } = useFetch(`http://${window.location.hostname}:1338/dashboard/deployments`)
   return (
     <>
+      {depLoad ? <Loader /> : JSON.stringify(dep)}
       <Segment style={{ paddingBottom: '0px' }}>
         <h1>World Users</h1>
         <Grid>
