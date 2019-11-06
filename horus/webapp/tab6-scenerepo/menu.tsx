@@ -5,7 +5,7 @@ export const ScenerepoMenu = (props: { subsection: string; section: string }) =>
   return (
     <HorusMenu
       {...props}
-      names={[{ title: 'Scene repo' }, 'Builder Pool', 'Empty parcels']}
+      names={[{ title: 'Scenes' }, 'Builder Pool', 'Empty parcels']}
     />
   )
 }

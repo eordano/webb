@@ -10,6 +10,7 @@ export const redirectTo = (path: string, title: string = '') => {
   if (!redirectCache[path]) {
     redirectCache[path] = (ev: any) => {
       ev.preventDefault()
+      window.scrollTo({ top: 0 })
       history.pushState({}, '[Horus] ' + title, path)
       return false
     }

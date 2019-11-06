@@ -10,18 +10,18 @@ import { ScenerepoMenu } from './menu'
 export const SceneRoutes = [
   <Through
     key="s"
-    path={routeFor('Scene Repo')}
+    path={routeFor('Scenes')}
     renderer={(props: any) => (
-      <Application key="sr" section={'Scene Repo'} Content={PoolScenes} Menu={ScenerepoMenu} {...props} />
+      <Application key="sr" section={'Scenes'} Content={PoolScenes} Menu={ScenerepoMenu} {...props} />
     )}
   />,
   <Through
     key="sbp"
-    path={routeFor('Scene Repo', 'Builder Pool')}
+    path={routeFor('Scenes', 'Builder Pool')}
     renderer={(props: any) => (
       <Application
         key="sr"
-        section={'Scene Repo'}
+        section={'Scenes'}
         subsection="Builder Pool"
         Content={PoolScenes}
         Menu={ScenerepoMenu}
@@ -35,7 +35,7 @@ export const SceneRoutes = [
     renderer={(props: any) => (
       <Application
         key="dd"
-        section={'Deployments'}
+        section={'Scenes'}
         subsection={'Details'}
         Content={SceneDetail}
         Menu={ScenerepoMenu}
@@ -45,11 +45,11 @@ export const SceneRoutes = [
   />,
   <Through
     key="semp"
-    path={routeFor('Scene Repo', 'Empty parcels')}
+    path={routeFor('Scenes', 'Empty parcels')}
     renderer={(props: any) => (
       <Application
         key="dp"
-        section={'Scene Repo'}
+        section={'Scenes'}
         subsection={'Empty Parcels'}
         Content={EmptyParcels}
         Menu={ScenerepoMenu}
