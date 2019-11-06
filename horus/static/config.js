@@ -12,5 +12,8 @@ require.config({
     jsonwebtoken: 'static/jsonwebtoken.umd',
     'redux-saga': '/npm/node_modules/redux-saga/dist/redux-saga.umd',
     'redux-saga/effects': '/npm/node_modules/redux-saga/dist/redux-saga-effects.umd',
+    'ethereum-cryptography/sha256': '/static/ethereum-cryptography/sha256.umd',
+    'ethereum-cryptography/random': '/static/ethereum-cryptography/random.umd',
+    'ethereum-cryptography/secp256k1': '/static/ethereum-cryptography/secp256k1.umd'
   }
 })

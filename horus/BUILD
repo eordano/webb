@@ -8,35 +8,59 @@ filegroup(
     srcs = glob(
         include = [
             "static/**/*",
+            "static/ethereum-cryptography/*",
         ],
     ),
 )
+
 
 load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 
 ts_devserver(
     name = "devserver",
     additional_root_paths = [":static"],
-    entry_module = "dcl/horus/webapp/Sections",
-    port = 3000,
-    serving_path = "/bundle.js",
-    static_files = ["index.html", "static/index.css"],
-    deps = [
-        "static/config.js",
-        "//horus/webapp",
-    ],
     data = [
         ":static",
+        "@npm//@babel/runtime",
+        "@npm//babel-runtime",
+        "@npm//decentraland-ui",
         "@npm//react",
         "@npm//react-dom",
         "@npm//react-redux",
         "@npm//react-router",
         "@npm//react-router-dom",
-        "@npm//typesafe-actions",
         "@npm//redux",
         "@npm//redux-saga",
-        "@npm//babel-runtime",
-        "@npm//decentraland-ui",
-        "@npm//@babel/runtime",
-    ]
+        "@npm//typesafe-actions",
+    ],
+    entry_module = "dcl/horus/webapp/Sections",
+    port = 3000,
+    serving_path = "/bundle.js",
+    static_files = [
+        "index.html",
+        "static/index.css",
+    ],
+    deps = [
+        "static/config.js",
+        ":static/jsonwebtoken.js",
+        "//config",
+        "//gamekit",
+        "//horus/webapp",
+        "//kernel",
+        "//protos:broker_lib",
+        "//protos:comms_lib",
+        "//rpc",
+        "//scene-api",
+        "//utils",
+        "@npm//auth0-js:auth0-js__umd",
+        "@npm//fp-future:fp-future__umd",
+        "@npm//google-protobuf:google-protobuf__umd",
+        "@npm//reselect:reselect__umd",
+        "@npm//typesafe-actions:typesafe-actions__umd",
+        "@npm//buffer:buffer__umd",
+        "@npm//stream:stream__umd",
+        "@npm//events:events__umd",
+        "@npm//util:util__umd",
+        "@npm//uuid:uuid__umd",
+    ],
 )

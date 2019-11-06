@@ -1,7 +1,7 @@
 import { Buffer } from 'buffer'
-import crypto from 'crypto'
-import { privateKeyVerify, publicKeyCreate, sign } from 'ethereum-cryptography/secp256k1'
+import { publicKeyCreate, sign } from 'ethereum-cryptography/secp256k1'
 import { sha256 } from 'ethereum-cryptography/sha256'
+import { getRandomBytesSync } from 'ethereum-cryptography/random'
 
 export { Buffer }
 
@@ -124,18 +124,8 @@ export class EcdsaKeyPair {
   }
 
   public static generateRandomKey(): EcdsaKeyPair {
-    if (crypto.randomBytes) {
-      const pvKey = crypto.randomBytes(32)
-      return new EcdsaKeyPair(pvKey)
-    } else {
-      const browser = new Buffer(32)
-      let retries = 0
-      do {
-        window.crypto.getRandomValues(browser)
-        retries++
-      } while (!privateKeyVerify(browser) && retries < 10)
-      return new EcdsaKeyPair(browser)
-    }
+    const pvKey = getRandomBytesSync(32)
+    return new EcdsaKeyPair(pvKey)
   }
 
   public privateKeyAsHexString(): string {

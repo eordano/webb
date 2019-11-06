@@ -23,6 +23,7 @@ ts_library(
         ],
     ),
     deps = [
+        "//kernel",
         "//horus/webapp/sail",
         "//horus/webapp/route",
         "//horus/webapp/tab1-overview",
@@ -36,6 +37,7 @@ ts_library(
         "@npm//@types/react-router",
         "@npm//@types/history",
         "@npm//react",
+        "@npm//ethereum-cryptography",
         "@npm//react-router",
         "@npm//react-dom",
         "@npm//redbox-react",
