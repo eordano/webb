@@ -21,8 +21,12 @@ ts_library(
         ],
     ),
     deps = [
+        "//horus/webapp/useFetch",
         "//horus/webapp/sail",
+        "//horus/webapp/kernel",
+        "//horus/webapp/datefun",
         "//horus/webapp/route",
+        "//kernel",
         "@npm//@types/defaults",
         "@npm//@types/react",
         "@npm//@types/react-router",

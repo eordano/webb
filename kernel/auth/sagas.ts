@@ -35,7 +35,13 @@ export function* authSaga(): any {
     try {
       const result = yield call(restoreSession)
       yield put(authSuccess(result, ''))
-    } catch (e) {}
+    } catch (e) {
+      if (e && e.code && e.code === 'login_required') {
+        yield put(login())
+      } else {
+        throw e
+      }
+    }
   }
 
   function restoreSession(): Promise<AuthData> {

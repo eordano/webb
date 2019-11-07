@@ -22,6 +22,7 @@ ts_library(
     ),
     deps = [
         "//horus/webapp/useFetch",
+        "//horus/webapp/datefun",
         "//horus/webapp/sail",
         "//horus/webapp/route",
         "//descartes/datadog",

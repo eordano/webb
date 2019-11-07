@@ -11,11 +11,6 @@ import { AssetRoutes } from './tab4-assets/routes'
 import { DeploymentsRoutes } from './tab5-deployments/routes'
 import { SceneRoutes } from './tab6-scenerepo/routes'
 
-import { configureStore } from 'dcl/kernel/core/store'
-
-const store = configureStore()
-console.log(store)
-
 renderApp(
   <Sail>
     <Through

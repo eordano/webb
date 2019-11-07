@@ -61,11 +61,12 @@ export async function findUser(user: string) {
       body: JSON.stringify({
         database: 2,
         native: {
-          query: `SELECT "avatars"."users"."id" AS "id", "avatars"."users"."eth_address" AS "eth_address", "avatars"."users"."email" AS "email"
+          query: `SELECT "avatars"."users"."id" AS "id", "avatars"."users"."received_at" AS "received_at", "avatars"."users"."eth_address" AS "eth_address", "avatars"."users"."email" AS "email"
   FROM "avatars"."users"
   WHERE "avatars"."users"."email" LIKE '%${user}%' OR
     "avatars"."users"."id" LIKE '%${user}' OR
     "avatars"."users"."eth_address" LIKE '${user}'
+  ORDER BY "avatars"."users"."received_at" DESC
   LIMIT 10;`,
   'template-args': {}
         },

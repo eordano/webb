@@ -35,13 +35,23 @@ export function createServer(descartes: Descartes, port: number = 1338) {
   })
 
   /*
-   * Env might be one of: stg, prod, dev
+   * Find by userId, email, or eth_address
    */
   app.get('/users/search/:how', async (req, res) => {
     try {
       const { how } = req.params
       console.log(`Users: request for ${how}`)
       const result: DataResponse = await cachedUsers(how)
+      res.json(result).end
+    } catch (e) {
+      console.log(e)
+      res.end({ error: 'unknown' })
+    }
+  })
+  app.get('/users/search', async (req, res) => {
+    try {
+      console.log(`Users: request for all`)
+      const result: DataResponse = await cachedUsers('')
       res.json(result).end
     } catch (e) {
       console.log(e)

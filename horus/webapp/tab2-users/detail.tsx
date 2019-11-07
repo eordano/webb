@@ -1,7 +1,22 @@
-import { Container, Segment, Grid, Icon, Table } from 'decentraland-ui'
-import React from 'react'
+import { PassportAsPromise } from 'dcl/kernel/passports/PassportAsPromise'
+import { Container, Grid, Icon, Segment, Table } from 'decentraland-ui'
+import React, { useEffect, useState } from 'react'
+import { store } from '../kernel/store'
 
 export const UserDetail = (props: any) => {
+  const userId = props.pathname.split('-')[1]
+  const [profile, setProfile] = useState(undefined)
+
+  useEffect(() => {
+    ;(async function() {
+      if (profile !== undefined) {
+        return
+      }
+      setProfile(null)
+      const response = await PassportAsPromise(store)(userId)
+      setProfile(response)
+    })()
+  })
   return (
     <Container>
       <Segment style={{ width: '100%' }}>
@@ -60,10 +75,10 @@ export const UserDetail = (props: any) => {
                   <Table.Row>
                     <Table.Cell>The Haunted House</Table.Cell>
                     <Table.Cell>45 objects, 10 kinds</Table.Cell>
+                    <Table.Cell>No</Table.Cell>
                     <Table.Cell>
-                      No
+                      <a href="#">Preview</a>
                     </Table.Cell>
-                    <Table.Cell><a href="#">Preview</a></Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>

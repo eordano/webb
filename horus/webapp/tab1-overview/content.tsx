@@ -5,31 +5,8 @@ import { routeFor } from '../route/redirectCache'
 import { useFetch } from '../useFetch/useFetch'
 import { GraphUsersOverTime } from './graphUsersOverTime'
 import { Link } from '../route/Link'
-
-const ONE_MINUTE = 60 * 1000
-const ONE_HOUR = 60 * ONE_MINUTE
-const ONE_DAY = 24 * ONE_HOUR
-const ONE_WEEK = 7 * ONE_DAY
-
-function englishTimeAgo(elapsed: number) {
-  if (elapsed < ONE_MINUTE) {
-    return 'seconds ago'
-  }
-  if (elapsed < ONE_HOUR) {
-    return Math.round(elapsed / ONE_MINUTE).toFixed(0) + ' minutes ago'
-  }
-  if (elapsed < ONE_DAY) {
-    return Math.round(elapsed / ONE_HOUR).toFixed(0) + ' hours ago'
-  }
-  if (elapsed < ONE_WEEK) {
-    return Math.round(elapsed / ONE_DAY).toFixed(0) + ' days ago'
-  }
-  return Math.round(elapsed / ONE_WEEK).toFixed(0) + ' weeks ago'
-}
-
-function getMillisEllapsed(response: any) {
-  return new Date().getTime() - new Date(response.timestamp).getTime()
-}
+import { englishTimeAgo } from '../datefun/englishTimeAgo'
+import { getMillisEllapsed } from '../datefun/timeConstants'
 
 function getSceneHash(response: any) {
   return response.cid
