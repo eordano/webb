@@ -10,7 +10,13 @@ export function createApp(port: number = 2345) {
 
   app.get('/poi', async (req, res) => {
     console.log(`GET /poi`)
-    res.end(JSON.stringify(Object.values(data)))
+    res.end(
+      JSON.stringify(
+        Object.values(data).sort(
+          (a, b) => -(parseInt('' + a.priority || a.id, 10) - parseInt('' + b.priority || b.id, 10))
+        )
+      )
+    )
   })
 
   app.post('/poi', async (req, res) => {

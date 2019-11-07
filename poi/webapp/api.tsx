@@ -8,6 +8,16 @@ export async function createPoi(data: any, emptyCacheFun: Function) {
   console.log(result);
   emptyCacheFun();
 }
+export async function pinit(data: any, emptyCacheFun: Function) {
+  const { id } = data
+  const result = await fetch(API + '/' + id, {
+    method: 'PUT',
+    headers: { 'content-type': 'application/json ' },
+    body: JSON.stringify({ ...data, priority: data.priority ? 0 : 10000 })
+  });
+  console.log(result);
+  emptyCacheFun();
+}
 export async function editPoi(id: string, data: any, emptyCacheFun: Function) {
   const result = await fetch(API + '/' + id, {
     method: 'PUT',

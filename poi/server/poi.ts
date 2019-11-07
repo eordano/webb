@@ -8,6 +8,7 @@ type POI = {
   description: string
   createdAt: number
   updatedAt: number
+  priority: number
   screenshot: string
   x: number
   y: number

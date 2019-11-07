@@ -1,7 +1,7 @@
 import { Button, Grid, Hero, Icon, Page, Segment } from 'decentraland-ui'
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { deletePoi } from './api'
+import { deletePoi, pinit } from './api'
 import { CreatePoi } from './CreatePoi'
 import { EditPoi } from './EditPoi'
 
@@ -33,7 +33,10 @@ function Everything(props: any) {
         <Hero.Description>Parcels of Interest</Hero.Description>
       </Hero>
       {newModal && (
-        <CreatePoi onCancel={() => setNewModal(false)} onFinish={() => [setDeleteActive(false), setNewModal(false), setPois(undefined)]} />
+        <CreatePoi
+          onCancel={() => setNewModal(false)}
+          onFinish={() => [setDeleteActive(false), setNewModal(false), setPois(undefined)]}
+        />
       )}
       {editPoi !== undefined && (
         <EditPoi
@@ -60,7 +63,10 @@ function Everything(props: any) {
                       </Grid.Column>
                       <Grid.Column width={8}>
                         <Grid.Row>
-                          <h2>{poi.name}</h2>
+                          <h2 style={poi.priority ? { color: '#ff2d55' } : {}}>
+                            {poi.priority ? <Icon size='small' name='pin' /> : <span />}
+                            {poi.name}
+                          </h2>
                           <h4>{poi.description}</h4>
                         </Grid.Row>
                       </Grid.Column>
@@ -79,7 +85,16 @@ function Everything(props: any) {
                           <Grid>
                             {deleteActive && (
                               <Grid.Column
-                                width={8}
+                                width={5}
+                                onClick={() => pinit(poi, () => setPois(undefined))}
+                                style={{ cursor: 'pointer', marginTop: '20px', textAlign: 'right', color: '#ccc' }}
+                              >
+                                <Icon name='pin' style={poi.priority ? { color: '#ff2d55' } : {}} />
+                              </Grid.Column>
+                            )}
+                            {deleteActive && (
+                              <Grid.Column
+                                width={5}
                                 onClick={() => setEditPoi(poi)}
                                 style={{ cursor: 'pointer', marginTop: '20px', textAlign: 'center', color: '#ccc' }}
                               >
@@ -88,7 +103,7 @@ function Everything(props: any) {
                             )}
                             {deleteActive && (
                               <Grid.Column
-                                width={8}
+                                width={5}
                                 onClick={() => deletePoi(poi.id, () => setPois(undefined))}
                                 style={{ cursor: 'pointer', marginTop: '20px', textAlign: 'center', color: '#ccc' }}
                               >
