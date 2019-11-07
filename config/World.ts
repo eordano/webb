@@ -16,8 +16,8 @@ export const loginConfig = {
   audience: 'decentraland.org'
 }
 export const AUTH = {
-  AUTH0_CLIENT_ID: loginConfig.today.client_id,
-  AUTH0_DOMAIN: loginConfig.today.domain,
+  AUTH0_CLIENT_ID: loginConfig.org.client_id,
+  AUTH0_DOMAIN: loginConfig.org.domain,
   AUTH0_REDIRECT: 'http://localhost:3000/login_callback',
   AUTH0_AUDIENCE: 'decentraland.org',
   EPHEMERAL_KEY_TTL: 24 * 60 * 60 * 1000

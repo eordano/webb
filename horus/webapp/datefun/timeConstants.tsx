@@ -3,5 +3,7 @@ export const ONE_HOUR = 60 * ONE_MINUTE
 export const ONE_DAY = 24 * ONE_HOUR
 export const ONE_WEEK = 7 * ONE_DAY
 export function getMillisEllapsed(response: any) {
-  return new Date().getTime() - new Date(response.timestamp).getTime();
+  return new Date().getTime() - new Date(response.timestamp).getTime()
 }
+export const FIFTEEN_MINUTES = 15 * ONE_MINUTE
+export const THREE_MINUTES = 3 * ONE_MINUTE

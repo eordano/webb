@@ -113,6 +113,7 @@ export function* handleFetchProfile(action: PassportRequestAction): any {
     const passport = processServerProfile(userId, profile)
     yield put(passportSuccess(userId, passport))
   } catch (error) {
+    console.log(error)
     const randomizedUserProfile = yield call(generateRandomUserProfile, userId)
     const currentId = yield select(getCurrentUserId)
     if (currentId === userId) {

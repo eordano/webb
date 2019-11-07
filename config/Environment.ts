@@ -37,7 +37,7 @@ export const knownTLDs = ['zone', 'org', 'today']
 function getDefaultTLD() {
   const TLD = getTLD()
   if (!TLD || !knownTLDs.includes(TLD)) {
-    return 'today'
+    return 'org'
   }
   return TLD
 }

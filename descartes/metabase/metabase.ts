@@ -54,6 +54,66 @@ export async function metabaseRequest(...params) {
   return baseMetabaseRequest({}, ...params)
 }
 
+export async function userPerf(userId: string) {
+  const results = await baseMetabaseRequest(
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        database: 2,
+        type: 'query',
+        query: {
+          'source-table': 758,
+          fields: [
+            ['field-id', 15092],
+            ['field-id', 15073],
+            ['field-id', 15089],
+            ['field-id', 15075],
+            ['field-id', 15066],
+            ['field-id', 15080],
+            ['field-id', 15070],
+            ['field-id', 15068],
+            ['field-id', 15074],
+            ['field-id', 15087],
+            ['field-id', 15078]
+          ],
+          filter: ['=', ['field-id', 15069], userId],
+          'order-by': [['desc', ['field-id', 15078]]]
+        },
+        parameters: []
+      })
+    },
+    'dataset'
+  )
+  return rowsAndColsToMap(results)
+}
+
+export async function userMovements(userId: string) {
+  const results = await baseMetabaseRequest(
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        database: 2,
+        type: 'query',
+        query: {
+          'source-table': 538,
+          'order-by': [['desc', ['field-id', 10286]]],
+          filter: ['=', ['field-id', 10270], userId],
+          fields: [
+            ['field-id', 10265],
+            ['field-id', 10281],
+            ['field-id', 10273],
+            ['field-id', 10279],
+            ['field-id', 10276]
+          ]
+        },
+        parameters: []
+      })
+    },
+    'dataset'
+  )
+  return rowsAndColsToMap(results)
+}
+
 export async function findUser(user: string) {
   const results = await baseMetabaseRequest(
     {
@@ -68,7 +128,7 @@ export async function findUser(user: string) {
     "avatars"."users"."eth_address" LIKE '${user}'
   ORDER BY "avatars"."users"."received_at" DESC
   LIMIT 10;`,
-  'template-args': {}
+          'template-args': {}
         },
         parameters: [],
         type: 'native'
