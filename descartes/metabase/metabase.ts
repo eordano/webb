@@ -15,12 +15,7 @@ const secrets: Secrets = JSON.parse(fs.readFileSync(join(__dirname, '../../.secr
 const cred = secrets.metabase
 
 export async function deploys() {
-  const result = await Promise.all([
-    queryMetric('348'),
-    queryMetric('349'),
-    queryMetric('350'),
-    queryRows('351')
-  ])
+  const result = await Promise.all([queryMetric('348'), queryMetric('349'), queryMetric('350'), queryRows('351')])
   return result
 }
 
@@ -31,6 +26,10 @@ export async function queryMetric(metricId: string) {
 
 export async function queryRows(metricId: string) {
   const result = await metabasePostRequest('card', metricId, 'query')
+  return rowsAndColsToMap(result)
+}
+
+export function rowsAndColsToMap(result: any) {
   const keys = result.data.cols.map((val: any) => val.name)
   return result.data.rows.map((value: string[]) =>
     value.reduce(
@@ -53,6 +52,30 @@ export async function metabasePostRequest(...params) {
 
 export async function metabaseRequest(...params) {
   return baseMetabaseRequest({}, ...params)
+}
+
+export async function findUser(user: string) {
+  const results = await baseMetabaseRequest(
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        database: 2,
+        native: {
+          query: `SELECT "avatars"."users"."id" AS "id", "avatars"."users"."eth_address" AS "eth_address", "avatars"."users"."email" AS "email"
+  FROM "avatars"."users"
+  WHERE "avatars"."users"."email" LIKE '%${user}%' OR
+    "avatars"."users"."id" LIKE '%${user}' OR
+    "avatars"."users"."eth_address" LIKE '${user}'
+  LIMIT 10;`,
+  'template-args': {}
+        },
+        parameters: [],
+        type: 'native'
+      })
+    },
+    'dataset'
+  )
+  return rowsAndColsToMap(results)
 }
 
 export async function baseMetabaseRequest(opts: any, ...params) {

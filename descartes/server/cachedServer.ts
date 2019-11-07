@@ -4,11 +4,13 @@ import { ears } from 'dcl/vangogh/ears'
 import express from 'express'
 import { DataResponse, getConnectedUsers } from '../datadog/getConnectedUsers'
 import { Descartes } from '../logic/descartes'
-import { deploys } from '../metabase/metabase'
+import { deploys, findUser } from '../metabase/metabase'
 
 const cachedGetConnectedUsers = cachedRequest((env: 'prod' | 'dev' | 'stg') => getConnectedUsers(env))
 
 const cachedDeployments = cachedRequest(() => deploys())
+
+const cachedUsers = cachedRequest((user: string) => findUser(user))
 
 export function createServer(descartes: Descartes, port: number = 1338) {
   const app = express()
@@ -25,6 +27,21 @@ export function createServer(descartes: Descartes, port: number = 1338) {
         return res.status(400).end({ error: 'invalid environment (use prod, stg or dev)' })
       }
       const result: DataResponse = await cachedGetConnectedUsers(env as any)
+      res.json(result).end
+    } catch (e) {
+      console.log(e)
+      res.end({ error: 'unknown' })
+    }
+  })
+
+  /*
+   * Env might be one of: stg, prod, dev
+   */
+  app.get('/users/search/:how', async (req, res) => {
+    try {
+      const { how } = req.params
+      console.log(`Users: request for ${how}`)
+      const result: DataResponse = await cachedUsers(how)
       res.json(result).end
     } catch (e) {
       console.log(e)
