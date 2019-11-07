@@ -1,12 +1,31 @@
-import { Button, Field, Grid, Icon, Modal, Page, Segment, Hero } from 'decentraland-ui'
-import React, { useState } from 'react'
+import { Button, Grid, Hero, Icon, Page, Segment } from 'decentraland-ui'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import { deletePoi } from './api'
+import { CreatePoi } from './CreatePoi'
+import { EditPoi } from './EditPoi'
 
-renderApp(<Everything />)
-
-function Everything() {
+function Everything(props: any) {
   const [deleteActive, setDeleteActive] = useState(false)
   const [newModal, setNewModal] = useState(false)
+  const [editPoi, setEditPoi] = useState(undefined)
+  const [pois, setPois] = useState(undefined)
+
+  useEffect(() => {
+    async function fetchPois() {
+      if (pois !== undefined) {
+        return
+      }
+      setPois({})
+      const request = await fetch(`//${window.location.hostname}:2345/poi`)
+      if (request.status === 200) {
+        const body = await request.json()
+        return setPois(body)
+      }
+    }
+    fetchPois()
+  })
+
   return (
     <Page isFullscreen>
       <Hero centered>
@@ -14,59 +33,77 @@ function Everything() {
         <Hero.Description>Parcels of Interest</Hero.Description>
       </Hero>
       {newModal && (
-        <Modal open={true}>
-          <Modal.Header>Submit a scene</Modal.Header>
-          <Modal.Content>
-            <Field label="Name" id="name" placeholder="Cool scene #42" />
-            <Field label="Screenshot" id="screenshot" placeholder="https://some.domain.com/image.png" />
-            <Grid>
-              <Grid.Column width="6">
-                <Field label="x" id="x" type="number" placeholder="-140" />
-              </Grid.Column>
-              <Grid.Column width="2"></Grid.Column>
-              <Grid.Column width="6">
-                <Field label="y" id="y" type="number" placeholder="99" />
-              </Grid.Column>
-            </Grid>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button onClick={() => setNewModal(false)}>Cancel</Button>
-            <Button primary onClick={() => setNewModal(false)}>
-              Submit
-            </Button>
-          </Modal.Actions>
-        </Modal>
+        <CreatePoi onCancel={() => setNewModal(false)} onFinish={() => [setDeleteActive(false), setNewModal(false), setPois(undefined)]} />
+      )}
+      {editPoi !== undefined && (
+        <EditPoi
+          id={editPoi}
+          {...editPoi}
+          onCancel={() => setEditPoi(undefined)}
+          onFinish={() => [setEditPoi(undefined), setDeleteActive(false), setPois(undefined)]}
+        />
       )}
       <Grid>
         <Grid.Row>&nbsp;</Grid.Row>
-        <Grid.Row>
-          <Grid.Column width={3} />
-          <Grid.Column width={10}>
-            <Segment>
-              <Grid>
-                <Grid.Row>
-                  <Grid.Column width={4} style={{ textAlign: 'center' }}>
-                    <img
-                      width="100%"
-                      src="https://media.discordapp.net/attachments/500732694100181002/641646818131968016/6.png?width=800&height=450"
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={8}>
-                    <h2>Scary Halloween</h2>
-                  </Grid.Column>
-                  <Grid.Column width={4}>
-                    <Button primary>Go to 12,34</Button>
-                    {deleteActive && (
-                      <p style={{ marginTop: '20px', textAlign: 'right', color: '#ccc' }}>
-                        <Icon name="x" />
-                      </p>
-                    )}
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
+        {pois &&
+          Object.values(pois).map((poi: any) => {
+            return (
+              <Grid.Row key={poi.id}>
+                <Grid.Column width={3} />
+                <Grid.Column width={10}>
+                  <Segment>
+                    <Grid>
+                      <Grid.Column width={4} style={{ textAlign: 'center' }}>
+                        <Grid.Row>
+                          <img width='100%' src={poi.screenshot} />
+                        </Grid.Row>
+                      </Grid.Column>
+                      <Grid.Column width={8}>
+                        <Grid.Row>
+                          <h2>{poi.name}</h2>
+                          <h4>{poi.description}</h4>
+                        </Grid.Row>
+                      </Grid.Column>
+                      <Grid.Column width={4}>
+                        <Grid.Row style={{ textAlign: 'center' }}>
+                          <Button
+                            primary
+                            inverted
+                            target='_blank'
+                            href={`https://explorer.decentraland.org/?position=${poi.x},${poi.y}`}
+                          >
+                            ({poi.x},{poi.y}) <Icon name='chevron right' />
+                          </Button>
+                        </Grid.Row>
+                        <Grid.Row>
+                          <Grid>
+                            {deleteActive && (
+                              <Grid.Column
+                                width={8}
+                                onClick={() => setEditPoi(poi)}
+                                style={{ cursor: 'pointer', marginTop: '20px', textAlign: 'center', color: '#ccc' }}
+                              >
+                                <Icon name='edit' />
+                              </Grid.Column>
+                            )}
+                            {deleteActive && (
+                              <Grid.Column
+                                width={8}
+                                onClick={() => deletePoi(poi.id, () => setPois(undefined))}
+                                style={{ cursor: 'pointer', marginTop: '20px', textAlign: 'center', color: '#ccc' }}
+                              >
+                                <Icon name='x' />
+                              </Grid.Column>
+                            )}
+                          </Grid>
+                        </Grid.Row>
+                      </Grid.Column>
+                    </Grid>
+                  </Segment>
+                </Grid.Column>
+              </Grid.Row>
+            )
+          })}
       </Grid>
       <Grid>
         <Grid.Row>
@@ -75,10 +112,10 @@ function Everything() {
             <Grid>
               <Grid.Row>
                 <Grid.Column width={4}>
-                  <Button onClick={() => setDeleteActive(!deleteActive)}>Delete</Button>
+                  <Button onClick={() => setDeleteActive(!deleteActive)}>Edit</Button>
                 </Grid.Column>
                 <Grid.Column width={8} style={{ textAlign: 'center' }}></Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column width={4} style={{ textAlign: 'right' }}>
                   <Button primary onClick={() => setNewModal(true)}>
                     New
                   </Button>
@@ -92,6 +129,8 @@ function Everything() {
   )
 }
 
-export function renderApp(paths: any) {
-  ReactDOM.render(paths, document.getElementById('root'))
+export function renderApp() {
+  ReactDOM.render(<Everything />, document.getElementById('root'))
 }
+
+renderApp()

@@ -15,8 +15,10 @@ export function createApp(port: number = 2345) {
 
   app.post('/poi', async (req, res) => {
     console.log(`POST /poi`)
-    if (!ensureData(req.body)) {
-      return res.status(400).end(JSON.stringify({ error: 'invalid format' }))
+    const validation = ensureData(req.body)
+    if (validation !== true) {
+      console.log(`  received ${JSON.stringify(req.body)}`)
+      return res.status(400).end(JSON.stringify({ error: 'invalid format: ' + validation }))
     }
     const id = newId()
     data[id] = { description: '', ...req.body, id, createdAt: new Date().getTime(), updatedAt: new Date().getTime() }
@@ -31,8 +33,10 @@ export function createApp(port: number = 2345) {
 
   app.put('/poi/:id', async (req, res) => {
     console.log(`PUT /poi/:id`)
-    if (!ensureData(req.body)) {
-      return res.status(400).end(JSON.stringify({ error: 'invalid format' }))
+    const validation = ensureData(req.body)
+    if (validation !== true) {
+      console.log(`  received ${req.body}`)
+      return res.status(400).end(JSON.stringify({ error: 'invalid format: ' + validation }))
     }
     const id = req.params.id
     data[id] = { ...data[id], ...req.body, id, updatedAt: new Date().getTime() }

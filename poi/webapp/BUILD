@@ -22,7 +22,7 @@ ts_library(
         "@npm//@types/react",
         "@npm//@types/react-dom",
         "@npm//react",
-        "@npm//react-dom",
         "@npm//decentraland-ui",
+        "@npm//react-dom",
     ],
 )

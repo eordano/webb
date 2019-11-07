@@ -2,14 +2,6 @@ import fs from 'fs'
 
 const FILE = process.env.DB || process.env.PWD + '/db.json'
 
-type ProtoPOI = {
-  name: string
-  description: string
-  screenshot: string
-  x: number
-  y: number
-}
-
 type POI = {
   id: string
   name: string
@@ -37,17 +29,26 @@ export function syncDb() {
   fs.writeFileSync(FILE, JSON.stringify(data))
 }
 
-export function ensureData(datum: any): datum is ProtoPOI {
+function validName(t: any) {
+  return (typeof t !== 'string' || t.length < 3) && 'invalid name (3 chars)'
+}
+function validDescription(t: any) {
+  return typeof t !== 'string' && 'invalid type of description'
+}
+function validCoordinate(t: any) {
+  return (parseInt('' + t, 10) + '') !== ('' + t) && `invalid coordinate "${t}"`
+}
+function validObject(t: any) {
+  return typeof t !== 'object' && 'invalid object'
+}
+
+export function ensureData(datum: any): string | true {
   return (
-    typeof datum === 'object' &&
-    typeof datum.name === 'string' &&
-    (datum.description === undefined || typeof datum.description === 'string') &&
-    typeof datum.x === 'number' &&
-    datum.x <= 150 &&
-    datum.x >= 150 &&
-    typeof datum.y === 'number' &&
-    datum.y <= 150 &&
-    datum.y >= 150 &&
-    typeof datum.screenshot === 'string'
+    validObject(datum) ||
+    validDescription(datum.description) ||
+    validName(datum.name) ||
+    validCoordinate(datum.x) ||
+    validCoordinate(datum.y) ||
+    true
   )
 }
