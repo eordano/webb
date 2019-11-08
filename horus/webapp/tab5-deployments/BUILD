@@ -23,6 +23,7 @@ ts_library(
     deps = [
         "//horus/webapp/sail",
         "//horus/webapp/route",
+        "//horus/webapp/useFetch",
         "@npm//@types/defaults",
         "@npm//@types/react",
         "@npm//@types/react-router",

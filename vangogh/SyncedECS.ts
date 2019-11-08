@@ -1,4 +1,7 @@
-import { MemoryRendererParcelScene } from 'dcl/kernel/renderer/parcelScene/MemoryRendererParcelScene'
+import { RendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/kernelSpace/RendererParcelSceneToScript'
+import { exposeMethod } from 'dcl/rpc/common/API'
+import { EventDispatcher } from 'dcl/rpc/common/core/EventDispatcher'
+import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import { emptyState } from 'dcl/synced-ecs/ecs/generators/emptyState'
 import { addComponent } from 'dcl/synced-ecs/ecs/reducers/addComponent'
@@ -11,8 +14,6 @@ import { entityExists } from 'dcl/synced-ecs/ecs/selectors/entityExists'
 import { getComponent } from 'dcl/synced-ecs/ecs/selectors/getComponent'
 import { getEntityParent } from 'dcl/synced-ecs/ecs/selectors/getEntityParent'
 import { deepCompare } from 'dcl/synced-ecs/ecs/util/deepCompare'
-import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
-import { EventDispatcher } from 'dcl/rpc/common/core/EventDispatcher'
 
 const names = {
   1: 'Transform',
@@ -26,28 +27,35 @@ export function componentName(name: any) {
   return '' + name
 }
 
-export class SyncedECS extends MemoryRendererParcelScene implements IRendererParcelSceneToScript {
+export class SyncedECS extends RendererParcelSceneToScript implements IRendererParcelSceneToScript {
   ecs: ECS
   eventDispatcher = new EventDispatcher()
-  constructor(transport: any) {
-    super(transport)
+  constructor(public options: any) {
+    super(options)
     this.ecs = emptyState('0')
   }
+  @exposeMethod
   on(event: string): Promise<void> {
-    console.log('subscribed to ', event)
     return Promise.resolve()
   }
+  @exposeMethod
   startSignal(): Promise<void> {
-    console.log('Start signal')
+    super.startSignal()
+    this.eventDispatcher.emit('startSignal')
     return Promise.resolve()
   }
-  subscribe(event: string) : Promise<void> {
+  @exposeMethod
+  subscribe(event): Promise<void> {
+    super.subscribe(event)
     return Promise.resolve()
   }
-  unsubscribe(event: string) : Promise<void> {
+  @exposeMethod
+  unsubscribe(event): Promise<void> {
+    super.unsubscribe(event)
     return Promise.resolve()
   }
   onSubscribedEvent(_: any): void {}
+  @exposeMethod
   sendBatch(actions: any[]) {
     const entities = {}
     const components = {}

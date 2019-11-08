@@ -26,7 +26,7 @@ export class EnvironmentAPI extends ExposableAPI {
     return Promise.resolve({
       ...this.sceneManifest,
       mappings: this.sceneManifest.legacyMappings,
-      baseUrl: 'https://content.decentraland.org/contents/'
+      baseUrl: 'http://localhost:1338/contents/'
     })
   }
 }

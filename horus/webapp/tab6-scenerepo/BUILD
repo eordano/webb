@@ -21,6 +21,12 @@ ts_library(
         ],
     ),
     deps = [
+        "//utils",
+        "//rpc",
+        "//kernel",
+        "//vangogh",
+        "//synced-ecs",
+        "//horus/webapp/kernel",
         "//horus/webapp/sail",
         "//horus/webapp/route",
         "@npm//@types/defaults",

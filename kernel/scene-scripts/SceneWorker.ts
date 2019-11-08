@@ -49,7 +49,7 @@ export class SceneWorker implements ISceneWorker {
 
   startSystem() {
     const manifest = this.sceneManifest
-    return ScriptingHost.fromTransport(this.transport).then(system => {
+    return ScriptingHost.fromTransport(this.transport).then(async (system) => {
       this.system = system
       this.systemPromise.resolve(system)
       this.transport = this.transport

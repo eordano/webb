@@ -4,15 +4,16 @@ import { ears } from 'dcl/vangogh/ears'
 import express from 'express'
 import { DataResponse, getConnectedUsers } from '../datadog/getConnectedUsers'
 import { Descartes } from '../logic/descartes'
-import { deploys, findUser, userMovements, userPerf } from '../metabase/metabase'
+import { deploys, findUser, userMovements, userPerf, deploysBefore } from '../metabase/metabase'
 
-const cachedGetConnectedUsers = cachedRequest((env: 'prod' | 'dev' | 'stg') => getConnectedUsers(env))
+const cachedGetConnectedUsers = cachedRequest((env: 'prod' | 'dev' | 'stg') => getConnectedUsers(env), _ => 'comms' + _)
 
-const cachedDeployments = cachedRequest(() => deploys())
+const cachedDeployments = cachedRequest(() => deploys(), () => 'deploys')
 
-const cachedUsers = cachedRequest((user: string) => findUser(user))
+const cachedUsers = cachedRequest((user: string) => findUser(user), _ => 'user' + _)
 
 const cachedMovements = cachedRequest((user: string) => userMovements(user), t => 'move' + t)
+
 const cachedPerf = cachedRequest((user: string) => userPerf(user), t => 'perf' + t)
 
 export function createServer(descartes: Descartes, port: number = 1338) {
@@ -77,6 +78,16 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       const { userId } = req.params
       console.log(`Users: perf request for ${userId}`)
       const result: DataResponse = await cachedPerf(userId)
+      res.json(result).end
+    } catch (e) {
+      console.log(e)
+      res.end({ error: 'unknown' })
+    }
+  })
+
+  app.get('/deployments', async (req, res) => {
+    try {
+      const result = await deploysBefore(req.query.before ? req.query.before : new Date().toISOString())
       res.json(result).end
     } catch (e) {
       console.log(e)

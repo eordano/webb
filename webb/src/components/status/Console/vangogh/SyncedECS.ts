@@ -37,7 +37,6 @@ export class SyncedECS extends RendererParcelSceneToScript implements IRendererP
   }
   @exposeMethod
   on(event: string): Promise<void> {
-    console.log('subscribed to ', event)
     super.subscribe(event as any)
     return Promise.resolve()
   }

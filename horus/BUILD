@@ -13,7 +13,6 @@ filegroup(
     ),
 )
 
-
 load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 
 ts_devserver(
@@ -21,6 +20,7 @@ ts_devserver(
     additional_root_paths = [":static"],
     data = [
         ":static",
+        "//gamekit:gamekit_bundle",
         "@npm//@babel/runtime",
         "@npm//babel-runtime",
         "@npm//decentraland-ui",
@@ -53,13 +53,13 @@ ts_devserver(
         "//scene-api",
         "//utils",
         "@npm//auth0-js:auth0-js__umd",
+        "@npm//buffer:buffer__umd",
+        "@npm//events:events__umd",
         "@npm//fp-future:fp-future__umd",
         "@npm//google-protobuf:google-protobuf__umd",
         "@npm//reselect:reselect__umd",
-        "@npm//typesafe-actions:typesafe-actions__umd",
-        "@npm//buffer:buffer__umd",
         "@npm//stream:stream__umd",
-        "@npm//events:events__umd",
+        "@npm//typesafe-actions:typesafe-actions__umd",
         "@npm//util:util__umd",
         "@npm//uuid:uuid__umd",
     ],

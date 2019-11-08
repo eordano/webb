@@ -50,7 +50,7 @@ export function WorldSessions(props: { userId: string }) {
           <Table.HeaderCell>Perf Score: (95th)</Table.HeaderCell>
         </Table.Header>
         <Table.Body>
-          {segments.map(segment => (
+          {segments.slice(0, 5).map(segment => (
             <Table.Row key={segment.timestamp}>
               <Table.Cell>{englishTimeAgo(now - segment[0].timestamp)}</Table.Cell>
               <Table.Cell>

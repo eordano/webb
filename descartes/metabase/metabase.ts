@@ -19,9 +19,54 @@ export async function deploys() {
   return result
 }
 
+export async function deploysBefore(date: string) {
+  if (Math.abs(date.length - '2019-11-07T20:04:35.016-03:00'.length) > 6) {
+    throw new Error('this is not the date format you are looking for: ' + date)
+  }
+  const query = {
+    query: {
+      'source-table': 94,
+      fields: [
+        ['field-id', 1883],
+        ['field-id', 1880],
+        ['field-id', 1856],
+        ['field-id', 1860],
+        ['field-id', 12175],
+        ['field-id', 1875],
+        ['field-id', 1869],
+        ['field-id', 1884],
+        ['field-id', 1857],
+        ['field-id', 1868],
+        ['field-id', 1858],
+        ['field-id', 1876],
+        ['field-id', 1867]
+      ],
+      filter: [
+        'and',
+        ['does-not-contain', ['field-id', 1858], '0x1337', { 'case-sensitive': false }],
+        ['does-not-contain', ['field-id', 1858], '0xdc1337', { 'case-sensitive': false }],
+        ['<', ['field-id', 1868], date]
+      ],
+      'order-by': [['desc', ['field-id', 1857]]],
+      limit: 100
+    },
+    type: 'query',
+    database: 2,
+    parameters: []
+  }
+  const result = await baseMetabaseRequest(
+    {
+      method: 'POST',
+      body: JSON.stringify(query)
+    },
+    'dataset'
+  )
+  return rowsAndColsToMap(result)
+}
+
 export async function queryMetric(metricId: string) {
-  const result = await metabaseRequest('card', metricId)
-  return result.result_metadata[0].fingerprint.type['type/Number'].avg
+  const result = await metabasePostRequest('card', metricId, 'query')
+  return result.data.rows[0][0]
 }
 
 export async function queryRows(metricId: string) {
@@ -161,7 +206,6 @@ export async function login() {
   })
   if (request.status === 200) {
     const response = await request.json()
-    console.log(request, response)
     return (cred.session = response.id)
   } else {
     throw new Error(JSON.stringify({ request }))

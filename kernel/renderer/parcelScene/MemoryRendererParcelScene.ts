@@ -1,8 +1,8 @@
 import { ScriptingHost } from 'dcl/rpc/host'
 import { ISceneWorker } from 'dcl/scene-api/interface/ISceneWorker'
 import { EventEmitter } from 'events'
-import { IRendererParcelSceneAPI } from './IRendererParcelSceneAPI'
 import { future } from 'fp-future'
+import { IRendererParcelSceneAPI } from './IRendererParcelSceneAPI'
 
 /**
  * Use this as a mock for a Renderer's Parcel Scene behavior if there is no renderer connected

@@ -1,7 +1,7 @@
 import { configureStore } from 'dcl/kernel/core/store'
 
-const { store, start } = configureStore() as any
+const { store, start, sagasMiddleware } = configureStore() as any
 
 start()
 
-export { store }
+export { store, sagasMiddleware }

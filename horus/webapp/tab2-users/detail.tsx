@@ -44,6 +44,33 @@ export const UserDetail = (props: any) => {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
+              <h3>Inventory</h3>
+              <Table basic="very">
+                <Table.Header>
+                  <Table.HeaderCell></Table.HeaderCell>
+                  <Table.HeaderCell>Item</Table.HeaderCell>
+                  <Table.HeaderCell>Rarity (link)</Table.HeaderCell>
+                  <Table.HeaderCell>Acquired</Table.HeaderCell>
+                </Table.Header>
+                <Table.Body>
+                  {passport.inventory.map(item => {
+                    return (
+                      <Table.Row key={item}>
+                        <Table.Cell></Table.Cell>
+                        <Table.Cell>{item}</Table.Cell>
+                        <Table.Cell>
+                          <a href="#">#0</a>/<a href="#">0</a>
+                        </Table.Cell>
+                        <Table.Cell>never days ago</Table.Cell>
+                      </Table.Row>
+                    )
+                  })}
+                </Table.Body>
+              </Table>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
               <h3>Builder Scenes</h3>
               <h5>Latest editions</h5>
               <Table basic="very">
@@ -61,29 +88,6 @@ export const UserDetail = (props: any) => {
                     <Table.Cell>
                       <a href="#">Preview</a>
                     </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <h3>Inventory</h3>
-              <Table basic="very">
-                <Table.Header>
-                  <Table.HeaderCell></Table.HeaderCell>
-                  <Table.HeaderCell>Item</Table.HeaderCell>
-                  <Table.HeaderCell>Rarity (link)</Table.HeaderCell>
-                  <Table.HeaderCell>Acquired</Table.HeaderCell>
-                </Table.Header>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell></Table.Cell>
-                    <Table.Cell>Halloween Mask</Table.Cell>
-                    <Table.Cell>
-                      <a href="#">#145</a>/<a href="#">400</a>
-                    </Table.Cell>
-                    <Table.Cell>4 days ago</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>

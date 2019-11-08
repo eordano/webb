@@ -1,18 +1,9 @@
 import { getServerConfigurations } from 'dcl/config'
-import { GamekitScene } from 'dcl/gamekit/GamekitScene'
 import { configureStore } from 'dcl/kernel/core/store'
 import { resolvePositionToSceneManifest } from 'dcl/kernel/scene-atlas/resolvePositionToSceneManifest'
 import fetch from 'node-fetch'
 import { SyncedECS } from './SyncedECS'
-
-export class PlainGameKit extends GamekitScene {
-  constructor(public source: string) {
-    super()
-  }
-  getSource(): Promise<string> {
-    return Promise.resolve(this.source)
-  }
-}
+import { PlainGameKit } from './PlainGameKit'
 
 export async function ears(x: number, y: number) {
   global['fetch'] = fetch
@@ -42,7 +33,6 @@ export async function ears(x: number, y: number) {
     await kit.update(0)
 
     return sync.ecs
-
   } catch (e) {
     console.log(e)
     return
