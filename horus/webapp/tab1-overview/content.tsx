@@ -48,7 +48,7 @@ export const Overview = () => {
           <h1>Deployments</h1>
           <Stats title={englishTimeAgo(getMillisEllapsed(dep[3][0]))}>
             <Header>
-              <Link path={routeFor('Scene', 'Detail', '/' + getSceneHash(dep[3][0]))}>{getParcel(dep[3][0])}</Link>
+              <Link path={routeFor('Scenes', 'Details', '/' + getSceneHash(dep[3][0]))}>{getParcel(dep[3][0])}</Link>
             </Header>
           </Stats>
           <Stats title="1d">
@@ -62,15 +62,6 @@ export const Overview = () => {
           </Stats>
         </Segment>
       )}
-      <Segment>
-        <Header>
-          <h2>Events</h2>
-        </Header>
-        <Segment>
-          <h3>Hallowing NFT Giveaway</h3>
-          <p>Runs over the weekend</p>
-        </Segment>
-      </Segment>
     </>
   )
 }

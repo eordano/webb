@@ -31,7 +31,7 @@ export const SceneRoutes = [
   />,
   <Through
     key="sd"
-    path={_ => _.startsWith('/scene/')}
+    path={_ => _.startsWith('/scenes/details')}
     renderer={(props: any) => (
       <Application
         key="dd"

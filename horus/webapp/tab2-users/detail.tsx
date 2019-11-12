@@ -69,30 +69,6 @@ export const UserDetail = (props: any) => {
               </Table>
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <h3>Builder Scenes</h3>
-              <h5>Latest editions</h5>
-              <Table basic="very">
-                <Table.Header>
-                  <Table.HeaderCell>What</Table.HeaderCell>
-                  <Table.HeaderCell>Stats</Table.HeaderCell>
-                  <Table.HeaderCell>Deployed?</Table.HeaderCell>
-                  <Table.HeaderCell>Link</Table.HeaderCell>
-                </Table.Header>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>The Haunted House</Table.Cell>
-                    <Table.Cell>45 objects, 10 kinds</Table.Cell>
-                    <Table.Cell>No</Table.Cell>
-                    <Table.Cell>
-                      <a href="#">Preview</a>
-                    </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </Grid.Column>
-          </Grid.Row>
         </Grid>
       </Segment>
     </Container>

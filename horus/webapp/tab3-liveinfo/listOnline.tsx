@@ -2,6 +2,17 @@ import { Container, Grid, Segment, Table } from 'decentraland-ui'
 import React from 'react'
 
 export const ListOnline = () => {
+  // const [ status, setStatus ] = useState({ count: { i: -150, j: -150 }, lastSent: new Date().getTime() })
+  // useEffect(() => {
+  //   setStatus('loading')
+  //   for (let i = -150; i <= 150; i += 4) {
+  //     for (let j = -150; j <= 150; j += 4) {
+  //       const topic = `${Math.floor(i/4)}:${Math.floor(i/4)}`
+  //       store.dispatch(protocolSubscription(topic))
+  //       store.dispatch(protocolOutPosition({playerHeight: 1.6, position: {x: i * 16, y: 0, z: j * 16}, rotation: { x: 0, y: 0, z: 0, w: 1}}, topic))
+  //     }
+  //   }
+  // })
   return (
     <Container>
       <Segment style={{ width: '100%' }}>

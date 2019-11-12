@@ -36,7 +36,7 @@ function ECSTree(props: { ecs: ECS }) {
 }
 
 export function SceneDetail(props: any) {
-  const sceneId = props.pathname.split('/')[2]
+  const sceneId = props.pathname.split('/')[3]
   const [manifest, setManifest] = useState(undefined)
   useEffect(() => {
     ;(async function() {
