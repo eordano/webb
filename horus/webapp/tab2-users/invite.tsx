@@ -47,13 +47,13 @@ export const InviteUsers = () => {
           const jsonResponse = await response.json()
           setResult(`Error performing request (${response.status}): ${jsonResponse.message}`);
         } else if (response.status !== 200 && response.status !== 201) {
-          setResult("Error while performing request: " + response.status);
+          setResult("Unexpected response status: " + response.status);
         } else {
           setResult(`${address} invited successfully`);
           setAddress("")
         }
       } catch (error) {
-        setResult("Error while performing request: " + error)
+        setResult("Error while performing request (possibly network or protocol error): " + error)
       } finally {
         setLoading(false);
       }
