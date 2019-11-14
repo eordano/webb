@@ -45,11 +45,11 @@ export const InviteUsers = () => {
         });
         if (response.status >= 400) {
           const jsonResponse = await response.json()
-          setResult(`Error performing request (${response.status}): ${jsonResponse.message}`);
+          setResult(`Error performing request (${response.status}): ${jsonResponse && jsonResponse.message}`);
         } else if (response.status !== 200 && response.status !== 201) {
           setResult("Unexpected response status: " + response.status);
         } else {
-          setResult(`${address} invited successfully`);
+          setResult(`${address} invited successfully ✓`);
           setAddress("")
         }
       } catch (error) {
