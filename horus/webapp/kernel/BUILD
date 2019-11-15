@@ -22,5 +22,6 @@ ts_library(
     ),
     deps = [
         "//kernel",
+        "@npm//redux"
     ],
 )

@@ -25,6 +25,8 @@ export const setBaseWearablesCatalog = (wearables: Wearable[]) => action(SET_BAS
 export const SET_BASE_EXCLUSIVES_CATALOG = 'Set base exclusives catalog'
 export const setBaseExclusivesCatalog = (wearables: Wearable[]) => action(SET_BASE_EXCLUSIVES_CATALOG, wearables)
 
+export const CATALOGS_REQUEST = 'Catalogs Request'
+export const catalogsRequest = () => action(CATALOGS_REQUEST)
 export const ADD_CATALOG = 'Add Catalog'
 export const addCatalog = (name: string, catalog: Catalog) => action(ADD_CATALOG, { name, catalog })
 export type AddCatalogAction = ReturnType<typeof addCatalog>
