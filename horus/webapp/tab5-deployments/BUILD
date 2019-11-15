@@ -24,7 +24,7 @@ ts_library(
         "//horus/webapp/sail",
         "//horus/webapp/route",
         "//horus/webapp/datefun",
-        "//horus/webapp/useFetch",
+        "//horus/webapp/hooks",
         "@npm//@types/defaults",
         "@npm//@types/react",
         "@npm//@types/react-router",

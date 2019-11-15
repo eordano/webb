@@ -2,7 +2,7 @@ import { Address, Container, Loader, Segment, Table } from 'decentraland-ui'
 import React from 'react'
 import { englishTimeAgo } from '../datefun/englishTimeAgo'
 import { Link } from '../route/Link'
-import { useFetch } from '../useFetch/useFetch'
+import { useFetch } from '../hooks/useFetch'
 
 export const LatestDeployments = () => {
   const { data, isLoading } = useFetch(`http://${window.location.hostname}:1338/deployments`)
