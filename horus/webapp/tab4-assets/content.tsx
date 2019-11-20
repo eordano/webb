@@ -1,6 +1,8 @@
 import { Center, Container, Dropdown, Filter, Grid, HeaderMenu, Loader, Radio, Table, TableBody } from 'decentraland-ui'
 import React, { useMemo, useState } from 'react'
-import { useFetch } from '../useFetch/useFetch'
+import { usePromise } from '../hooks/usePromise'
+import { CatalogAsPromise } from '../kernel/wearables'
+import { store } from '../kernel/store'
 
 export type CollectionName = string
 export type CategoryName = string
@@ -71,17 +73,33 @@ export function bySub(data: any) {
   )
 }
 
-export const Assets = () => {
-  const { error, isLoading, data } = useFetch('https://dcl-base-avatars.now.sh/index.json')
+function getCollectionFromPath(pathname: string) {
+  const collectionsMapping = {
+    "basic-wearables": "base-avatars",
+    "exclusive-masks": "base-exclusive"
+  }
+  const parts = pathname.split("/");
+  return collectionsMapping[parts[parts.length - 1]];
+}
+
+export const Assets = (props) => {
+  const collection = getCollectionFromPath(props.pathname);
+  
+  if(!collection) {
+    return <h1>Collection not found for {props.pathname}</h1>
+  }
+
+  const { error, isLoading, result } = usePromise(() => CatalogAsPromise(store)(collection), [collection])
+
   if (error) {
     return <h1>Error fetching: {JSON.stringify(error)}</h1>
   }
   const categories = useMemo(() => {
-    if (!data) {
+    if (!result) {
       return
     }
-    return processData(data)
-  }, [data])
+    return processData(result)
+  }, [result])
 
   const [showBodyShapes, setShowBodyShapes] = useState(false)
   const [showFaceAttributes, setShowFaceAttributes] = useState(false)
@@ -90,16 +108,16 @@ export const Assets = () => {
 
   const faceAttributes = ['eyes', 'mouth', 'eyebrows', 'facial_hair', 'hair', 'mouth']
   const allCategories = useMemo(() => {
-    if (!data) {
+    if (!result) {
       return
     }
     const dict: any = {}
-    data.forEach(_ => (dict[_.category] = false))
+    result.forEach(_ => (dict[_.category] = false))
     return dict
-  }, [data])
+  }, [result])
 
   const filtered = useMemo(() => {
-    if (!data) {
+    if (!result) {
       return
     }
     return categories
@@ -107,7 +125,7 @@ export const Assets = () => {
       .filter(_ => !activeCategory || activeCategory === _.category)
       .filter(_ => !onlyExclusives || _.exclusive)
       .filter(_ => showFaceAttributes || !faceAttributes.includes(_.category))
-  }, [data, showBodyShapes, showFaceAttributes, onlyExclusives, activeCategory])
+  }, [result, showBodyShapes, showFaceAttributes, onlyExclusives, activeCategory])
 
   return (
     <Container>

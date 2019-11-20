@@ -22,7 +22,7 @@ ts_library(
     ),
     deps = [
         "//horus/webapp/horus-config",
-        "//horus/webapp/useFetch",
+        "//horus/webapp/hooks",
         "//horus/webapp/sail",
         "//horus/webapp/kernel",
         "//horus/webapp/datefun",
