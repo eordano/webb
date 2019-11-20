@@ -22,6 +22,8 @@ ts_library(
     ),
     deps = [
         "//kernel",
+        "//utils",
+        "//horus/webapp/horus-config",
         "@npm//redux"
     ],
 )
