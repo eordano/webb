@@ -21,6 +21,7 @@ ts_library(
         ],
     ),
     deps = [
+        "//horus/webapp/horus-config",
         "//horus/webapp/sail",
         "//horus/webapp/route",
         "//horus/webapp/datefun",
