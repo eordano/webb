@@ -39,7 +39,8 @@ export async function deploysBefore(date: string) {
         ['field-id', 1868],
         ['field-id', 1858],
         ['field-id', 1876],
-        ['field-id', 1867]
+        ['field-id', 1867],
+        ['field-id', 1881]
       ],
       filter: [
         'and',

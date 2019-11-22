@@ -168,10 +168,11 @@ export function createServer(descartes: Descartes, port: number = 1338) {
     const { cids } = req.query
     console.log(`Mapping: ${cids}`)
     const sceneMap = await Promise.all(
-      cids.split(',').map(async (_: string) => [_, await descartes.getMappingForSceneId(cids)])
+      cids.split(',').map(async (_: string) => [_, await descartes.getMappingForSceneId(_)])
     )
+
     res.send({
-      data: sceneMap.map(([sceneId, currentMap]) => ({
+      data: sceneMap.filter(it => !!it[1]).map(([sceneId, currentMap]) => ({
         root_cid: sceneId,
         scene_cid: sceneId,
         publisher: sceneId,

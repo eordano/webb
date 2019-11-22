@@ -45,22 +45,30 @@ export async function fetchManifestForSceneId(downloadServer: string, sceneId: s
       data: ParcelInfoResponse[]
     }
     const content = mappings.data[0]
-    if (!content || !content.content || !content.content.contents) {
-      // defaultLogger.info(`Resolved ${sceneId} to null -- no contents`, content)
-      return null
-    }
-    const sceneJsonMapping = content.content.contents.find($ => $.file === 'scene.json')
-    if (!sceneJsonMapping) {
-      defaultLogger.info(`Resolved ${sceneId} to null -- no sceneJsonMapping`)
-      return null
-    }
-    const baseUrl = downloadServer + '/contents/'
-    const sceneData = (await memoize(baseUrl + sceneJsonMapping.hash)(fetch)) as IScene
-    const scene = migrateFromILand(sceneData, mappings)
-    scene.id = sceneId
-    return scene
+    return await fetchManifestForContent(content, sceneId, downloadServer, mappings)
   } catch (error) {
     defaultLogger.error(`Error in ${downloadServer}/parcel_info response!`, error.stack)
     throw error
   }
+}
+
+export async function fetchManifestForContent(
+  content: ParcelInfoResponse,
+  sceneId: string,
+  downloadServer: string,
+  mappings?: any) {
+  if (!content || !content.content || !content.content.contents) {
+    // defaultLogger.info(`Resolved ${sceneId} to null -- no contents`, content)
+    return null
+  }
+  const sceneJsonMapping = content.content.contents.find($ => $.file === 'scene.json')
+  if (!sceneJsonMapping) {
+    defaultLogger.info(`Resolved ${sceneId} to null -- no sceneJsonMapping`)
+    return null
+  }
+  const baseUrl = downloadServer + '/contents/'
+  const sceneData = (await memoize(baseUrl + sceneJsonMapping.hash)(fetch)) as IScene
+  const scene = migrateFromILand(sceneData, mappings)
+  scene.id = sceneId
+  return scene
 }
