@@ -22,3 +22,27 @@ body {
 body .ui.checkbox input:checked~.box:after, body .ui.checkbox input:checked~label:after {
   top: -5px;
 }
+
+.map-overlay {
+  z-index: 10;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: 30px;
+  background-color: var(--background);
+  border: var(--outline);
+  box-shadow: var(--shadow-3);
+  padding: 24px;
+}
+
+.map-overlay .dcl.close {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+
+.ui.loader {
+  display: inline;
+}

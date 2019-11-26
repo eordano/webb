@@ -23,7 +23,7 @@ export function createServer(descartes: Descartes, port: number = 1338) {
   /*
    * Env might be one of: stg, prod, dev
    */
-  app.get('/comms/:env/users', async (req, res) => {
+  app.get('/comms/:env/users', async (req, res, next) => {
     try {
       const { env } = req.params
       console.log(`Comms: request for ${env}`)
@@ -34,14 +34,14 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       res.json(result).end
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
 
   /*
    * Find by userId, email, or eth_address
    */
-  app.get('/users/search/:how', async (req, res) => {
+  app.get('/users/search/:how', async (req, res, next) => {
     try {
       const { how } = req.params
       console.log(`Users: request for ${how}`)
@@ -49,20 +49,20 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       res.json(result).end
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
-  app.get('/users/search', async (req, res) => {
+  app.get('/users/search', async (req, res, next) => {
     try {
       console.log(`Users: request for all`)
       const result: DataResponse = await cachedUsers('')
       res.json(result).end
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
-  app.get('/users/movements/:userId', async (req, res) => {
+  app.get('/users/movements/:userId', async (req, res, next) => {
     try {
       const { userId } = req.params
       console.log(`Users: movement request for ${userId}`)
@@ -70,10 +70,10 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       res.json(result).end
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
-  app.get('/users/perf/:userId', async (req, res) => {
+  app.get('/users/perf/:userId', async (req, res, next) => {
     try {
       const { userId } = req.params
       console.log(`Users: perf request for ${userId}`)
@@ -81,17 +81,17 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       res.json(result).end
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
 
-  app.get('/deployments', async (req, res) => {
+  app.get('/deployments', async (req, res, next) => {
     try {
       const result = await deploysBefore(req.query.before ? req.query.before : new Date().toISOString())
       res.json(result).end
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
 
@@ -101,11 +101,11 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       res.json(result).end
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      res.end(JSON.stringify({ error: 'unknown' }))
     }
   })
 
-  app.get('/ecs/:x/:y', async (req, res) => {
+  app.get('/ecs/:x/:y', async (req, res, next) => {
     try {
       const { x, y } = req.params
       const success = { error: false }
@@ -124,11 +124,11 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       return res.json(ecs).end()
     } catch (e) {
       console.log(e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
 
-  app.get('/scene/:x/:y/*', async (req, res) => {
+  app.get('/scene/:x/:y/*', async (req, res, next) => {
     const { x, y } = req.params
     const path = req.path
       .split('/')
@@ -139,13 +139,17 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       const yy = parseInt(y, 10)
       const mapToScene = await descartes.getSceneIdForCoordinates(everythingInside(xx, xx, yy, yy))
       const sceneId = mapToScene[`${xx},${yy}`]
-      const mapping = await descartes.getMappingForSceneId(sceneId)
-      const hash = mapping[path]
-      console.log(`Content: ${x},${y}:${path} -> ${hash}`)
-      return res.redirect('https://content.decentraland.org/contents/' + hash)
+      if(sceneId) {
+        const mapping = await descartes.getMappingForSceneId(sceneId)
+        const hash = mapping[path]
+        console.log(`Content: ${x},${y}:${path} -> ${hash}`)
+        return res.redirect('https://content.decentraland.org/contents/' + hash)
+      } else {
+        res.status(404).json({"status": "not_found"})
+      }
     } catch (e) {
       console.log(`Fetch for (${x}, ${y}: ${path}) failed:`, e)
-      res.end({ error: 'unknown' })
+      next(e)
     }
   })
 
