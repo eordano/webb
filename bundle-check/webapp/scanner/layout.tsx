@@ -229,7 +229,7 @@ export function ShowRunning(options: FormOptions) {
       </Grid.Row>
       <Grid.Row>
         <Progress
-          color={'red'}
+          color={(state.scannedTextures - state.existingTextures) === 0 ? 'green': 'red'}
           style={{ minWidth: '100%' }}
           value={state.scannedTextures - state.existingTextures}
           total={state.scannedTextures}
@@ -238,7 +238,7 @@ export function ShowRunning(options: FormOptions) {
       </Grid.Row>
       <Grid.Row>
         <Progress
-          color={'red'}
+          color={(state.scannedGltfs - state.existingGltfs) === 0 ? 'green': 'red'}
           style={{ minWidth: '100%' }}
           value={state.scannedGltfs - state.existingGltfs}
           total={state.scannedGltfs}
