@@ -33,7 +33,7 @@ export function RenderForm(
           <Grid.Column width={8}>
             <Field
               type="number"
-              onChange={x => setOptions({ ...options, x: x.target.value })}
+              onChange={x => setOptions({ ...options, x: parseInt(x.target.value, 10) })}
               name="startX"
               value={options.x}
               placeholder=""
@@ -44,7 +44,7 @@ export function RenderForm(
           <Grid.Column width={8}>
             <Field
               type="number"
-              onChange={y => setOptions({ ...options, y: y.target.value })}
+              onChange={y => setOptions({ ...options, y: parseInt(y.target.value, 10) })}
               name="startY"
               value={options.y}
               placeholder=""
@@ -58,7 +58,7 @@ export function RenderForm(
             <Field
               fluid
               type="number"
-              onChange={width => setOptions({ ...options, width: width.target.value })}
+              onChange={width => setOptions({ ...options, width: parseInt(width.target.value, 10) })}
               value={options.width}
               name="width"
               placeholder=""
@@ -68,7 +68,7 @@ export function RenderForm(
           </Grid.Column>
           <Grid.Column width={8}>
             <Field
-              onChange={height => setOptions({ ...options, height: height.target.value })}
+              onChange={height => setOptions({ ...options, height: parseInt(height.target.value, 10) })}
               value={options.height}
               type="number"
               name="height"
