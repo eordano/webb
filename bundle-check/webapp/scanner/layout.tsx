@@ -14,7 +14,7 @@ export function delay(interval: number) {
 
 export function Layout() {
   const [options, setOptions] = useState({
-    contentServer: 'https://content.decentraland.org/',
+    contentServer: 'https://content.decentraland.org',
     assetBundleServer: 'https://content-as-bundle.decentraland.zone',
     x: 50,
     y: 20,
