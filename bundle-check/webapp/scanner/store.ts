@@ -1,5 +1,6 @@
 import { action } from 'typesafe-actions'
 import { configureStore } from 'dcl/kernel/core/store'
+import { rootSaga } from 'dcl/kernel/core/rootSaga'
 
 export const START = 'Start'
 export const UPDATE_OK = 'Update - bundle complete'
@@ -14,6 +15,6 @@ export const updateEmpty = action(UPDATE_EMPTY)
 export const updateProblem = action(UPDATE_PROBLEM)
 
 const kit = configureStore()
-kit.start()
+kit.sagasMiddleware(rootSaga)
 
 export const store: any = kit.store

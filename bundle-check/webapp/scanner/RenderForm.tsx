@@ -1,6 +1,6 @@
 import { Button, Field, Form, Grid } from 'decentraland-ui'
 import React from 'react'
-import { FormOptions } from "./types"
+import { FormOptions } from './types'
 
 export function RenderForm(
   props: FormOptions & {
@@ -16,7 +16,7 @@ export function RenderForm(
         name="content-server"
         value={options.contentServer}
         disabled={disabled}
-        onChange={contentServer => setOptions({ ...options, contentServer })}
+        onChange={contentServer => setOptions({ ...options, contentServer: contentServer.target.value })}
         placeholder=""
         label="Content Server:"
       />
@@ -25,7 +25,7 @@ export function RenderForm(
         value={options.assetBundleServer}
         placeholder=""
         disabled={disabled}
-        onChange={assetBundleServer => setOptions({ ...options, assetBundleServer })}
+        onChange={assetBundleServer => setOptions({ ...options, assetBundleServer: assetBundleServer.target.value })}
         label="Asset Bundle Server:"
       />
       <Grid>
@@ -33,7 +33,7 @@ export function RenderForm(
           <Grid.Column width={8}>
             <Field
               type="number"
-              onChange={x => setOptions({ ...options, x })}
+              onChange={x => setOptions({ ...options, x: x.target.value })}
               name="startX"
               value={options.x}
               placeholder=""
@@ -44,7 +44,7 @@ export function RenderForm(
           <Grid.Column width={8}>
             <Field
               type="number"
-              onChange={y => setOptions({ ...options, y })}
+              onChange={y => setOptions({ ...options, y: y.target.value })}
               name="startY"
               value={options.y}
               placeholder=""
@@ -58,7 +58,7 @@ export function RenderForm(
             <Field
               fluid
               type="number"
-              onChange={width => setOptions({ ...options, width })}
+              onChange={width => setOptions({ ...options, width: width.target.value })}
               value={options.width}
               name="width"
               placeholder=""
@@ -68,7 +68,7 @@ export function RenderForm(
           </Grid.Column>
           <Grid.Column width={8}>
             <Field
-              onChange={height => setOptions({ ...options, height })}
+              onChange={height => setOptions({ ...options, height: height.target.value })}
               value={options.height}
               type="number"
               name="height"

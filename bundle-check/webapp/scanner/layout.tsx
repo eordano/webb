@@ -16,8 +16,8 @@ export function Layout() {
   const [options, setOptions] = useState({
     contentServer: 'https://content.decentraland.org/',
     assetBundleServer: 'https://content-as-bundle.decentraland.zone',
-    x: -150,
-    y: -150,
+    x: 50,
+    y: 20,
     width: 10,
     height: 10
   } as FormOptions)
