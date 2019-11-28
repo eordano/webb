@@ -15,6 +15,6 @@ export const updateEmpty = action(UPDATE_EMPTY)
 export const updateProblem = action(UPDATE_PROBLEM)
 
 const kit = configureStore()
-kit.sagasMiddleware(rootSaga)
+kit.sagasMiddleware.run(rootSaga)
 
 export const store: any = kit.store

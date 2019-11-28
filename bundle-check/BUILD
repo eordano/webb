@@ -33,7 +33,7 @@ ts_devserver(
         "@npm//typesafe-actions",
     ],
     entry_module = "dcl/bundle-check/webapp/index",
-    port = 3000,
+    port = 3001,
     serving_path = "/bundle.js",
     static_files = [
         "index.html",
