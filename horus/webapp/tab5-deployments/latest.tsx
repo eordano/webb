@@ -2,14 +2,15 @@ import { Address, Container, Loader, Segment, Table } from 'decentraland-ui'
 import React from 'react'
 import { englishTimeAgo } from '../datefun/englishTimeAgo'
 import { Link } from '../route/Link'
-import { useFetch } from '../useFetch/useFetch'
+import { usePromise } from '../hooks/usePromise'
+import { deployments } from './deploymentsPromise'
 
 export const LatestDeployments = () => {
-  const { data, isLoading } = useFetch(`http://${window.location.hostname}:1338/deployments`)
+  const { result, isLoading } = usePromise(() => deployments(), [])
   const now = new Date().getTime()
   return (
     <Container>
-      {isLoading || !data ? (
+      {isLoading || !result ? (
         <Loader />
       ) : (
         <Segment>
@@ -25,9 +26,9 @@ export const LatestDeployments = () => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {data.map(_ => (
+              {result.map(_ => (
                 <Table.Row key={_.id}>
-                  <Table.Cell/>
+                  <Table.Cell>{_.name}</Table.Cell>
                   <Table.Cell>
                     <Link path={`/scenes/details/${_.cid}`}>
                       {_.parcels.slice(0, 15)}

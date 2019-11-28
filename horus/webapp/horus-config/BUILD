@@ -13,7 +13,7 @@ filegroup(
 )
 
 ts_library(
-    name = "kernel",
+    name = "horus-config",
     srcs = glob(
         include = [
             "*.ts",
@@ -21,7 +21,6 @@ ts_library(
         ],
     ),
     deps = [
-        "//kernel",
-        "@npm//redux"
+        "//config"
     ],
 )

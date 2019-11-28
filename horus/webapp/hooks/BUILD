@@ -13,7 +13,7 @@ filegroup(
 )
 
 ts_library(
-    name = "useFetch",
+    name = "hooks",
     srcs = glob(
         include = [
             "*.ts",

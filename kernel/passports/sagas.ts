@@ -30,10 +30,10 @@ import {
   saveAvatarFailure,
   SaveAvatarRequest,
   saveAvatarSuccess,
-  SAVE_AVATAR_REQUEST
+  SAVE_AVATAR_REQUEST,
+  CATALOGS_REQUEST
 } from './actions'
 import { sendLoadProfileToRenderer } from './renderer/sendLoadProfileToRenderer'
-import { sendWearablesCatalog } from './renderer/sendWearablesCatalog'
 import { fetchCatalog } from './requests/fetchCatalog'
 import { fetchInventoryItemsByAddress } from './requests/fetchInventoryItemsByAddress'
 import { fetchProfileFromServer } from './requests/fetchProfileFromServer'
@@ -61,6 +61,8 @@ import { Profile } from './types'
 export function* passportSaga(): any {
   yield takeLatest(RENDERER_INITIALIZED, initialLoad)
 
+  yield takeLatest(CATALOGS_REQUEST, loadCatalogs)
+
   yield takeLatest(ADD_CATALOG, handleAddCatalog)
 
   yield takeLatest(PASSPORT_REQUEST, handleFetchProfile)
@@ -73,12 +75,16 @@ export function* passportSaga(): any {
 }
 
 export function* initialLoad(): any {
+  if (!(yield select(isInitialized))) {
+    yield take(RENDERER_INITIALIZED)
+  }
+}
+
+export function* loadCatalogs(): any {
   try {
     const baseAvatars = yield call(fetchCatalog, 'https://dcl-base-avatars.now.sh/expected.json')
     const baseExclusive = yield call(fetchCatalog, 'https://dcl-base-exclusive.now.sh/expected.json')
-    if (!(yield select(isInitialized))) {
-      yield take(RENDERER_INITIALIZED)
-    }
+
     yield put(addCatalog('base-avatars', baseAvatars))
     yield put(addCatalog('base-exclusive', baseExclusive))
   } catch (error) {
@@ -134,10 +140,7 @@ export function* handleAddCatalog(action: AddCatalogAction): any {
   if (!action.payload.catalog) {
     return
   }
-  if (!(yield select(isInitialized))) {
-    yield take(RENDERER_INITIALIZED)
-  }
-  yield call(sendWearablesCatalog, action.payload.catalog)
+  
   yield put(catalogLoaded(action.payload.name))
 }
 

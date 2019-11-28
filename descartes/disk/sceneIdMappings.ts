@@ -4,10 +4,11 @@ import { safeWriteJSON } from '../disk/driver/safeWriteJSON'
 import { SceneMappingRecord } from '../logic/lib/SceneMappingRecord'
 import { readJSON } from './driver/readJSON'
 import { exists } from './driver/exists'
+import crypto from 'crypto';
 
 export function diskSceneIdMappings(dir: string) {
   return async function(_: SceneIdString): Promise<SceneMappingRecord> {
-    const path = resolve(dir, 'm', _)
+    const path = resolve(dir, 'm', getKey(_))
     if (!exists(path)) {
       return undefined
     }
@@ -15,8 +16,17 @@ export function diskSceneIdMappings(dir: string) {
   }
 }
 
+function getKey(keyObj: any): string {
+  let str: string = keyObj.toString();
+  if(str.length > 255) {
+    return crypto.createHash('sha256').update(str).digest("hex");
+  } else {
+    return str;
+  }
+}
+
 export function diskSaveSceneIdMappings(dir: string) {
   return async function(_: any, mapping: SceneMappingRecord) {
-    await safeWriteJSON(resolve(dir, 'm', _), mapping)
+    await safeWriteJSON(resolve(dir, 'm', getKey(_)), mapping)
   }
 }
