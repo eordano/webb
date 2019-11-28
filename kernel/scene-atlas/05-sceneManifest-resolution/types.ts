@@ -1,8 +1,8 @@
 import { ISceneManifest } from 'dcl/utils'
 import { action } from 'typesafe-actions'
+import { RootPositionToSceneIdState } from '../04-sceneId-resolution/types'
 
 export type SceneIdToSceneManifestState = {
-  downloadServer: string
   scenesById: Record<string, ISceneManifest>
   loading: Record<string, boolean>
   errors: Record<string, any>
@@ -17,15 +17,13 @@ export const sceneByIdRequest = (sceneId: string) => action(SCENE_BY_ID_REQUEST,
 export const sceneByIdSuccess = (sceneId: string, scene: ISceneManifest) =>
   action(SCENE_BY_ID_SUCCESS, { sceneId, scene })
 export const sceneByIdFailure = (sceneId: string, error: any) => action(SCENE_BY_ID_FAILURE, { sceneId, error })
-export const configureManifestDownloadServer = (downloadServer: string) => action(CONFIGURE_DOWNLOAD_SERVER, { downloadServer })
 
 export type SceneByIdRequest = ReturnType<typeof sceneByIdRequest>
 export type SceneByIdSuccess = ReturnType<typeof sceneByIdSuccess>
 export type SceneByIdFailure = ReturnType<typeof sceneByIdFailure>
-export type ConfigureManifestDownloadServer = ReturnType<typeof configureManifestDownloadServer>
 
-export type SceneByIdAction = SceneByIdRequest | SceneByIdFailure | SceneByIdSuccess | ConfigureManifestDownloadServer
+export type SceneByIdAction = SceneByIdRequest | SceneByIdFailure | SceneByIdSuccess
 
-export type RootSceneIdToSceneManifestState = {
-  sceneIdToManifest: SceneIdToSceneManifestState
-}
+export type RootSceneIdToSceneManifestState = { 
+  sceneIdToManifest: SceneIdToSceneManifestState,
+} & RootPositionToSceneIdState

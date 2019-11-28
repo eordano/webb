@@ -36,11 +36,9 @@ export function* authSaga(): any {
       const result = yield call(restoreSession)
       yield put(authSuccess(result, ''))
     } catch (e) {
-      debugger
       if (e && e.code && e.code === 'login_required') {
         yield put(login())
       } else {
-        debugger
         throw e
       }
     }
@@ -50,7 +48,6 @@ export function* authSaga(): any {
     return new Promise((resolve, reject) => {
       webAuth.checkSession({}, (err, auth) => {
         if (err) {
-          debugger
           return reject(err)
         }
         return resolve({
@@ -75,7 +72,6 @@ export function* authSaga(): any {
     try {
       webAuth.authorize(options)
     } catch (e) {
-      debugger
       console.log(e)
     }
   }
@@ -108,14 +104,12 @@ export function* authSaga(): any {
     return new Promise((resolve, reject) => {
       webAuth.parseHash((err, auth) => {
         if (err) {
-          debugger
           reject(err)
           return
         }
         if (auth && auth.accessToken && auth.idToken) {
           webAuth.client.userInfo(auth.accessToken, (err, user) => {
             if (err) {
-          debugger
               reject(err)
               return
             }
@@ -155,7 +149,6 @@ export function* authSaga(): any {
       const request = yield call(fetchToken, accessToken, ephemeral)
       yield put(tokenSuccess(request))
     } catch (error) {
-      debugger
       yield put(tokenFailure(error))
     }
   }

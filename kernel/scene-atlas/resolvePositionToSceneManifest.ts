@@ -1,9 +1,9 @@
 import { encodeParcelPositionFromCoordinates, ISceneManifest } from 'dcl/utils'
 import { Store } from 'redux'
-import { getSceneIdForPosition } from './04-sceneId-resolution/selectors'
+import { positionLoadRequest } from './04-sceneId-resolution/actions'
+import { getEmptyStatus, getPositionError, getSceneIdForPosition } from './04-sceneId-resolution/selectors'
 import { getSceneManifest } from './05-sceneManifest-resolution/selectors'
 import { RootState } from './06-scripts/SceneLifeCycleHelper'
-import { positionLoadRequest } from './04-sceneId-resolution/actions'
 
 export function resolvePositionToSceneManifest(store: Store<RootState>) {
   return function(x: number, y: number) {
@@ -18,6 +18,10 @@ export function resolvePositionToSceneManifest(store: Store<RootState>) {
             unsubscribe()
             resolve(sceneManifest)
           }
+        }
+        if (getPositionError(state, asString) || getEmptyStatus(state, asString)) {
+          unsubscribe()
+          resolve(undefined)
         }
       }
       const unsubscribe = store.subscribe(listener)

@@ -4,7 +4,6 @@ import createSagaMiddleware from 'redux-saga'
 import { setProfileServer } from '../passports/actions'
 import { configureLineOfSightRadius } from '../scene-atlas/02-parcel-sight/actions'
 import { configureDownloadServer } from '../scene-atlas/04-sceneId-resolution/actions'
-import { configureManifestDownloadServer } from '../scene-atlas/05-sceneManifest-resolution/types'
 import { createReducer } from './reducers'
 import { rootSaga } from './rootSaga'
 import { RootState } from './types'
@@ -49,7 +48,6 @@ export const configureStore: (otherReducers?: Record<string, Reducer>, state?: a
   const config = getServerConfigurations()
   store.dispatch(configureLineOfSightRadius(4))
   store.dispatch(configureDownloadServer(config.content))
-  store.dispatch(configureManifestDownloadServer(config.content))
   store.dispatch(setProfileServer(config.profile))
 
   async function start() {

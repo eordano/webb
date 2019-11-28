@@ -4,11 +4,9 @@ import {
   SCENE_BY_ID_REQUEST,
   SCENE_BY_ID_SUCCESS,
   SCENE_BY_ID_FAILURE,
-  CONFIGURE_DOWNLOAD_SERVER
 } from './types'
 
 export const INITIAL_SCENEID_TO_MANIFEST_STATE: SceneIdToSceneManifestState = {
-  downloadServer: '',
   scenesById: {},
   loading: {},
   errors: {}
@@ -25,8 +23,6 @@ export function sceneIdToSceneManifestReducer(
     return state
   }
   switch (action.type) {
-    case CONFIGURE_DOWNLOAD_SERVER:
-      return { ...state, downloadServer: action.payload.downloadServer }
     case SCENE_BY_ID_REQUEST:
       return { ...state, loading: { ...state.loading, [action.payload.sceneId]: true } }
     case SCENE_BY_ID_SUCCESS:

@@ -4,6 +4,7 @@ import { Container, Grid, Loader, Segment, Table } from 'decentraland-ui'
 import React, { useEffect, useState } from 'react'
 import { store } from '../kernel/store'
 import { WorldSessions } from './worldSessions'
+import { profileToRendererFormat } from 'dcl/kernel/passports/transformations/profileToRendererFormat'
 
 export const UserDetail = (props: any) => {
   const userId = 'email|' + props.pathname.split('-')[1]
@@ -22,6 +23,7 @@ export const UserDetail = (props: any) => {
   if (!profile) {
     return <Loader />
   }
+  console.log(profileToRendererFormat(profile))
   const passport: Profile = profile
   return (
     <Container>

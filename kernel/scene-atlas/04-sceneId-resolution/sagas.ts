@@ -51,7 +51,7 @@ export function* resolvePositionMapping(downloadServer: string, position: string
   }
 }
 
-async function resolvePositionToSceneId(
+export async function resolvePositionToSceneId(
   downloadServer: string,
   pos: string
 ): Promise<{ sceneId: string; positions: string[] } | null> {

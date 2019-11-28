@@ -15,7 +15,7 @@ export function internalNeedsResolution(state: SceneIdToSceneManifestState, posi
 }
 
 export function getDownloadServer(state: RootSceneIdToSceneManifestState) {
-  return state.sceneIdToManifest.downloadServer
+  return state.positionToSceneId.downloadServer
 }
 
 export function getSceneManifest(state: RootSceneIdToSceneManifestState, sceneId: string) {
