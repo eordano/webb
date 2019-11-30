@@ -2,18 +2,15 @@ const json = JSON
 const isArray = Array.isArray
 const objectKeys = Object.keys
 
-export function stableStringify({
-  obj,
-  opts
-}: {
-  obj: any
+export function stableStringify(
+  obj: any,
   opts?: {
     replacer?: Function
     cmp?: Function
     space?: string
     cycles?: boolean
   }
-}) {
+): string {
   if (!opts) opts = {}
   if (typeof opts === 'function') opts = { cmp: opts }
   var space = opts.space || ''
