@@ -18,7 +18,12 @@ load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 ts_devserver(
     name = "devserver",
     additional_root_paths = [":static"],
-    data = [
+    entry_module = "dcl/horus/webapp/Sections",
+    port = 3000,
+    serving_path = "/bundle.js",
+    static_files = [
+        "index.html",
+        "static/index.css",
         ":static",
         "//gamekit:gamekit_bundle",
         "@npm//@babel/runtime",
@@ -32,13 +37,6 @@ ts_devserver(
         "@npm//redux",
         "@npm//redux-saga",
         "@npm//typesafe-actions",
-    ],
-    entry_module = "dcl/horus/webapp/Sections",
-    port = 3000,
-    serving_path = "/bundle.js",
-    static_files = [
-        "index.html",
-        "static/index.css",
     ],
     deps = [
         "static/config.js",

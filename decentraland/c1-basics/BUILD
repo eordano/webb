@@ -79,3 +79,21 @@ jasmine_test(
         "@npm//jasmine-console-reporter",
     ],
 )
+
+load("@npm_bazel_karma//:index.bzl", "karma_web_test_suite")
+
+karma_web_test_suite(
+    name = "karma-suite",
+    browsers = [
+        "@io_bazel_rules_webtesting//browsers:chromium-local",
+    ],
+    config_file = ":karma.conf.js",
+    tags = ["native"],
+    runtime_deps = [
+        ":c1-basics",
+        "@npm//ethereum-cryptography"
+    ],
+    deps = [
+        ":c1-basics-spec",
+    ]
+)
