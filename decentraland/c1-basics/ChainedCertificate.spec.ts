@@ -7,7 +7,7 @@ import {
 import { CHAINED_ADDRESS } from './constants'
 import { createNewIdentity } from './createNewIdentity'
 import { createSignedMessage } from './SignedMessage'
-import { secondTestIdentity, testIdentity } from './testIdentity'
+import { secondTestIdentity, testIdentity } from './TestIdentities.spec'
 
 const thirdTestIdentity = createNewIdentity()
 const link = createAddressCertificateLink(testIdentity, secondTestIdentity)

@@ -1,7 +1,7 @@
 import { Address } from './Address'
 
 /**
- * But Decentraland is not only about validating LAND deployments. It's a social world, and in addition to
+ * Decentraland is not only about validating LAND deployments. It's a social world, and in addition to
  * having LAND, you can contact other citizens. Having a Decentraland Passport links your cryptographic
  * identity to a name.
  */
@@ -12,18 +12,35 @@ export type Passport = {
   avatar: {
     bodyShape: BodyShapeId
     wearables: WearableId[]
+    /**
+     * Also known as "Skin tone"
+     */
+    primaryColor: RGBAStringColor
+    /**
+     * Also known as "Hair color"
+     */
+    secondaryColor: RGBAStringColor
+    /**
+     * Also known as "Eye color"
+     */
+    ternaryColor: RGBAStringColor
   }
   version: number
   createdAt: number
 }
+export type BodyShapeId = string
 
 /**
- * But what is a Wearable?
+ * A '#deadcafe' kind of string (R, G, B, A) -- 9 digits describing red, green, blue, and alpha channels
  */
-export type BodyShapeId = string
+export type RGBAStringColor = string
 
 export type WearableId = string
 
+/**
+ * But what is a Wearable?
+ * TODO: Document
+ */
 export type Wearable = {
   id: WearableId
   type: 'wearable'
