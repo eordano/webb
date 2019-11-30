@@ -1,7 +1,3 @@
-// tslint:disable:ter-indent
-r
-// tslint:disable:ter-indent
-
 import { MVector3 } from 'dcl/utils/math'
 
 import { DecentralandInterface, PointerEvent } from './Types'

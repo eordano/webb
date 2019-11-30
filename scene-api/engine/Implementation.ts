@@ -12,7 +12,6 @@ import {
 } from '../ecs/Component'
 
 import { DecentralandInterface } from './Types'
-import { stableStringify } from 'dcl/utils'
 
 // This number is defined in the protocol ECS.SetEntityParent.3
 const ROOT_ENTITY_ID = '0'
@@ -129,7 +128,7 @@ export class DecentralandSynchronizationSystem implements ISystem {
         const classId = getComponentClassId(component)
 
         if (classId !== null && !isDisposableComponent(component)) {
-          const componentJson = stableStringify(component)
+          const componentJson = JSON.stringify(component)
 
           if (this.cachedComponents[entityId][componentName] !== componentJson) {
             // Send the updated component

@@ -48,8 +48,8 @@ ts_library(
         "@npm//@types/chai",
         "@npm//@types/jasmine",
         "@npm//@types/node",
-        "@npm//ethereum-cryptography",
         "@npm//chai",
+        "@npm//ethereum-cryptography",
     ],
 )
 
@@ -64,14 +64,18 @@ jasmine_node_test(
 )
 
 load("@npm//jasmine:index.bzl", "jasmine_test")
+
 jasmine_test(
     name = "jasmine_test",
+    args = [
+        "decentraland/c1-basics/*.spec.js",
+        "--reporter=jasmine-console-reporter",
+    ],
     data = [
-        ":c1-basics-spec",
         ":c1-basics",
+        ":c1-basics-spec",
         ":srcs",
         "//stableStringify",
-    ],
-    args = [
+        "@npm//jasmine-console-reporter",
     ],
 )
