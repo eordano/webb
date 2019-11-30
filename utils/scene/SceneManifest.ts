@@ -1,4 +1,4 @@
-import { stableStringify } from '../pure/stableStringify'
+import { stableStringify } from 'dcl/stableStringify'
 import { sha256 } from 'ethereum-cryptography/sha256'
 import { decideFloat } from './decideFloat'
 import { getMinimum } from './getMinimum'

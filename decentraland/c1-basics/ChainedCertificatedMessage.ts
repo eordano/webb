@@ -1,8 +1,8 @@
-import { stableStringify } from 'dcl/utils'
 import { Address, isAddress } from './Address'
 import { CHAINED_ADDRESS } from './constants'
 import { CryptographicIdentity, PublicCryptographicIdentity } from './CryptographicIdentity'
-import { createSignedMessage, SignedMessage, validateSignedMessage } from './SignedMessage'
+import { createSignedMessage, isValidMessage, SignedMessage } from './SignedMessage'
+import { stableStringify } from 'dcl/stableStringify'
 /**
  * We introduce the concept of a chained signature with an "chained key".
  * This is similar to what the X.509 standard does for a certification path (RFC 5280).
@@ -38,7 +38,7 @@ export function validateChainedSignature(sender: Address, messages: ChainedCerti
  */
 export function chainSignatureError(sender: Address, messages: ChainedCertificatedMessage): string | undefined {
   const message = messages[0]
-  if (!validateSignedMessage(message)) {
+  if (!isValidMessage(message)) {
     return `Invalid signature for message: ${JSON.stringify(message)}`
   }
   // If the message was not signed by the current trusted sender, reject the chain

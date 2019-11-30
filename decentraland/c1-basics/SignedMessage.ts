@@ -1,6 +1,6 @@
 import { keccak256 } from 'ethereum-cryptography/keccak'
 import { publicKeyConvert, recover, sign } from 'ethereum-cryptography/secp256k1'
-import { Address } from './Address'
+import { Address, isAddress } from './Address'
 import { UNCOMPRESSED } from './constants'
 import { CryptographicIdentity } from './CryptographicIdentity'
 import { uncompressedPublicKeyToAddress } from './uncompressedPublicKeyToAddress'
@@ -15,7 +15,10 @@ export type SignedMessage = {
 }
 export type ValidMessage = SignedMessage
 
-export function validateSignedMessage(message: SignedMessage): message is ValidMessage {
+export function isValidMessage(message: any): message is ValidMessage {
+  if (!isSignedMessage(message)) {
+    return false
+  }
   const hash = keccak256(Buffer.from(message.payload))
   if (hash.toString('hex') !== message.hash) {
     return false
@@ -35,4 +38,26 @@ export function createSignedMessage(identity: CryptographicIdentity, message: st
     signature: signature.signature.toString('hex') + signature.recovery.toString(),
     signingAddress: identity.address
   }
+}
+
+export function isSignedMessage(message: any): message is SignedMessage {
+  if (typeof message !== 'object') {
+    return false
+  }
+  if (typeof message.payload !== 'string') {
+    return false
+  }
+  if (typeof message.signature !== 'string') {
+    return false
+  }
+  if (message.signature.length !== 129) {
+    return false
+  }
+  if (typeof message.hash !== 'string') {
+    return false
+  }
+  if (!isAddress(message.signingAddress)) {
+    return false
+  }
+  return true
 }

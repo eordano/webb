@@ -27,7 +27,7 @@ ts_library(
     ),
     module_name = "dcl/decentraland/c1-basics",
     deps = [
-        "//utils",
+        "//stableStringify",
         "@npm//@types",
         "@npm//@types/node",
         "@npm//ethereum-cryptography",
@@ -44,7 +44,7 @@ ts_library(
     ]),
     deps = [
         ":c1-basics",
-        "//utils",
+        "//stableStringify",
         "@npm//@types/chai",
         "@npm//@types/jasmine",
         "@npm//@types/node",
@@ -58,6 +58,20 @@ jasmine_node_test(
     coverage = True,
     deps = [
         ":c1-basics-spec",
+        "//stableStringify",
         "@npm//jasmine",
+    ],
+)
+
+load("@npm//jasmine:index.bzl", "jasmine_test")
+jasmine_test(
+    name = "jasmine_test",
+    data = [
+        ":c1-basics-spec",
+        ":c1-basics",
+        ":srcs",
+        "//stableStringify",
+    ],
+    args = [
     ],
 )

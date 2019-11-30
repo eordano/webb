@@ -1,4 +1,4 @@
-import { stableStringify } from 'dcl/utils'
+import { stableStringify } from 'dcl/stableStringify'
 import {
   chainSignatureError,
   createAddressCertificateLink,
@@ -28,9 +28,6 @@ describe('ChainedCertificate', () => {
     expect(validateChainedSignature(testIdentity.address, [link, link2, signedByThirdChild])).toBe(true)
   })
 
-  /**
-   * Case A
-   */
   it(`doesn't work if a message has an invalid signature`, () => {
     const fakeLink = { ...link, hash: '' }
     expect(chainSignatureError(testIdentity.address, [fakeLink, link2, signedByChild])).toContain(
@@ -38,45 +35,28 @@ describe('ChainedCertificate', () => {
     )
   })
 
-  /**
-   * Case B
-   */
   it(`doesn't work if address doesn't match the signature chain`, () => {
     expect(chainSignatureError(testIdentity.address, [link, link2, signedByChild])).toContain(
       'Signing address mismatch: Expected signature from'
     )
   })
 
-  /**
-   * Case B
-   */
   it(`doesn't work if it's not in the correct order`, () => {
     expect(chainSignatureError(testIdentity.address, [link2, link, signedByThirdChild])).toContain(
       'Signing address mismatch: Expected signature from'
     )
   })
 
-  /**
-   * Case C
-   */
   it(`doesn't work if the link is not parseable`, () => {
     const fakeLink = createSignedMessage(testIdentity, 'Cant{}ParseMe')
-    expect(chainSignatureError(testIdentity.address, [fakeLink, signedByChild])).toContain(
-      'Could not parse JSON from '
-    )
+    expect(chainSignatureError(testIdentity.address, [fakeLink, signedByChild])).toContain('Could not parse JSON from ')
   })
 
-  /**
-   * Case D
-   */
   it(`doesn't work if the link is not an object`, () => {
     const fakeLink = createSignedMessage(testIdentity, `"You can parse this string"`)
     expect(chainSignatureError(testIdentity.address, [fakeLink, signedByChild])).toContain('Parsed message')
   })
 
-  /**
-   * Case E
-   */
   it(`doesn't work if the chain type is not CHAINED_ADDRESS`, () => {
     const fakeLink = createSignedMessage(
       testIdentity,
@@ -90,9 +70,6 @@ describe('ChainedCertificate', () => {
     )
   })
 
-  /**
-   * Case F
-   */
   it(`doesn't work if the chain has an invalid address`, () => {
     const fakeLink = createSignedMessage(
       testIdentity,
@@ -101,8 +78,6 @@ describe('ChainedCertificate', () => {
         childAddress: 'Invalid address'
       })
     )
-    expect(chainSignatureError(testIdentity.address, [fakeLink, signedByChild])).toContain(
-      `Invalid chained address: `
-    )
+    expect(chainSignatureError(testIdentity.address, [fakeLink, signedByChild])).toContain(`Invalid chained address: `)
   })
 })

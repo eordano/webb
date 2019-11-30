@@ -1,4 +1,6 @@
-import { isNumber } from 'util'
+export function isNumber(param: any): param is number {
+  return typeof param === 'number' && !isNaN(param)
+}
 
 export type Coordinate = {
   x: number
