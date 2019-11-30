@@ -44,6 +44,7 @@ ts_library(
     ]),
     deps = [
         ":c1-basics",
+        "//utils",
         "@npm//@types/chai",
         "@npm//@types/jasmine",
         "@npm//@types/node",

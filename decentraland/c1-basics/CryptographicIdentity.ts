@@ -1,4 +1,5 @@
 import { Address } from './Address'
+
 /**
  * One can easily create a Private Key.
  *
@@ -8,6 +9,7 @@ import { Address } from './Address'
 export type CryptographicIdentity = {
   privateKey: Buffer
 } & PublicCryptographicIdentity
+
 export type PublicCryptographicIdentity = {
   publicKey: Buffer
   address: Address
