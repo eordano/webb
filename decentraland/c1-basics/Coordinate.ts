@@ -6,8 +6,9 @@ export type Coordinate = {
   x: number
   y: number
 }
+export type CoordinateString = string
 
-export function coordinateToString(coordinate: Coordinate): string {
+export function coordinateToString(coordinate: Coordinate): CoordinateString {
   return `${coordinate.x},${coordinate.y}`
 }
 

@@ -1,4 +1,4 @@
-import { Address } from './Address'
+import { Address } from '../c1-basics/Address'
 
 /**
  * Decentraland is not only about validating LAND deployments. It's a social world, and in addition to
@@ -39,7 +39,6 @@ export type WearableId = string
 
 /**
  * But what is a Wearable?
- * TODO: Document
  */
 export type Wearable = {
   id: WearableId
