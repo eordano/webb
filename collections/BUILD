@@ -57,6 +57,7 @@ ts_library(
         "@npm//@types/sinon",
         "@npm//@types/tmp",
         "@npm//async-iterator-all",
+        "@npm//async-iterator-first",
         "@npm//aws-sdk",
         "@npm//chai",
         "@npm//fp-future",

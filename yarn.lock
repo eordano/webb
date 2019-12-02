@@ -1323,6 +1323,11 @@ async-iterator-all@^1.0.0:
   resolved "https://registry.yarnpkg.com/async-iterator-all/-/async-iterator-all-1.0.0.tgz#de436370630158c94cb026e59e58469ee0dbc603"
   integrity sha512-+vC2NFEmAuONF+A2MzM1tUS5pHovDH37/oQbmXW6FgnEns0S9BsR+MJGnzsFHzSN2iFQhbN7L8cFqV1W1F1kpQ==
 
+async-iterator-first@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/async-iterator-first/-/async-iterator-first-1.0.0.tgz#7376fa80ddef4fee169ffa7507fa70016aabe180"
+  integrity sha512-1PT9En58Uw1CZtcNUsrEUK5yXUxsKeaI5f7Y9/yEfQXeWObmbivvw+VZIyFL3T7BdUT1HvL2mKlHZdVpiJWCSQ==
+
 async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
@@ -8519,9 +8524,9 @@ rollup-pluginutils@^2.3.1, rollup-pluginutils@^2.5.0, rollup-pluginutils@^2.6.0,
     estree-walker "^0.6.1"
 
 rollup@^1.27.6:
-  version "1.27.6"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.27.6.tgz#287f255af0c76c30a60df67900e5dd8379f3147e"
-  integrity sha512-/NA1sjU92K9KZHiPdrHMzykFABcjeDaxS8xh19hYj8FKbtGNEahbXkdYatlk75dZF0oRXwzA9KIjHedcxcnYng==
+  version "1.27.7"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.27.7.tgz#ee49603c33edb6968b6582e1c3a6a0731b9e3944"
+  integrity sha512-4BEpoLwMpiCHxRobDzi6rM1/DbTsflfPw2g6l1ctWYnUvdyCTEEWfSgpykwNzZ5nHRr4pyET+aPwKVhbJBAPAg==
   dependencies:
     "@types/estree" "*"
     "@types/node" "*"
@@ -9371,9 +9376,9 @@ term-size@^1.2.0:
     execa "^0.7.0"
 
 terser@^4.1.0, terser@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-4.4.0.tgz#22c46b4817cf4c9565434bfe6ad47336af259ac3"
-  integrity sha512-oDG16n2WKm27JO8h4y/w3iqBGAOSCtq7k8dRmrn4Wf9NouL0b2WpMHGChFGZq4nFAQy1FsNJrVQHfurXOSTmOA==
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-4.4.1.tgz#f3a469c125d9a0eb52f1e6a7fdff587bd6e35902"
+  integrity sha512-e05giplw+8sIYh50qXYHZmr0b76O5dOSm9JwSDebGFLri4ItYzxsnumiAK+yuI56R+H7uIjT9KbVEKNkrprzHw==
   dependencies:
     commander "^2.20.0"
     source-map "~0.6.1"
