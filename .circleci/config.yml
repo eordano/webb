@@ -45,6 +45,7 @@ jobs:
             bazel run kernel:test -j 8 --local_ram_resources=8000
             bazel run synced-ecs:test -j 8 --local_ram_resources=8000
             bazel run utils:test -j 8 --local_ram_resources=8000
+            bazel run decentraland:test -j 8 --local_ram_resources=8000
 
       - save_cache:
           paths:
