@@ -1,5 +1,5 @@
-import { ChainedCertificatedMessage } from './ChainedCertificatedMessage'
-import { Coordinate } from './Coordinate'
+import { ChainedCertificatedMessage } from '../c1-basics/ChainedCertificatedMessage'
+import { Coordinate } from '../c1-basics/Coordinate'
 
 /**
  * Interface for retrieving deployment information about a parcel.

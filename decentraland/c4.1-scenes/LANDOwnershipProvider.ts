@@ -1,4 +1,4 @@
-import { Coordinate } from './Coordinate'
+import { Coordinate } from '../c1-basics/Coordinate'
 import { LAND } from './LAND'
 
 /**

@@ -1,11 +1,11 @@
-import { ChainedCertificatedMessage, createAddressCertificateLink } from './ChainedCertificatedMessage'
-import { Coordinate, isCoordinate } from './Coordinate'
+import { ChainedCertificatedMessage, createAddressCertificateLink } from '../c1-basics/ChainedCertificatedMessage'
+import { Coordinate, isCoordinate } from '../c1-basics/Coordinate'
 import { DeploymentProvider } from "./DeploymentProvider"
 import { LANDOwnershipProvider } from "./LANDOwnershipProvider"
 import { LAND } from './LAND'
-import { safeGetMessage } from './safeGetMessage'
-import { createSignedMessage } from './SignedMessage'
-import { secondTestIdentity, testIdentity } from './TestIdentities.spec'
+import { safeGetMessage } from '../c1-basics/safeGetMessage'
+import { createSignedMessage } from '../c1-basics/SignedMessage'
+import { secondTestIdentity, testIdentity } from '../c1-basics/TestIdentities.spec'
 
 describe('Fake LAND & Content provider example', () => {
   it('LANDOwnership is a trusted source of information.', () => {
