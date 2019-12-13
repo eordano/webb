@@ -1,4 +1,4 @@
-import { Address, isAddress } from '../c1-basics/Address'
+import { Address, isAddress } from './Address'
 /**
  * LAND parcels are records on the ethereum blockchain.
  * They have unique X and Y coordinates and are exclusively owned by a public key.

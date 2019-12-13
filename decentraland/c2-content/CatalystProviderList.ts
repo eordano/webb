@@ -7,4 +7,4 @@
  *
  * These two functions of catalysts are often referred to as the "content server" and the "comms server"
  */
-export type CatalystProviderList = string[];
+export type CatalystProviderList = string[]
