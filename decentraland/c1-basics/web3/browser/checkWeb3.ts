@@ -1,4 +1,5 @@
 import { window } from './web3Window'
+import { Web3Results } from './Web3Results'
 
 /**
  * This function checks for web3 being present.
@@ -10,11 +11,4 @@ export async function checkWeb3Presence() {
     return Web3Results.Unlocked
   }
   return Web3Results.Missing
-}
-
-export enum Web3Results {
-  Present = 'Present',
-  Unlocked = 'Unlocked',
-  Missing = 'Missing',
-  Unauthorized = 'Unauthorized'
 }

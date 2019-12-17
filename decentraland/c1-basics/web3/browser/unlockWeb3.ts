@@ -1,9 +1,10 @@
-import { checkWeb3Presence, Web3Results } from './checkWeb3'
+import { checkWeb3Presence } from './checkWeb3'
+import { Web3Results } from "./Web3Results"
 import { window } from './web3Window'
 
 export async function enableWeb3() {
   if ((await checkWeb3Presence()) === Web3Results.Missing) {
-    throw new Error('The browser does not support Web3')
+    return Web3Results.Missing
   }
   if (window.ethereum) {
     try {
