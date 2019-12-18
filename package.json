@@ -7,6 +7,11 @@
     },
     "dependencies": {
         "@babel/core": "^7.7.4",
+        "@babylonjs/core": "^4.0.3",
+        "@babylonjs/loaders": "^4.0.3",
+        "@babylonjs/materials": "^4.0.3",
+        "@babylonjs/post-processes": "^4.0.3",
+        "@babylonjs/serializers": "^4.0.3",
         "@bazel/ibazel": "^0.10.3",
         "@bazel/jasmine": "^0.42.1",
         "@bazel/karma": "^0.42.1",
