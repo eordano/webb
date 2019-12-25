@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+}
+
+.ui.segment {
+  box-shadow: 0 1px 2px 0px rgba(34,36,38,.16);
+}
+
+#renderer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 640px;
+  height: 480px;
+  background: black;
+}
+
+.dcl.field .ui.input input {
+  font-size: 1.2em;
+}
+
+body .ui.checkbox input:checked~.box:after, body .ui.checkbox input:checked~label:after {
+  top: -5px;
+}
+
+.map-overlay {
+  z-index: 10;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: 30px;
+  background-color: var(--background);
+  border: var(--outline);
+  box-shadow: var(--shadow-3);
+  padding: 24px;
+}
+
+.map-overlay .dcl.close {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+
+.ui.loader {
+  display: inline;
+}
