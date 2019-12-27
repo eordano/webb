@@ -25,7 +25,6 @@ ts_devserver(
         "index.html",
         "static/index.css",
         ":static",
-        "//gamekit:gamekit_bundle",
         "@npm//@babel/runtime",
         "@npm//babel-runtime",
         "@npm//decentraland-ui",
@@ -40,6 +39,7 @@ ts_devserver(
     ],
     deps = [
         "static/config.js",
+        "//manadata/frontend",
         ":static/jsonwebtoken.js",
     ],
 )

@@ -1,14 +1,17 @@
-workspace(name = "dcl")
+workspace(
+    name = "dcl",
+    managed_directories = {"@npm": ["node_modules"]},
+)
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "rules_proto",
-    sha256 =
-        "7994a4587e00b9049fed87390fc0d5ff62e0077c1ae8a0761d618e4dce2c525c",
-    strip_prefix = "rules_proto-33549b80b8097502de2a966d764c8d23c59f4d08",
+    sha256 = "602e7161d9195e50246177e7c55b2f39950a9cf7366f74ed5f22fd45750cd208",
+    strip_prefix = "rules_proto-97d8af4dc474595af3900dd85cb3a29ad28cc313",
     urls = [
-        "https://github.com/bazelbuild/rules_proto/archive/33549b80b8097502de2a966d764c8d23c59f4d08.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz",
+        "https://github.com/bazelbuild/rules_proto/archive/97d8af4dc474595af3900dd85cb3a29ad28cc313.tar.gz",
     ],
 )
 
@@ -20,26 +23,33 @@ rules_proto_toolchains()
 
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "c612d6b76eaa17540e8b8c806e02701ed38891460f9ba3303f4424615437887a",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.42.1/rules_nodejs-0.42.1.tar.gz"],
+    sha256 = "3887b948779431ac443e6a64f31b9e1e17b8d386a31eebc50ec1d9b0a6cabd2b",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/1.0.0/rules_nodejs-1.0.0.tar.gz"],
 )
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
 
 node_repositories(
-    node_urls = [
-        "https://nodejs.org/dist/v{version}/{filename}",
-    ],
-    node_version = "10.16.0",
+    node_repositories = {
+        "10.16.3-darwin_amd64": ("node-v10.16.3-darwin-x64.tar.gz", "node-v10.16.3-darwin-x64", "6febc571e1543c2845fa919c6d06b36a24e4e142c91aedbe28b6ff7d296119e4"),
+        "10.16.3-linux_amd64": ("node-v10.16.3-linux-x64.tar.xz", "node-v10.16.3-linux-x64", ""),
+        "10.16.3-windows_amd64": ("node-v10.16.3-win-x64.zip", "node-v10.16.3-win-x64", ""),
+    },
+    node_urls = ["https://nodejs.org/dist/v{version}/{filename}"],
+    node_version = "10.16.3",
     package_json = ["//:package.json"],
+    yarn_repositories = {
+        "1.17.3": ("yarn-v1.17.3.tar.gz", "yarn-v1.17.3", "e3835194409f1b3afa1c62ca82f561f1c29d26580c9e220c36866317e043c6f3"),
+    },
+    yarn_urls = ["https://github.com/yarnpkg/yarn/releases/download/v{version}/{filename}"],
+    yarn_version = "1.17.3",
 )
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 
 yarn_install(
     name = "npm",
     package_json = "//:package.json",
-    symlink_node_modules = False,
     yarn_lock = "//:yarn.lock",
 )
 
@@ -53,10 +63,10 @@ ts_setup_workspace()
 
 http_archive(
     name = "rules_typescript_proto",
-    sha256 = "224a98a044a726f04883392a68a2f0cf0a277dc0d3150f00b71e430ad53f583e",
-    strip_prefix = "rules_typescript_proto-ebf191aec9ef0977d7352a6644e9cd91615d3693",
+    sha256 = "1bb09f1c90d34153bf2ff06addf8ace0d02ab6ed14aa1978dc491d22f2a31b42",
+    strip_prefix = "rules_typescript_proto-0.0.1",
     urls = [
-        "https://github.com/Dig-Doug/rules_typescript_proto/archive/ebf191aec9ef0977d7352a6644e9cd91615d3693.tar.gz",
+        "https://github.com/Dig-Doug/rules_typescript_proto/archive/0.0.1.tar.gz",
     ],
 )
 
