@@ -46,6 +46,8 @@ ts_library(
         "@npm//@types/react-redux",
         "@npm//ethereum-cryptography",
         "@npm//fp-future",
+        "@npm//@babylonjs/core",
+        "@npm//@babylonjs/loaders",
         "@npm//react",
         "@npm//react-json-tree",
         "@npm//react-dom",
@@ -65,12 +67,13 @@ ts_devserver(
         "@npm//fp-future:fp-future.umd.js",
         "@npm//react:react.umd.js",
         "@npm//react-dom:react-dom.umd.js",
-        "@npm//react-json-tree:react-json-tree.umd.js",
         "@npm//redux:redux.umd.js",
         "@npm//redux-saga:redux-saga.umd.js",
         "@npm//typesafe-actions:typesafe-actions.umd.js",
         "@npm//events:events.umd.js",
         "@npm//util:util.umd.js",
+        ":babylon-core_umd",
+        ":babylon-loaders_umd",
         ":redux-saga-effects_umd",
         ":ethereum-cryptography-sha256_umd",
     ],
@@ -79,7 +82,7 @@ ts_devserver(
         "index.html",
         "static/index.css",
         "static/favicon.ico",
-        "//gamekit:gamekit_bundle"
+        "//gamekit:gamekit_bundle",
     ],
     deps = [
         ":webb_code",
@@ -87,6 +90,20 @@ ts_devserver(
 )
 
 load("@build_bazel_rules_nodejs//internal/npm_install:npm_umd_bundle.bzl", "npm_umd_bundle")
+
+npm_umd_bundle(
+    name = "babylon-core_umd",
+    package_name = "@babylonjs/core",
+    entry_point = "@npm//:node_modules/@babylonjs/core/index.js",
+    package = "@npm//@babylonjs/core",
+)
+
+npm_umd_bundle(
+    name = "babylon-loaders_umd",
+    package_name = "@babylonjs/loaders",
+    entry_point = "@npm//:node_modules/@babylonjs/loaders/index.js",
+    package = "@npm//@babylonjs/loaders",
+)
 
 npm_umd_bundle(
     name = "redux-saga-effects_umd",

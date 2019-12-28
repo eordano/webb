@@ -6,6 +6,7 @@ import { Position } from './controls/Position'
 import { configured } from './store'
 import './StoreSyncedECS'
 import { Atlas } from './atlas/Atlas'
+import { Avatar } from './avatar/Avatar'
 
 configured.start()
 
@@ -27,6 +28,7 @@ configured.store.subscribe(() => {
     const setZ = (z: number) => dispatch(setWorldPosition({ ...positionReport.position, z }))
     ReactDOM.render(
       <div>
+        <Avatar {...getState()} />
         <Position {...positionReport.position} {...{ setX, setY, setZ }}></Position>
         <Atlas {...getState()}></Atlas>
         <pre>{JSON.stringify(configured.store.getState(), null, 2)}</pre>{' '}
