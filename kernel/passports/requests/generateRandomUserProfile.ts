@@ -1,4 +1,4 @@
-import { getServerConfigurations } from '../../../config/index'
+import { getServerConfigurations } from 'dcl/config/index'
 import { Profile } from '../types'
 import { colorString } from '../transformations/colorString'
 import { fixWearableIds } from '../transformations/processServerProfile'

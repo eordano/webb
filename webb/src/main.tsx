@@ -1,30 +1,12 @@
-import { createBrowserHistory } from 'history'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { Router, Switch, Route } from 'react-router'
-import { Container, Navbar } from './components/liteui/dcl'
-import Status from './components/status/StatusFrame'
-import { store, configured } from './store'
+import { configured } from './store'
+import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/actions'
 
-const history = createBrowserHistory()
 configured.start()
 
-ReactDOM.render(
-  <Provider store={store}>
-    <>
-      <Container>
-        <Navbar />
-      </Container>
-      <Router history={history}>
-        <Switch>
-          <Route path="/status" component={Status} />
-          <Route path="/status/*" component={Status} />
+configured.store.subscribe(() => {
+  ReactDOM.render(<pre>{JSON.stringify(configured.store.getState(), null, 2)}</pre>, document.getElementById('root'))
+})
 
-          <Route component={Status} />
-        </Switch>
-      </Router>
-    </>
-  </Provider>,
-  document.getElementById('root')
-)
+configured.store.dispatch(setWorldPosition({ x: 0, y: 0, z: 0 }))

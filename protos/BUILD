@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@npm_bazel_typescript//:index.bzl", "ts_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@rules_typescript_proto//:index.bzl", "typescript_proto_library")
 
 proto_library(

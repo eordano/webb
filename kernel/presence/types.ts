@@ -1,5 +1,4 @@
-import { Alias } from '../comms/actions'
-import { Vector3, ReadOnlyQuaternion } from 'dcl/utils'
+import { ReadOnlyQuaternion, Vector3 } from 'dcl/utils'
 import { Profile } from '../passports/types'
 
 export type UserId = string
@@ -16,7 +15,7 @@ export type RendereablePeer = {
 
 export type PeerPresence = {
   userId: UserId
-  peerAlias: Alias
+  peerAlias: any
   profileVersion: number
   position: Vector3
   rotation: ReadOnlyQuaternion
@@ -32,7 +31,7 @@ export type PeerPresence = {
 }
 
 export type PresenceState = {
-  commsAliasToUserId: Record<Alias, UserId>
+  commsAliasToUserId: Record<string, UserId>
   lastTimestampReceivedByUserId: Record<UserId, Timestamp>
   presenceByUserId: Record<UserId, PeerPresence>
 }

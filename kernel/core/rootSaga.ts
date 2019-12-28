@@ -1,6 +1,4 @@
 import { fork } from 'redux-saga/effects'
-import { authSaga } from '../auth/sagas'
-import { commsSaga } from '../comms/sagas'
 import { passportSaga } from '../passports/sagas'
 import { presenceSaga } from '../presence/sagas'
 import { rendererSaga } from '../renderer/sagas'
@@ -12,8 +10,6 @@ import { rootSceneLifecycleSaga } from '../scene-atlas/06-scripts/sagas'
 import { positionSettlementSaga } from '../scene-atlas/07-settlement/sagas'
 
 export function* rootSaga(): any {
-  yield fork(authSaga)
-  yield fork(commsSaga)
   yield fork(rootSceneLifecycleSaga)
   yield fork(sceneIdToManifestSaga)
   yield fork(positionToSceneIdSaga)

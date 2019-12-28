@@ -2,8 +2,6 @@ import { combineReducers, Reducer } from 'redux'
 /**
  * Begin import reducers
  */
-import { authReducer as auth } from '../auth/reducer'
-import { commsReducer as comms } from '../comms/reducer'
 import { passportsReducer as passports } from '../passports/reducer'
 import { rendererReducer as renderer } from '../renderer/reducer'
 import { parcelSightReducer as userPosition } from '../scene-atlas/02-parcel-sight/reducer'
@@ -16,8 +14,6 @@ import { settlementReducer as settlement } from '../scene-atlas/07-settlement/re
 
 export const createReducer: any = (otherReducers: Record<string, Reducer> = {}) => {
   return combineReducers({
-    auth,
-    comms,
     parcelLoading,
     userPosition,
     positionToSceneId,

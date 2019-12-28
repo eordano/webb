@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@npm_bazel_typescript//:index.bzl", "ts_library")
-load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 
 filegroup(
     name = "static",
@@ -36,107 +36,66 @@ ts_library(
         "//protos:broker",
         "//utils",
         "//synced-ecs",
-        "//gamekit",
         "//config",
         "//rpc",
         "//scene-api",
         # App Dependencies
-        "@npm//@types/defaults",
-        "@npm//@types/history",
-        "@npm//@types/prop-types",
         "@npm//@types/react",
         "@npm//@types/react-dom",
         "@npm//@types/react-redux",
-        "@npm//@types/react-router",
-        "@npm//@types/stringify-object",
-        "@npm//defaults",
-        "@npm//history",
-        "@npm//prop-types",
         "@npm//ethereum-cryptography",
         "@npm//fp-future",
         "@npm//react",
         "@npm//react-dom",
-        "@npm//react-fast-compare",
-        "@npm//react-inner-html",
         "@npm//react-redux",
-        "@npm//react-router",
         "@npm//redux",
         "@npm//redux-saga",
-        "@npm//stringify-object",
     ],
 )
 
 load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
-load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
-
-rollup_bundle(
-    name = "main_roll",
-    config_file = ":rollup.config.js",
-    entry_point = "src/main.tsx",
-    format = "amd",
-    output_dir = True,
-    deps = [
-        ":webb_code",
-        "//config",
-        "//gamekit",
-        "//kernel",
-        "//protos:broker_lib",
-        "//protos:comms_lib",
-        "//rpc",
-        "//scene-api",
-        "//synced-ecs",
-        "//utils",
-        "@npm//ethereum-cryptography",
-        "@npm//jsonwebtoken",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-json",
-        "@npm//rollup-plugin-node-builtins",
-        "@npm//rollup-plugin-node-globals",
-        "@npm//rollup-plugin-node-resolve",
-    ],
-)
 
 ts_devserver(
     name = "devserver",
-    additional_root_paths = [
-        ":static",
-        ":main_roll__files",
-    ],
-    entry_module = "webb/main_roll/main_roll",
+    entry_module = "dcl/webb/src/main",
     port = 3000,
+    scripts = [
+        "@npm//fp-future:fp-future.umd.js",
+        "@npm//react:react.umd.js",
+        "@npm//react-dom:react-dom.umd.js",
+        "@npm//react-json-tree:react-json-tree.umd.js",
+        "@npm//redux:redux.umd.js",
+        "@npm//redux-saga:redux-saga.umd.js",
+        "@npm//typesafe-actions:typesafe-actions.umd.js",
+        "@npm//events:events.umd.js",
+        "@npm//util:util.umd.js",
+        ":redux-saga-effects_umd",
+        ":ethereum-cryptography-sha256_umd",
+    ],
     serving_path = "/bundle.js",
     static_files = [
         "index.html",
         "static/index.css",
-        "//:node_modules",
-        "//gamekit:gamekit_bundle",
-        "@npm//@babel/runtime",
-        "@npm//hoist-non-react-statics",
-        "@npm//prop-types",
-        "@npm//react",
-        "@npm//react-dom",
-        "@npm//react-redux",
-        "@npm//react-router-dom",
-        "@npm//redux",
-        "@npm//redux-saga",
+        "static/favicon.ico",
+        "//gamekit:gamekit_bundle"
     ],
     deps = [
-        "static/config.js",
-        ":main_roll",
-        ":static",
         ":webb_code",
-        "//protos:broker",
-        "//protos:comms",
-        "@npm//auth0-js:auth0-js__umd",
-        "@npm//events:events__umd",
-        "@npm//fp-future:fp-future__umd",
-        "@npm//google-protobuf:google-protobuf__umd",
-        "@npm//history:history__umd",
-        "@npm//path-to-regexp:path-to-regexp__umd",
-        "@npm//react-fast-compare:react-fast-compare__umd",
-        "@npm//react-inner-html:react-inner-html__umd",
-        "@npm//react-is:react-is__umd",
-        "@npm//typesafe-actions:typesafe-actions__umd",
-        "@npm//uuid:uuid__umd",
     ],
+)
+
+load("@build_bazel_rules_nodejs//internal/npm_install:npm_umd_bundle.bzl", "npm_umd_bundle")
+
+npm_umd_bundle(
+    name = "redux-saga-effects_umd",
+    package_name = "redux-saga/effects",
+    entry_point = "@npm//:node_modules/redux-saga/dist/redux-saga-effects.umd.js",
+    package = "@npm//redux-saga",
+)
+
+npm_umd_bundle(
+    name = "ethereum-cryptography-sha256_umd",
+    package_name = "ethereum-cryptography/sha256",
+    entry_point = "@npm//:node_modules/ethereum-cryptography/pure/sha256.js",
+    package = "@npm//ethereum-cryptography",
 )

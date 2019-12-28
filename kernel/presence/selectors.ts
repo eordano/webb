@@ -1,5 +1,4 @@
 import { PeerPresence, RootPresenceState, UserId } from './types'
-import { Alias } from '../comms/actions'
 import { zip } from 'dcl/utils'
 
 export function getPresenceByUserId(root: RootPresenceState, userId: UserId): PeerPresence | undefined {
@@ -20,9 +19,4 @@ export function getAllRenderablePresences(root: RootPresenceState): PeerPresence
 
 export function getAllPresencesByAlias(root: RootPresenceState): Record<number, PeerPresence> {
   return zip(Object.values(root.presence.presenceByUserId).map(presence => ([presence.peerAlias, presence])))
-}
-
-export function getPresenceByAlias(root: RootPresenceState, peerAlias: Alias): PeerPresence | undefined {
-  const userId = root.presence.commsAliasToUserId[peerAlias]
-  return getPresenceByUserId(root, userId)
 }

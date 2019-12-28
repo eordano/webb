@@ -7,10 +7,6 @@ import { configureDownloadServer } from '../scene-atlas/04-sceneId-resolution/ac
 import { createReducer } from './reducers'
 import { rootSaga } from './rootSaga'
 import { RootState } from './types'
-import { restoreSession } from '../auth/actions'
-import { commsStarted } from '../comms/actions'
-import { isLoggedIn } from '../auth/selectors'
-import { isConnected } from '../comms/selectors'
 
 declare var window: any
 export let store: Store<RootState>
@@ -26,16 +22,6 @@ export async function waitFor<T>(store: Store<RootState>, isFulfilled: (state: R
   })
 }
 
-export function triggerLoginAndAwait(store: Store<RootState>) {
-  store.dispatch(restoreSession())
-  return waitFor(store, state => isLoggedIn(state))
-}
-
-export function triggerConnectAndAwait(store: Store<RootState>) {
-  store.dispatch(commsStarted())
-  return waitFor(store, state => isConnected(state))
-}
-
 export const configureStore: (otherReducers?: Record<string, Reducer>, state?: any) => { store: Store<RootState>; sagasMiddleware: any; start: () => void } = (otherReducers: Record<string, Reducer>, state?: any) => {
   const enhance =
     typeof window === 'object' && (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && DEBUG_REDUX)
@@ -46,14 +32,12 @@ export const configureStore: (otherReducers?: Record<string, Reducer>, state?: a
   const sagasMiddleware = createSagaMiddleware()
   store = createStore(createReducer(otherReducers), state, enhance(applyMiddleware(sagasMiddleware))) as Store<RootState>
   const config = getServerConfigurations()
-  store.dispatch(configureLineOfSightRadius(4))
-  store.dispatch(configureDownloadServer(config.content))
-  store.dispatch(setProfileServer(config.profile))
 
   async function start() {
     sagasMiddleware.run(rootSaga)
-    await triggerLoginAndAwait(store)
-    // await triggerConnectAndAwait(store)
+    store.dispatch(configureLineOfSightRadius(4))
+    store.dispatch(configureDownloadServer(config.content))
+    store.dispatch(setProfileServer(config.profile))
   }
   return { store, sagasMiddleware, start }
 }
