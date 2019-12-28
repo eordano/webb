@@ -1,9 +1,9 @@
 import { store, waitFor } from 'dcl/kernel/core/store'
 import { MemoryRendererParcelScene } from 'dcl/kernel/renderer/parcelScene/MemoryRendererParcelScene'
 import { fetchManifestForSceneId } from 'dcl/kernel/scene-atlas/05-sceneManifest-resolution/sagas'
-import { sceneManager } from 'dcl/kernel/scene-atlas/06-scripts/sceneManager'
 import { sceneRunner } from 'dcl/kernel/scene-atlas/06-scripts/sceneRunner'
 import { getSceneStatus } from 'dcl/kernel/scene-atlas/06-scripts/selectors'
+import { SceneWorkersManager } from 'dcl/kernel/scene-scripts/SceneWorkersManager'
 import { registerAPI } from 'dcl/rpc'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import { encodeParcelPositionFromCoordinates, SceneManifest } from 'dcl/utils'
@@ -14,6 +14,8 @@ import { call } from 'redux-saga/effects'
 import { sagasMiddleware } from '../kernel/store'
 
 const syncedObjects = { count: 0 }
+
+SceneWorkersManager.gamekitPath = '/dcl/gamekit/gamekit_bundle.js'
 
 @registerAPI('EngineAPI')
 export class StoreSyncedECS extends SyncedECS {
@@ -57,8 +59,6 @@ export function SceneDetail(props: any) {
       await import('./DevTools')
       const engine = new MemoryRendererParcelScene(scene)
       setECS(engine)
-
-      sceneManager.gamekitPath = '/dcl/gamekit/gamekit_bundle.js'
       setTimeout(() => {
         sagasMiddleware.run(function*() {
           yield call(sceneRunner, manifest)

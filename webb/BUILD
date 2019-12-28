@@ -37,6 +37,7 @@ ts_library(
         "//utils",
         "//synced-ecs",
         "//config",
+        "//vangogh",
         "//rpc",
         "//scene-api",
         # App Dependencies

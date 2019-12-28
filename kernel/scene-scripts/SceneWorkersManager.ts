@@ -15,16 +15,16 @@ export type Data<T extends IWorker, R extends IRendererParcelSceneAPI> = {
 export class SceneWorkersManager {
   loadedSceneWorkers = new Map<string, ISceneWorker>()
   sceneManifests = new Map<string, ISceneManifest>()
-  parcelSceneClass: any = MemoryRendererParcelScene
-  public gamekitPath = './gamekit.js'
+  public static parcelSceneClass: any = MemoryRendererParcelScene
+  public static gamekitPath = './gamekit.js'
 
   newSceneWorker(scene: ISceneManifest, transport?: ScriptingTransport) {
-    const worker = createWorker(scene.id, this.gamekitPath)
+    const worker = createWorker(scene.id, SceneWorkersManager.gamekitPath)
     if (!transport) {
       transport = WebWorkerTransport(worker)
     }
-    const parcelSceneConnector = new this.parcelSceneClass(transport, scene)
-    const sceneWorker = new SceneWorker(scene, transport, parcelSceneConnector, this.gamekitPath)
+    const parcelSceneConnector = new SceneWorkersManager.parcelSceneClass(transport, scene)
+    const sceneWorker = new SceneWorker(scene, transport, parcelSceneConnector, SceneWorkersManager.gamekitPath)
     parcelSceneConnector.registerWorker(sceneWorker)
     sceneWorker.startSystem()
     return sceneWorker
