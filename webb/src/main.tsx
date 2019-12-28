@@ -1,36 +1,39 @@
+import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/actions'
+import { getCurrentWorldPosition } from 'dcl/kernel/scene-atlas/02-parcel-sight/selectors'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Position } from './controls/Position'
 import { configured } from './store'
-import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/actions'
-import { SceneWorkersManager } from 'dcl/kernel/scene-scripts/SceneWorkersManager'
-import { MemoryRendererParcelScene } from 'dcl/kernel/renderer/parcelScene/MemoryRendererParcelScene'
-import { registerAPI } from 'dcl/rpc'
-import { SyncedECS } from 'dcl/vangogh/SyncedECS'
-import { DevTools } from 'dcl/scene-api'
+import './StoreSyncedECS'
+import { Atlas } from './atlas/Atlas'
 
-SceneWorkersManager.gamekitPath = '/gamekit/gamekit_bundle.js'
-SceneWorkersManager.parcelSceneClass = MemoryRendererParcelScene
-
-const syncedObjects = { count: 0, systems: {} }
-
-console.log('Loading: ' + DevTools.name)
-
-@registerAPI('EngineAPI')
-export class StoreSyncedECS extends SyncedECS {
-  startSignal() {
-    syncedObjects.count++
-    syncedObjects.systems[syncedObjects.count] = this.ecs
-    console.log('signal', syncedObjects)
-    setTimeout(() => {
-      ;(this.rendererParcelSceneAPI as any).readyPromise.resolve()
-    }, 768)
-    return super.startSignal()
-  }
-}
 configured.start()
 
+const dispatch = configured.store.dispatch.bind(configured.store)
+const getState = configured.store.getState.bind(configured.store)
+
+const timeouts: any = {
+  pending: -1
+}
+
 configured.store.subscribe(() => {
-  ReactDOM.render(<pre>{JSON.stringify(configured.store.getState(), null, 2)}</pre>, document.getElementById('root'))
+  if (timeouts.pending !== -1) {
+    clearTimeout(timeouts.pending)
+  }
+  timeouts.pending = setTimeout(() => {
+    const positionReport = getCurrentWorldPosition(getState())
+    const setX = (x: number) => dispatch(setWorldPosition({ ...positionReport.position, x }))
+    const setY = (y: number) => dispatch(setWorldPosition({ ...positionReport.position, y }))
+    const setZ = (z: number) => dispatch(setWorldPosition({ ...positionReport.position, z }))
+    ReactDOM.render(
+      <div>
+        <Position {...positionReport.position} {...{ setX, setY, setZ }}></Position>
+        <Atlas {...getState()}></Atlas>
+        <pre>{JSON.stringify(configured.store.getState(), null, 2)}</pre>{' '}
+      </div>,
+      document.getElementById('root')
+    )
+  }, 100)
 })
 
 configured.store.dispatch(setWorldPosition({ x: 0, y: 0, z: 0 }))

@@ -47,6 +47,7 @@ ts_library(
         "@npm//ethereum-cryptography",
         "@npm//fp-future",
         "@npm//react",
+        "@npm//react-json-tree",
         "@npm//react-dom",
         "@npm//react-redux",
         "@npm//redux",
