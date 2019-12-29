@@ -1,11 +1,7 @@
-import { SceneLoader, Vector3 } from '@babylonjs/core'
-import * as Loaders from '@babylonjs/loaders'
+import { Vector3 } from '@babylonjs/core'
 import { RootState } from 'dcl/kernel/core/types'
 import React, { useContext } from 'react'
 import { BabylonJSContext, Engine, Scene } from 'react-babylonjs'
-
-const p = new Loaders.GLTFFileLoader()
-SceneLoader.RegisterPlugin(p)
 
 export function Avatar(props: RootState) {
   const babylonContext = useContext(BabylonJSContext)

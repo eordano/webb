@@ -1,41 +1,25 @@
+import { RootState } from 'dcl/kernel/core/types'
 import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/actions'
 import { getCurrentWorldPosition } from 'dcl/kernel/scene-atlas/02-parcel-sight/selectors'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
 import { Atlas } from './atlas/Atlas'
-import { Avatar } from './avatar/Avatar'
 import { Position } from './controls/Position'
+import { ScenePreview } from './scenePreview/ScenePreview'
 import { configured } from './store'
-import './StoreSyncedECS'
 
-configured.start()
-
-const dispatch = configured.store.dispatch.bind(configured.store)
-const getState = configured.store.getState.bind(configured.store)
-
-const timeouts: any = {
-  pending: -1
+export function Main(props: { state: RootState; dispatch: any }) {
+  const { state, dispatch } = props
+  const [currentScene, setCurrentScene] = React.useState()
+  const positionReport = getCurrentWorldPosition(state)
+  const setX = (x: number) => dispatch(setWorldPosition({ ...positionReport.position, x }))
+  const setY = (y: number) => dispatch(setWorldPosition({ ...positionReport.position, y }))
+  const setZ = (z: number) => dispatch(setWorldPosition({ ...positionReport.position, z }))
+  return (
+    <div>
+      {currentScene !== 'undefined' ? <ScenePreview {...state} currentScene={currentScene} /> : <div />}
+      <Position {...positionReport.position} {...{ setX, setY, setZ }}></Position>
+      <Atlas {...state} setCurrentScene={setCurrentScene}></Atlas>
+      <pre>{JSON.stringify(configured.store.getState(), null, 2)}</pre>{' '}
+    </div>
+  )
 }
-
-configured.store.subscribe(() => {
-  if (timeouts.pending !== -1) {
-    clearTimeout(timeouts.pending)
-  }
-  timeouts.pending = setTimeout(() => {
-    const positionReport = getCurrentWorldPosition(getState())
-    const setX = (x: number) => dispatch(setWorldPosition({ ...positionReport.position, x }))
-    const setY = (y: number) => dispatch(setWorldPosition({ ...positionReport.position, y }))
-    const setZ = (z: number) => dispatch(setWorldPosition({ ...positionReport.position, z }))
-    ReactDOM.render(
-      <div>
-        <Avatar {...getState()} />
-        <Position {...positionReport.position} {...{ setX, setY, setZ }}></Position>
-        <Atlas {...getState()}></Atlas>
-        <pre>{JSON.stringify(configured.store.getState(), null, 2)}</pre>{' '}
-      </div>,
-      document.getElementById('root')
-    )
-  }, 100)
-})
-
-configured.store.dispatch(setWorldPosition({ x: 0, y: 0, z: 0 }))

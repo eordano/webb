@@ -63,7 +63,7 @@ load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 
 ts_devserver(
     name = "devserver",
-    entry_module = "dcl/webb/src/main",
+    entry_module = "dcl/webb/src/index",
     port = 3000,
     scripts = [
         "@npm//fp-future:fp-future.umd.js",

@@ -9,7 +9,7 @@ function generatecolor(name: string) {
   const b = (name.charCodeAt(5) * 431) % 256
   return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`
 }
-export type AtlasParams = RootState
+export type AtlasParams = RootState & { setCurrentScene: (sceneId: string) => void }
 
 function createRange(from: number, length: number) {
   return Array.from(new Array(length)).map((_, index) => from + index)
@@ -21,6 +21,7 @@ function shortSceneName(name: string) {
 
 export class Atlas extends React.Component<AtlasParams> {
   render() {
+    const { setCurrentScene } = this.props
     if (!isValidNumber(this.props.userPosition.grid.x)) {
       debugger
       return <div />
@@ -40,22 +41,25 @@ export class Atlas extends React.Component<AtlasParams> {
         {createRange(
           this.props.userPosition.grid.x - this.props.userPosition.lineOfSightRadius,
           this.props.userPosition.lineOfSightRadius * 2 + 1
-        ).map(col => (
-          <td
-            key={index + '_' + col + '_' + this.props.positionToSceneId.positionToScene[`${col},${index}`]}
-            style={{
-              backgroundColor: generatecolor(
-                this.props.positionToSceneId.positionToScene[`${col},${index}`]
-                  ? shortSceneName(this.props.positionToSceneId.positionToScene[`${col},${index}`])
-                  : 'unknown'
-              )
-            }}
-          >
-            {this.props.positionToSceneId.positionToScene[`${col},${index}`]
-              ? shortSceneName(this.props.positionToSceneId.positionToScene[`${col},${index}`])
-              : 'unknown'}
-          </td>
-        ))}
+        ).map(col => {
+          const sceneId = this.props.positionToSceneId.positionToScene[`${col},${index}`]
+          return (
+            <td
+              key={index + '_' + col + '_' + sceneId}
+              style={{
+                backgroundColor: generatecolor(sceneId ? shortSceneName(sceneId) : 'unknown')
+              }}
+            >
+              {sceneId ? (
+                <a href={`#${sceneId}`} onClick={ev => [setCurrentScene(sceneId), ev.preventDefault()]}>
+                  {shortSceneName(sceneId)}
+                </a>
+              ) : (
+                'unknown'
+              )}
+            </td>
+          )
+        })}
       </tr>
     ))
     return (
