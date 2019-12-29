@@ -7,6 +7,9 @@ filegroup(
     srcs = glob(
         [
             "base-avatars/**/*.*",
+            "base-exclusive/**/*.*",
+            "halloween_2019/**/*.*",
+            "xmas_2019/**/*.*",
             "README.md",
             "LICENSE",
         ],
@@ -20,6 +23,13 @@ filegroup(
         exclude = [
             "node_modules/**/*",
         ],
+    ),
+)
+
+filegroup(
+    name = "catalog",
+    srcs = glob(
+        include = ["src/catalog/expected.json"],
     ),
 )
 

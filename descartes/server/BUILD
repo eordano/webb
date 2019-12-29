@@ -48,6 +48,8 @@ nodejs_binary(
     name = "server",
     data = [
         ":server_lib",
+        "//collections:collections_assets",
+        "//collections:catalog",
         "//descartes",
         "//descartes/datadog",
         "//descartes/metabase",

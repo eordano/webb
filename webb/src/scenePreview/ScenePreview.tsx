@@ -9,31 +9,7 @@ import { BabylonJSContext, Engine, Scene } from 'react-babylonjs'
 import { configureLights } from '../engineHelpers/ambientLights'
 import { setupColliders } from '../engineHelpers/colliders'
 import { processGLTFAssetContainer } from '../engineHelpers/assetContainer'
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      model: any
-    }
-  }
-}
-
-function basename(str: string) {
-  const split = str.split('/')
-  return split.slice(0, split.length - 1).join('/')
-}
-function filename(str: string) {
-  const split = str.split('/')
-  return split[split.length - 1]
-}
-type RendereableEntity = {
-  key: string
-  rotation: Quaternion
-  position: Vector3
-  scaling: Vector3
-  rootUrl: string
-  sceneFilename: string
-}
+import { basename, filename, RendereableEntity } from '../BabylonHelpers'
 
 type CurrentScene = { currentScene: string } & any
 

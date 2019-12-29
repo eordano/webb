@@ -2,10 +2,12 @@ import cors from 'cors'
 import { Coordinate } from 'dcl/utils'
 import { ears } from 'dcl/vangogh/ears'
 import express from 'express'
-import { DataResponse, getConnectedUsers } from '../datadog/getConnectedUsers'
-import { Descartes } from '../logic/descartes'
 import fileType from 'file-type'
-import { deploys, findUser, userMovements, userPerf, deploysBefore } from '../metabase/metabase'
+import path from 'path'
+import { DataResponse, getConnectedUsers } from '../datadog/getConnectedUsers'
+import { readJSON } from '../disk/driver/readJSON'
+import { Descartes } from '../logic/descartes'
+import { deploys, deploysBefore, findUser, userMovements, userPerf } from '../metabase/metabase'
 
 const cachedGetConnectedUsers = cachedRequest(
   (env: 'prod' | 'dev' | 'stg') => getConnectedUsers(env),
@@ -32,7 +34,7 @@ const cachedPerf = cachedRequest(
   t => 'perf' + t
 )
 
-export function createServer(descartes: Descartes, port: number = 1338) {
+export async function createServer(descartes: Descartes, port: number = 1338) {
   const app = express()
   app.use(cors())
 
@@ -224,7 +226,71 @@ export function createServer(descartes: Descartes, port: number = 1338) {
     res.end(content)
   })
 
+  const wearableCollection = await readJSON(
+    path.join(
+      __dirname /* server */,
+      '..' /* descartes */,
+      '..' /* root */,
+      'collections',
+      'src',
+      'catalog',
+      'expected.json'
+    )
+  )
+  const wearableDict = (wearableCollection as Array<{ id: string }>).reduce((catalog, entry) => {
+    catalog[entry.id] = entry
+    return catalog
+  }, {})
+  app.get('/wearable/:base/:collection/:name/:file', async (req, res) => {
+    console.log(`Fetch wearable:`, req.params)
+    const { collection, base, name, file } = req.params
+    const asset = wearableDict[`dcl://${collection}/${name}`]
+    const exists = !!asset
+    if (!exists) {
+      res.status(404).end()
+      return
+    }
+    const representation = selectRepresentation(asset, 'dcl://base-avatars/' + base)
+    if (!representation) {
+      console.log('no representation')
+      res.status(404).end()
+      return
+    }
+    const assetName = file.startsWith('model.') ? representation.mainFile : file
+    if (!assetName) {
+      console.log('no filename')
+      res.status(404).end()
+      return
+    }
+    const hash = selectFile(representation, assetName)
+    if (!hash) {
+      console.log('no file')
+      res.status(404).end()
+      return
+    }
+    const content = await descartes.getContent(hash)
+    if (content) {
+      const type = fileType(content)
+      if (type) {
+        res.header('content-type: ' + type.mime)
+      }
+    }
+    res.end(content)
+  })
+
   return app.listen(port)
+}
+function selectRepresentation(asset: any, baseShape: string) {
+  const representation = asset.representations.filter((_: any) => _.bodyShapes.includes(baseShape))
+  return representation ? representation[0] : null
+}
+function selectFile(representation: any, name: string) {
+  const value = representation.contents.filter((_: any) => _.file === name)
+  if (value) {
+    return value[0].hash
+  } else {
+    return null
+  }
 }
 
 const MINS = 1
