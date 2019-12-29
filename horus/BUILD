@@ -18,7 +18,7 @@ load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 ts_devserver(
     name = "devserver",
     additional_root_paths = [":static"],
-    entry_module = "dcl/horus/webapp/Sections",
+    entry_module = "dcl/horus/webapp/index",
     port = 3000,
     serving_path = "/bundle.js",
     static_files = [

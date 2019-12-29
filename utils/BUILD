@@ -22,7 +22,7 @@ ts_library(
         "@npm//@types",
         "@npm//ethereum-cryptography",
         "@npm//fp-future",
-        "//stableStringify",
+        "//jslibs/stableStringify",
     ],
 )
 

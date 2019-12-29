@@ -6,39 +6,39 @@ filegroup(
     name = "sources",
     srcs = glob(
         include = [
-            "index.tsx",
+            "*.ts",
+            "*.tsx",
         ],
     ),
 )
 
 ts_library(
-    name = "webapp",
+    name = "tab2-users",
     srcs = glob(
         include = [
-            "index.tsx",
+            "*.ts",
+            "*.tsx",
         ],
     ),
     deps = [
+        "//horus/horus-config",
+        "//horus/kernel",
         "//horus/route",
-        "//horus/tab1-overview",
-        "//horus/tab2-users",
-        "//horus/tab3-liveinfo",
-        "//horus/tab4-assets",
-        "//horus/tab5-deployments",
-        "//horus/tab6-scenerepo",
+        "//jslibs/datefun",
+        "//jslibs/hooks",
         "//jslibs/sail",
         "//kernel",
-        "@npm//@types/history",
+        "@npm//@types/defaults",
         "@npm//@types/react",
-        "@npm//@types/react-dom",
         "@npm//@types/react-router",
+        "@npm//@types/react-router-dom",
         "@npm//decentraland-ui",
-        "@npm//ethereum-cryptography",
+        "@npm//defaults",
         "@npm//history",
         "@npm//react",
-        "@npm//react-dom",
         "@npm//react-router",
-        "@npm//redbox-react",
+        "@npm//react-router-dom",
         "@npm//redux",
+        "@npm//redux-saga",
     ],
 )
