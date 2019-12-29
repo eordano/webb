@@ -48,6 +48,7 @@ ts_library(
         "@npm//fp-future",
         "@npm//@babylonjs/core",
         "@npm//@babylonjs/loaders",
+        "@npm//@babylonjs/materials",
         "@npm//react",
         "@npm//react-babylonjs",
         "@npm//react-reconciler",
@@ -75,6 +76,7 @@ ts_devserver(
         "@npm//util:util.umd.js",
         ":babylon-core_umd",
         ":babylon-loaders_umd",
+        ":babylon-materials_umd",
         ":react-dom_umd",
         ":react-babylonjs_umd",
         ":redux-saga-effects_umd",
@@ -107,6 +109,13 @@ npm_umd_bundle(
     package_name = "@babylonjs/loaders",
     entry_point = "@npm//:node_modules/@babylonjs/loaders/index.js",
     package = "@npm//@babylonjs/loaders",
+)
+
+npm_umd_bundle(
+    name = "babylon-materials_umd",
+    package_name = "@babylonjs/materials",
+    entry_point = "@npm//:node_modules/@babylonjs/materials/index.js",
+    package = "@npm//@babylonjs/materials",
 )
 
 npm_umd_bundle(

@@ -4,17 +4,33 @@ import { ears } from 'dcl/vangogh/ears'
 import express from 'express'
 import { DataResponse, getConnectedUsers } from '../datadog/getConnectedUsers'
 import { Descartes } from '../logic/descartes'
+import fileType from 'file-type'
 import { deploys, findUser, userMovements, userPerf, deploysBefore } from '../metabase/metabase'
 
-const cachedGetConnectedUsers = cachedRequest((env: 'prod' | 'dev' | 'stg') => getConnectedUsers(env), _ => 'comms' + _)
+const cachedGetConnectedUsers = cachedRequest(
+  (env: 'prod' | 'dev' | 'stg') => getConnectedUsers(env),
+  _ => 'comms' + _
+)
 
-const cachedDeployments = cachedRequest(() => deploys(), () => 'deploys')
+const cachedDeployments = cachedRequest(
+  () => deploys(),
+  () => 'deploys'
+)
 
-const cachedUsers = cachedRequest((user: string) => findUser(user), _ => 'user' + _)
+const cachedUsers = cachedRequest(
+  (user: string) => findUser(user),
+  _ => 'user' + _
+)
 
-const cachedMovements = cachedRequest((user: string) => userMovements(user), t => 'move' + t)
+const cachedMovements = cachedRequest(
+  (user: string) => userMovements(user),
+  t => 'move' + t
+)
 
-const cachedPerf = cachedRequest((user: string) => userPerf(user), t => 'perf' + t)
+const cachedPerf = cachedRequest(
+  (user: string) => userPerf(user),
+  t => 'perf' + t
+)
 
 export function createServer(descartes: Descartes, port: number = 1338) {
   const app = express()
@@ -139,13 +155,20 @@ export function createServer(descartes: Descartes, port: number = 1338) {
       const yy = parseInt(y, 10)
       const mapToScene = await descartes.getSceneIdForCoordinates(everythingInside(xx, xx, yy, yy))
       const sceneId = mapToScene[`${xx},${yy}`]
-      if(sceneId) {
+      if (sceneId) {
         const mapping = await descartes.getMappingForSceneId(sceneId)
         const hash = mapping[path]
         console.log(`Content: ${x},${y}:${path} -> ${hash}`)
-        return res.redirect('https://content.decentraland.org/contents/' + hash)
+        const content = await descartes.getContent(hash)
+        if (content) {
+          const type = fileType(content)
+          if (type) {
+            res.header('content-type: ' + type.mime)
+          }
+        }
+        res.end(content)
       } else {
-        res.status(404).json({"status": "not_found"})
+        res.status(404).json({ status: 'not_found' })
       }
     } catch (e) {
       console.log(`Fetch for (${x}, ${y}: ${path}) failed:`, e)
@@ -176,20 +199,29 @@ export function createServer(descartes: Descartes, port: number = 1338) {
     )
 
     res.send({
-      data: sceneMap.filter(it => !!it[1]).map(([sceneId, currentMap]) => ({
-        root_cid: sceneId,
-        scene_cid: sceneId,
-        publisher: sceneId,
-        content: {
-          contents: Object.keys(currentMap).map(file => ({ file, hash: currentMap[file] }))
-        }
-      }))
+      data: sceneMap
+        .filter(it => !!it[1])
+        .map(([sceneId, currentMap]) => ({
+          root_cid: sceneId,
+          scene_cid: sceneId,
+          publisher: sceneId,
+          content: {
+            contents: Object.keys(currentMap).map(file => ({ file, hash: currentMap[file] }))
+          }
+        }))
     })
   })
 
   app.get('/contents/:cid', async (req, res) => {
     console.log(`Fetch content: ${req.params['cid']}`)
-    res.end(await descartes.getContent(req.params['cid']))
+    const content = await descartes.getContent(req.params['cid'])
+    if (content) {
+      const type = fileType(content)
+      if (type) {
+        res.header('content-type: ' + type.mime)
+      }
+    }
+    res.end(content)
   })
 
   return app.listen(port)

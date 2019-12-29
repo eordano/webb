@@ -1,10 +1,14 @@
-import { Quaternion, Vector3 } from '@babylonjs/core'
+import { Quaternion, Vector3, SceneLoader } from '@babylonjs/core'
+import '@babylonjs/loaders'
 import { RootState } from 'dcl/kernel/core/types'
+import { getSceneManifest } from 'dcl/kernel/scene-atlas/05-sceneManifest-resolution/selectors'
+import { GLTFShape } from 'dcl/scene-api'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import React, { useContext, useState } from 'react'
 import { BabylonJSContext, Engine, Scene } from 'react-babylonjs'
-import { GLTFShape } from 'dcl/scene-api'
-import { getSceneManifest } from 'dcl/kernel/scene-atlas/05-sceneManifest-resolution/selectors'
+import { configureLights } from '../engineHelpers/ambientLights'
+import { setupColliders } from '../engineHelpers/colliders'
+import { processGLTFAssetContainer } from '../engineHelpers/assetContainer'
 
 declare global {
   namespace JSX {
@@ -14,10 +18,27 @@ declare global {
   }
 }
 
+function basename(str: string) {
+  const split = str.split('/')
+  return split.slice(0, split.length - 1).join('/')
+}
+function filename(str: string) {
+  const split = str.split('/')
+  return split[split.length - 1]
+}
+type RendereableEntity = {
+  key: string
+  rotation: Quaternion
+  position: Vector3
+  scaling: Vector3
+  rootUrl: string
+  sceneFilename: string
+}
+
 type CurrentScene = { currentScene: string } & any
 
 export function ScenePreview(props: RootState & CurrentScene) {
-  const currentScene = props.currentScene || 'QmXFTEu1xv1PQBciUkTyayem34bBKwQyj59aQpvgd3mMgN'
+  const currentScene = props.currentScene || 'QmXUp1MfCaxvRPpTNyLAWmiVxeTDVhU6mVAGYqtmo7FDft'
   const babylonContext = useContext(BabylonJSContext)
   const statusRunning = props.sceneLifeCycle.running[currentScene]
 
@@ -83,13 +104,12 @@ export function ScenePreview(props: RootState & CurrentScene) {
           rotation: offset.rotation,
           position: offset.position,
           scaling: offset.scale,
-          rootUrl: `http://localhost:1338/scene/${baseParcel.x}/${baseParcel.y}/`,
-          sceneFilename: m.src
+          rootUrl: `http://localhost:1338/scene/${baseParcel.x}/${baseParcel.y}/${basename(m.src)}/`,
+          sceneFilename: filename(m.src)
         }
-      return [
-        ...(transform && m ? [<model {...modelProps} />] : []),
-        ...[graph.children[entity] ? graph.children[entity].map((i: any) => renderEntity(i, offset)) : []]
-      ]
+      return (transform && m ? [modelProps] : []).concat(
+        graph.children[entity] ? graph.children[entity].map((i: any) => renderEntity(i, offset)) : []
+      )
     }
     return (
       <div>
@@ -104,18 +124,29 @@ export function ScenePreview(props: RootState & CurrentScene) {
           canvasId="scene-preview"
           babylonJSContext={babylonContext}
         >
-          <Scene>
+          <Scene
+            onSceneMount={sceneArgs => {
+              const { scene } = sceneArgs
+              setupColliders(scene)
+              configureLights(scene)
+              const entities = renderEntity('0', {
+                position: Vector3.Zero(),
+                rotation: new Quaternion(0, 0, 0, 1),
+                scale: Vector3.One()
+              })
+
+              entities.flat().forEach((entity: RendereableEntity) => {
+                SceneLoader.LoadAssetContainer(entity.rootUrl, entity.sceneFilename, scene, assets => {
+                  const root = assets.createRootMesh()
+                  root.position = entity.position
+                  root.rotationQuaternion = entity.rotation
+                  root.scaling = entity.scaling
+                  processGLTFAssetContainer(assets)
+                })
+              })
+            }}
+          >
             <freeCamera name="camera1" position={new Vector3(8, 4, 0)} setTarget={[new Vector3(8, 0, 8)]} />
-            <sphere name="sphere1" diameter={0.4} segments={16} position={new Vector3(8, 0, 0)} />
-            <sphere name="sphere2" diameter={0.7} segments={16} position={new Vector3(16, 0, 0)} />
-            <box name="cube1" size={0.4} position={new Vector3(0, 0, 8)} />
-            <box name="cube2" size={0.7} position={new Vector3(0, 0, 16)} />
-            <hemisphericLight name="light1" intensity={0.7} direction={Vector3.Up()} />
-            {renderEntity('0', {
-              position: Vector3.Zero(),
-              rotation: new Quaternion(0, 0, 0, 1),
-              scale: Vector3.One()
-            })}
           </Scene>
         </Engine>
       </div>
