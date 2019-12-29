@@ -25,7 +25,7 @@ export async function ears(x: number, y: number) {
     const kit = new PlainGameKit(script)
     const sync = new SyncedECS(scene)
 
-    kit.engine = sync
+    kit.rendererInterface = sync
 
     await kit.setupLifecycle()
     await kit.update(0)

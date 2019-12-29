@@ -1,4 +1,16 @@
-export function BuildDCLInterface(that: any) {
+type GlobalDCL = {
+  onLog: any
+  onError: any
+  onStartFunctions: any
+  onUpdateFunctions: any
+  onEventFunctions: any
+  rendererInterface: any
+  loadedAPIs: any
+  loadAPIs: any
+  fireEvent: any
+}
+export function BuildDCLInterface(globalObject: any) {
+  const that = globalObject as GlobalDCL
   return {
     DEBUG: true,
     log(...args: any[]) {
@@ -37,8 +49,8 @@ export function BuildDCLInterface(that: any) {
      * @param eventName
      */
     subscribe(eventName: string): void {
-      that.engine.subscribe(eventName)
-      that.engine.on(eventName, (event: any) => {
+      that.rendererInterface.subscribe(eventName)
+      that.rendererInterface.on(eventName, (event: any) => {
         that.fireEvent({ type: eventName, data: event.data })
       })
     },
@@ -49,13 +61,13 @@ export function BuildDCLInterface(that: any) {
      * @param eventName
      */
     unsubscribe(eventName: string): void {
-      that.engine.unsubscribe(eventName)
+      that.rendererInterface.unsubscribe(eventName)
     },
 
     loadModule: (moduleName: string) => {
       const moduleToLoad = moduleName.replace(/^@decentraland\//, '')
       try {
-        return (that.loadAPIs([moduleToLoad]))[moduleToLoad].then((proxy: any) => {
+        return that.loadAPIs([moduleToLoad])[moduleToLoad].then((proxy: any) => {
           return proxy._getExposedMethods().then((methods: any) => {
             return {
               rpcHandle: moduleToLoad,

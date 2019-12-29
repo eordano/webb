@@ -1,7 +1,7 @@
 import { DecentralandInterface, DevTools } from 'dcl/scene-api'
-import { defaultLogger, EntityAction } from 'dcl/utils'
-import { ISceneRunningScript } from 'dcl/scene-api/interface/ISceneRunningScript'
 import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
+import { ISceneRunningScript } from 'dcl/scene-api/interface/ISceneRunningScript'
+import { defaultLogger, EntityAction } from 'dcl/utils'
 import { BuildDCLInterface } from './DCLInterface/BuildDCLInterface'
 import { BuildECSInterface } from './DCLInterface/BuildECSInterface'
 import { customEval, getES5Context } from './sandbox'
@@ -19,7 +19,7 @@ const RUNNING = 'running'
  */
 export abstract class GamekitScene implements ISceneRunningScript {
 
-  engine!: IRendererParcelSceneToScript
+  rendererInterface!: IRendererParcelSceneToScript
 
   devTools: any
   devToolsAdapter?: DevTools
@@ -38,7 +38,7 @@ export abstract class GamekitScene implements ISceneRunningScript {
 
     this.status = AWAKE
 
-    ;(this.engine as any).on('sceneStart')
+    ;(this.rendererInterface as any).on('sceneStart')
 
     try {
       this.runFirstRound().then(() => this.startSignal())
@@ -48,6 +48,10 @@ export abstract class GamekitScene implements ISceneRunningScript {
   }
 
   protected setupDCLInterface() {
+    Object.defineProperty(this, 'engine', {
+      get: () => this.rendererInterface,
+      enumerable: false
+    })
     this.dcl = { ...BuildDCLInterface(this), ...BuildECSInterface(this.outboundEventQueue) }
     this.fixupDeprecations()
   }
@@ -56,7 +60,7 @@ export abstract class GamekitScene implements ISceneRunningScript {
     try {
       const batch = this.outboundEventQueue.slice()
       this.outboundEventQueue.length = 0
-      this.engine.sendBatch(batch).catch((e: Error) => this.onError(e))
+      this.rendererInterface.sendBatch(batch).catch((e: Error) => this.onError(e))
     } catch (e) {
       this.onError(e)
     }
@@ -100,13 +104,14 @@ export abstract class GamekitScene implements ISceneRunningScript {
       // Only run this handler once
       this.onEventFunctions.splice(this.onEventFunctions.indexOf(handler), 1)
     }
+    this.dcl.subscribe('sceneStart')
     this.onEventFunctions.push(handler)
 
     this.enqueueInitMessagesFinished()
 
     this.sendBatch()
 
-    this.engine.startSignal()
+    this.rendererInterface.startSignal()
   }
 
   update(dt: number) {
@@ -199,6 +204,9 @@ export abstract class GamekitScene implements ISceneRunningScript {
   }
 
   onLog(...messages: any[]) {
+    if (messages[0].startsWith('The entity is already in the engine. Please fix this')) {
+      return
+    }
     if (this.devToolsAdapter) {
       this.devToolsAdapter.logger.error(JSON.stringify([...messages]))
     } else {

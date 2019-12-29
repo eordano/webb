@@ -19,6 +19,10 @@ export function Position(props: PositionControl) {
       <h4>
         Current scene: {Math.floor(x / parcelLimits.parcelSize)}, {Math.floor(z / parcelLimits.parcelSize)}{' '}
       </h4>
+      <button onClick={() => setX(x + 16)}>x+1</button>
+      <button onClick={() => setX(x - 16)}>x-1</button>
+      <button onClick={() => setZ(z + 16)}>z+1</button>
+      <button onClick={() => setZ(z - 16)}>z-1</button>
       <input value={x} onChange={ev => setX(parseInt(ev.target.value, 10))}></input>
       <input value={y} onChange={ev => setY(parseInt(ev.target.value, 10))}></input>
       <input value={z} onChange={ev => setZ(parseInt(ev.target.value, 10))}></input>

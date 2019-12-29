@@ -15,7 +15,7 @@ export class APILoadedScriptGamekit extends GamekitScene {
 
 export class GamekitFactory extends Script {
   @inject('EngineAPI')
-  engine!: IRendererParcelSceneToScript
+  renderingInterface!: IRendererParcelSceneToScript
 
   @inject('DevTools')
   devTools: any
@@ -31,14 +31,14 @@ export class GamekitFactory extends Script {
   get gamekit(): GamekitScene {
     if (!this._gamekit) {
       this._gamekit = new APILoadedScriptGamekit(this)
-      this._gamekit.engine = this.engine
+      this._gamekit.rendererInterface = this.renderingInterface
       this._gamekit.devTools = this.devTools
     }
     return this._gamekit
   }
 
   systemDidEnable() {
-    this.eventSubscriber = new EventSubscriber(this.engine)
+    this.eventSubscriber = new EventSubscriber(this.renderingInterface)
     return this.gamekit.setupLifecycle()
   }
 }

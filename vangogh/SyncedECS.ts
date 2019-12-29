@@ -1,6 +1,7 @@
 import { RendererParcelSceneToScript } from 'dcl/kernel/scene-scripts/kernelSpace/RendererParcelSceneToScript'
 import { exposeMethod } from 'dcl/rpc/common/API'
 import { EventDispatcher } from 'dcl/rpc/common/core/EventDispatcher'
+import { IEventNames } from 'dcl/scene-api'
 import { IRendererParcelSceneToScript } from 'dcl/scene-api/interface/IRendererParcelSceneToScript'
 import { ECS } from 'dcl/synced-ecs/ecs/EntityComponentState'
 import { emptyState } from 'dcl/synced-ecs/ecs/generators/emptyState'
@@ -35,7 +36,8 @@ export class SyncedECS extends RendererParcelSceneToScript implements IRendererP
     this.ecs = emptyState('0')
   }
   @exposeMethod
-  on(event: string): Promise<void> {
+  on(event: IEventNames): Promise<void> {
+    super.subscribe(event)
     return Promise.resolve()
   }
   @exposeMethod
