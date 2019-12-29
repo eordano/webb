@@ -2,11 +2,11 @@ import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/action
 import { getCurrentWorldPosition } from 'dcl/kernel/scene-atlas/02-parcel-sight/selectors'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Atlas } from './atlas/Atlas'
+import { Avatar } from './avatar/Avatar'
 import { Position } from './controls/Position'
 import { configured } from './store'
 import './StoreSyncedECS'
-import { Atlas } from './atlas/Atlas'
-import { Avatar } from './avatar/Avatar'
 
 configured.start()
 

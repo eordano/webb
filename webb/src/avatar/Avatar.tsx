@@ -1,33 +1,25 @@
-import { SceneLoader } from '@babylonjs/core'
+import { SceneLoader, Vector3 } from '@babylonjs/core'
 import * as Loaders from '@babylonjs/loaders'
 import { RootState } from 'dcl/kernel/core/types'
-import React from 'react'
-import { BabylonScene } from './babylon/scene'
+import React, { useContext } from 'react'
+import { BabylonJSContext, Engine, Scene } from 'react-babylonjs'
 
 const p = new Loaders.GLTFFileLoader()
 SceneLoader.RegisterPlugin(p)
 
 export function Avatar(props: RootState) {
+  const babylonContext = useContext(BabylonJSContext)
   return (
     <div>
       <h2>Avatar renderer</h2>
-      <BabylonScene
-        onSceneMount={args => {
-          const { canvas, engine, scene } = args
-
-          // The first parameter can be used to specify which mesh to import. Here we import all meshes
-          SceneLoader.Append('https://models.babylonjs.com/', 'alien.glb', scene, function(newMeshes) {
-            scene.createDefaultCameraOrLight(true, true, true)
-            scene.activeCamera.attachControl(canvas, false)
-
-            engine.runRenderLoop(() => {
-              if (scene) {
-                scene.render()
-              }
-            })
-          })
-        }}
-      ></BabylonScene>
+      <Engine canvasId="sample-canvas" babylonJSContext={babylonContext}>
+        <Scene>
+          <freeCamera name="camera1" position={new Vector3(0, 5, -10)} cameraDirection={Vector3.Zero()} />
+          <hemisphericLight name="light1" intensity={0.7} direction={Vector3.Up()} />
+          <sphere name="sphere1" diameter={2} segments={16} position={new Vector3(0, 1, 0)} />
+          <ground name="ground1" width={6} height={6} subdivisions={2} />
+        </Scene>
+      </Engine>
     </div>
   )
 }

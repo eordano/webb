@@ -49,6 +49,8 @@ ts_library(
         "@npm//@babylonjs/core",
         "@npm//@babylonjs/loaders",
         "@npm//react",
+        "@npm//react-babylonjs",
+        "@npm//react-reconciler",
         "@npm//react-json-tree",
         "@npm//react-dom",
         "@npm//react-redux",
@@ -66,7 +68,6 @@ ts_devserver(
     scripts = [
         "@npm//fp-future:fp-future.umd.js",
         "@npm//react:react.umd.js",
-        "@npm//react-dom:react-dom.umd.js",
         "@npm//redux:redux.umd.js",
         "@npm//redux-saga:redux-saga.umd.js",
         "@npm//typesafe-actions:typesafe-actions.umd.js",
@@ -74,6 +75,8 @@ ts_devserver(
         "@npm//util:util.umd.js",
         ":babylon-core_umd",
         ":babylon-loaders_umd",
+        ":react-dom_umd",
+        ":react-babylonjs_umd",
         ":redux-saga-effects_umd",
         ":ethereum-cryptography-sha256_umd",
     ],
@@ -82,6 +85,7 @@ ts_devserver(
         "index.html",
         "static/index.css",
         "static/favicon.ico",
+        "static/babylonEngine/environment.dds",
         "//gamekit:gamekit_bundle",
     ],
     deps = [
@@ -103,6 +107,29 @@ npm_umd_bundle(
     package_name = "@babylonjs/loaders",
     entry_point = "@npm//:node_modules/@babylonjs/loaders/index.js",
     package = "@npm//@babylonjs/loaders",
+)
+
+npm_umd_bundle(
+    name = "react-dom_umd",
+    package_name = "react-dom",
+    entry_point = "@npm//:node_modules/react-dom/index.js",
+    excluded = ["react"],
+    package = "@npm//react-dom",
+)
+
+npm_umd_bundle(
+    name = "react-babylonjs_umd",
+    package_name = "react-babylonjs",
+    entry_point = "@npm//:node_modules/react-babylonjs/dist/react-babylonjs.umd.js",
+    excluded = [
+        "react",
+        "react-dom",
+        "@babylonjs/core",
+        "@babylonjs/loaders",
+        "@babylonjs/gui",
+        "@babylonjs/inspector",
+    ],
+    package = "@npm//react-babylonjs",
 )
 
 npm_umd_bundle(
