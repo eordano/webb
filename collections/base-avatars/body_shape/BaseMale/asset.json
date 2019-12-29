@@ -1,5 +1,5 @@
 {
-  "name": "male_body",
+  "name": "BaseMale",
   "i18n": {
     "en": "Man",
     "es": "Hombre"
@@ -11,6 +11,6 @@
    ],
   "category": "body_shape",
   "main": [
-    {"type": "BaseMale", "model": "BaseMale.glb"}
+    {"type": "dcl://base-avatars/BaseMale", "model": "BaseMale.glb"}
   ]
 }
