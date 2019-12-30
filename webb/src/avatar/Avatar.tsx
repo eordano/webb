@@ -38,10 +38,14 @@ export function Avatar(props: RootState) {
         <Engine
           canvasId="sample-canvas"
           babylonJSContext={babylonContext}
-          canvasStyle={{ width: '200px', height: '300px' }}
+          canvasStyle={{ width: '500px', height: '800px' }}
         >
           <Scene>
-            <freeCamera name="camera1" position={new Vector3(0, 5, -10)} cameraDirection={Vector3.Zero()} />
+            <freeCamera
+              name="camera1"
+              position={new Vector3(0, 1.5, 3.4)}
+              rotation={new Vector3(0.1, 3.1710396286766813, 0)}
+            />
             <hemisphericLight
               name="light1"
               intensity={0.7}

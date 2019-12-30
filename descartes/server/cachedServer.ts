@@ -238,15 +238,22 @@ export async function createServer(descartes: Descartes, port: number = 1338) {
     )
   )
   const wearableDict = (wearableCollection as Array<{ id: string }>).reduce((catalog, entry) => {
-    catalog[entry.id] = entry
-    return catalog
+    return {
+      ...catalog,
+      ...entry['wearables'].reduce((collection: any, item: any) => {
+        collection[item.id] = item
+        return collection
+      }, {})
+    }
   }, {})
+  console.log(Object.keys(wearableDict).filter(wearable => wearable.startsWith('dcl://base-avatars/Base')))
   app.get('/wearable/:base/:collection/:name/:file', async (req, res) => {
     console.log(`Fetch wearable:`, req.params)
     const { collection, base, name, file } = req.params
     const asset = wearableDict[`dcl://${collection}/${name}`]
     const exists = !!asset
     if (!exists) {
+      console.log('no asset', collection, name)
       res.status(404).end()
       return
     }
