@@ -271,7 +271,7 @@ function selectRepresentation(asset: any, baseShape: string) {
 }
 function selectFile(representation: any, name: string) {
   const value = representation.contents.filter((_: any) => _.file === name)
-  if (value) {
+  if (value && value.length) {
     return value[0].hash
   } else {
     return null

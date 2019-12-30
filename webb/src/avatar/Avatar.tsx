@@ -40,15 +40,19 @@ export function Avatar(props: RootState) {
           babylonJSContext={babylonContext}
           canvasStyle={{ width: '500px', height: '800px' }}
         >
-          <Scene onSceneMount={async (args) => {
-            const { scene } = args
-            const containers = await FullAvatar({ avatar })(scene)
-            containers.forEach((_: AssetContainer) => _ && _.addAllToScene())
-          }}>
-            <freeCamera
+          <Scene
+            onSceneMount={async args => {
+              const { scene } = args
+              const containers = await FullAvatar({ avatar })(scene)
+              containers.forEach((_: AssetContainer) => _ && _.addAllToScene && _.addAllToScene())
+            }}
+          >
+            <arcRotateCamera
               name="camera1"
-              position={new Vector3(0, 1.5, 3.4)}
-              rotation={new Vector3(0.1, 3.1710396286766813, 0)}
+              alpha={Math.PI / 2}
+              beta={Math.PI / 2}
+              radius={1.9}
+              target={new Vector3(0, 1.5, 0)}
             />
             <hemisphericLight
               name="light1"

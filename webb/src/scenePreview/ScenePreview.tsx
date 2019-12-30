@@ -14,7 +14,7 @@ import { basename, filename, RendereableEntity } from '../BabylonHelpers'
 type CurrentScene = { currentScene: string } & any
 
 export function ScenePreview(props: RootState & CurrentScene) {
-  const currentScene = props.currentScene || 'QmXUp1MfCaxvRPpTNyLAWmiVxeTDVhU6mVAGYqtmo7FDft'
+  const currentScene = props.currentScene
   const babylonContext = useContext(BabylonJSContext)
   const statusRunning = props.sceneLifeCycle.running[currentScene]
 
