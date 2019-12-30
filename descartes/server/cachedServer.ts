@@ -1,11 +1,10 @@
 import cors from 'cors'
+import { indexedCatalog } from 'dcl/collections/src/catalog/outputCatalog'
 import { Coordinate } from 'dcl/utils'
 import { ears } from 'dcl/vangogh/ears'
 import express from 'express'
 import fileType from 'file-type'
-import path from 'path'
 import { DataResponse, getConnectedUsers } from '../datadog/getConnectedUsers'
-import { readJSON } from '../disk/driver/readJSON'
 import { Descartes } from '../logic/descartes'
 import { deploys, deploysBefore, findUser, userMovements, userPerf } from '../metabase/metabase'
 
@@ -226,31 +225,10 @@ export async function createServer(descartes: Descartes, port: number = 1338) {
     res.end(content)
   })
 
-  const wearableCollection = await readJSON(
-    path.join(
-      __dirname /* server */,
-      '..' /* descartes */,
-      '..' /* root */,
-      'collections',
-      'src',
-      'catalog',
-      'expected.json'
-    )
-  )
-  const wearableDict = (wearableCollection as Array<{ id: string }>).reduce((catalog, entry) => {
-    return {
-      ...catalog,
-      ...entry['wearables'].reduce((collection: any, item: any) => {
-        collection[item.id] = item
-        return collection
-      }, {})
-    }
-  }, {})
-  console.log(Object.keys(wearableDict).filter(wearable => wearable.startsWith('dcl://base-avatars/Base')))
   app.get('/wearable/:base/:collection/:name/:file', async (req, res) => {
     console.log(`Fetch wearable:`, req.params)
     const { collection, base, name, file } = req.params
-    const asset = wearableDict[`dcl://${collection}/${name}`]
+    const asset = indexedCatalog[`dcl://${collection}/${name}`]
     const exists = !!asset
     if (!exists) {
       console.log('no asset', collection, name)

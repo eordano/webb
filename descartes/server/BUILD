@@ -15,6 +15,7 @@ ts_library(
     deps = [
         "//config",
         "//descartes",
+        "//collections",
         "//descartes/datadog",
         "//descartes/metabase",
         "//kernel",
@@ -49,8 +50,8 @@ nodejs_binary(
     data = [
         ":server_lib",
         "//collections:collections_assets",
-        "//collections:catalog",
         "//descartes",
+        "//collections",
         "//descartes/datadog",
         "//descartes/metabase",
         "//:secrets",

@@ -63,6 +63,8 @@ export type Wearable = {
 export type BodyShapeRespresentation = {
   bodyShapes: string[]
   mainFile: string
+  overrideReplaces?: string[]
+  overrideHides?: string[]
   contents: FileAndHash[]
 }
 

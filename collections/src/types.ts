@@ -16,7 +16,12 @@ export type Wearable = {
   type: 'wearable'
   thumbnail: string
   category: string
+  image?: string
+  replaces?: string[]
+  hides?: string[]
   baseUrl: string
+  description?: string
+  rarity?: string
   i18n: {
     code: string
     text: string
@@ -29,6 +34,8 @@ export type WearableId = string
 export type BodyShapeRespresentation = {
   bodyShapes: string[]
   mainFile: string
+  overrideReplaces?: string[]
+  overrideHides?: string[]
   contents: FileAndHash[]
 }
 

@@ -35,6 +35,7 @@ ts_library(
         "//protos:comms",
         "//protos:broker",
         "//utils",
+        "//collections",
         "//synced-ecs",
         "//config",
         "//vangogh",
