@@ -2942,6 +2942,11 @@ d3@^5.14.2:
     d3-voronoi "1"
     d3-zoom "1"
 
+dappeteer@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/dappeteer/-/dappeteer-0.6.0.tgz#b9668f4481dd9be1bdf647e141f56b542aeb987c"
+  integrity sha512-AqdWDku2w6IlLerqfstQlQ5KK9ABMjJMohl35xsUQQyQjJgrmGOv99SQt9I6C+7xhF/7FjML6S4b0zzi04U+Jw==
+
 dashdash@^1.12.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"

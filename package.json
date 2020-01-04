@@ -56,6 +56,7 @@
         "chai": "^4.2.0",
         "cors": "^2.8.5",
         "d3": "^5.14.2",
+        "dappeteer": "^0.6.0",
         "decentraland-renderer": "^1.8.4188",
         "decentraland-ui": "^2.12.1",
         "defaults": "^1.0.3",
