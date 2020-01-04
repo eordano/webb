@@ -1,0 +1,10 @@
+{
+  "contractAddresses": {
+    "LANDRegistry": "0x7...",
+    "EstateRegistry": "0x1..."
+  },
+  "txConfig": {
+    "gasPrice": 27000000000,
+    "gas": 1000000
+  }
+}
