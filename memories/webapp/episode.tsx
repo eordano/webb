@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from 'react'
-function Navbar(props: { id: string }) {
-  return (
-    <>
-      <a href='#prev'>First</a>
-      <a href='#prev'>Previous</a>
-      <a href='#prev'>Random</a>
-      <a href='#prev'>Next</a>
-      <a href='#prev'>Last</a>
-    </>
-  )
-}
-
+import { Navbar } from './Navbar'
 export function Episode(props) {
   const { pathname } = props
-  const id = pathname.split('/')[2]
+  const id = decodeURIComponent(pathname.split('/')[2])
   const [data, setData] = useState()
   const [showEdit, setEdit] = useState()
   const [newName, setNewName] = useState(id)
@@ -37,7 +26,7 @@ export function Episode(props) {
   })
   return (
     <div key='index'>
-      <h3>Memorias Fragmentadas</h3>
+      <h3><a href='/'>Memorias Fragmentadas</a></h3>
       <h4>
         <Navbar id={id} />
       </h4>

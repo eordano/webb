@@ -7,7 +7,7 @@ import path from 'path'
 
 const currentWD = process.env.CWD || process.env.BUILD_WORKING_DIRECTORY || process.env.PWD
 
-export async function createServer(port: number = 8000) {
+export async function createServer(port: number = 9001) {
   const app = express()
   app.use(cors())
   app.use(json())
@@ -62,10 +62,10 @@ export async function createServer(port: number = 8000) {
       const stepId = new Date().getTime()
       await promises.writeFile(pathTo('steps/' + stepId), JSON.stringify(body))
       steps[stepId] = JSON.stringify(body)
-      res.redirect('http://localhost:3000/ep/' + id)
+      res.redirect('/ep/' + id)
     } catch (e) {
       console.log(e)
-      res.redirect('http://localhost:3000/')
+      res.redirect('/')
     }
   })
   app.get('/list', async (req, res) => {

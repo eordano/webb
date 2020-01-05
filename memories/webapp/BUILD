@@ -15,6 +15,7 @@ ts_library(
         "@npm//@types/react-dom",
         "@npm//react",
         "@npm//react-dom",
+        "@npm//react-markdown",
     ],
 )
 
@@ -33,11 +34,12 @@ ts_devserver(
     name = "devserver",
     additional_root_paths = [":static"],
     entry_module = "dcl/memories/webapp/index",
-    port = 3000,
+    port = 9002,
     serving_path = "/bundle.js",
     static_files = [
         "index.html",
         "index.css",
+        "@npm//react-markdown:react-markdown/umd/react-markdown.js",
         ":static",
     ],
     deps = [
