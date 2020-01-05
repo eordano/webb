@@ -1,10 +1,13 @@
 import { Sail, Through } from 'dcl/jslibs/sail'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Index } from './contents'
+import { Episode } from './episode'
 
 renderApp(
   <Sail>
-    <Through path='/' catchAll renderer={(props: any) => <h1> hi</h1>} />
+    <Through path={_ => _.startsWith('/ep/')} renderer={(props: any) => <Episode {...props} />} />
+    <Through path='/' renderer={(props: any) => <Index {...props} />} key='root' />
   </Sail>
 )
 

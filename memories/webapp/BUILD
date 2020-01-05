@@ -6,7 +6,7 @@ ts_library(
     name = "webapp",
     srcs = glob(
         include = [
-            "index.tsx",
+            "*.tsx",
         ],
     ),
     deps = [
@@ -22,8 +22,7 @@ filegroup(
     name = "static",
     srcs = glob(
         include = [
-            "static/**/*",
-            "static/ethereum-cryptography/*",
+            "index.*",
         ],
     ),
 )
@@ -38,9 +37,22 @@ ts_devserver(
     serving_path = "/bundle.js",
     static_files = [
         "index.html",
-        "static/index.css",
+        "index.css",
         ":static",
-        "@npm//react",
-        "@npm//react-dom",
-    ]
+    ],
+    deps = [
+        ":react-dom_umd",
+        ":webapp",
+        "@npm//react:react.umd.js",
+    ],
+)
+
+load("@build_bazel_rules_nodejs//internal/npm_install:npm_umd_bundle.bzl", "npm_umd_bundle")
+
+npm_umd_bundle(
+    name = "react-dom_umd",
+    package_name = "react-dom",
+    entry_point = "@npm//:node_modules/react-dom/index.js",
+    excluded = ["react"],
+    package = "@npm//react-dom",
 )

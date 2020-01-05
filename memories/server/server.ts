@@ -1,4 +1,4 @@
-import { json } from 'body-parser'
+import { json, urlencoded } from 'body-parser'
 import cors from 'cors'
 import { zipTwo } from 'dcl/utils'
 import express from 'express'
@@ -11,6 +11,7 @@ export async function createServer(port: number = 8000) {
   const app = express()
   app.use(cors())
   app.use(json())
+  app.use(urlencoded({ extended: true }))
 
   const episodes = await readDirAsDict('episodes')
   const steps = await readDirAsDict('steps')
@@ -28,6 +29,15 @@ export async function createServer(port: number = 8000) {
     return path.join(currentWD, pathName)
   }
 
+  async function add(id: string, episode: string) {
+    episodes[id] = episode
+    await promises.writeFile(pathTo('episodes/' + id), episode)
+  }
+  async function remove(id: string) {
+    delete episodes[id]
+    await promises.unlink(pathTo('episodes/' + id))
+  }
+
   app.post('/steps', async (req, res, next) => {
     try {
       const body = await req.body
@@ -35,23 +45,30 @@ export async function createServer(port: number = 8000) {
         return res.status(400)
       }
       if (body.add) {
-        episodes[body.id] = body.body
-        await promises.writeFile(pathTo('episodes/' + body.id), body.body)
+        await add(body.id, body.body)
+      }
+      if (body.edit) {
+        await remove(body.id)
+        await add(body['new-id'], body.body)
       }
       if (body.remove) {
-        delete episodes[body.id]
-        await promises.unlink(pathTo('episodes/' + body.id))
+        await remove(body.id)
       }
       const stepId = new Date().getTime()
       await promises.writeFile(pathTo('steps/' + stepId), JSON.stringify(body))
       steps[stepId] = JSON.stringify(body)
-      res.json({ ok: true })
+      res.redirect('http://localhost:3000/')
     } catch (e) {
       console.log(e)
     }
   })
   app.get('/list', async (req, res) => {
     res.json(Object.keys(episodes))
+  })
+  app.get('/ep/:id', async (req, res) => {
+    const { id } = req.params
+    const episode = episodes[id]
+    res.json({ id, episode })
   })
   app.get('/steps', async (req, res) => {
     res.json(steps)
