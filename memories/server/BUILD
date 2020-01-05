@@ -18,6 +18,7 @@ ts_library(
         "@npm//@types/express",
         "@npm//@types/node",
         "@npm//cors",
+        "//utils",
         "@npm//express",
         "@npm//fp-future",
         "@npm//typescript",
@@ -28,6 +29,7 @@ nodejs_binary(
     name = "server",
     data = [
         ":server_lib",
+        "//utils",
         # App Dependencies
         "@npm//express",
         "@npm//cors",
