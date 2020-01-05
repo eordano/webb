@@ -13,7 +13,7 @@ export function Index() {
       return
     }
     ;(async function() {
-      const request = await fetch('http://localhost:8000/list')
+      const request = await fetch('/api/list')
       const body = await request.json()
       setData(body)
     })()
@@ -21,8 +21,8 @@ export function Index() {
   return (
     <div key='index'>
       <h1>Memorias Fragmentadas</h1>
-      <ul>{data === 'loading' || data === undefined ? 'Loading..' : data.map(_ => <li key={`_${_}`}>{_}</li>)}</ul>
-      <form action='http://localhost:8000/steps' method='POST'>
+      <ul>{data === 'loading' || data === undefined ? 'Loading..' : data.map(_ => <li key={`_${_}`}><a href={`/ep/${_}`}>{_}</a></li>)}</ul>
+      <form action='/api/steps' method='POST'>
         <div>
           <label htmlFor='id'>Episode name:</label>
           <br />

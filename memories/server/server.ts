@@ -40,16 +40,21 @@ export async function createServer(port: number = 8000) {
 
   app.post('/steps', async (req, res, next) => {
     try {
-      const body = await req.body
-      if (!body.add && !body.remove) {
-        return res.status(400)
+      const body = req.body
+      let id = body.id
+      if (!body.add && !body.remove && !body.edit) {
+        return res.status(400).end()
       }
       if (body.add) {
         await add(body.id, body.body)
       }
       if (body.edit) {
-        await remove(body.id)
+        console.log('editing')
+        try {
+          await remove(body.id)
+        } catch (e) {}
         await add(body['new-id'], body.body)
+        id = body['new-id']
       }
       if (body.remove) {
         await remove(body.id)
@@ -57,9 +62,10 @@ export async function createServer(port: number = 8000) {
       const stepId = new Date().getTime()
       await promises.writeFile(pathTo('steps/' + stepId), JSON.stringify(body))
       steps[stepId] = JSON.stringify(body)
-      res.redirect('http://localhost:3000/')
+      res.redirect('http://localhost:3000/ep/' + id)
     } catch (e) {
       console.log(e)
+      res.redirect('http://localhost:3000/')
     }
   })
   app.get('/list', async (req, res) => {

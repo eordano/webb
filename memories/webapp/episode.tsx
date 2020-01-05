@@ -1,4 +1,15 @@
 import React, { useEffect, useState } from 'react'
+function Navbar(props: { id: string }) {
+  return (
+    <>
+      <a href='#prev'>First</a>
+      <a href='#prev'>Previous</a>
+      <a href='#prev'>Random</a>
+      <a href='#prev'>Next</a>
+      <a href='#prev'>Last</a>
+    </>
+  )
+}
 
 export function Episode(props) {
   const { pathname } = props
@@ -18,7 +29,7 @@ export function Episode(props) {
       return
     }
     ;(async function() {
-      const request = await fetch(`http://localhost:8000/ep/${id}`)
+      const request = await fetch(`/api/ep/${id}`)
       const body = await request.json()
       setData(body)
       setNewBody(body.episode)
@@ -26,6 +37,10 @@ export function Episode(props) {
   })
   return (
     <div key='index'>
+      <h3>Memorias Fragmentadas</h3>
+      <h4>
+        <Navbar id={id} />
+      </h4>
       {data === 'loading' || data === undefined ? (
         'Loading..'
       ) : (
@@ -37,7 +52,7 @@ export function Episode(props) {
       <button style={{ display: showEdit ? 'none' : 'block' }} onClick={() => setEdit(true)}>
         Edit
       </button>
-      <form action='http://localhost:8000/steps' method='POST' style={{ display: showEdit ? 'block' : 'none' }}>
+      <form action='/api/steps' method='POST' style={{ display: showEdit ? 'block' : 'none' }}>
         <div>
           <label htmlFor='id'>Episode name:</label>
           <br />
