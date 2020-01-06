@@ -36,7 +36,7 @@
     "chai-bignumber": "2.0.2",
     "eslint": "4.19.1",
     "eslint-config-prettier": "2.10.0",
-    "eslint-plugin-prettier": "2.6.2",
+    "eslint-plugin-prettier": "2.7.0",
     "ethereumjs-abi": "0.6.5",
     "ganache-cli": "6.1.8",
     "mocha": "3.5.3",
