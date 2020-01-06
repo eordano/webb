@@ -39,7 +39,7 @@ export function Episode(props) {
         </div>
       )}
       <button className='editButton' style={{ display: showEdit ? 'none' : 'block' }} onClick={() => setEdit(true)}>
-        Edit
+        Edit Chapter
       </button>
       <form action='/api/steps' method='POST' style={{ display: showEdit ? 'block' : 'none' }}>
         <div>
