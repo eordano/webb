@@ -31,6 +31,7 @@ export function Index() {
               </li>
             ))}
       </ul>
+
       <button className='addButton' onClick={() => setAdd(true)} style={{ display: addVisible ? 'none' : 'block' }}>
         Add Chapter
       </button>
