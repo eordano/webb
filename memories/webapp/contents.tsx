@@ -18,7 +18,7 @@ export function Index() {
       setData(body)
     })()
   })
-  const [addVisible, setAdd] = useState(false)
+  const [addVisible, setAdd] = useState(true)
   return (
     <div key='index'>
       <h1>Memorias Fragmentadas</h1>
@@ -35,7 +35,7 @@ export function Index() {
       <button className='addButton' onClick={() => setAdd(true)} style={{ display: addVisible ? 'none' : 'block' }}>
         Add Chapter
       </button>
-      <form action='/api/steps' method='POST' style={{ display: addVisible ? 'block' : 'none' }}>
+      <form action='/api/steps' className='addChapter' method='POST' style={{ display: addVisible ? 'block' : 'none' }}>
         <div>
           <label htmlFor='id'>Episode name:</label>
           <br />
@@ -48,7 +48,12 @@ export function Index() {
         </div>
         <input type='hidden' name='add' value='true'></input>
         <div>
-          <button>Submit</button>
+          <button className='learn-more'>
+            <span className='circle'>
+              <span className='icon arrow'></span>
+            </span>
+            <span className='button-text'>Submit</span>
+          </button>
         </div>
       </form>
     </div>

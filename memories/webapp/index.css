@@ -41,14 +41,70 @@
 }
 
 #root form input {
-  border: 1px solid black;
   padding: 3px;
   width: 100%;
+  border: none;
 }
 
 #root form textarea {
-  border: 1px solid black;
   padding: 3px;
   width: 100%;
-  min-height: 300px;
+  min-height: 200px;
+}
+
+.addChapter {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#root form.addChapter label {
+  font-size: 1.2em;
+  padding: 4px;
+}
+
+#root form.addChapter {
+  margin-top: 20px;
+}
+#root form.addChapter textarea {
+  padding: 8px;
+}
+#root form.addChapter input {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  margin-top: 5px;
+  padding: 4px;
+  border-radius: 2px;
+  border: 1px solid black;
+}
+button.learn-more {
+  margin: auto;
+}
+
+button {
+  background-color: #3333fa;
+  border: none;
+
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #4166ff;
+}
+
+input,
+button,
+textarea {
+  font-size: 16px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  outline: none;
 }

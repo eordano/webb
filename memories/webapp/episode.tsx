@@ -24,11 +24,28 @@ export function Episode(props) {
       setNewBody(body.episode)
     })()
   })
+  const [episodeList, setEpisodeList] = useState()
+  useEffect(() => {
+    if (episodeList === undefined) {
+      setEpisodeList('loading')
+    }
+    if (episodeList === 'loading') {
+      return
+    }
+    if (typeof episodeList === 'object') {
+      return
+    }
+    ;(async function() {
+      const request = await fetch('/api/list')
+      const body = await request.json()
+      setEpisodeList(body)
+    })()
+  })
   return (
     <div key='index'>
       <h3><a href='/'>Memorias Fragmentadas</a></h3>
       <h4>
-        <Navbar id={id} />
+        <Navbar id={id} episodeList={episodeList} />
       </h4>
       {data === 'loading' || data === undefined ? (
         'Loading..'
@@ -41,7 +58,8 @@ export function Episode(props) {
       <button className='editButton' style={{ display: showEdit ? 'none' : 'block' }} onClick={() => setEdit(true)}>
         Edit Chapter
       </button>
-      <form action='/api/steps' method='POST' style={{ display: showEdit ? 'block' : 'none' }}>
+      <form action='/api/steps' className='addChapter' method='POST' style={{ display: showEdit ? 'block' : 'none' }}>
+        <h4>Editing {newName}</h4>
         <div>
           <label htmlFor='id'>Episode name:</label>
           <br />
