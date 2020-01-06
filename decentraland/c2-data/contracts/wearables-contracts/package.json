@@ -39,7 +39,7 @@
     "ethereumjs-abi": "0.6.7",
     "ganache-cli": "6.4.3",
     "mocha": "6.1.4",
-    "openzeppelin-solidity": "2.2.0",
+    "openzeppelin-solidity": "2.4.0",
     "prettier": "1.17.0",
     "solium": "1.2.5"
   },
