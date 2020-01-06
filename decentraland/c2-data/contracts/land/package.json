@@ -41,7 +41,7 @@
     "ganache-cli": "6.1.8",
     "mocha": "3.5.3",
     "npx": "9.7.1",
-    "prettier": "1.14.2",
+    "prettier": "1.19.1",
     "solidity-sha3": "0.4.1",
     "solium": "1.1.8",
     "truffle": "4.1.15",
