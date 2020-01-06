@@ -2,11 +2,11 @@ import React from 'react'
 export function Navbar(props: { id: string }) {
   return (
     <>
-      <a href='#prev'>First</a>
-      <a href='#prev'>Previous</a>
-      <a href='#prev'>Random</a>
-      <a href='#prev'>Next</a>
-      <a href='#prev'>Last</a>
+      <a className='navbar' href='#prev'>&lt;&lt; first </a>
+      <a className='navbar' href='#prev'>&lt; back</a>
+      <a className='navbar' href='#prev'>🎲</a>
+      <a className='navbar' href='#prev'>next &gt;</a>
+      <a className='navbar' href='#prev'>last &gt; &gt;</a>
     </>
   )
 }

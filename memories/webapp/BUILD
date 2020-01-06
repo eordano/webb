@@ -15,7 +15,6 @@ ts_library(
         "@npm//@types/react-dom",
         "@npm//react",
         "@npm//react-dom",
-        "@npm//react-markdown",
     ],
 )
 
@@ -39,7 +38,6 @@ ts_devserver(
     static_files = [
         "index.html",
         "index.css",
-        "@npm//react-markdown:react-markdown/umd/react-markdown.js",
         ":static",
     ],
     deps = [

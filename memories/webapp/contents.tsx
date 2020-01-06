@@ -18,11 +18,23 @@ export function Index() {
       setData(body)
     })()
   })
+  const [addVisible, setAdd] = useState(false)
   return (
     <div key='index'>
       <h1>Memorias Fragmentadas</h1>
-      <ul>{data === 'loading' || data === undefined ? 'Loading..' : data.map(_ => <li key={`_${_}`}><a href={`/ep/${_}`}>{_}</a></li>)}</ul>
-      <form action='/api/steps' method='POST'>
+      <ul>
+        {data === 'loading' || data === undefined
+          ? 'Loading..'
+          : data.sort().map(_ => (
+              <li key={`_${_}`}>
+                <a href={`/ep/${_}`}>{_}</a>
+              </li>
+            ))}
+      </ul>
+      <button className='addButton' onClick={() => setAdd(true)} style={{ display: addVisible ? 'none' : 'block' }}>
+        Add Chapter
+      </button>
+      <form action='/api/steps' method='POST' style={{ display: addVisible ? 'block' : 'none' }}>
         <div>
           <label htmlFor='id'>Episode name:</label>
           <br />
