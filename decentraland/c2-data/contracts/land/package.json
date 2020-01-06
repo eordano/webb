@@ -38,7 +38,7 @@
     "eslint-config-prettier": "2.10.0",
     "eslint-plugin-prettier": "2.6.2",
     "ethereumjs-abi": "0.6.5",
-    "ganache-cli": "6.1.8",
+    "ganache-cli": "6.8.1",
     "mocha": "3.5.3",
     "npx": "9.7.1",
     "prettier": "1.14.2",
