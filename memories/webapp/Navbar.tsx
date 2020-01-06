@@ -17,7 +17,10 @@ export function Navbar(props: { id: string; episodeList: string[] }) {
           &lt; back
         </a>
       )}
-      <a className='navbar' href={'/ep/' + sorted[Math.floor(Math.random() * sorted.length)]}>
+      <a
+        className='navbar'
+        href={'/ep/' + sorted.filter(_ => _ != id)[Math.floor(Math.random() * (sorted.length - 1))]}
+      >
         🎲
       </a>
       {current < sorted.length - 1 && (
