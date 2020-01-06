@@ -36,7 +36,7 @@
     "eslint": "4.19.1",
     "eslint-config-prettier": "2.10.0",
     "eslint-plugin-prettier": "2.7.0",
-    "ethereumjs-abi": "0.6.7",
+    "ethereumjs-abi": "0.6.8",
     "ganache-cli": "6.4.3",
     "mocha": "6.1.4",
     "openzeppelin-solidity": "2.2.0",
