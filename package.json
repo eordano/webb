@@ -3,6 +3,7 @@
         "jsxSingleQuote": true,
         "singleQuote": true,
         "semi": false,
+        "tabWidth": 2,
         "printWidth": 120
     },
     "dependencies": {
@@ -133,6 +134,7 @@
         "util": "0.12.1",
         "utils": "0.3.1",
         "uuid": "3.3.3",
+        "web3x-es": "^4.0.6",
         "webrtc-adapter": "7.3.0",
         "webworker-threads": "0.7.17",
         "wrtc": "0.4.3",
