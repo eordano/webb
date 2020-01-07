@@ -792,7 +792,7 @@
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
 
-"@types/http-proxy@^1.17.2":
+"@types/http-proxy@1.17.2":
   version "1.17.2"
   resolved "https://registry.yarnpkg.com/@types/http-proxy/-/http-proxy-1.17.2.tgz#3b7fb5365a00d47129967b0b2da51c2123692314"
   integrity sha512-Qfb7batJJBlI8wcrd48vHpgsOOYzQQa+OZcaIz33jkJPe8A7KktAJFmRAiR42s5BfnErdlFnOyQucq2BKy/98g==
@@ -5227,7 +5227,7 @@ http-errors@~1.7.2:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
 
-http-proxy@^1.13.0, http-proxy@^1.18.0:
+http-proxy@1.18.0, http-proxy@^1.13.0:
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.0.tgz#dbe55f63e75a347db7f3d99974f2692a314a6a3a"
   integrity sha512-84I2iJM/n1d4Hdgc6y2+qY5mDaz2PUVjlg9znE9byl+q0uC3DeByqBGReQu5tpLK0TAqTIXScRUV+dg7+bUPpQ==
@@ -8726,7 +8726,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-markdown@^4.3.1:
+react-markdown@4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-markdown/-/react-markdown-4.3.1.tgz#39f0633b94a027445b86c9811142d05381300f2f"
   integrity sha512-HQlWFTbDxTtNY6bjgp3C3uv1h2xcjCSi1zAEzfBW9OwJJvENSYiLXWNXN5hHLsoqai7RnZiiHzcnWdXk2Splzw==
@@ -11191,7 +11191,7 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-web3x-es@^4.0.6:
+web3x-es@4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/web3x-es/-/web3x-es-4.0.6.tgz#87a330851c7492936d5cb2a4ce9cbc2276dd841f"
   integrity sha512-zQHh+ykFTFp1b+jakBJnohXNJazLORQzwS9zXNmKaMqFM2uhhuTe0b8efDLtQ842uljd0wBujbuOdDgcOI08dw==
