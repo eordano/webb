@@ -3,10 +3,9 @@ import * as Loaders from '@babylonjs/loaders'
 import { setWorldPosition } from 'dcl/kernel/scene-atlas/01-user-position/actions'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Main } from './main'
+import { Login } from './login/Login'
 import { configured } from './store'
 import './StoreSyncedECS'
-
 const p = new Loaders.GLTFFileLoader()
 SceneLoader.RegisterPlugin(p)
 
@@ -24,7 +23,7 @@ configured.store.subscribe(() => {
     clearTimeout(timeouts.pending)
   }
   timeouts.pending = setTimeout(() => {
-    ReactDOM.render(<Main state={getState()} dispatch={dispatch} />, document.getElementById('root'))
+    ReactDOM.render(<Login />, document.getElementById('root'))
   }, 100)
 })
 
