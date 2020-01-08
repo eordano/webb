@@ -21,7 +21,7 @@ export function createAddressCertificateLink(
     })
   )
 }
-export function validateChainedSignature(sender: Address, messages: ChainedCertificatedMessage): boolean {
+export function validateChainedCertificate(sender: Address, messages: ChainedCertificatedMessage): boolean {
   return chainSignatureError(sender, messages) === undefined
 }
 
@@ -55,13 +55,15 @@ export function chainSignatureError(sender: Address, messages: ChainedCertificat
     if (typeof chained !== 'object') {
       return `Parsed message ${message.payload} is not an object`
     }
-    if (chained.type !== CHAINED_ADDRESS) {
-      return `Type of certificate link ${chained.type} is not recognized (expected CHAINED_ADDRESS=${CHAINED_ADDRESS})`
+    switch (chained.type) {
+      case CHAINED_ADDRESS:
+        if (!isAddress(chained.childAddress)) {
+          return `Invalid chained address: ${chained.childAddress}`
+        }
+        return chainSignatureError(chained.childAddress, messages.slice(1))
+      default:
+        return `Type of certificate link ${chained.type} is not recognized (expected CHAINED_ADDRESS=${CHAINED_ADDRESS})`
     }
-    if (!isAddress(chained.childAddress)) {
-      return `Invalid chained address: ${chained.childAddress}`
-    }
-    return chainSignatureError(chained.childAddress, messages.slice(1))
   } catch (e) {
     return `Could not parse JSON from ${message.payload}`
   }
