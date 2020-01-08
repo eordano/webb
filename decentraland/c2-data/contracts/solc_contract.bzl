@@ -3,7 +3,7 @@ load("@bazel_skylib//lib:paths.bzl", "paths")
 
 def solc_contract(name):
     src = name + ".sol"
-    baseFolder = "decentraland/c2-data/contracts"
+    baseFolder = "decentraland/c2-data/contracts/" + name
     folder = baseFolder + "/"
     file_prefix = folder.replace("/", "_")
     internal_output = "_internal_{}".format(name)

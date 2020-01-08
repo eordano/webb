@@ -29,7 +29,7 @@ ts_library(
         "@npm//@types",
         "@npm//@types/node",
         "@npm//ethereum-cryptography",
-        "@npm//web3x-es",
+        "@npm//web3x",
     ],
 )
 
@@ -48,7 +48,7 @@ ts_library(
         "@npm//@types/node",
         "@npm//chai",
         "@npm//ethereum-cryptography",
-        "@npm//web3x-es",
+        "@npm//web3x",
     ],
 )
 
@@ -58,7 +58,7 @@ jasmine_node_test(
     deps = [
         ":c2-data-spec",
         "@npm//jasmine",
-        "@npm//web3x-es",
+        "@npm//web3x",
     ],
 )
 

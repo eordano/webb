@@ -1,4 +1,4 @@
-import { WebsocketProvider } from 'web3x-es/providers'
+import { WebsocketProvider } from 'web3x/providers'
 
 export const mainnet = new WebsocketProvider('wss://mainnet.infura.io/ws')
 export const ropsten = new WebsocketProvider('wss://ropsten.infura.io/ws')

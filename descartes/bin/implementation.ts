@@ -114,7 +114,9 @@ function getSceneJsonRetrying(macros: any) {
       const mapping = await macros.getMappingForSceneId(sceneId)
       if (mapping) {
         const cid = mapping['scene.json']
-        return JSON.parse((await macros.getContent(cid)).toString())
+        const content = await macros.getContent(cid)
+        if (content)
+          return JSON.parse(content.toString())
       }
     } catch (e) {
       console.log(e)

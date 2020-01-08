@@ -32,7 +32,7 @@ ts_library(
         "@npm//@types",
         "@npm//@types/node",
         "@npm//ethereum-cryptography",
-        "@npm//web3x-es",
+        "@npm//web3x",
     ],
 )
 
@@ -46,6 +46,7 @@ ts_library(
     ]),
     deps = [
         ":c2-data-providers",
+        "//decentraland/c2-data/contracts/Katalyst",
         "//decentraland/c1-basics",
         "//jslibs/stableStringify",
         "@npm//@types/chai",
@@ -53,7 +54,7 @@ ts_library(
         "@npm//@types/node",
         "@npm//chai",
         "@npm//ethereum-cryptography",
-        "@npm//web3x-es",
+        "@npm//web3x",
     ],
 )
 
@@ -62,6 +63,7 @@ jasmine_node_test(
     coverage = True,
     deps = [
         ":c2-data-providers-spec",
+        "//decentraland/c2-data/contracts/Katalyst",
         "//decentraland/c1-basics",
         "//jslibs/stableStringify",
         "@npm//jasmine",
@@ -80,6 +82,7 @@ jasmine_test(
         ":c2-data-providers",
         ":c2-data-providers-spec",
         ":srcs",
+        "//decentraland/c2-data/contracts/Katalyst",
         "//decentraland/c1-basics",
         "//jslibs/stableStringify",
         "@npm//jasmine-console-reporter",
@@ -97,6 +100,7 @@ karma_web_test_suite(
     tags = ["native"],
     runtime_deps = [
         ":c2-data-providers",
+        "//decentraland/c2-data/contracts/Katalyst",
         "//decentraland/c1-basics",
         "@npm//ethereum-cryptography",
     ],

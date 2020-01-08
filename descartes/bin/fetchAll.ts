@@ -7,10 +7,15 @@ const currentPromises: Promise<any>[] = []
 const promiseAt: Record<string, number> = {}
 const data: Record<string, boolean> = {}
 
+const FROM_X = 25
+const FROM_Y = -150
+const TO_X = 150
+const TO_Y = 150
+
 export async function fetchAll(mode: DescartesMode, hasData = (x: number, y: number) => !!data[`${x},${y}`]) {
   try {
-    for (let ii = 25; ii >= -150; ii--) {
-      for (let jj = 150; jj >= -150; jj--) {
+    for (let ii = FROM_X; ii <= TO_X; ii++) {
+      for (let jj = FROM_Y; jj <= TO_Y; jj++) {
         if (workers.count > MAX_WORKERS) {
           await Promise.race(currentPromises.filter(_ => !!_))
         }
@@ -26,6 +31,8 @@ export async function fetchAll(mode: DescartesMode, hasData = (x: number, y: num
             if (mapping) {
               const cids = Object.keys(mapping)
               const sceneJson = await descartes.getSceneJson(scene)
+              if (!sceneJson || ! sceneJson.scene || !sceneJson.scene.parcels)
+                return (data[`${i},${j}`] = true)
               for (let parcel of sceneJson.scene.parcels) {
                 data[parcel] = true
               }
