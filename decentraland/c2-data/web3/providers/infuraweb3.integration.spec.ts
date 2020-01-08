@@ -8,8 +8,7 @@ const RINKEBY_KATALYST_CONTRACT = Address.fromString('0xF220706424C98E5485Ce1b2E
 describe('Infura integration test', () => {
     it('fetches a list of servers from a ropsten contract', async () => {
       const eth = new Eth(rinkeby);
-      console.log(Katalyst, eth, RINKEBY_KATALYST_CONTRACT)
-      // const contract = new Katalyst(eth, RINKEBY_KATALYST_CONTRACT)
-      // console.log(await contract.methods.katalystCount().call())
+      const contract = new Katalyst(eth, RINKEBY_KATALYST_CONTRACT)
+      console.log(await contract.methods.katalystCount().call())
     })
 })
