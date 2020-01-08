@@ -1,7 +1,8 @@
-load("@npm//solc:index.bzl", _solc_contract = "solcjs")
+load("@npm//solc:index.bzl", _solc_5 = "solcjs")
+load("@npm//solc4:index.bzl", _solc_4 = "solcjs")
 load("@bazel_skylib//lib:paths.bzl", "paths")
 
-def solc_contract(name):
+def solc_contract(name, solc = _solc_5):
     src = name + ".sol"
     baseFolder = "decentraland/c2-data/contracts/" + name
     folder = baseFolder + "/"
@@ -9,7 +10,7 @@ def solc_contract(name):
     internal_output = "_internal_{}".format(name)
     temp_bin = "{0}_sol_{0}.bin".format(name)
     temp_abi = "{0}_sol_{0}.abi".format(name)
-    _solc_contract(
+    solc(
         name = internal_output,
         data = [":" + src],
         outs = [

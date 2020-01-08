@@ -124,6 +124,7 @@
         "serve": "11.3.0",
         "sinon": "8.0.2",
         "solc": "0.5.12",
+        "solc4": "ethereum/solc-js#v0.4.24",
         "stream": "0.0.2",
         "terser": "4.5.1",
         "tmp": "0.1.0",

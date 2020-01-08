@@ -1,13 +1,11 @@
-import { checkWeb3Presence } from './checkWeb3'
-import { Web3Results } from './Web3Results'
-import { window } from './web3Window'
+import { checkWeb3 } from './checkWeb3'
+import { Web3Results } from './web3Results'
+import { getWindow } from './getWindow'
 
 export async function enableWeb3() {
-  if ((await checkWeb3Presence()) === Web3Results.Missing) {
+  const window = getWindow()
+  if ((await checkWeb3()) === Web3Results.Missing) {
     return Web3Results.Missing
-  }
-  if (window.web3) {
-    return Web3Results.Unlocked
   }
   if (window.ethereum) {
     try {
@@ -16,6 +14,9 @@ export async function enableWeb3() {
     } catch (e) {
       return Web3Results.Unauthorized
     }
+  }
+  if (window.web3) {
+    return Web3Results.Unlocked
   }
   return Web3Results.Unauthorized
 }

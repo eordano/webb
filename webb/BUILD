@@ -31,6 +31,7 @@ ts_library(
         ],
     ),
     deps = [
+        "//decentraland/c2-data/web3/browser",
         "//kernel",
         "//protos:comms",
         "//protos:broker",

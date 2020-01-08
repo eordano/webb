@@ -12,7 +12,6 @@
     "diagnostics": false,
     "moduleResolution": "node",
     "inlineSourceMap": true,
-    "importHelpers": true,
     "downlevelIteration": true,
     "inlineSources": true,
     "esModuleInterop": true,
