@@ -5,10 +5,9 @@ load("@npm_bazel_typescript//:index.bzl", "ts_library")
 filegroup(
     name = "srcs",
     srcs = glob(
-        include = ["**/*.ts"],
+        include = ["*.ts"],
         exclude = [
             "node_modules/**/*",
-            "**/*.spec.ts",
         ],
     ),
 )
@@ -17,11 +16,9 @@ ts_library(
     name = "c2-data",
     srcs = glob(
         include = [
-            "**/*.ts",
             "*.ts",
         ],
         exclude = [
-            "**/*.spec.ts",
             "*.spec.ts",
         ],
     ),
@@ -42,7 +39,6 @@ ts_library(
     name = "c2-data-spec",
     srcs = glob([
         "*.spec.ts",
-        "**/*.spec.ts",
     ]),
     deps = [
         ":c2-data",
@@ -51,8 +47,8 @@ ts_library(
         "@npm//@types/jasmine",
         "@npm//@types/node",
         "@npm//chai",
-        "@npm//web3x-es",
         "@npm//ethereum-cryptography",
+        "@npm//web3x-es",
     ],
 )
 
@@ -94,9 +90,9 @@ karma_web_test_suite(
     tags = ["native"],
     runtime_deps = [
         ":c2-data",
-        "@npm//ethereum-cryptography"
+        "@npm//ethereum-cryptography",
     ],
     deps = [
         ":c2-data-spec",
-    ]
+    ],
 )

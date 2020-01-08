@@ -1,0 +1,106 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+filegroup(
+    name = "srcs",
+    srcs = glob(
+        include = ["**/*.ts"],
+        exclude = [
+            "node_modules/**/*",
+            "**/*.spec.ts",
+        ],
+    ),
+)
+
+ts_library(
+    name = "c2-data-providers",
+    srcs = glob(
+        include = [
+            "**/*.ts",
+            "*.ts",
+        ],
+        exclude = [
+            "**/*.spec.ts",
+            "*.spec.ts",
+        ],
+    ),
+    module_name = "dcl/decentraland/c2-data/web3/providers",
+    deps = [
+        "//decentraland/c1-basics",
+        "//jslibs/stableStringify",
+        "@npm//@types",
+        "@npm//@types/node",
+        "@npm//ethereum-cryptography",
+        "@npm//web3x-es",
+    ],
+)
+
+load("@npm_bazel_jasmine//:index.bzl", "jasmine_node_test")
+
+ts_library(
+    name = "c2-data-providers-spec",
+    srcs = glob([
+        "*.spec.ts",
+        "**/*.spec.ts",
+    ]),
+    deps = [
+        ":c2-data-providers",
+        "//decentraland/c1-basics",
+        "//jslibs/stableStringify",
+        "@npm//@types/chai",
+        "@npm//@types/jasmine",
+        "@npm//@types/node",
+        "@npm//chai",
+        "@npm//ethereum-cryptography",
+        "@npm//web3x-es",
+    ],
+)
+
+jasmine_node_test(
+    name = "test",
+    coverage = True,
+    deps = [
+        ":c2-data-providers-spec",
+        "//decentraland/c1-basics",
+        "//jslibs/stableStringify",
+        "@npm//jasmine",
+    ],
+)
+
+load("@npm//jasmine:index.bzl", "jasmine_test")
+
+jasmine_test(
+    name = "jasmine_test",
+    args = [
+        "decentraland/c2-data/web3/providers/*.spec.js",
+        "--reporter=jasmine-console-reporter",
+    ],
+    data = [
+        ":c2-data-providers",
+        ":c2-data-providers-spec",
+        ":srcs",
+        "//decentraland/c1-basics",
+        "//jslibs/stableStringify",
+        "@npm//jasmine-console-reporter",
+    ],
+)
+
+load("@npm_bazel_karma//:index.bzl", "karma_web_test_suite")
+
+karma_web_test_suite(
+    name = "karma-suite",
+    browsers = [
+        "@io_bazel_rules_webtesting//browsers:chromium-local",
+    ],
+    config_file = ":karma.conf.js",
+    tags = ["native"],
+    runtime_deps = [
+        ":c2-data-providers",
+        "//decentraland/c1-basics",
+        "@npm//ethereum-cryptography",
+    ],
+    deps = [
+        ":c2-data-providers-spec",
+    ],
+)
