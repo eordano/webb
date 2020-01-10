@@ -4388,10 +4388,10 @@ gud@^1.0.0:
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
   integrity sha512-zGEOVKFM5sVPPrYs7J5/hYEw2Pof8KCyOwyhG8sAF26mCAeUFAcYPu1mwB7hhpIP29zOIBaDqwuHdLp0jvZXjw==
 
-hamt-sharding@~0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/hamt-sharding/-/hamt-sharding-0.0.2.tgz#53691f72122f1929a92a4688c7bb59545a8998ac"
-  integrity sha512-0pUBRvsdM1G6RgXfJASUMLwk++LQMNoXx2n2iMZiSzV43lBNesSz130wkGSP2D6d/8DYIWABLL1Vqb4PpcUcvQ==
+hamt-sharding@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/hamt-sharding/-/hamt-sharding-1.0.0.tgz#8c7cccb068cd871d721c21e6f09219e5e66383d1"
+  integrity sha512-jDk8N1U8qprvSt3KopOrrP46zUogxeZY+znDHP196MLBQKldld0TQFTneT1bxOFDw8vttbAQy1bG7L3/pzYorg==
   dependencies:
     sparse-array "^1.3.1"
 
@@ -4816,31 +4816,32 @@ ipfs-repo@^0.27.0:
     proper-lockfile "^4.0.0"
     sort-keys "^3.0.0"
 
-ipfs-unixfs-importer@0.42.0:
-  version "0.42.0"
-  resolved "https://registry.yarnpkg.com/ipfs-unixfs-importer/-/ipfs-unixfs-importer-0.42.0.tgz#16a7dc2aaebd484f3dc1f434202753c479f998cc"
-  integrity sha512-fRTsHCm05aaOeXruMK+n48UBRyVrG1JlvbnoulBbPI/R4cQBsoXg+Hl0qpyKlBPfAhzAm8B1asJLlLKwfTXcVw==
+ipfs-unixfs-importer@0.43.1:
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs-importer/-/ipfs-unixfs-importer-0.43.1.tgz#6035e5c98747ee0b8d3dd0129c7f8749f702b3f3"
+  integrity sha512-LAOUlWcbQskTjZ5/s+UWwMYiCg1Vvfbs1DzwafyexCnzKdMBMHjUX23LG+e+7rL0W7hlcKHHNuwZGSDkd2Szvg==
   dependencies:
     bl "^4.0.0"
     err-code "^2.0.0"
-    hamt-sharding "~0.0.2"
-    ipfs-unixfs "^0.2.0"
+    hamt-sharding "^1.0.0"
+    ipfs-unixfs "^0.3.0"
     ipld-dag-pb "^0.18.0"
     it-all "^1.0.1"
     it-batch "^1.0.3"
     it-first "^1.0.1"
-    it-parallel-batch "1.0.2"
+    it-parallel-batch "^1.0.3"
     merge-options "^2.0.0"
-    multicodec "~0.5.1"
+    multicodec "^1.0.0"
     multihashing-async "^0.8.0"
     rabin-wasm "~0.0.8"
 
-ipfs-unixfs@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-0.2.0.tgz#504a12b30dcd0fce30ecb98fa217ce5522c554de"
-  integrity sha512-J/iYD8PR7Ypx4L2NblygFponYTVfTVE8ncX8CtgvpGBQsnb3mvhr+hmF5FDptzCUjBxHNscbKawg1FELhBy9ow==
+ipfs-unixfs@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-0.3.0.tgz#8cb0c8031c50f4d4c01d844b4877a5fde5fd23df"
+  integrity sha512-0lyU0V7dMh9JAN9NPUrsT6Bf8nHpH5YPAbXByrf3snZzY5J5wuvKd9CIBgYAq1eIgTRmJIqfXGFtbD8RDchuoA==
   dependencies:
-    protons "^1.0.1"
+    err-code "^2.0.0"
+    protons "^1.1.0"
 
 ipld-dag-cbor@~0.15.0:
   version "0.15.0"
@@ -5366,11 +5367,6 @@ it-all@^1.0.1:
   resolved "https://registry.yarnpkg.com/it-all/-/it-all-1.0.1.tgz#5aaec6a86d916f1d077546889efe398d621a8d92"
   integrity sha512-DQ8MQXVfwCktZOja1xvKdsuka7E/OJHpLKLR3tMBmg6Kfo8Kob+XRE6pRfpbkXNsGyET4lMYrQ0y5T3XXF/Akw==
 
-it-batch@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/it-batch/-/it-batch-0.0.1.tgz#dacfc7137daa0548bb331530222783da57909984"
-  integrity sha512-YB+cx7FByGH84DhRAxSA+GTG6UceI8cbov4bmYu+b7LfgeygtDGIlw0ITzSFyVfBq9mHi0nY1jHhWRKR6HOxjw==
-
 it-batch@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/it-batch/-/it-batch-1.0.3.tgz#3d86a4bc6eba0ba79d150f0c018ac5f73bf5471f"
@@ -5381,12 +5377,12 @@ it-first@^1.0.1:
   resolved "https://registry.yarnpkg.com/it-first/-/it-first-1.0.1.tgz#dca0d247b630359a955d3415cd3b986e33232b35"
   integrity sha512-+Eka8awisZlNh9/zK0kuad/31PngGpVm9Vo/tb9KkeAKGKUMc2POMxFUvRzj93kODOyBSc0be8k3AbQ6xdPsyg==
 
-it-parallel-batch@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/it-parallel-batch/-/it-parallel-batch-1.0.2.tgz#2ec5ebbf7cb0ff7ec8ae712dac7c8859c1483fc7"
-  integrity sha512-r9pUUAxHXl0j2slbelKmugAqtQ7IL5gTNugsR9NCWdpHCcjmXOj2CrEP4EVnz4f/fTHLIUAYyiEFHDoxwwHF/g==
+it-parallel-batch@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/it-parallel-batch/-/it-parallel-batch-1.0.3.tgz#f5eb9a42b9b1cac2e5dc27a399b045573bfe4238"
+  integrity sha512-i2AnxP28P+50RYeHTORWRhfj8n/xd/2gCsnkF6+ze8C7f6TklGRIlxGVeZ58z3STvz04WR9eUf2iij/KT6WP2A==
   dependencies:
-    it-batch "0.0.1"
+    it-batch "^1.0.3"
 
 jasmine-console-reporter@3.1.0:
   version "3.1.0"
@@ -6611,6 +6607,13 @@ multibase@~0.6.0:
   dependencies:
     base-x "3.0.4"
 
+multicodec@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/multicodec/-/multicodec-1.0.0.tgz#75652ff96cc30f63bb56264ef5c7e6526bc0becb"
+  integrity sha512-CBiLdYcMnVnkN/2kL4AaUH3betYXQGKV5CCmN2CfgHUt5xROtsj91w780ltX6Wy7frgc6en8md3h2UQl6jDXAg==
+  dependencies:
+    varint "^5.0.0"
+
 multicodec@~0.5.0, multicodec@~0.5.1, multicodec@~0.5.5:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/multicodec/-/multicodec-0.5.7.tgz#1fb3f9dd866a10a55d226e194abba2dcc1ee9ffd"
@@ -7583,7 +7586,7 @@ protocol-buffers-schema@^3.3.1:
   resolved "https://registry.yarnpkg.com/protocol-buffers-schema/-/protocol-buffers-schema-3.3.2.tgz#00434f608b4e8df54c59e070efeefc37fb4bb859"
   integrity sha512-Xdayp8sB/mU+sUV4G7ws8xtYMGdQnxbeIfLjyO9TZZRJdztBGhlmbI5x1qcY4TG5hBkIKGnc28i7nXxaugu88w==
 
-protons@^1.0.1:
+protons@^1.0.1, protons@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/protons/-/protons-1.1.0.tgz#08f00cb6ea2b9a40d11da2e2d580c3662056a994"
   integrity sha512-rxf3et88VGRJkXIcDK1nemQM9OpnKsRVuZW+vkJLRmytA6530hQ+k/r2DpclNJCYF+xUl2MXsvRsK+MJgcbfEg==
