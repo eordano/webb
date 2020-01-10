@@ -113,7 +113,7 @@
         "redux-saga-test-plan": "4.0.0-rc.3",
         "requirejs": "2.3.6",
         "reselect": "4.0.0",
-        "rollup": "1.28.0",
+        "rollup": "1.29.0",
         "rollup-plugin-commonjs": "10.1.0",
         "rollup-plugin-json": "4.0.0",
         "rollup-plugin-node-builtins": "2.1.2",
