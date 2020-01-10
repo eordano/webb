@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Navbar } from './Navbar'
+import { daySort } from './daySort'
 
 export function Index() {
   const [data, setData] = useState()
@@ -18,44 +20,30 @@ export function Index() {
       setData(body)
     })()
   })
-  const [addVisible, setAdd] = useState(true)
   return (
     <div key='index'>
       <h1>Memorias Fragmentadas</h1>
-      <ul>
-        {data === 'loading' || data === undefined
-          ? 'Loading..'
-          : data.sort().map(_ => (
-              <li key={`_${_}`}>
-                <a href={`/ep/${_}`}>{_}</a>
-              </li>
-            ))}
-      </ul>
-
-      <button className='addButton' onClick={() => setAdd(true)} style={{ display: addVisible ? 'none' : 'block' }}>
-        Add Chapter
-      </button>
-      <form action='/api/steps' className='addChapter' method='POST' style={{ display: addVisible ? 'block' : 'none' }}>
-        <div>
-          <label htmlFor='id'>Episode name:</label>
+      <div className='apertura'>
+        <p>
+          En una memoria fragmentada, aquello que se supone real pierde sentido
+          <br />y engendra entendimiento
+        </p>
+        <p>
+          Cualquier día es un final
           <br />
-          <input name='id'></input>
-        </div>
-        <div>
-          <label htmlFor='body'>Content:</label>
-          <br />
-          <textarea name='body'></textarea>
-        </div>
-        <input type='hidden' name='add' value='true'></input>
-        <div>
-          <button className='learn-more'>
-            <span className='circle'>
-              <span className='icon arrow'></span>
-            </span>
-            <span className='button-text'>Submit</span>
-          </button>
-        </div>
-      </form>
+          Cualquier día es un inicio
+        </p>
+        <p>Círculos dentro de círculos</p>
+        <p>
+          El tiempo uno solo
+          <br />Y el caos vida
+        </p>
+      </div>
+      {data === 'loading' || data === undefined ? (
+        'Loading..'
+      ) : (
+        <Navbar episodeList={data.sort(daySort)} id='Apertura' hideLast={true} />
+      )}
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react'
-export function Navbar(props: { id: string; episodeList: string[] }) {
+import { daySort } from './daySort'
+export function Navbar(props: { id: string; episodeList: string[]; hideLast?: boolean }) {
   const { episodeList } = props
   const id = decodeURIComponent(props.id)
-  const sorted = typeof episodeList === 'object' ? episodeList.filter(_ => !!_).sort() : []
+  const sorted = typeof episodeList === 'object' ? episodeList.filter(_ => !!_).sort(daySort) : []
   const current = sorted.indexOf(id)
-  console.log(current, 'afe', id, sorted)
   return (
     <>
       {current > 0 && (
@@ -28,7 +28,7 @@ export function Navbar(props: { id: string; episodeList: string[] }) {
           next &gt;
         </a>
       )}
-      {current < sorted.length - 1 && (
+      {current < sorted.length - 1 && !props.hideLast && (
         <a className='navbar' href={'/ep/' + sorted[sorted.length - 1]}>
           last &gt; &gt;
         </a>

@@ -4,9 +4,6 @@ export function Episode(props) {
   const { pathname } = props
   const id = decodeURIComponent(pathname.split('/')[2])
   const [data, setData] = useState()
-  const [showEdit, setEdit] = useState()
-  const [newName, setNewName] = useState(id)
-  const [newBody, setNewBody] = useState(data)
   useEffect(() => {
     if (data === undefined) {
       setData('loading')
@@ -21,7 +18,6 @@ export function Episode(props) {
       const request = await fetch(`/api/ep/${id}`)
       const body = await request.json()
       setData(body)
-      setNewBody(body.episode)
     })()
   })
   const [episodeList, setEpisodeList] = useState()
@@ -43,7 +39,9 @@ export function Episode(props) {
   })
   return (
     <div key='index'>
-      <h3><a href='/'>Memorias Fragmentadas</a></h3>
+      <h3>
+        <a href='/'>Memorias Fragmentadas</a>
+      </h3>
       <h4>
         <Navbar id={id} episodeList={episodeList} />
       </h4>
@@ -52,30 +50,9 @@ export function Episode(props) {
       ) : (
         <div>
           <h1>{data.id}</h1>
-          <div>{data.episode}</div>
+          <div className='content'>{data.episode}</div>
         </div>
       )}
-      <button className='editButton' style={{ display: showEdit ? 'none' : 'block' }} onClick={() => setEdit(true)}>
-        Edit Chapter
-      </button>
-      <form action='/api/steps' className='addChapter' method='POST' style={{ display: showEdit ? 'block' : 'none' }}>
-        <h4>Editing {newName}</h4>
-        <div>
-          <label htmlFor='id'>Episode name:</label>
-          <br />
-          <input name='new-id' value={newName} onChange={ev => setNewName(ev.target.value)}></input>
-        </div>
-        <div>
-          <label htmlFor='body'>Content:</label>
-          <br />
-          <textarea name='body' value={newBody} onChange={ev => setNewBody(ev.target.value)}></textarea>
-        </div>
-        <input type='hidden' name='id' value={id}></input>
-        <input type='hidden' name='edit' value='true'></input>
-        <div>
-          <button>Submit</button>
-        </div>
-      </form>
     </div>
   )
 }
