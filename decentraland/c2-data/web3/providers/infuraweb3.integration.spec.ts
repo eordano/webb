@@ -9,7 +9,6 @@ describe('Infura integration test', () => {
     it('fetches a list of servers from a ropsten contract', async () => {
       const eth = new Eth(rinkeby);
       const contract = new Katalyst(eth, RINKEBY_KATALYST_CONTRACT)
-      contract.methods.
       console.log(await contract.methods.katalystCount().call())
     })
 })
