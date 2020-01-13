@@ -126,7 +126,7 @@
         "solc": "0.5.12",
         "solc4": "0.4.25",
         "stream": "0.0.2",
-        "terser": "4.5.1",
+        "terser": "4.6.3",
         "tmp": "0.1.0",
         "typesafe-actions": "5.1.0",
         "typescript": "3.7.4",
