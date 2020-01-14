@@ -52,7 +52,7 @@
         "async-iterator-all": "1.0.0",
         "async-iterator-first": "1.0.0",
         "auth0-js": "9.12.1",
-        "aws-sdk": "2.599.0",
+        "aws-sdk": "2.603.0",
         "babylonjs": "4.0.3",
         "buffer": "5.4.3",
         "chai": "4.2.0",
