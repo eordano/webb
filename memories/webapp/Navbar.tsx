@@ -8,11 +8,6 @@ export function Navbar(props: { id: string; episodeList: string[]; hideLast?: bo
   return (
     <>
       {current > 0 && (
-        <a className='navbar' href={'/ep/' + sorted[0]}>
-          &lt;&lt; first{' '}
-        </a>
-      )}
-      {current > 0 && (
         <a className='navbar' href={'/ep/' + sorted[current - 1]}>
           &lt; back
         </a>
@@ -26,11 +21,6 @@ export function Navbar(props: { id: string; episodeList: string[]; hideLast?: bo
       {current < sorted.length - 1 && (
         <a className='navbar' href={'/ep/' + sorted[current + 1]}>
           next &gt;
-        </a>
-      )}
-      {current < sorted.length - 1 && !props.hideLast && (
-        <a className='navbar' href={'/ep/' + sorted[sorted.length - 1]}>
-          last &gt; &gt;
         </a>
       )}
     </>
