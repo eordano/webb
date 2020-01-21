@@ -2914,10 +2914,10 @@ decentraland-renderer@1.8.5256:
   resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.5256.tgz#c39abe5ab8c6cb6327fc7ca457cb924fb2a65d59"
   integrity sha512-mp33qoFXbaRGyYQJZPpfivXf6OgFKxLhuVMxwtyJY9QCasLYzqr092j5DDPRmH+7AHodIVZPkKuxxoHySrVTFA==
 
-decentraland-ui@2.12.2:
-  version "2.12.2"
-  resolved "https://registry.yarnpkg.com/decentraland-ui/-/decentraland-ui-2.12.2.tgz#b6256ece8514a228e2df0c148909c7b91460b02a"
-  integrity sha512-hqaA0RyzXHOQF33rao6mAtCyL6scc5VvxQaTrdzPwFzjNWLYExTcjY5yad6KCzGST+88PRoy3ueeouiPOC0TwA==
+decentraland-ui@2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/decentraland-ui/-/decentraland-ui-2.13.0.tgz#90c9e318e918877c6f8d7e850ec3c54efe80de5a"
+  integrity sha512-84UyTfSBxIUUmdvpvoiJ7M3lT7CwXwUXLzTd0Dkj8A3K3GgdqvemiT7gTDF72H8dXJllBJgtHRmGuKSn9Vp28w==
   dependencies:
     balloon-css "^0.5.0"
     ethereum-blockies "^0.1.1"
