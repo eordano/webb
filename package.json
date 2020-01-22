@@ -65,7 +65,7 @@
         "ethereum-cryptography": "0.0.7",
         "events": "3.1.0",
         "express": "4.17.1",
-        "file-type": "13.0.3",
+        "file-type": "13.1.2",
         "fp-future": "1.0.1",
         "fuse-box": "3.7.1",
         "gltf-pipeline": "2.1.4",
