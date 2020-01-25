@@ -489,10 +489,10 @@
   resolved "https://registry.yarnpkg.com/@types/argparse/-/argparse-1.0.33.tgz#2728669427cdd74a99e53c9f457ca2866a37c52d"
   integrity sha512-VQgHxyPMTj3hIlq9SY1mctqx+Jj8kpQfoLvDlVSDNOyuYs8JYfkuY3OW/4+dO657yPmNhHpePRx0/Tje5ImNVQ==
 
-"@types/auth0-js@9.10.7":
-  version "9.10.7"
-  resolved "https://registry.yarnpkg.com/@types/auth0-js/-/auth0-js-9.10.7.tgz#df0b5f8df2f844a9920b8b4dc4c917d6ebe776d9"
-  integrity sha512-lgqjubkQCYDCejPVqlTZLlCp5Mf4ROLlidVUmi4RArA9VYagLNk1wRKXGC8+XaJd3ZeTQKsEJJFzlDl8qWGeyA==
+"@types/auth0-js@9.12.3":
+  version "9.12.3"
+  resolved "https://registry.yarnpkg.com/@types/auth0-js/-/auth0-js-9.12.3.tgz#1d1b73ee4affd48dc986b36277e14fb4c998027d"
+  integrity sha512-DMR+1X+HxuZCkZx0n6fS//TYZRKTjCxKW4Ye1D4olFS1uC1Y5udpfBdMCZpj1F2lGPmQh+SmPvnn8o7IoB4b3A==
 
 "@types/bn.js@^4.11.2":
   version "4.11.6"
