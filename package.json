@@ -72,7 +72,7 @@
         "google-protobuf": "3.11.2",
         "history": "4.10.1",
         "http-proxy": "1.18.0",
-        "ipfs-unixfs-importer": "0.43.1",
+        "ipfs-unixfs-importer": "0.45.0",
         "ipld": "0.25.3",
         "ipld-in-memory": "3.0.1",
         "istanbul": "0.4.5",

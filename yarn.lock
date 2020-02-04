@@ -4868,10 +4868,10 @@ ipfs-repo@^0.27.0:
     proper-lockfile "^4.0.0"
     sort-keys "^3.0.0"
 
-ipfs-unixfs-importer@0.43.1:
-  version "0.43.1"
-  resolved "https://registry.yarnpkg.com/ipfs-unixfs-importer/-/ipfs-unixfs-importer-0.43.1.tgz#6035e5c98747ee0b8d3dd0129c7f8749f702b3f3"
-  integrity sha512-LAOUlWcbQskTjZ5/s+UWwMYiCg1Vvfbs1DzwafyexCnzKdMBMHjUX23LG+e+7rL0W7hlcKHHNuwZGSDkd2Szvg==
+ipfs-unixfs-importer@0.45.0:
+  version "0.45.0"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs-importer/-/ipfs-unixfs-importer-0.45.0.tgz#3cb3cca9cf72704f2b4e12a08b87acf04198d163"
+  integrity sha512-YmRr2hGEQtjMXTzkeD/x0PDwz5OY79GkZSf7w7FGQbCxpAS8ezwEs8JIYCsEgVRs9zae89nfODKgr6sNkIRNbw==
   dependencies:
     bl "^4.0.0"
     err-code "^2.0.0"
