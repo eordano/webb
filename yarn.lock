@@ -2909,10 +2909,10 @@ decamelize@^1.1.1, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decentraland-renderer@1.8.5256:
-  version "1.8.5256"
-  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.5256.tgz#c39abe5ab8c6cb6327fc7ca457cb924fb2a65d59"
-  integrity sha512-mp33qoFXbaRGyYQJZPpfivXf6OgFKxLhuVMxwtyJY9QCasLYzqr092j5DDPRmH+7AHodIVZPkKuxxoHySrVTFA==
+decentraland-renderer@1.8.8287:
+  version "1.8.8287"
+  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.8287.tgz#bc90b4f37c7284639d4a7cb87fcf8a6527cda693"
+  integrity sha512-8cy448y4tyQcs1H49BUbrqtHKxpZSP2+6jSVrhF7gglByRK+Ii72HcnkD4Fk29BH6sPRzKX0j9Tyb4ql1nGXqg==
 
 decentraland-ui@2.12.2:
   version "2.12.2"
