@@ -50,7 +50,6 @@ ts_devserver(
         "//rpc",
         "//scene-api",
         "//utils",
-        "@npm//auth0-js:auth0-js__umd",
         "@npm//buffer:buffer__umd",
         "@npm//events:events__umd",
         "@npm//fp-future:fp-future__umd",

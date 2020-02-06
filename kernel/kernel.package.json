@@ -12,7 +12,6 @@
     "@microsoft/api-documenter": "^7.3.8",
     "@microsoft/api-extractor": "^7.3.2",
     "@types/google-protobuf": "^3.7.1",
-    "@types/auth0-js": "^9.10.2",
     "dcl-tslint-config-standard": "^2.0.0",
     "prettier": "^1.18.2",
     "typescript": "^3.5.3"
@@ -22,7 +21,6 @@
     "@dcl/protos": "$DCL_VERSION",
     "@dcl/scene-api": "$DCL_VERSION",
     "@dcl/rpc": "$DCL_VERSION",
-    "auth0-js": "^9.11.2",
     "devtools-protocol": "0.0.678025",
     "fp-future": "^1.0.1",
     "google-protobuf": "^3.9.0",
