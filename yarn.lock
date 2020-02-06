@@ -3114,10 +3114,10 @@ detect-libc@^1.0.2:
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
-devtools-protocol@0.0.731173:
-  version "0.0.731173"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.731173.tgz#51613e1a2656ff6f0dd00a003a273ac9b8d76b80"
-  integrity sha512-rCWPnCcA/Hvj8Rvjfykjow4ejbq6X16n6fJ8yUvEoENNW9Fezh0CPcqvvLELrc56NUvVtsXorbJ9EwLki7Qnvg==
+devtools-protocol@0.0.738774:
+  version "0.0.738774"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.738774.tgz#9552bd894d232497c07b32cfdfca67caf417aeba"
+  integrity sha512-OFXAnlADl7YbMaLztRkOm02xNBm06hhzZSE1tWligEO06/icvs5UNseLNjcTYbAitt9TwquBl2c2VGuWsbR5sg==
 
 di@^0.0.1:
   version "0.0.1"
