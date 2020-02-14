@@ -67,7 +67,7 @@
         "fp-future": "1.0.1",
         "fuse-box": "3.7.1",
         "gltf-pipeline": "2.1.6",
-        "google-protobuf": "3.11.3",
+        "google-protobuf": "3.11.4",
         "history": "4.10.1",
         "http-proxy": "1.18.0",
         "ipfs-unixfs-importer": "0.45.0",
