@@ -6728,7 +6728,7 @@ node-gyp-build@~4.1.0:
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.1.1.tgz#d7270b5d86717068d114cc57fff352f96d745feb"
   integrity sha512-dSq1xmcPDKPZ2EED2S6zw/b9NKsqzXRE6dVr8TVQnI3FJOTteUMuqF3Qqs6LZg+mLGYJWqQzMbIjMtJqTv87nQ==
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
@@ -10111,10 +10111,10 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
-wrtc@0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/wrtc/-/wrtc-0.4.3.tgz#95a9182f734114226be0ef9c377143d67bf85c04"
-  integrity sha512-HPPocFTrfCDdhVAsUlcToF3HVE/LDVP+ctHa3sHJzyUDH49tig5boKGPd3KRUjDHRStYxepu7XjNUbrxrhScRA==
+wrtc@0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/wrtc/-/wrtc-0.4.4.tgz#523bcec18ea91de5d8ee1ef11e5cbe4fcf7daf3d"
+  integrity sha512-ithsvEKqS6pIbzPiXgJXU4SjQHR7fSszDgGMOREW8j2S4N+ay05r4aYpUZJnsa1fr6o5efeQ/ikFiDXDl5YqeQ==
   dependencies:
     node-pre-gyp "^0.13.0"
   optionalDependencies:

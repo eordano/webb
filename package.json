@@ -134,7 +134,7 @@
         "web3x": "4.0.6",
         "webrtc-adapter": "7.5.0",
         "webworker-threads": "0.7.17",
-        "wrtc": "0.4.3",
+        "wrtc": "0.4.4",
         "yargs": "15.1.0"
     }
 }
