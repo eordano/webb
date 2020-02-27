@@ -57,7 +57,7 @@
         "cors": "2.8.5",
         "d3": "5.15.0",
         "decentraland-renderer": "1.8.8287",
-        "decentraland-ui": "2.13.0",
+        "decentraland-ui": "2.15.0",
         "defaults": "1.0.3",
         "devtools-protocol": "0.0.738774",
         "ethereum-cryptography": "0.0.7",

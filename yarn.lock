@@ -2901,10 +2901,10 @@ decentraland-renderer@1.8.8287:
   resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.8287.tgz#bc90b4f37c7284639d4a7cb87fcf8a6527cda693"
   integrity sha512-8cy448y4tyQcs1H49BUbrqtHKxpZSP2+6jSVrhF7gglByRK+Ii72HcnkD4Fk29BH6sPRzKX0j9Tyb4ql1nGXqg==
 
-decentraland-ui@2.13.0:
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/decentraland-ui/-/decentraland-ui-2.13.0.tgz#90c9e318e918877c6f8d7e850ec3c54efe80de5a"
-  integrity sha512-84UyTfSBxIUUmdvpvoiJ7M3lT7CwXwUXLzTd0Dkj8A3K3GgdqvemiT7gTDF72H8dXJllBJgtHRmGuKSn9Vp28w==
+decentraland-ui@2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/decentraland-ui/-/decentraland-ui-2.15.0.tgz#c736407faf695c258ddda303dce4e2af02c025eb"
+  integrity sha512-mi7lmVA9aU5Q8MBuGIVLSRaKAo4UVkd5reYniJ0GKPTSFivk4n5SkOkG+J55nYXzMNVZFH5dknBhfhs4qwe3JQ==
   dependencies:
     balloon-css "^0.5.0"
     ethereum-blockies "^0.1.1"
@@ -6728,7 +6728,7 @@ node-gyp-build@~4.1.0:
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.1.1.tgz#d7270b5d86717068d114cc57fff352f96d745feb"
   integrity sha512-dSq1xmcPDKPZ2EED2S6zw/b9NKsqzXRE6dVr8TVQnI3FJOTteUMuqF3Qqs6LZg+mLGYJWqQzMbIjMtJqTv87nQ==
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
