@@ -50,7 +50,7 @@
         "assert": "2.0.0",
         "async-iterator-all": "1.0.0",
         "async-iterator-first": "1.0.0",
-        "aws-sdk": "2.612.0",
+        "aws-sdk": "2.632.0",
         "babylonjs": "4.0.3",
         "buffer": "5.4.3",
         "chai": "4.2.0",
