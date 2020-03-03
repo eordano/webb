@@ -2896,10 +2896,10 @@ decamelize@^1.1.1, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decentraland-renderer@1.8.8287:
-  version "1.8.8287"
-  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.8287.tgz#bc90b4f37c7284639d4a7cb87fcf8a6527cda693"
-  integrity sha512-8cy448y4tyQcs1H49BUbrqtHKxpZSP2+6jSVrhF7gglByRK+Ii72HcnkD4Fk29BH6sPRzKX0j9Tyb4ql1nGXqg==
+decentraland-renderer@1.8.14623:
+  version "1.8.14623"
+  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.14623.tgz#be2e16af4e61d944035768bca9bb2a1814f25d9e"
+  integrity sha512-99ZNB1zPpov16oo4dsTX9TZYdV+Kgqa55xu+bf3sYAzCY2dGIG5ELCt1SvJ+Zow5jQO2Ttxggq15ji7IGH8dDQ==
 
 decentraland-ui@2.13.0:
   version "2.13.0"
@@ -6728,7 +6728,7 @@ node-gyp-build@~4.1.0:
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.1.1.tgz#d7270b5d86717068d114cc57fff352f96d745feb"
   integrity sha512-dSq1xmcPDKPZ2EED2S6zw/b9NKsqzXRE6dVr8TVQnI3FJOTteUMuqF3Qqs6LZg+mLGYJWqQzMbIjMtJqTv87nQ==
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
