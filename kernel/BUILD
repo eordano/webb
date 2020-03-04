@@ -14,18 +14,17 @@ filegroup(
 )
 
 ts_library(
-    name = "kernel",
+    name = "kernel_",
     srcs = glob(
         include = [
             "index.ts",
             "**/*.ts",
         ],
         exclude = [
-            "scene-scripts/userSpace/**/*.ts",
             "**/*.spec.ts",
         ],
     ),
-    module_name = "@dcl/kernel",
+    module_name = "dcl/kernel",
     deps = [
         "//config",
         "//protos:broker",
@@ -58,7 +57,7 @@ ts_library(
         "**/*.spec.ts",
     ]),
     deps = [
-        ":kernel",
+        ":kernel_",
         "//config",
         "//utils",
         "@npm//@types/jasmine",
