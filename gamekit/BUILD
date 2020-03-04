@@ -38,10 +38,8 @@ rollup_bundle(
         "//utils",
         "@npm//fp-future",
         "@npm//google-protobuf",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-json",
-        "@npm//rollup-plugin-node-builtins",
-        "@npm//rollup-plugin-node-globals",
-        "@npm//rollup-plugin-node-resolve",
+        "@npm//@rollup/plugin-commonjs",
+        "@npm//@rollup/plugin-json",
+        "@npm//@rollup/plugin-node-resolve",
     ],
 )
