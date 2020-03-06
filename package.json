@@ -17,7 +17,7 @@
         "@babylonjs/serializers": "4.1.0",
         "@bazel/ibazel": "0.12.2",
         "@bazel/jasmine": "1.4.0",
-        "@bazel/karma": "1.4.0",
+        "@bazel/karma": "1.4.1",
         "@bazel/rollup": "1.4.0",
         "@bazel/typescript": "1.4.0",
         "@improbable-eng/grpc-web": "0.12.0",
