@@ -16,7 +16,7 @@
         "@babylonjs/post-processes": "4.1.0",
         "@babylonjs/serializers": "4.1.0",
         "@bazel/ibazel": "0.12.2",
-        "@bazel/jasmine": "1.4.0",
+        "@bazel/jasmine": "1.4.1",
         "@bazel/karma": "1.4.0",
         "@bazel/rollup": "1.4.0",
         "@bazel/typescript": "1.4.0",
