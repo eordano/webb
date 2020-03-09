@@ -1,5 +1,23 @@
 {
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "packagePatterns": [ "@bazel" ],
+      "groupName": "@bazel"
+    },
+    {
+      "packagePatterns": [ "@types" ],
+      "groupName": "@types"
+    {
+    },
+      "packagePatterns": [ ".*react.*" ],
+      "groupName": "react"
+    },
+    {
+      "packagePatterns": [ ".*karma.*", ".*jasmine.*", ".*mocha.*" ],
+      "groupName": "tests"
+    }
   ]
 }
