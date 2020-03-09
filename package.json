@@ -51,7 +51,7 @@
         "async-iterator-all": "1.0.0",
         "async-iterator-first": "1.0.0",
         "babylonjs": "4.1.0",
-        "buffer": "5.4.3",
+        "buffer": "5.5.0",
         "chai": "4.2.0",
         "cors": "2.8.5",
         "d3": "5.15.0",
