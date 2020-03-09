@@ -1,22 +1,20 @@
 {
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["config:base"],
   "packageRules": [
     {
-      "packagePatterns": [ "@bazel" ],
+      "packagePatterns": ["@bazel"],
       "groupName": "@bazel"
     },
     {
-      "packagePatterns": [ "@types" ],
+      "packagePatterns": ["@types"],
       "groupName": "@types"
-    {
     },
-      "packagePatterns": [ ".*react.*" ],
+    {
+      "packagePatterns": [".*react.*"],
       "groupName": "react"
     },
     {
-      "packagePatterns": [ ".*karma.*", ".*jasmine.*", ".*mocha.*" ],
+      "packagePatterns": [".*karma.*", ".*jasmine.*", ".*mocha.*"],
       "groupName": "tests"
     }
   ]
