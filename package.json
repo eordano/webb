@@ -106,7 +106,7 @@
         "rollup-plugin-terser": "5.2.0",
         "serve": "11.3.0",
         "sinon": "9.0.0",
-        "solc": "0.6.3",
+        "solc": "0.6.4",
         "solc4": "0.4.25",
         "stream": "0.0.2",
         "terser": "4.6.6",
