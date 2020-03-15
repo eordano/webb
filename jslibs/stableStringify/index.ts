@@ -2,7 +2,7 @@ const json = JSON
 const isArray = Array.isArray
 const objectKeys = Object.keys
 
-export function stableStringify(
+export function jsonStringify(
   obj: any,
   opts?: {
     replacer?: Function

@@ -7,10 +7,10 @@ import { Address } from './Address'
  * lose this data, you'll lose your identity, and you won't be able to show proof of who you say you are.
  */
 export type CryptographicIdentity = {
-  privateKey: Buffer
+  privateKey: Uint8Array
 } & PublicCryptographicIdentity
 
 export type PublicCryptographicIdentity = {
-  publicKey: Buffer
+  publicKey: Uint8Array
   address: Address
 }

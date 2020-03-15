@@ -9,7 +9,7 @@ ts_library(
             "index.ts",
         ],
     ),
-    module_name = "dcl/stableStringify",
+    module_name = "dcl/jslibs/stableStringify",
     deps = [
         "@npm//@types",
     ],

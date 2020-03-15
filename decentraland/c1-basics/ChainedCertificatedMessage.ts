@@ -2,7 +2,7 @@ import { Address, isAddress } from './Address'
 import { CHAINED_ADDRESS } from './constants'
 import { CryptographicIdentity, PublicCryptographicIdentity } from './CryptographicIdentity'
 import { createSignedMessage, isValidMessage, SignedMessage } from './SignedMessage'
-import { stableStringify } from 'dcl/stableStringify'
+import { jsonStringify } from 'dcl/jslibs/stableStringify'
 /**
  * We introduce the concept of a chained signature with an "chained key".
  * This is similar to what the X.509 standard does for a certification path (RFC 5280).
@@ -15,7 +15,7 @@ export function createAddressCertificateLink(
 ) {
   return createSignedMessage(
     rootIdentity,
-    stableStringify({
+    jsonStringify({
       type: CHAINED_ADDRESS,
       childAddress: childIdentity.address
     })

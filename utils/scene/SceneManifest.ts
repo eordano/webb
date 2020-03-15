@@ -1,9 +1,10 @@
-import { stableStringify } from 'dcl/stableStringify'
+import { jsonStringify } from 'dcl/jslibs/stableStringify'
 import { sha256 } from 'ethereum-cryptography/sha256'
 import { decideFloat } from './decideFloat'
 import { getMinimum } from './getMinimum'
-import { parseCoordinate } from './parseCoordinate'
 import { ISceneManifest } from './ISceneManifest'
+import { encodeParcelPosition } from './parcel'
+import { parseCoordinate } from './parseCoordinate'
 import {
   AssetDefinition,
   AssetTagDefinition,
@@ -16,7 +17,6 @@ import {
   URIAsset
 } from './SceneManifestTypes'
 import { getInvalidReason, isValidSceneInput } from './validation'
-import { encodeParcelPosition } from './parcel'
 import { parcelLimits } from './world'
 
 export class SceneManifest implements ISceneManifest {
@@ -183,7 +183,7 @@ export class SceneManifest implements ISceneManifest {
 
   get cannonicalSerialization(): string {
     if (!this._cannonicalRepresentation) {
-      this._cannonicalRepresentation = stableStringify({
+      this._cannonicalRepresentation = jsonStringify({
         obj: {
           parcels: this.parcels,
           version: this.version,

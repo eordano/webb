@@ -1,8 +1,8 @@
-import { stableStringify } from 'dcl/stableStringify'
+import { jsonStringify } from 'dcl/jslibs/stableStringify'
 import {
   chainSignatureError,
   createAddressCertificateLink,
-  validateChainedSignature
+  validateChainedCertificate
 } from './ChainedCertificatedMessage'
 import { CHAINED_ADDRESS } from './constants'
 import { createNewIdentity } from './createNewIdentity'
@@ -21,11 +21,11 @@ describe('ChainedCertificate', () => {
   })
 
   it('creates valid link signatures', () => {
-    expect(validateChainedSignature(testIdentity.address, [link, signedByChild])).toBe(true)
+    expect(validateChainedCertificate(testIdentity.address, [link, signedByChild])).toBe(true)
   })
 
   it('validates correctly through a chain of signatures', () => {
-    expect(validateChainedSignature(testIdentity.address, [link, link2, signedByThirdChild])).toBe(true)
+    expect(validateChainedCertificate(testIdentity.address, [link, link2, signedByThirdChild])).toBe(true)
   })
 
   it(`doesn't work if a message has an invalid signature`, () => {
@@ -60,7 +60,7 @@ describe('ChainedCertificate', () => {
   it(`doesn't work if the chain type is not CHAINED_ADDRESS`, () => {
     const fakeLink = createSignedMessage(
       testIdentity,
-      stableStringify({
+      jsonStringify({
         type: 'Not Chained Address',
         childAddress: secondTestIdentity.address
       })
@@ -73,7 +73,7 @@ describe('ChainedCertificate', () => {
   it(`doesn't work if the chain has an invalid address`, () => {
     const fakeLink = createSignedMessage(
       testIdentity,
-      stableStringify({
+      jsonStringify({
         type: CHAINED_ADDRESS,
         childAddress: 'Invalid address'
       })
