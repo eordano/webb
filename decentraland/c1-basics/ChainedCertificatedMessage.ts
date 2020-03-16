@@ -3,6 +3,7 @@ import { CHAINED_ADDRESS } from './constants'
 import { CryptographicIdentity, PublicCryptographicIdentity } from './CryptographicIdentity'
 import { createSignedMessage, isValidMessage, SignedMessage } from './SignedMessage'
 import { jsonStringify } from 'dcl/jslibs/stableStringify'
+
 /**
  * We introduce the concept of a chained signature with an "chained key".
  * This is similar to what the X.509 standard does for a certification path (RFC 5280).
