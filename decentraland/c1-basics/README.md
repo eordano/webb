@@ -6,11 +6,11 @@ Modeled after some of the most interesting developments of the past decades, it'
 
 Space is defined in a 2D grid of units called LAND parcels.
 
--> see [LAND.ts](LAND.ts)
+-> see [LAND.ts](LAND)
 
 LAND is owned by an Ethereum Address.
 
--> see [Address.ts](Address.ts)
+-> see [Address.ts](Address)
 
 Addresses are controlled either by a smart contract on the ethereum blockchain, or by an "externally owned account", a Cryptographic identity:
 
