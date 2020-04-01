@@ -7,7 +7,7 @@
         "printWidth": 120
     },
     "dependencies": {
-        "@babel/core": "7.8.7",
+        "@babel/core": "7.9.0",
         "@babylonjs/core": "4.1.0",
         "@babylonjs/gui": "4.1.0",
         "@babylonjs/inspector": "4.1.0",
