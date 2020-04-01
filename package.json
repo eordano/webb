@@ -58,7 +58,7 @@
         "buffer": "5.5.0",
         "chai": "4.2.0",
         "cors": "2.8.5",
-        "d3": "5.15.0",
+        "d3": "5.15.1",
         "decentraland-renderer": "1.8.15170",
         "defaults": "1.0.3",
         "devtools-protocol": "0.0.750324",
