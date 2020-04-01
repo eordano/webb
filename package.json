@@ -71,7 +71,7 @@
         "gltf-pipeline": "2.1.8",
         "google-protobuf": "3.11.4",
         "http-proxy": "1.18.0",
-        "ipfs-unixfs-importer": "1.0.2",
+        "ipfs-unixfs-importer": "1.0.3",
         "ipld": "0.25.3",
         "ipld-in-memory": "3.0.2",
         "jasmine": "3.5.0",

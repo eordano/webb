@@ -8010,15 +8010,15 @@ ipfs-repo@^0.30.1:
     proper-lockfile "^4.0.0"
     sort-keys "^4.0.0"
 
-ipfs-unixfs-importer@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/ipfs-unixfs-importer/-/ipfs-unixfs-importer-1.0.2.tgz#faf2947e91af733e94a110cba593022893d64c28"
-  integrity sha512-q5hN1ZVSp44v3xlVkiGVM4xWmdEvOge3lbwUGvPvFUO9gNxWWRQ9ayZXXEqODBsfTH6gIk9iVLCRf+imP0wexg==
+ipfs-unixfs-importer@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs-importer/-/ipfs-unixfs-importer-1.0.3.tgz#7589e92f6e247affd480650fab0778edaae0e597"
+  integrity sha512-PMONUSMQF/t1wauxB2pxoYIOliSkRB5qpnfwm2D/YWnyuGcbZJUFRpyIzpfrnXfADWJWyeFHnk00S+B1P+USLg==
   dependencies:
     bl "^4.0.0"
     err-code "^2.0.0"
     hamt-sharding "^1.0.0"
-    ipfs-unixfs "^1.0.0"
+    ipfs-unixfs "^1.0.1"
     ipld-dag-pb "^0.18.0"
     it-all "^1.0.1"
     it-batch "^1.0.3"
@@ -8029,10 +8029,10 @@ ipfs-unixfs-importer@1.0.2:
     multihashing-async "^0.8.0"
     rabin-wasm "^0.1.1"
 
-ipfs-unixfs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-1.0.0.tgz#3f0cce082ad71062adfb97d6b0bc48574f5160dc"
-  integrity sha512-K1x0/zAOXZnxjmGJVBIMHV8sPy8oEihiv8L9imD27izuc54M9tHvFB0qkFgdvCzsfK3sUj2cn6JM3rBz3S6MZw==
+ipfs-unixfs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-1.0.1.tgz#85c1f4f8635f5ac0b2a3bc0b2df1e8d85b36cc5e"
+  integrity sha512-P1G9eVywOFtItONEiAvOgPIUO7hZjBC1FK3iiTXRDOrtM8S1K0fxgF9lGG+mZUeE5WPjyiuQEiMrSmqym27Efw==
   dependencies:
     err-code "^2.0.0"
     protons "^1.1.0"
