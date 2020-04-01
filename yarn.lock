@@ -4796,10 +4796,10 @@ decamelize@^1.1.1, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decentraland-renderer@1.8.15170:
-  version "1.8.15170"
-  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.15170.tgz#3bd33332d7942b5cc59460871a0e64b05d3d6b0d"
-  integrity sha512-kZFEn3K46Mwx2KUhP+6ot8KeAYlbOUB6im1vtu85GuhAerydw7jn4eoQcX7CNGvnG605ASwIB3IjhZ7+DxPw3w==
+decentraland-renderer@1.8.16142:
+  version "1.8.16142"
+  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.16142.tgz#06b2afbeba292e9e0d030d1651e1c6f18565adb3"
+  integrity sha512-ufbBk6PC1mfv3A7vxuVkZI9Bft3CVz1hmQ5Kjm4+4fFvoQv4tJ/vwrHDZRt7XgndavlOdaUBfoQ3rJvPsssbIA==
 
 decode-uri-component@^0.2.0:
   version "0.2.0"

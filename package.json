@@ -59,7 +59,7 @@
         "chai": "4.2.0",
         "cors": "2.8.5",
         "d3": "5.15.0",
-        "decentraland-renderer": "1.8.15170",
+        "decentraland-renderer": "1.8.16142",
         "defaults": "1.0.3",
         "devtools-protocol": "0.0.750324",
         "ethereum-cryptography": "0.0.7",
