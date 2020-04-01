@@ -112,7 +112,7 @@
         "solc": "0.6.4",
         "solc4": "0.4.25",
         "stream": "0.0.2",
-        "terser": "4.6.6",
+        "terser": "4.6.10",
         "tmp": "0.1.0",
         "typedoc": "^0.17.0",
         "typedoc-plugin-sourcefile-url": "^1.0.6",
