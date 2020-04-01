@@ -5080,10 +5080,10 @@ devcert@^1.0.2:
     tmp "^0.0.33"
     tslib "^1.10.0"
 
-devtools-protocol@0.0.750324:
-  version "0.0.750324"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.750324.tgz#e160c639e345a3800dc9d07c12b0f568424f2126"
-  integrity sha512-w5hFCqEzCmK/oQpGKyZfvrLguY1xVfmUtB4JBqHTsGFpUoCO0/KX7feNwo2BnVLM/PqU0QRp0hTKuQvtWku6Ow==
+devtools-protocol@0.0.754670:
+  version "0.0.754670"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.754670.tgz#3b2166f8fd695be92e42b4b4edd8fef388304970"
+  integrity sha512-AN4AQwYJcxrOwVzxcj9Kw5QpvzdTgrmtHGhOAgIjgDYL5D6aBZw3hdc/BpukOtWlMtdU7udrkA/FXhqpdfb6PA==
 
 di@^0.0.1:
   version "0.0.1"
