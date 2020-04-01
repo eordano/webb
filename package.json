@@ -68,7 +68,7 @@
         "file-type": "14.1.4",
         "fp-future": "1.0.1",
         "gatsby": "^2.19.43",
-        "gltf-pipeline": "2.1.8",
+        "gltf-pipeline": "2.1.9",
         "google-protobuf": "3.11.4",
         "http-proxy": "1.18.0",
         "ipfs-unixfs-importer": "1.0.2",

@@ -7097,10 +7097,10 @@ globule@^1.0.0:
     lodash "~4.17.12"
     minimatch "~3.0.2"
 
-gltf-pipeline@2.1.8:
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/gltf-pipeline/-/gltf-pipeline-2.1.8.tgz#034abd2f24579793581b79a48afaa506f2de18c3"
-  integrity sha512-LQ3w3l1bPPosbcCpCjpuYGnGm1cFma61wZsAmoavCWT8vT2sdcSie4R0I9lDJgZzl/pAOigVZtvi0f5XTATjXw==
+gltf-pipeline@2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/gltf-pipeline/-/gltf-pipeline-2.1.9.tgz#db34a60197f50be9f046e333db8b1504b7d60c0e"
+  integrity sha512-RioHr4zBewTVOrGeCbATa0wm50vSaXp4lIJNeAeaJZISuZqow7y7i6RoESJSMODGsMZiuUA8WZSRmZXKV5SX/A==
   dependencies:
     bluebird "^3.7.2"
     cesium "^1.66.0"
