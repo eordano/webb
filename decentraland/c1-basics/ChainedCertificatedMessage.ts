@@ -10,6 +10,11 @@ import { jsonStringify } from 'dcl/jslibs/stableStringify'
  */
 export type ChainedCertificatedMessage = SignedMessage[]
 
+/**
+ * Create a normal signature link between two identities
+ * @param rootIdentity The current authority signing certificates (must have a private key)
+ * @param childIdentity The child identity (can have their private key missing)
+ */
 export function createAddressCertificateLink(
   rootIdentity: CryptographicIdentity,
   childIdentity: PublicCryptographicIdentity
@@ -18,7 +23,7 @@ export function createAddressCertificateLink(
     rootIdentity,
     jsonStringify({
       type: CHAINED_ADDRESS,
-      childAddress: childIdentity.address
+      childAddress: childIdentity.address,
     })
   )
 }
@@ -27,15 +32,9 @@ export function validateChainedCertificate(sender: Address, messages: ChainedCer
 }
 
 /**
- * Recursion:
- * Invariants:
- *   - "sender" is a trusted sender
- *   - the first element of the messages array is not trusted (yet)
- * Steps:
- *   - Validate that the first element is trusted
- *   - If there are no more elements, there is no chain signature error (return undefined)
- *   - Update the "sender" (if needed)
- *   - Recurse on the next element of the array
+ * This method verifies the provided signature and returns a human-readable message, with populated information about
+ * the errors found, for which the given ChainedCertificatedMessage fails. It returns undefined in case the signature
+ * is invalid.
  */
 export function chainSignatureError(sender: Address, messages: ChainedCertificatedMessage): string | undefined {
   const message = messages[0]

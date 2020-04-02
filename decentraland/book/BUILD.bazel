@@ -1,0 +1,66 @@
+load("@npm//http-server:index.bzl", "http_server")
+load("@npm//sass:index.bzl", "sass")
+load("@npm//webpack-cli:index.bzl", webpack = "webpack_cli")
+load("@npm_bazel_typescript//:index.bzl", "ts_project")
+
+sass(
+    name = "styles",
+    outs = ["styles.css"],
+    args = [
+        "$(execpath styles.scss)",
+        "$(execpath styles.css)",
+    ],
+    data = ["styles.scss"],
+)
+
+ts_project(
+    extends = [":book.package.json"],
+    deps = [
+        "@npm//@types",
+        "@npm//csstype",
+    ],
+)
+
+webpack(
+    name = "bundle",
+    outs = ["app.bundle.js"],
+    args = [
+        "$(execpath index.js)",
+        "--config",
+        "$(execpath webpack.config.js)",
+        "-o",
+        "$@",
+    ],
+    data = [
+        "index.js",
+        "styles.css",
+        "webpack.config.js",
+        "@npm//@bazel/typescript",
+        "@npm//@types/form-data",
+        "@npm//@types/react",
+        "@npm//@types/react-dom",
+        "@npm//@types/redux",
+        "@npm//css-loader",
+        "@npm//form-data",
+        "@npm//http-server",
+        "@npm//react",
+        "@npm//react-dom",
+        "@npm//redux",
+        "@npm//sass",
+        "@npm//style-loader",
+        "@npm//typescript",
+        "@npm//webpack",
+        "@npm//webpack-cli",
+        "@npm//webpack-dev-server",
+    ],
+)
+
+# Note, on Windows you need `--enable_runfiles`
+http_server(
+    name = "server",
+    data = [
+        "app.bundle.js",
+        "index.html",
+    ],
+    templated_args = ["."],
+)

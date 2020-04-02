@@ -82,23 +82,22 @@ jasmine_test(
 
 load("@npm_bazel_karma//:index.bzl", "karma_web_test_suite")
 
+load("@npm//webpack-cli:index.bzl", webpack = "webpack_cli")
+
 karma_web_test_suite(
     name = "karma-web-test",
     browsers = [
         "@io_bazel_rules_webtesting//browsers:chromium-local",
+        "@io_bazel_rules_webtesting//browsers:firefox-local",
     ],
     config_file = ":karma.conf.js",
-    tags = ["native"],
     data = [
         ":c1-basics-spec",
     ],
-    runtime_deps = [
-    ],
+    tags = ["native"],
     deps = [
-        ":test/config.js",
         ":c1-basics-spec",
-        "@npm//ethereum-cryptography:ethereum-cryptography__files",
         "@npm//karma-mocha-reporter",
         "@npm//karma-spec-reporter",
-    ]
+    ],
 )

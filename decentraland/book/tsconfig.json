@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "alwaysStrict": true,
+    "allowSyntheticDefaultImports": false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "jsx": "react",
+    "lib": ["es2015", "DOM"]
+  },
+  "include": ["*.tsx", "*.d.ts"],
+  "exclude": ["node_modules/**"]
+}
