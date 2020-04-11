@@ -20,3 +20,6 @@ chrome.devtools.panels.create('DCL Tools', 'static/icon.png', 'static/panel.html
   // code invoked on panel creation
 })
 
+export const backgroundPageConnection = chrome.runtime.connect({
+  name: 'dcl-debugger-page',
+})

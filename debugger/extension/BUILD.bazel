@@ -1,0 +1,38 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+filegroup(
+    name = "static",
+    srcs = glob(
+        include = [
+            "static/**/*",
+        ],
+    ),
+)
+
+ts_library(
+    name = "inject",
+    srcs = glob(
+        include = [
+            "inject.ts",
+        ],
+    ),
+    module_name = "@dcl/debugger/ext-inject",
+    deps = [
+        "//debugger/types",
+    ],
+)
+
+ts_library(
+    name = "content",
+    srcs = glob(
+        include = [
+            "content.ts",
+        ],
+    ),
+    module_name = "@dcl/debugger/ext-content",
+    deps = [
+        "//debugger/types",
+    ],
+)
