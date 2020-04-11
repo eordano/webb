@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@npm_bazel_typescript//:index.bzl", "ts_library")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
 
 filegroup(
     name = "static",
@@ -15,11 +16,32 @@ ts_library(
     name = "devtool",
     srcs = glob(
         include = [
-            "page.ts",
+            "comms/*.ts",
+            "jslibs/*.ts",
+            "page.tsx",
         ],
     ),
     module_name = "@dcl/debugger/devtool",
     deps = [
         "//debugger/types",
+        "@npm//@types/react",
+        "@npm//@types/react-dom",
+        "@npm//@types/redux",
+        "@npm//react",
+        "@npm//react-dom",
+        "@npm//redux",
+    ],
+)
+
+rollup_bundle(
+    name = "bundle",
+    config_file = ":rollup.config.js",
+    entry_point = "page.tsx",
+    format = "amd",
+    deps = [
+        ":devtool",
+        "@npm//react",
+        "@npm//react-dom",
+        "@npm//redux",
     ],
 )

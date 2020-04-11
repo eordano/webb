@@ -1,4 +1,41 @@
-import type { GlobalChrome, DevToolConnection, WebSocketLike } from 'dcl/debugger/types/chrome'
+type GlobalChrome = {
+  devtools: {
+    panels: {
+      create: (name: string, icon: string, page: string, code: Function) => void
+    }
+    inspectedWindow: Window & { tabId: number }
+  }
+  runtime: {
+    onConnect: {
+      addListener: (handler: unknown) => EventListener
+    }
+    onMessage: {
+      addListener: (handler: unknown) => EventListener
+    }
+    onInstalled: {
+      addListener: (handler: unknown) => EventListener
+    }
+    connect: (what: { name: string }) => WebSocketLike
+    sendMessage: (what: unknown) => void
+  }
+  tabs: {
+    executeScript: (tab: number | string, data: unknown) => void
+  }
+}
+
+type WebSocketLike = {
+  onMessage: {
+    addListener: (handler: unknown) => EventListener
+    removeListener: (listener: unknown) => void
+  }
+  onDisconnect: {
+    addListener: (handler: unknown) => EventListener
+    removeListener: (listener: unknown) => void
+  }
+  postMessage: Function
+}
+
+type DevToolConnection = WebSocketLike
 
 declare var chrome: GlobalChrome
 
@@ -13,16 +50,12 @@ chrome.runtime.onConnect.addListener(function (port: WebSocketLike) {
     sender: number,
     sendResponse: Function
   ) {
+    if (!message.tabId) {
+      return
+    }
     if (message.name === 'init') {
       connections[message.tabId] = port
-    }
-    if (message.name === 'inject') {
-      // Inject a content script into the identified tab
-      chrome.tabs.executeScript(message.tabId, { file: message.scriptToInject })
-    }
-    if (message.name === 'dcl-debugger-page') {
-      // ?
-      console.log(`Connected debugger ${JSON.stringify(message)}`)
+      chrome.tabs.executeScript(message.tabId, { file: 'js/inject.js' })
     }
   }
 
@@ -49,9 +82,14 @@ chrome.runtime.onMessage.addListener(function (
   if (sender.tab) {
     var tabId = sender.tab.id
     if (tabId in connections) {
-      connections[tabId].postMessage(request)
+      try {
+        connections[tabId].postMessage(request)
+      } catch (e) {
+        delete connections[tabId]
+        console.log(`disconnecting: ${tabId} could not be reached`, e.stack)
+      }
     } else {
-      console.log('Tab not found in connection list.')
+      console.log(`tab ${tabId} not found in connection list.`)
     }
   } else {
     console.log('sender.tab not defined.')

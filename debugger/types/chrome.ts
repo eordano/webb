@@ -3,7 +3,7 @@ export type GlobalChrome = {
     panels: {
       create: (name: string, icon: string, page: string, code: Function) => void
     }
-    inspectedWindow: Window & { tabId: number }
+    inspectedWindow: Window & { tabId: number, eval: Function }
   }
   runtime: {
     onConnect: {
