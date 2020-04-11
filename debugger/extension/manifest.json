@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "dcl-toolkit",
+  "name": "dcl-debugger",
   "version": "0.0.1",
   "description": "Inspect the Decentraland Client and Scenes",
   "icons": { "16": "static/icon16.png", "48": "static/icon48.png", "128": "static/icon128.png" },
@@ -15,7 +15,7 @@
   "minimum_chrome_version": "10.0",
   "devtools_page": "static/devtools.html",
   "background": {
-    "scripts": ["js/background.js"],
+    "scripts": ["js/background.js", "static/vendor/hotreload.js"],
     "persistent": false
   },
   "permissions": [

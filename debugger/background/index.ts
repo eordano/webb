@@ -1,4 +1,4 @@
-type GlobalChrome = {
+type _GlobalChrome = {
   devtools: {
     panels: {
       create: (name: string, icon: string, page: string, code: Function) => void
@@ -15,15 +15,16 @@ type GlobalChrome = {
     onInstalled: {
       addListener: (handler: unknown) => EventListener
     }
-    connect: (what: { name: string }) => WebSocketLike
+    connect: (what: { name: string }) => _WebSocketLike
     sendMessage: (what: unknown) => void
   }
   tabs: {
     executeScript: (tab: number | string, data: unknown) => void
   }
 }
+declare var chrome: _GlobalChrome
 
-type WebSocketLike = {
+type _WebSocketLike = {
   onMessage: {
     addListener: (handler: unknown) => EventListener
     removeListener: (listener: unknown) => void
@@ -35,16 +36,14 @@ type WebSocketLike = {
   postMessage: Function
 }
 
-type DevToolConnection = WebSocketLike
-
-declare var chrome: GlobalChrome
+type _DevToolConnection = _WebSocketLike
 
 const connections: {
-  [port: number]: DevToolConnection
+  [port: number]: _DevToolConnection
 } = {}
 
 // Background page -- background.js
-chrome.runtime.onConnect.addListener(function (port: WebSocketLike) {
+chrome.runtime.onConnect.addListener(function (port: _WebSocketLike) {
   var devToolsListener = function (
     message: { name: string; tabId: number; scriptToInject: string },
     sender: number,
@@ -61,7 +60,7 @@ chrome.runtime.onConnect.addListener(function (port: WebSocketLike) {
 
   port.onMessage.addListener(devToolsListener)
 
-  port.onDisconnect.addListener(function (devToolDisconnected: WebSocketLike) {
+  port.onDisconnect.addListener(function (devToolDisconnected: _WebSocketLike) {
     port.onMessage.removeListener(devToolsListener)
     const allTabs = Object.keys(connections)
     for (let i = 0; i < allTabs.length; i++) {

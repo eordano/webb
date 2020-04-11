@@ -1,58 +1,50 @@
-import type { GlobalChrome } from 'dcl/debugger/types/chrome'
-import React, { useCallback } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { setupComms } from './comms/setup'
-import { commsStore } from './comms/store'
-import { useStore2 } from './jslibs/useStore2'
+import type { GlobalChrome } from '../types/chrome'
+import { setupComms, resetComms } from './comms/setup'
 import { clientLog } from './jslibs/clientLog'
-declare const chrome: GlobalChrome
+import { Render } from './Render'
+export declare const chrome: GlobalChrome
 
-/**
- * Initialize the connection
- */
-export const backgroundPageConnection = chrome.runtime.connect({
-  name: 'dcl-debugger-page',
-})
-/**
- * Send the first message to the background page
- */
-backgroundPageConnection.postMessage({
-  name: 'init',
-  tabId: chrome.devtools.inspectedWindow.tabId,
-})
+const FILE_LOCAL_VERBOSE_BUGS = false
 
-setupComms(backgroundPageConnection)
+function setupBackground() {
+  /**
+   * Initialize the connection
+   */
+  const backgroundPageConnection = chrome.runtime.connect({
+    name: 'dcl-debugger-page',
+  })
+  /**
+   * Send the first message to the background page
+   */
+  backgroundPageConnection.postMessage({
+    name: 'init',
+    tabId: chrome.devtools.inspectedWindow.tabId,
+  })
 
-/**
- * Create a panel and continue there
- */
-chrome.devtools.panels.create('DCL Tools', 'static/icon.png', 'static/panel.html', function (panel) {
-  panel.onShown.addListener(function (panelWin: Window) {
-    ReactDOM.render(<Render />, panelWin.document.getElementById('root'))
-    backgroundPageConnection.onMessage.addListener(function (message: any) {
-      clientLog(`[dcl-debugger:panel] received message`, message)
+  backgroundPageConnection.onDisconnect.addListener(() => {
+    resetComms()
+  })
+  setupComms(backgroundPageConnection)
+
+  /**
+   * Create a panel and continue there
+   */
+  chrome.devtools.panels.create('DCL Tools', 'static/icon.png', 'static/panel.html', function (panel) {
+    panel.onShown.addListener(function (panelWin: Window) {
+      ReactDOM.render(<Render panelWindow={panelWin} />, panelWin.document.getElementById('root'))
+      backgroundPageConnection.onDisconnect.addListener(function (message: any) {
+        ReactDOM.render(<h2>Disconnected</h2>, panelWin.document.getElementById('root'))
+      })
+      backgroundPageConnection.onMessage.addListener(function (message: any) {
+        if (typeof message === 'object' && message.name === '[dcl-debugger:panel] Pong!') {
+          clientLog(`📬 Messaging back & forth between dcl-debugger and the client successfully established 👌`)
+        }
+        FILE_LOCAL_VERBOSE_BUGS && clientLog(`[dcl-debugger:panel] received message`, message)
+      })
     })
   })
-})
-
-function Render() {
-  const test = useCallback(() => {
-    chrome.devtools.inspectedWindow.eval(
-      `window.postMessage(
-         {
-           name: '[dcl-debugger:panel] Pong!',
-           source: 'dcl-debugger',
-         },
-         '*'
-       )`
-    )
-  }, [])
-  const [state] = useStore2(commsStore)
-  return (
-    <div>
-      <div style={{ color: 'white' }}>Render 5</div>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-      <button onClick={test}>Send Test `Ping`</button>
-    </div>
-  )
 }
+
+setupBackground()

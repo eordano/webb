@@ -1,6 +1,7 @@
-import type { GlobalChrome, DevToolConnection } from 'dcl/debugger/types/chrome'
-import { getCommsStore, COMMS_REPORT } from './store'
 import { clientLog } from '../jslibs/clientLog'
+import type { DevToolConnection, GlobalChrome } from '../../types/chrome'
+import { getCommsStore } from './store'
+import { COMMS_REPORT, COMMS_DISCONNECTED } from './types'
 export declare var chrome: GlobalChrome
 
 export function setupComms(connection: DevToolConnection) {
@@ -36,4 +37,8 @@ export function setupComms(connection: DevToolConnection) {
       clientLog(`Could not parse message from client:`, event)
     }
   })
+}
+
+export function resetComms() {
+  getCommsStore().dispatch({ type: COMMS_DISCONNECTED })
 }

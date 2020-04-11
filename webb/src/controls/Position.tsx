@@ -1,6 +1,6 @@
 import { parcelLimits } from 'dcl/utils'
 import React from 'react'
-import { Segment } from '../components/liteui/dcl'
+import { Segment } from 'dcl/jslibs/liteui/dcl'
 
 export type PositionControl = {
   x: number

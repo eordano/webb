@@ -3,31 +3,50 @@ package(default_visibility = ["//visibility:public"])
 load("@npm_bazel_typescript//:index.bzl", "ts_library")
 load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
 
-filegroup(
-    name = "static",
-    srcs = glob(
-        include = [
-            "static/**/*",
-        ],
-    ),
-)
-
 ts_library(
     name = "devtool",
     srcs = glob(
         include = [
-            "comms/*.ts",
-            "jslibs/*.ts",
             "page.tsx",
         ],
     ),
     module_name = "@dcl/debugger/devtool",
     deps = [
+        "//debugger/devtool/comms",
+        "//debugger/devtool/jslibs",
+        "//debugger/devtool/scenes",
         "//debugger/types",
+        "//jslibs/hooks",
         "@npm//@types/react",
         "@npm//@types/react-dom",
         "@npm//@types/redux",
         "@npm//react",
+        "@npm//react-dom",
+        "@npm//redux",
+    ],
+)
+
+ts_library(
+    name = "bundled_devtool",
+    srcs = glob(
+        include = [
+            "**/*.ts",
+            "**/*.tsx",
+            "page.tsx",
+        ],
+    ),
+    module_name = "@dcl/debugger/bundled_devtool",
+    deps = [
+        "//debugger/devtool/comms",
+        "//debugger/devtool/jslibs",
+        "//debugger/devtool/scenes",
+        "//debugger/types",
+        "//jslibs/hooks",
+        "@npm//@types/react",
+        "@npm//@types/react-dom",
+        "@npm//@types/redux",
+        "@npm//react",
+        "@npm//chart.js",
         "@npm//react-dom",
         "@npm//redux",
     ],
@@ -39,9 +58,15 @@ rollup_bundle(
     entry_point = "page.tsx",
     format = "amd",
     deps = [
-        ":devtool",
+        ":bundled_devtool",
+        "//debugger/devtool/comms",
+        "//debugger/devtool/jslibs",
+        "//debugger/devtool/scenes",
+        "//debugger/devtool/static",
+        "//debugger/types",
+        "//jslibs/hooks",
+        "@npm//chart.js",
         "@npm//react",
         "@npm//react-dom",
-        "@npm//redux",
     ],
 )

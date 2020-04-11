@@ -13,7 +13,7 @@ filegroup(
 )
 
 ts_library(
-    name = "hooks",
+    name = "liteui",
     srcs = glob(
         include = [
             "*.ts",
@@ -22,8 +22,6 @@ ts_library(
     ),
     deps = [
         "@npm//@types/react",
-        "@npm//defaults",
         "@npm//react",
-        "@npm//redux",
     ],
 )
