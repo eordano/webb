@@ -1,6 +1,6 @@
-import { DisposableComponent } from '../ecs/Component'
-import { Shape } from './Shape'
-import { CLASS_ID } from './Components'
+import { DisposableComponent } from '../../ecs/Component'
+import { Shape } from '../Shape'
+import { CLASS_ID } from './../Components'
 /**
  * @public
  */

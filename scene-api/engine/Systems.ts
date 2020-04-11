@@ -1,6 +1,6 @@
 import { UUIDEvent } from './Events'
 import { DecentralandInterface } from './Types'
-import { OnUUIDEvent } from './Components'
+import { OnUUIDEvent } from './events/OnUUIDEvent'
 
 import { ISystem, ComponentAdded, ComponentRemoved, IEntity } from '../ecs/IEntity'
 import { ECSEngine } from '../ecs/ECSEngine'

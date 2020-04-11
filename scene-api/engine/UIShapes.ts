@@ -1,8 +1,9 @@
 import { Color4 } from 'dcl/utils'
 
-import { CLASS_ID, OnUUIDEvent } from './Components'
+import { CLASS_ID } from './Components'
+import { OnUUIDEvent } from './events/OnUUIDEvent'
 import { Texture } from './Texture'
-import { OnTextSubmit, OnBlur, OnChanged, OnClick, OnFocus } from './UIEvents'
+import { OnTextSubmit, OnBlur, OnChanged, OnClick, OnFocus } from './events/UIEvents'
 
 import { ObservableComponent, DisposableComponent, getComponentId } from '../ecs/Component'
 

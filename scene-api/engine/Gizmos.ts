@@ -1,5 +1,6 @@
 import { Component, ObservableComponent } from '../ecs/Component'
-import { CLASS_ID, OnUUIDEvent } from './Components'
+import { CLASS_ID } from './Components'
+import { OnUUIDEvent } from './events/OnUUIDEvent'
 
 /**
  * Gizmo identifiers

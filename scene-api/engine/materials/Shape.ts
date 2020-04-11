@@ -1,4 +1,4 @@
-import { ObservableComponent } from '../ecs/Component'
+import { ObservableComponent } from '../../ecs/Component'
 /**
  * @public
  */

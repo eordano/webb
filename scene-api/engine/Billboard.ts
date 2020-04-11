@@ -1,5 +1,6 @@
 import { Component, ObservableComponent } from '../ecs/Component'
 import { CLASS_ID } from './Components'
+
 /**
  * Billboard defines a behavior that makes the entity face the camera in any moment.
  * @public
