@@ -1,5 +1,6 @@
 import { ObservableComponent, Component, getComponentId } from '../../ecs/Component'
 import { CLASS_ID } from '../Components'
+import { AudioClip } from './AudioClip'
 /**
  * @public
  */

@@ -1,0 +1,25 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+filegroup(
+    name = "static",
+    srcs = glob(
+        include = [
+            "static/**/*",
+        ],
+    ),
+)
+
+ts_library(
+    name = "devtool",
+    srcs = glob(
+        include = [
+            "page.ts",
+        ],
+    ),
+    module_name = "@dcl/debugger/devtool",
+    deps = [
+        "//debugger/types",
+    ],
+)

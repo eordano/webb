@@ -1,4 +1,4 @@
-import { DecentralandSynchronizationSystem } from './engine/DecentralandSynchronizationSystem'
+import { DecentralandSynchronizationSystem } from './engine/systems/DecentralandSynchronizationSystem'
 
 // ECS INITIALIZATION
 import { ECSEngine } from './ecs/ECSEngine'

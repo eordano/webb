@@ -1,0 +1,25 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+filegroup(
+    name = "static",
+    srcs = glob(
+        include = [
+            "static/**/*",
+        ],
+    ),
+)
+
+ts_library(
+    name = "background",
+    srcs = glob(
+        include = [
+            "index.ts",
+        ],
+    ),
+    module_name = "@dcl/debugger/background",
+    deps = [
+        "//debugger/types",
+    ],
+)
