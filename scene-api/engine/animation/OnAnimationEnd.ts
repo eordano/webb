@@ -1,5 +1,5 @@
 import { Component, ObservableComponent } from '../../ecs/Component'
-import { OnUUIDEvent } from './OnUUIDEvent'
+import { OnUUIDEvent } from '../events/OnUUIDEvent'
 import { CLASS_ID } from '../Components'
 /**
  * @public

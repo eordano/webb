@@ -1,7 +1,7 @@
 import { Color3 } from 'dcl/utils'
-import { ObservableComponent, DisposableComponent } from '../ecs/Component'
+import { ObservableComponent, DisposableComponent } from '../../ecs/Component'
 import { Texture } from './Texture'
-import { CLASS_ID } from './Components'
+import { CLASS_ID } from './../Components'
 /**
  * @public
  */
