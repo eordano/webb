@@ -56,7 +56,7 @@ rollup_bundle(
     name = "bundle",
     config_file = ":rollup.config.js",
     entry_point = "page.tsx",
-    format = "amd",
+    format = "umd",
     deps = [
         ":bundled_devtool",
         "//debugger/devtool/comms",

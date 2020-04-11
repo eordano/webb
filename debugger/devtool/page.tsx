@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import type { GlobalChrome } from '../types/chrome'
-import { setupComms, resetComms } from './comms/setup'
+import { resetComms, setupComms } from './comms/setup'
 import { clientLog } from './jslibs/clientLog'
 import { Render } from './Render'
 export declare const chrome: GlobalChrome
