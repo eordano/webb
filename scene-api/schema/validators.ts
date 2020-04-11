@@ -167,7 +167,7 @@ export const validators = {
         // tslint:disable-next-line:no-console
         defaultLogger.warn('Cannot parse color3', x)
       }
-    } else if (typeof x === 'object' && (x.r !== undefined && x.g !== undefined && x.b !== undefined)) {
+    } else if (typeof x === 'object' && x.r !== undefined && x.g !== undefined && x.b !== undefined) {
       color.copyFrom(x)
     } else if (typeof x === 'number') {
       color.copyFrom(Color3.FromHexString('#' + ('000000' + (x | 0).toString(16)).substr(-6)))
@@ -189,7 +189,7 @@ export const validators = {
         // tslint:disable-next-line:no-console
         defaultLogger.warn('Cannot parse color4', x)
       }
-    } else if (typeof x === 'object' && (x.r !== undefined && x.g !== undefined && x.b !== undefined)) {
+    } else if (typeof x === 'object' && x.r !== undefined && x.g !== undefined && x.b !== undefined) {
       color.copyFrom(x)
     } else if (typeof x === 'number') {
       color.copyFrom(Color4.FromHexString('#' + ('00000000' + (x | 0).toString(16)).substr(-8)))
@@ -222,14 +222,14 @@ export const validators = {
       ret.push(validators.float(x[i], 0))
     }
     return ret
-  }
+  },
 }
 
 export function createSchemaValidator(schema: ISchema<typeof validators>) {
   const schemaKeys = Object.keys(schema)
 
   return Object.assign(
-    function(input: any) {
+    function (input: any) {
       if (input != null && typeof input === 'object') {
         for (let k = 0; k < schemaKeys.length; k++) {
           const key = schemaKeys[k]

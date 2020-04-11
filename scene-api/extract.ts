@@ -50,7 +50,7 @@ export function runMain(tsConfig: string, entryPoint, dtsBundleOut): 1 | 0 {
       JSON.stringify({
         name: 'GENERATED-BY-BAZEL',
         version: '0.0.0',
-        description: 'This is a dummy package.json as API Extractor always requires one.'
+        description: 'This is a dummy package.json as API Extractor always requires one.',
       })
     )
   }
@@ -76,7 +76,7 @@ export function runMain(tsConfig: string, entryPoint, dtsBundleOut): 1 | 0 {
   const extractorConfig = ExtractorConfig.prepare({
     configObject: extractorConfigData,
     configObjectFullPath: undefined,
-    packageJsonFullPath: targetPackageJsonPath
+    packageJsonFullPath: targetPackageJsonPath,
   })
 
   const extractor = Extractor.invoke(extractorConfig, { showDiagnostics: true })

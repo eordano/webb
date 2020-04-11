@@ -53,7 +53,7 @@ export class EventManager {
 
     listeners.push({
       listener,
-      fn: listenerFunction
+      fn: listenerFunction,
     })
 
     return this

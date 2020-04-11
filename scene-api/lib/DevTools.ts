@@ -29,7 +29,7 @@ export class DevTools extends API implements DevToolsServer {
       case 'Runtime.consoleAPICalled': {
         let [event] = params as ProtocolMapping.Events['Runtime.consoleAPICalled']
 
-        this.logger.log('', ...event.args.map($ => ('value' in $ ? $.value : $.unserializableValue)))
+        this.logger.log('', ...event.args.map(($) => ('value' in $ ? $.value : $.unserializableValue)))
 
         break
       }

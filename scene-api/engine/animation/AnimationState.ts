@@ -1,5 +1,5 @@
-import { ObservableComponent } from '../ecs/Component'
-import { newId } from '../ecs/IdGenerator'
+import { ObservableComponent } from '../../ecs/Component'
+import { newId } from '../../ecs/IdGenerator'
 
 /** @public */
 export type AnimationParams = {
@@ -11,7 +11,7 @@ export type AnimationParams = {
 const defaultParams: Required<Pick<AnimationParams, 'looping' | 'speed' | 'weight'>> = {
   looping: true,
   speed: 1.0,
-  weight: 1.0
+  weight: 1.0,
 }
 
 /**

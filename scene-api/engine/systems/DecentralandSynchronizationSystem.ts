@@ -1,6 +1,6 @@
-import { ECSEngine } from '../ecs/ECSEngine'
-import { IEntity, ISystem, ComponentAdded, ComponentRemoved, ParentChanged } from '../ecs/IEntity'
-import { UUIDEvent } from './Events'
+import { ECSEngine } from '../../ecs/ECSEngine'
+import { IEntity, ISystem, ComponentAdded, ComponentRemoved, ParentChanged } from '../../ecs/IEntity'
+import { UUIDEvent } from '../Events'
 import {
   DisposableComponentCreated,
   DisposableComponentRemoved,
@@ -8,10 +8,10 @@ import {
   isDisposableComponent,
   getComponentId,
   getComponentClassId,
-  ObservableComponent
-} from '../ecs/Component'
+  ObservableComponent,
+} from '../../ecs/Component'
 
-import { DecentralandInterface } from './Types'
+import { DecentralandInterface } from '../Types'
 
 // This number is defined in the protocol ECS.SetEntityParent.3
 const ROOT_ENTITY_ID = '0'
@@ -37,12 +37,12 @@ export class DecentralandSynchronizationSystem implements ISystem {
 
     // TODO(agus): send disposableComponents if exist
 
-    this.dcl.onUpdate(dt => {
+    this.dcl.onUpdate((dt) => {
       engine.update(dt)
       this.presentEntities()
     })
 
-    this.dcl.onEvent(event => {
+    this.dcl.onEvent((event) => {
       switch (event.type) {
         case 'uuidEvent':
           const data = event.data as any

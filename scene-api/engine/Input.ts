@@ -13,7 +13,7 @@ export type InputEventKind = 'BUTTON_DOWN' | 'BUTTON_UP'
  */
 export enum Pointer {
   PRIMARY = 'PRIMARY',
-  SECONDARY = 'SECONDARY'
+  SECONDARY = 'SECONDARY',
 }
 
 /** @public */
@@ -78,16 +78,16 @@ export class Input {
 
   private subscriptions: Record<InputEventKind, Array<(e: LocalPointerEvent) => void>> = {
     BUTTON_DOWN: [],
-    BUTTON_UP: []
+    BUTTON_UP: [],
   }
 
   private internalState: InputState = {
     [Pointer.PRIMARY]: {
-      BUTTON_DOWN: false
+      BUTTON_DOWN: false,
     },
     [Pointer.SECONDARY]: {
-      BUTTON_DOWN: false
-    }
+      BUTTON_DOWN: false,
+    },
   }
 
   private constructor() {
@@ -95,7 +95,7 @@ export class Input {
       dcl.subscribe('pointerUp')
       dcl.subscribe('pointerDown')
 
-      dcl.onEvent(event => {
+      dcl.onEvent((event) => {
         if (event.type === 'pointerUp') {
           this.handlePointerUp(event.data as PointerEvent)
         } else if (event.type === 'pointerDown') {
@@ -153,9 +153,9 @@ export class Input {
             ...data.hit,
             hitPoint: new MVector3().copyFrom(data.hit.hitPoint),
             normal: new MVector3().copyFrom(data.hit.normal),
-            worldNormal: new MVector3().copyFrom(data.hit.worldNormal)
+            worldNormal: new MVector3().copyFrom(data.hit.worldNormal),
           }
-        : undefined
+        : undefined,
     }
 
     this.internalState[Pointer.PRIMARY].BUTTON_DOWN = false
@@ -185,9 +185,9 @@ export class Input {
             ...data.hit,
             hitPoint: new MVector3().copyFrom(data.hit.hitPoint),
             normal: new MVector3().copyFrom(data.hit.normal),
-            worldNormal: new MVector3().copyFrom(data.hit.worldNormal)
+            worldNormal: new MVector3().copyFrom(data.hit.worldNormal),
           }
-        : undefined
+        : undefined,
     }
 
     this.internalState[Pointer.PRIMARY].BUTTON_DOWN = true

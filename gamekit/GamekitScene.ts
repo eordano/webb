@@ -6,7 +6,6 @@ import { BuildDCLInterface } from './DCLInterface/BuildDCLInterface'
 import { BuildECSInterface } from './DCLInterface/BuildECSInterface'
 import { customEval, getES5Context } from './sandbox'
 
-
 const LOADING = 'loading'
 const AWAKE = 'awake'
 const RUNNING = 'running'
@@ -18,7 +17,6 @@ const RUNNING = 'running'
  * This is the class that runs all the magic (see `runFirstRound`)
  */
 export abstract class GamekitScene implements ISceneRunningScript {
-
   rendererInterface!: IRendererParcelSceneToScript
 
   devTools: any
@@ -37,7 +35,6 @@ export abstract class GamekitScene implements ISceneRunningScript {
     this.setupDevtools()
 
     this.status = AWAKE
-
     ;(this.rendererInterface as any).on('sceneStart')
 
     try {
@@ -47,10 +44,14 @@ export abstract class GamekitScene implements ISceneRunningScript {
     }
   }
 
+  /**
+   * Merge together the core `dcl` functions (like `loadModule` to send messages to the main thread) and the more
+   * GameKit specific functions (like `addEntity`)
+   */
   protected setupDCLInterface() {
     Object.defineProperty(this, 'engine', {
       get: () => this.rendererInterface,
-      enumerable: false
+      enumerable: false,
     })
     this.dcl = { ...BuildDCLInterface(this), ...BuildECSInterface(this.outboundEventQueue) }
     this.fixupDeprecations()
@@ -69,14 +70,16 @@ export abstract class GamekitScene implements ISceneRunningScript {
   abstract getSource(): Promise<string | void>
 
   runFirstRound() {
-    return this.getSource().then(source => {
-      if (!source) {
-        throw new Error('Could not load source')
-      }
-      return customEval(source, getES5Context({ dcl: this.dcl }))
-    }).catch(error => {
-      console.log(error)
-    })
+    return this.getSource()
+      .then((source) => {
+        if (!source) {
+          throw new Error('Could not load source')
+        }
+        return customEval(source, getES5Context({ dcl: this.dcl }))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   runStartFunctions() {
@@ -187,11 +190,11 @@ export abstract class GamekitScene implements ISceneRunningScript {
     Object.defineProperty(this, 'manualUpdate', {
       get: () => this.managedUpdateCalls,
       set: (value: boolean) => (this.managedUpdateCalls = value),
-      enumerable: false
+      enumerable: false,
     })
     Object.defineProperty(this, 'events', {
       get: () => this.outboundEventQueue,
-      enumerable: false
+      enumerable: false,
     })
   }
 

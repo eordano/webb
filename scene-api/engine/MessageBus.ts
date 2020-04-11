@@ -24,14 +24,14 @@ function ensureCommunicationsController() {
   if (!communicationsControllerPromise) {
     communicationsControllerPromise = dcl.loadModule('@decentraland/CommunicationsController')
 
-    communicationsControllerPromise.then($ => {
+    communicationsControllerPromise.then(($) => {
       communicationsController = $
     })
 
     const observer = getMessageObserver()
 
     dcl.subscribe('comms')
-    dcl.onEvent(event => {
+    dcl.onEvent((event) => {
       if (event.type === 'comms') {
         dcl.log('Receiving comms message ', event.data)
         observer.notifyObservers(event.data as any)
@@ -50,14 +50,14 @@ export class MessageBus {
   private flushing = false
 
   constructor() {
-    ensureCommunicationsController().then($ => {
+    ensureCommunicationsController().then(($) => {
       this.connected = true
       this.flush()
     })
   }
 
   on(message: string, callback: (value: any, sender: string) => void): Observer<IEvents['comms']> {
-    return getMessageObserver().add(e => {
+    return getMessageObserver().add((e) => {
       try {
         let m = JSON.parse(e.message)
 
@@ -96,11 +96,11 @@ export class MessageBus {
     this.flushing = true
 
     dcl.callRpc(communicationsController.rpcHandle, 'send', [message]).then(
-      _ => {
+      (_) => {
         this.flushing = false
         this.flush()
       },
-      e => {
+      (e) => {
         this.flushing = false
         error('Error flushing MessageBus', e)
       }

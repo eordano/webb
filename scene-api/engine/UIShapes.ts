@@ -1,6 +1,7 @@
 import { Color4 } from 'dcl/utils'
 
-import { CLASS_ID, OnUUIDEvent, Texture } from './Components'
+import { CLASS_ID, OnUUIDEvent } from './Components'
+import { Texture } from './Texture'
 import { OnTextSubmit, OnBlur, OnChanged, OnClick, OnFocus } from './UIEvents'
 
 import { ObservableComponent, DisposableComponent, getComponentId } from '../ecs/Component'
@@ -120,7 +121,7 @@ export class UIContainerRect extends UIShape {
  */
 export enum UIStackOrientation {
   VERTICAL,
-  HORIZONTAL
+  HORIZONTAL,
 }
 
 /**

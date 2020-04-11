@@ -1,9 +1,10 @@
 import { MVector3, MQuaternion, Matrix, MathTmp, Color3 } from 'dcl/utils'
 
 import { Component, ObservableComponent, DisposableComponent } from '../ecs/Component'
-import { AnimationState } from './AnimationState'
 import { newId } from '../ecs/IdGenerator'
 import { IEvents } from './Types'
+import { Shape } from './Shape'
+import { Texture } from './Texture'
 
 /** @public */
 export type TranformConstructorArgs = {
@@ -57,7 +58,7 @@ export enum CLASS_ID {
 
   AUDIO_CLIP = 200,
   AUDIO_SOURCE = 201,
-  GIZMOS = 203
+  GIZMOS = 203,
 }
 
 /**
@@ -117,326 +118,6 @@ export class Transform extends ObservableComponent {
   translate(vec: MVector3) {
     this.position.addInPlace(vec)
     return this
-  }
-}
-
-/**
- * Billboard defines a behavior that makes the entity face the camera in any moment.
- * @public
- */
-@Component('engine.billboard', CLASS_ID.BILLBOARD)
-export class Billboard extends ObservableComponent {
-  @ObservableComponent.field
-  x: boolean = true
-
-  @ObservableComponent.field
-  y: boolean = true
-
-  @ObservableComponent.field
-  z: boolean = true
-
-  constructor(x: boolean = true, y: boolean = true, z: boolean = true) {
-    super()
-    this.x = x
-    this.y = y
-    this.z = z
-  }
-}
-
-/**
- * @public
- */
-export class Shape extends ObservableComponent {
-  /**
-   * Set to true to turn on the collider for the entity.
-   * @alpha
-   */
-  @ObservableComponent.field
-  withCollisions: boolean = false
-
-  /**
-   * Defines if the entity and its children should be rendered
-   * @alpha
-   */
-  @ObservableComponent.field
-  visible: boolean = true
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.BOX_SHAPE)
-export class BoxShape extends Shape {}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.SPHERE_SHAPE)
-export class SphereShape extends Shape {}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.CIRCLE_SHAPE)
-export class CircleShape extends Shape {
-  @ObservableComponent.field
-  segments?: number
-
-  @ObservableComponent.field
-  arc?: number
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.PLANE_SHAPE)
-export class PlaneShape extends Shape {
-  /**
-   * Sets the horizontal length of the plane. Defaults to 1.
-   */
-  @ObservableComponent.field
-  width: number = 1
-
-  /**
-   * Sets the vertical length of the plane. Defaults to 1.
-   */
-  @ObservableComponent.field
-  height: number = 1
-
-  /**
-   * Sets the UV coordinates for the plane.
-   * Used to map specific pieces of a Material's texture into the plane's geometry.
-   */
-  @ObservableComponent.field
-  uvs?: number[]
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.CONE_SHAPE)
-export class ConeShape extends Shape {
-  /**
-   * The radius of the top of a truncated cone. Defaults to 0.
-   */
-  @ObservableComponent.field
-  radiusTop: number = 0
-
-  /**
-   * The radius of the base of the cone. Defaults to 1.
-   */
-  @ObservableComponent.field
-  radiusBottom: number = 1
-
-  /**
-   * Sets the number of rings along the cone height (positive integer). Defaults to 1.
-   */
-  @ObservableComponent.field
-  segmentsHeight: number = 1
-
-  /**
-   * Sets the number of cone sides (positive integer). Defaults to 36.
-   */
-  @ObservableComponent.field
-  segmentsRadial: number = 36
-
-  /**
-   * Adds two extra faces per subdivision to enclose the cone around its height axis.
-   * Defaults to false.
-   */
-  @ObservableComponent.field
-  openEnded: boolean = false
-
-  /**
-   * Sets the radius of the top and bottom caps at once.
-   *
-   * Properties `radiusTop` and `radiusBottom` are prioritized over this one.
-   */
-  @ObservableComponent.field
-  radius: number | null = null
-
-  /**
-   * Sets the ratio (max 1) to apply to the circumference to slice the cone. Defaults to 360.
-   */
-  @ObservableComponent.field
-  arc: number = 360
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.CYLINDER_SHAPE)
-export class CylinderShape extends Shape {
-  /**
-   * The radius of the top of the cylinder. Defaults to 0.
-   */
-  @ObservableComponent.field
-  radiusTop: number = 0
-
-  /**
-   * The radius of the base of the cylinder. Defaults to 1.
-   */
-  @ObservableComponent.field
-  radiusBottom: number = 1
-
-  /**
-   * Sets the number of rings along the cylinder height (positive integer). Defaults to 1.
-   */
-  @ObservableComponent.field
-  segmentsHeight: number = 1
-
-  /**
-   * Sets the number of cylinder sides (positive integer). Defaults to 36.
-   */
-  @ObservableComponent.field
-  segmentsRadial: number = 36
-
-  /**
-   * Adds two extra faces per subdivision to enclose the cylinder around its height axis.
-   * Defaults to false.
-   */
-  @ObservableComponent.field
-  openEnded: boolean = false
-
-  /**
-   * Sets the radius of the top and bottom caps at once.
-   *
-   * Properties `radiusTop` and `radiusBottom` are prioritized over this one.
-   */
-  @ObservableComponent.field
-  radius: number | null = null
-
-  /**
-   * Sets the ratio (max 1) to apply to the circumference to slice the cylinder. Defaults to 360.
-   */
-  @ObservableComponent.field
-  arc: number = 360
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.GLTF_SHAPE)
-export class GLTFShape extends Shape {
-  @Shape.readonly
-  readonly src!: string
-
-  constructor(src: string) {
-    super()
-    this.src = src
-  }
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.NFT_SHAPE)
-export class NFTShape extends Shape {
-  @Shape.readonly
-  readonly src!: string
-
-  constructor(src: string) {
-    super()
-    this.src = src
-  }
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.texture', CLASS_ID.TEXTURE)
-export class Texture extends ObservableComponent {
-  @ObservableComponent.readonly
-  readonly src!: string
-
-  /**
-   * Enables crisper images based on the provided sampling mode.
-   * | Value | Type      |
-   * |-------|-----------|
-   * |     1 | NEAREST   |
-   * |     2 | BILINEAR  |
-   * |     3 | TRILINEAR |
-   */
-  @ObservableComponent.readonly
-  readonly samplingMode!: number
-
-  /**
-   * Enables texture wrapping for this material.
-   * | Value | Type      |
-   * |-------|-----------|
-   * |     1 | CLAMP     |
-   * |     2 | WRAP      |
-   * |     3 | MIRROR    |
-   */
-  @ObservableComponent.readonly
-  readonly wrap!: number
-
-  /**
-   * Defines if this texture has an alpha channel
-   */
-  @ObservableComponent.readonly
-  readonly hasAlpha!: boolean
-
-  constructor(src: string, opts?: Partial<Pick<Texture, 'samplingMode' | 'wrap' | 'hasAlpha'>>) {
-    super()
-    this.src = src
-
-    if (opts) {
-      for (let i in opts) {
-        ;(this[i as 'samplingMode' | 'wrap' | 'hasAlpha'] as any) = (opts as any)[i]
-      }
-    }
-  }
-}
-
-/**
- * @public
- */
-@Component('engine.animator', CLASS_ID.ANIMATION)
-export class Animator extends Shape {
-  @ObservableComponent.readonly
-  private states: AnimationState[] = []
-
-  /**
-   * Adds an AnimationState to the animation lists.
-   */
-  addClip(clip: AnimationState) {
-    this.states.push(clip)
-    clip.onChange(() => {
-      this.dirty = true
-    })
-    return this
-  }
-
-  /**
-   * Gets the animation clip instance for the specified clip name.
-   * If the clip doesn't exist a new one will be created.
-   */
-  getClip(clipName: string): AnimationState {
-    for (let i = 0; i < this.states.length; i++) {
-      const clip = this.states[i]
-      if (clip.clip === clipName) {
-        return clip
-      }
-    }
-
-    const newClip = new AnimationState(clipName)
-    this.addClip(newClip)
-    return newClip
-  }
-}
-
-/**
- * @public
- */
-@DisposableComponent('engine.shape', CLASS_ID.OBJ_SHAPE)
-export class OBJShape extends Shape {
-  @ObservableComponent.readonly
-  readonly src!: string
-
-  constructor(src: string) {
-    super()
-    this.src = src
   }
 }
 
@@ -741,14 +422,14 @@ export class OnUUIDEvent<T extends keyof IEvents> extends ObservableComponent {
 
       Object.defineProperty(target, componentSymbol, {
         ...Object.getOwnPropertyDescriptor(target, componentSymbol),
-        enumerable: false
+        enumerable: false,
       })
 
       Object.defineProperty(target, propertyKey.toString(), {
-        get: function() {
+        get: function () {
           return this[componentSymbol]
         },
-        set: function(value) {
+        set: function (value) {
           const oldValue = this[componentSymbol]
 
           if (value) {
@@ -771,7 +452,7 @@ export class OnUUIDEvent<T extends keyof IEvents> extends ObservableComponent {
             }
           }
         },
-        enumerable: true
+        enumerable: true,
       })
     }
   }

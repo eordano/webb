@@ -5,7 +5,7 @@ import { EntityAction } from 'dcl/utils'
  * their scenes stopped working. Remember that the Gamekit is code that we provide on each new build -- and the scene
  * script is likely to remain over time. That's also the reason for this to be outside of the `userSpace` folder.
  */
-export interface ISceneRunningScript {
+export interface ISceneRunnerScript {
   onLog: (...args: any) => void
   onError: (...args: any) => void
   onUpdateFunctions: Function[]
