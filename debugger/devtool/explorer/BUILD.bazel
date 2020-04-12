@@ -12,10 +12,12 @@ ts_library(
     ),
     module_name = "@dcl/debugger/devtool/layout/explorer",
     deps = [
+        "//debugger/devtool/layout/explorer/reducers",
+        "//debugger/devtool/layout/explorer/selectors",
         "//debugger/types",
         "//jslibs/hooks",
-        "@npm//react",
         "@npm//@types/react",
+        "@npm//react",
         "@npm//redux",
     ],
 )

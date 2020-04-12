@@ -1,6 +1,6 @@
 import React, { Dispatch, useCallback } from 'react'
-import { sidebar } from './navigation/sidebar'
-import { NAVIGATE, NavigateAction, NavigationState } from './navigation/store'
+import { sidebar } from '../navigation/sidebar'
+import { NAVIGATE, NavigateAction, NavigationState } from '../navigation/store'
 
 const voidAction = () => undefined
 

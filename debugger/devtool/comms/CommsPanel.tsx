@@ -1,44 +1,18 @@
 import React, { useCallback, useState } from "react";
-import { LineChart } from "./Chart";
+import { LineChart } from "./LineChart"
+import { MessageTypeFilterList, StatTypeFilterList } from "./types";
 
-const messageTypeFilter = [
-  "all",
-  "profile",
-  "position",
-  "sceneComms",
-  "parcelUpdate",
-  "chat",
-];
-const statTypeFilter = [
-  "expired",
-  "expiredPercentage",
-  "packetDuplicates",
-  "duplicatePercentage",
-  "averagePacketSize",
-  "optimistic",
-  "packets",
-  "totalBytes",
-];
-function GetStatFilter(key: number) {
-  return statTypeFilter[key];
-}
-function GetMessageFilter(key: number) {
-  return messageTypeFilter[key];
-}
-export type StatFilter = ReturnType<typeof GetStatFilter>;
-export type MessageTypeFilter = ReturnType<typeof GetMessageFilter>;
-
-export function Networking(props: { datapoints: any }) {
+export function Networking(props: { windowContext: Window }) {
   const [selectedStat, setStat] = useState("totalBytes");
   const [selectedType, setType] = useState("all");
 
   const callbacks: Record<string, any> = {};
-  for (let stat of statTypeFilter) {
+  for (let stat of StatTypeFilterList) {
     // eslint-disable-next-line no-loop-func
     // eslint-disable-next-line react-hooks/rules-of-hooks
     callbacks[stat] = useCallback(() => setStat(stat), [stat]);
   }
-  for (let type of messageTypeFilter) {
+  for (let type of MessageTypeFilterList) {
     // eslint-disable-next-line no-loop-func
     // eslint-disable-next-line react-hooks/rules-of-hooks
     callbacks[type] = useCallback(() => setType(type), [type]);
@@ -51,7 +25,7 @@ export function Networking(props: { datapoints: any }) {
           <h3>Filter</h3>
           <div>
             <h4>by Message Type</h4>
-            {messageTypeFilter.map((_) => {
+            {MessageTypeFilterList.map((_) => {
               return (
                 <div key={_}>
                   <button onClick={callbacks[_]}>
@@ -63,7 +37,7 @@ export function Networking(props: { datapoints: any }) {
           </div>
           <div>
             <h4>by Stat</h4>
-            {statTypeFilter.map((_) => {
+            {StatTypeFilterList.map((_) => {
               return (
                 <div key={_}>
                   <span onClick={callbacks[_]}>
@@ -75,7 +49,7 @@ export function Networking(props: { datapoints: any }) {
           </div>
         </div>
         <div className="netGraphs">
-          <LineChart dataPoints={props.datapoints} />
+          <LineChart windowContext={props.windowContext} />
           <canvas id="netgraph"></canvas>
         </div>
       </div>

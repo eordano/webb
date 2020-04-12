@@ -109,6 +109,7 @@
     "react-dom": "^16.13.1",
     "react-reconciler": "0.25.1",
     "react-redux": "^7.2.0",
+    "react-simple-resizer": "^2.1.0",
     "redbox-react": "1.6.0",
     "redux": "^4.0.5",
     "redux-saga": "1.1.3",

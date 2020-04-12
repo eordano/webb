@@ -1,6 +1,4 @@
 import { SectionType } from './store'
-import { Status } from '../explorer/Status'
-import { Networking } from '../explorer/networking/Networking'
 
 export type Section = {
   section: SectionType
@@ -22,12 +20,10 @@ export const sidebar: Section[] = [
       {
         section: 'Status',
         logo: '🌎',
-        component: Status,
       },
       {
         section: 'Networking',
         logo: '📡',
-        component: Networking,
       },
     ],
   },

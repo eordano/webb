@@ -1,4 +1,4 @@
-import { createStore, AnyAction } from 'redux'
+import { createStore, AnyAction, Store } from 'redux'
 
 export type NavigationState = {
   currentSection: SectionType
@@ -47,4 +47,4 @@ export function reducer(state?: NavigationState, action?: NavigateAction | Other
   }
   return state
 }
-export const store = createStore(reducer)
+export const store: Store<NavigationState> = createStore(reducer)

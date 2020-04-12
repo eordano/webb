@@ -14,11 +14,12 @@ ts_library(
     deps = [
         "//debugger/devtool/jslibs",
         "//debugger/types",
+        "//jslibs/deepEqual",
         "//jslibs/hooks",
-        "@npm//redux",
-        "@npm//react",
+        "@npm//@types/chart.js",
         "@npm//@types/react",
         "@npm//chart.js",
-        "@npm//@types/chart.js",
+        "@npm//react",
+        "@npm//redux",
     ],
 )

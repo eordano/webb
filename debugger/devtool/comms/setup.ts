@@ -1,11 +1,10 @@
 import { clientLog } from '../jslibs/clientLog'
 import type { DevToolConnection, GlobalChrome } from '../../types/chrome'
-import { getCommsStore } from './store'
+import { store } from './store'
 import { COMMS_REPORT, COMMS_DISCONNECTED } from './types'
 export declare var chrome: GlobalChrome
 
 export function setupComms(connection: DevToolConnection) {
-  const store = getCommsStore()
   chrome.devtools.inspectedWindow.eval(
     `window.setInterval(() => {
        (typeof window !== 'undefined')
@@ -40,5 +39,5 @@ export function setupComms(connection: DevToolConnection) {
 }
 
 export function resetComms() {
-  getCommsStore().dispatch({ type: COMMS_DISCONNECTED })
+  store.dispatch({ type: COMMS_DISCONNECTED })
 }

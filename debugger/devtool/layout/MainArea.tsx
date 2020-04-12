@@ -1,6 +1,6 @@
 import React from 'react'
-import { mapSections } from './navigation/sidebar'
-import { NavigationState } from './navigation/store'
+import { mapSections } from '../navigation/sidebar'
+import { NavigationState } from '../navigation/store'
 
 export function MainArea(props: { state: NavigationState }) {
   const { currentSection } = props.state

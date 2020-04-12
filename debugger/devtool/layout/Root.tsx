@@ -2,8 +2,8 @@ import React, { Dispatch, useReducer } from 'react'
 import { Store } from 'redux'
 import './App.css'
 import { MainArea } from './MainArea'
-import { sidebar } from './navigation/sidebar'
-import { InitialState, NavigateAction, NavigationState, reducer } from './navigation/store'
+import { sidebar } from '../navigation/sidebar'
+import { InitialState, NavigateAction, NavigationState, reducer } from '../navigation/store'
 import { Sidebar } from './Sidebar'
 
 export function Root(props: { state: Store<any, any>; panelWindow: Window }) {
