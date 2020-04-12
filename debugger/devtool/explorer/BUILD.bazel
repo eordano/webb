@@ -10,10 +10,10 @@ ts_library(
             "*.tsx",
         ],
     ),
-    module_name = "@dcl/debugger/devtool/layout/explorer",
+    module_name = "@dcl/debugger/devtool/explorer",
     deps = [
-        "//debugger/devtool/layout/explorer/reducers",
-        "//debugger/devtool/layout/explorer/selectors",
+        "//debugger/devtool/explorer/reducers",
+        "//debugger/devtool/explorer/selectors",
         "//debugger/types",
         "//jslibs/hooks",
         "@npm//@types/react",

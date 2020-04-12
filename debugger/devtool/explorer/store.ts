@@ -29,8 +29,6 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose
 
-const enhancer = composeEnhancers(
-  applyMiddleware(middleWare)
-)
+const enhancer = composeEnhancers(applyMiddleware(middleWare))
 
 export const store: Store<ExplorerState> = createStore(reducer, enhancer)
