@@ -1,4 +1,10 @@
-import { ExplorableTree } from '../types'
+export type ExplorableTree = {
+  loading?: boolean
+  expanded?: boolean
+  hasKeys?: boolean
+  keys?: string[]
+  values?: Record<string, any>
+}
 
 export function alterAtPath(tree: ExplorableTree, path: string[], alteration: any): ExplorableTree {
   if (path.length === 0) {

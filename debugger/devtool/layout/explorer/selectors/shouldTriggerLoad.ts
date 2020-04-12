@@ -1,6 +1,11 @@
-import { ExplorableTree } from '../types'
 import { getTreeInfo } from './getTreeInfo'
-
+export type ExplorableTree = {
+  loading?: boolean
+  expanded?: boolean
+  hasKeys?: boolean
+  keys?: string[]
+  values?: Record<string, any>
+}
 const LOCAL_VERBOSE_DEBUG = true
 
 export function shouldTriggerLoad(tree: ExplorableTree, path: string | null): boolean {

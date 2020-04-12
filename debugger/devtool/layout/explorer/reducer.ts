@@ -1,9 +1,15 @@
 import { AnyAction } from 'redux'
 import { StateAction } from './actions'
-import { withoutInitialDot } from './helpers/withoutInitialDot'
 import { alterAtPath } from './reducers/alterAtPath'
 import { getTreeInfo } from './selectors/getTreeInfo'
 import { EmptyTree, ExplorerState, InitialExplorerState } from './types'
+
+function withoutInitialDot(str: string): string {
+  if (str.startsWith('.')) {
+    return withoutInitialDot(str.slice(1))
+  }
+  return str
+}
 
 export function reducer(state?: ExplorerState, action?: StateAction | AnyAction): ExplorerState {
   if (!state) {

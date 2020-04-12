@@ -1,4 +1,4 @@
-import { EmptyTree } from '../types'
+export const EmptyTree = { expanded: false, hasKeys: false }
 
 export function getInfo(object: any, path: string) {
   const parts = path.split('.').filter((_) => _ !== '')

@@ -1,4 +1,10 @@
-import { ExplorableTree } from '../types'
+export type ExplorableTree = {
+  loading?: boolean
+  expanded?: boolean
+  hasKeys?: boolean
+  keys?: string[]
+  values?: Record<string, any>
+}
 
 export function renderTree(tree: ExplorableTree | string | number | null | undefined, depth: number = 0): string {
   const start = ''.padStart(depth, ' ')

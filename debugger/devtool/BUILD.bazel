@@ -13,6 +13,7 @@ ts_library(
     module_name = "@dcl/debugger/devtool",
     deps = [
         "//debugger/devtool/comms",
+        "//debugger/devtool/layout",
         "//debugger/devtool/jslibs",
         "//debugger/devtool/scenes",
         "//debugger/types",

@@ -1,13 +1,6 @@
 import React, { useCallback, useState } from "react";
-import snapshot from "../snapshot.json";
 import { LineChart } from "./Chart";
 
-const info = "protocol.context.worldInstanceConnection.peer.stats"
-  .split(".")
-  .reduce((prev: any, next) => {
-    console.log(prev, next);
-    return prev[next];
-  }, snapshot);
 const messageTypeFilter = [
   "all",
   "profile",
@@ -32,15 +25,10 @@ function GetStatFilter(key: number) {
 function GetMessageFilter(key: number) {
   return messageTypeFilter[key];
 }
-type StatFilter = ReturnType<typeof GetStatFilter>;
-type MessageTypeFilter = ReturnType<typeof GetMessageFilter>;
-const fakeMetric = (type: MessageTypeFilter, stat: StatFilter) => {
-  const dataToUse = type === "all" ? info : info.statsByType[type];
-  const initial = dataToUse[stat];
-  return Array.from(new Array(10)).map((_) => Math.random() * initial);
-};
+export type StatFilter = ReturnType<typeof GetStatFilter>;
+export type MessageTypeFilter = ReturnType<typeof GetMessageFilter>;
 
-export function Networking(props: {}) {
+export function Networking(props: { datapoints: any }) {
   const [selectedStat, setStat] = useState("totalBytes");
   const [selectedType, setType] = useState("all");
 
@@ -87,7 +75,7 @@ export function Networking(props: {}) {
           </div>
         </div>
         <div className="netGraphs">
-          <LineChart dataPoints={fakeMetric(selectedType, selectedStat)} />
+          <LineChart dataPoints={props.datapoints} />
           <canvas id="netgraph"></canvas>
         </div>
       </div>
