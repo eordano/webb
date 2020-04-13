@@ -2,7 +2,7 @@ import { AnyAction } from 'redux'
 import { StateAction } from './actions'
 import { alterAtPath } from './reducers/alterAtPath'
 import { getTreeInfo } from './selectors/getTreeInfo'
-import { EmptyTree, ExplorerState, InitialExplorerState } from './types'
+import { EmptyTree, InitialExplorerState, InspectedExplorableTree } from './types'
 
 function withoutInitialDot(str: string): string {
   if (str.startsWith('.')) {
@@ -11,7 +11,7 @@ function withoutInitialDot(str: string): string {
   return str
 }
 
-export function reducer(state?: ExplorerState, action?: StateAction | AnyAction): ExplorerState {
+export function reducer(state?: InspectedExplorableTree, action?: StateAction | AnyAction): InspectedExplorableTree {
   if (!state) {
     if (!action) {
       return InitialExplorerState
@@ -44,6 +44,11 @@ export function reducer(state?: ExplorerState, action?: StateAction | AnyAction)
       return alterAtPath(state, path, { expanded: false })
     case 'Clear':
       return alterAtPath(state, path, () => EmptyTree)
+    case 'Set Inspected Tab':
+      return {
+        ...state,
+        inspectedTab: action.payload,
+      }
     default:
       return state
   }

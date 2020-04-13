@@ -1,3 +1,6 @@
+import { GlobalChrome } from '../../types/chrome'
+declare var chrome: GlobalChrome
+
 export function tapOnOutgoingKernelMessages(tabId: number) {
   chrome.tabs.executeScript(tabId, {
     code: `

@@ -1,6 +1,6 @@
 import Chart from 'chart.js'
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
-import { deepEqual } from '../../../jslibs/deepEqual'
+import { deepEqual } from '../../../jslibs/deepEqual/index'
 import { useStore2 } from '../../../jslibs/hooks/useStore2'
 import { store } from './store'
 
@@ -21,12 +21,12 @@ function getContextFromCanvas(windowContext: Window, id: string = 'canvas') {
 /**
  * Creates a chart using hard-coded data (see `initialConfig` in `//devtool/comms/chart.tsx`)
  */
-export function LineChart(props: { windowContext: Window }) {
+export function LineChart(props: { windowContext: Window, id: string }) {
   const [state] = useStore2(store)
   const [context, setContext] = useState(null as CanvasRenderingContext2D | null)
   useEffect(() => {
     if (!context) {
-      const tryContext = getContextFromCanvas(props.windowContext)
+      const tryContext = getContextFromCanvas(props.windowContext, props.id || 'canvas')
       if (tryContext) {
         setContext(tryContext)
       }

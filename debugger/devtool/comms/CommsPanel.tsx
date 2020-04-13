@@ -49,7 +49,7 @@ export function Networking(props: { windowContext: Window }) {
           </div>
         </div>
         <div className="netGraphs">
-          <LineChart windowContext={props.windowContext} />
+          <LineChart windowContext={props.windowContext} id='netgraph' />
           <canvas id="netgraph"></canvas>
         </div>
       </div>

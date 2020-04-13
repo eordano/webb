@@ -11,7 +11,7 @@ export type Section = {
 
 type Subsection = Section
 
-export const sidebar: Section[] = [
+export const Sections: Section[] = [
   {
     section: 'Explorer',
     cantselect: true,
@@ -67,7 +67,7 @@ export const sidebar: Section[] = [
   },
 ]
 
-export const mapSections = (sidebar
+export const mapSections = (Sections
   .map((_) => [_, _.subsections ? [..._.subsections] : []])
   .flat()
   .flat() as Section[]).reduce((prev, next) => {

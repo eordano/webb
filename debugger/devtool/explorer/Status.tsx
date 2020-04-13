@@ -47,7 +47,7 @@ export function ExploreTree(props: {
   );
 }
 
-export function Status(props: any) {
+export function Status(props: { windowContext: Window }) {
   const [tree, setTree] = useState(EmptyTree as ExplorableTree);
 
   useEffect(() => {

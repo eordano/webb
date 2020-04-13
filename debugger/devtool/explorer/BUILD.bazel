@@ -8,13 +8,14 @@ ts_library(
         include = [
             "*.ts",
             "*.tsx",
+            "**/*.ts",
+            "**/*.tsx",
         ],
     ),
     module_name = "@dcl/debugger/devtool/explorer",
     deps = [
-        "//debugger/devtool/explorer/reducers",
-        "//debugger/devtool/explorer/selectors",
         "//debugger/types",
+        "//debugger/devtool/jslibs",
         "//jslibs/hooks",
         "@npm//@types/react",
         "@npm//react",

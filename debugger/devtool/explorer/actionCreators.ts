@@ -1,8 +1,14 @@
-import { CollapseAction, ExpandAction, LoadingAction } from './actions'
+import { CollapseAction, ExpandAction, LoadingAction, SetInspectedTab } from './actions'
 export function collapseAction(path: string): CollapseAction {
   return {
     type: 'Collapse',
     payload: path,
+  }
+}
+export function setInspectedTab(tab: number): SetInspectedTab {
+  return {
+    type: 'Set Inspected Tab',
+    payload: tab,
   }
 }
 export function expandAction(path: string): ExpandAction {

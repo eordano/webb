@@ -1,10 +1,10 @@
 import React, { Dispatch, useCallback } from 'react'
-import { sidebar } from '../navigation/sidebar'
-import { NAVIGATE, NavigateAction, NavigationState } from '../navigation/store'
+import { NAVIGATE, NavigateAction, NavigationState } from './store'
+import { Section } from './Sections'
 
 const voidAction = () => undefined
 
-export function Sidebar(props: { sidebar: typeof sidebar; state: NavigationState; dispatch: Dispatch<NavigateAction> }) {
+export function Sidebar(props: { sidebar: Section[]; state: NavigationState; dispatch: Dispatch<NavigateAction> }) {
   const child = []
   const { state, dispatch } = props
   for (let section of props.sidebar) {
@@ -26,7 +26,7 @@ export function Sidebar(props: { sidebar: typeof sidebar; state: NavigationState
         <span className='logo'>{section.logo}</span> {section.section}{' '}
       </div>
     )
-    section.subsections?.map((_: any) => {
+    section.subsections?.forEach((_: any) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const setSubSection = useCallback(() => dispatch({ type: NAVIGATE, payload: _.section }), [_.section])
       child.push(

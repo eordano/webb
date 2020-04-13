@@ -1,15 +1,15 @@
 import React from 'react'
-import { mapSections } from '../navigation/sidebar'
-import { NavigationState } from '../navigation/store'
+import { NavigationState } from './store'
+import { mapSections } from './Sections'
 
-export function MainArea(props: { state: NavigationState }) {
+export function MainArea(props: { state: NavigationState, windowContext: Window }) {
   const { currentSection } = props.state
   if (currentSection && mapSections[currentSection]) {
     const Component = mapSections[currentSection].component
     if (Component) {
       return (
         <div className='mainArea'>
-          <Component {...props.state} />
+          <Component {...props.state} windowContext={props.windowContext} />
         </div>
       )
     }
