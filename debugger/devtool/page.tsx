@@ -1,19 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import type { GlobalChrome } from '../types/chrome'
-import { Networking } from './comms/CommsPanel'
+import { default as CommsPresenter } from './comms/presenter'
 import { resetComms, setupComms } from './comms/setup'
-import { setInspectedTab } from './explorer/actions/actionCreators'
+import { createStore as createCommsStore } from './comms/store'
+import { default as Explorer } from './explorer/present'
+import { setup as setupExplorer } from './explorer/setup'
+/**
+ * Explorer module
+ */
+import { createStore as createExplorerStore } from './explorer/store'
 import { clientLog } from './jslibs/clientLog'
 import { Root } from './layout/Root'
 import { mapSections } from './layout/Sections'
-import { tapOnOutgoingKernelMessages } from './renderer/hooks/outgoing'
+/**
+ * Comms module
+ */
+import { setup as setupRenderer } from './renderer/setup'
+/**
+ * Renderer module
+ */
+import { createStore as createRenderStore } from './renderer/store'
+
 export declare const chrome: GlobalChrome
-
-import { createStore as createExplorerStore } from './explorer/store'
-import { setup as setupExplorer} from "./explorer/setup"
-import { default as Explorer } from './explorer/present'
-
 const FILE_LOCAL_VERBOSE_BUGS = false
 
 function setupBackground() {
@@ -39,22 +48,35 @@ function setupBackground() {
    * Setup modules. First, comms networking info report
    */
   setupComms(backgroundPageConnection)
+  const commsStore = createCommsStore()
   /**
    * Also, kernel tap-into-store
    */
-  tapOnOutgoingKernelMessages()
   setupExplorer(backgroundPageConnection, chrome.devtools.inspectedWindow.tabId)
-  createExplorerStore().dispatch(setInspectedTab(chrome.devtools.inspectedWindow.tabId))
+  const explorerStore = createExplorerStore()
+  /**
+   * Tap for renderer messages
+   */
+  setupRenderer()
+  const rendererStore = createRenderStore()
 
   mapSections.Status.component = Explorer
-  mapSections.Networking.component = Networking
+  mapSections.Networking.component = CommsPresenter
 
   /**
    * Create a panel and continue there
    */
   chrome.devtools.panels.create('DCL Tools', 'static/icon.png', 'static/panel.html', function (panel) {
     panel.onShown.addListener(function (panelWin: Window) {
-      ReactDOM.render(<Root windowContext={panelWin} />, panelWin.document.getElementById('root'))
+      ReactDOM.render(
+        <Root
+          windowContext={panelWin}
+          explorerStore={explorerStore}
+          commsStore={commsStore}
+          rendererStore={rendererStore}
+        />,
+        panelWin.document.getElementById('root')
+      )
       backgroundPageConnection.onDisconnect.addListener(function (message: any) {
         ReactDOM.render(<h2>Disconnected</h2>, panelWin.document.getElementById('root'))
       })
@@ -67,5 +89,5 @@ function setupBackground() {
     })
   })
 }
-
+clientLog('initialized')
 setupBackground()

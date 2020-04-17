@@ -1,7 +1,7 @@
 import { clientLog } from '../jslibs/clientLog'
 import type { DevToolConnection, GlobalChrome } from '../../types/chrome'
 import { store } from './store'
-import { COMMS_REPORT, COMMS_DISCONNECTED } from './types'
+import { COMMS_REPORT, COMMS_DISCONNECTED } from '../../types/comms'
 export declare var chrome: GlobalChrome
 
 export function setupComms(connection: DevToolConnection) {

@@ -6,9 +6,11 @@ ts_library(
     name = "types",
     srcs = glob(
         include = [
-            "chrome.ts",
+            "*.ts",
         ],
     ),
     module_name = "@dcl/debugger/types",
-    deps = [],
+    deps = [
+        "@npm//redux"
+    ],
 )

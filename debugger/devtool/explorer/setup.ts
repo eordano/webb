@@ -1,5 +1,9 @@
 import { clientLog } from '../jslibs/clientLog'
-import { chrome, store } from './store'
+import { store } from './store'
+import { GlobalChrome } from '../../types/chrome'
+import { setInspectedTab } from './actions/actionCreators'
+
+export declare const chrome: GlobalChrome
 
 export function setup(connection: any, tabId: number) {
   chrome.devtools.inspectedWindow.eval(`window.__sendStoreInfo = function (object, path) {
@@ -34,4 +38,5 @@ export function setup(connection: any, tabId: number) {
       clientLog(`Could not parse message from client:`, event)
     }
   })
+  store.dispatch(setInspectedTab(tabId))
 }

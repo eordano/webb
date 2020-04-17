@@ -2,7 +2,7 @@ import { AnyAction } from 'redux'
 import { StateAction } from '../actions/actions'
 import { alterAtPath } from './alterAtPath'
 import { getTreeInfo } from '../selectors/getTreeInfo'
-import { EmptyTree, InitialExplorerState, InspectedExplorableTree } from '../types'
+import { EmptyTree, InitialExplorerState, InspectedExplorableTree } from '../../../types/explorer'
 
 function withoutInitialDot(str: string): string {
   if (str.startsWith('.')) {

@@ -1,10 +1,10 @@
 import { applyMiddleware, compose, createStore as reduxCreateStore, Store } from 'redux'
 import { GlobalChrome } from '../../types/chrome'
+import { ExplorerState } from '../../types/explorer'
 import { loadAction } from './actions/actionCreators'
 import { OtherAction, StateAction } from './actions/actions'
 import { reducer } from './reducers/reducer'
 import { shouldTriggerLoad } from './selectors/shouldTriggerLoad'
-import { ExplorerState } from './types'
 
 export declare var chrome: GlobalChrome
 const middleWare = (api: any) => (next: any) => (action?: StateAction | OtherAction) => {
@@ -24,7 +24,7 @@ const middleWare = (api: any) => (next: any) => (action?: StateAction | OtherAct
     const tabId = api.getState().inspectedTab
     if (tabId) {
       chrome.devtools.inspectedWindow.eval(
-        `console.log(${JSON.stringify(action)});window.postMessage({ name: 'dcl-explorer-state',
+        `window.postMessage({ name: 'dcl-explorer-state',
           source: 'dcl-debugger',
           payload: window.__sendStoreInfo(window.globalStore.getState(), "${action.payload}")
         }, '*')`

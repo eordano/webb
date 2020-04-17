@@ -9,7 +9,8 @@ export function setup() {
     },
     `
       function tryInject() {
-        if (window.browserInterface) {
+        if (window.browserInterface && !window.__browserSendMessage) {
+          console.log("ℹ️ browser interface intervened");
           window.__browserSendMessage = window.browserInterface.SendMessage;
           window.browserInterface.SendMessage = function() {
             try {
@@ -23,7 +24,10 @@ export function setup() {
             }
             window.__browserSendMessage.apply(window.browserInterface, arguments)
           }
+        } else if (window.browserInterface) {
+          console.log("ℹ️ browser interface inject called twice");
         } else {
+          console.log("ℹ️ browser interface not found yet");
           setTimeout(tryInject, 1000)
         }
      }

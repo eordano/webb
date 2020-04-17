@@ -12,6 +12,6 @@ ts_library(
     ),
     module_name = "@dcl/debugger/devtool/renderer/hooks",
     deps = [
-        "//jslibs",
+        "//debugger/devtool/jslibs",
     ],
 )

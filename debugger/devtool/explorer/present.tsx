@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { collapseAction, expandAction } from "./actions/actionCreators";
 import { store } from "./store";
-import { EmptyTree, ExplorableTree } from "./types";
+import { EmptyTree, ExplorableTree } from "../../types/explorer";
 
 export function ExploreTree(props: {
   name: string;

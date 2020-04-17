@@ -74,5 +74,3 @@ export const mapSections = (Sections
   prev[next.section] = next
   return prev
 }, {} as Record<SectionType, Section>)
-
-console.log(mapSections)

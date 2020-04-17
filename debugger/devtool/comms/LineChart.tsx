@@ -2,7 +2,8 @@ import Chart from 'chart.js'
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { deepEqual } from '../../../jslibs/deepEqual/index'
 import { useStore2 } from '../../../jslibs/hooks/useStore2'
-import { store } from './store'
+import { CommsState } from '../../types/comms'
+import { Store } from 'redux'
 
 /**
  * Get a `2d` canvas out of an element, extracted by its id.
@@ -21,7 +22,8 @@ function getContextFromCanvas(windowContext: Window, id: string = 'canvas') {
 /**
  * Creates a chart using hard-coded data (see `initialConfig` in `//devtool/comms/chart.tsx`)
  */
-export function LineChart(props: { windowContext: Window, id: string }) {
+export function LineChart(props: { windowContext: Window; id: string, store: Store<CommsState> }) {
+  const store = props.store
   const [state] = useStore2(store)
   const [context, setContext] = useState(null as CanvasRenderingContext2D | null)
   useEffect(() => {

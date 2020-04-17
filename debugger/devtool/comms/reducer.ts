@@ -7,7 +7,7 @@ import {
   INITAL_COMMS_STATE,
   ReportAction,
   SetPreferencesAction,
-} from './types'
+} from '../../types/comms'
 
 export function CommsReducer(
   state: CommsState,

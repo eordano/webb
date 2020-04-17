@@ -1,8 +1,13 @@
 import React from 'react'
-import { NavigationState } from './store'
+import { RootProps } from '../../types/layout'
 import { mapSections } from './Sections'
+import { reducer } from './store'
 
-export function MainArea(props: { state: NavigationState, windowContext: Window }) {
+export function MainArea(
+  props: RootProps & {
+    state: ReturnType<typeof reducer>
+  }
+) {
   const { currentSection } = props.state
   if (currentSection && mapSections[currentSection]) {
     const Component = mapSections[currentSection].component

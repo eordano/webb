@@ -7,41 +7,27 @@ export function setup() {
     (data: any) => {
       clientLog(`outgoing log` + JSON.stringify(data))
     },
-    `function interceptMessages(unity) {
-       const returns = { intercept: function () {}, deactivate: function () {} }
-       const backups = {}
-       for (let key in unity) {
-         if (unity.hasOwnProperty(key)) {
-           backups[key] = unity[key]
-           unity[key] = function (...args) {
-             returns.intercept(args)
-             backups[key].apply(unity, args)
+    `function tryInject() {
+       if (window.unityInterface && window.unityInterface.SendGenericMessage) {
+         console.log("ℹ️ unity interface intervened");
+         for (let triggerSend in window.unityInterface) {
+           const backup = window.unityInterface[triggerSend]
+           window.unityInterface[triggerSend] = function() {
+             window.postMessage({
+               name: 'dcl-explorer-outgoing',
+               source: 'dcl-debugger',
+               payload: arguments
+             }, '*')
+             backup.apply(window.unityInterface, arguments)
            }
          }
+       } else if (window.unityInterface) {
+         console.log("ℹ️ unity interface exists -- no SendMessage though");
+         setTimeout(tryInject, 1000)
+       } else {
+         console.log("ℹ️ unity interface not found yet");
+         setTimeout(tryInject, 1000)
        }
-       returns.deactivate = function () {
-         for (let key in backups) {
-           unity[key] = backups[key]
-         }
-       }
-       return returns
-     }
-     function tryInject() {
-      if (window.unityInterface) {
-        window.intercept = interceptMessages(window.unityInterface)
-        window.intercept.intercept = function() {
-          window.postMessage(
-            {
-              name: 'dcl-explorer-outgoing',
-              source: 'dcl-debugger',
-              payload: arguments
-            },
-            '*'
-          )
-        }
-      } else {
-        setTimeout(tryInject, 1000)
-      }
      }
      tryInject()
      `
