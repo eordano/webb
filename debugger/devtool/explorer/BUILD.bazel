@@ -14,8 +14,8 @@ ts_library(
     ),
     module_name = "@dcl/debugger/devtool/explorer",
     deps = [
-        "//debugger/types",
         "//debugger/devtool/jslibs",
+        "//debugger/types",
         "//jslibs/hooks",
         "@npm//@types/react",
         "@npm//react",

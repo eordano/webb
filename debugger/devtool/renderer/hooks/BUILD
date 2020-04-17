@@ -3,19 +3,15 @@ package(default_visibility = ["//visibility:public"])
 load("@npm_bazel_typescript//:index.bzl", "ts_library")
 
 ts_library(
-    name = "renderer",
+    name = "hooks",
     srcs = glob(
         include = [
             "*.ts",
             "*.tsx",
         ],
     ),
-    module_name = "@dcl/debugger/devtool/renderer",
+    module_name = "@dcl/debugger/devtool/renderer/hooks",
     deps = [
-        "//debugger/devtools/renderer/hooks",
-        "//debugger/types",
-        "//jslibs/hooks",
-        "@npm//@types/react",
-        "@npm//react",
+        "//jslibs",
     ],
 )

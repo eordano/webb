@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { collapseAction, expandAction } from "./actionCreators";
+import { collapseAction, expandAction } from "./actions/actionCreators";
 import { store } from "./store";
 import { EmptyTree, ExplorableTree } from "./types";
 
@@ -9,6 +9,9 @@ export function ExploreTree(props: {
   path: string;
   offset: number;
 }) {
+  if (!props.tree) {
+    return <pre>Error</pre>
+  }
   const { loading, hasKeys, expanded } = props.tree;
 
   const toggle = useCallback(
@@ -62,3 +65,5 @@ export function Status(props: { windowContext: Window }) {
     </div>
   );
 }
+
+export default ExploreTree

@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom'
 import type { GlobalChrome } from '../types/chrome'
 import { Networking } from './comms/CommsPanel'
 import { resetComms, setupComms } from './comms/setup'
-import { setInspectedTab } from './explorer/actionCreators'
-import { Status } from './explorer/Status'
-import { setupConnectorToStore, store } from './explorer/store'
+import { setInspectedTab } from './explorer/actions/actionCreators'
 import { clientLog } from './jslibs/clientLog'
 import { Root } from './layout/Root'
 import { mapSections } from './layout/Sections'
-import { tapOnOutgoingKernelMessages } from './renderer/outgoing'
+import { tapOnOutgoingKernelMessages } from './renderer/hooks/outgoing'
 export declare const chrome: GlobalChrome
+
+import { createStore as createExplorerStore } from './explorer/store'
+import { setup as setupExplorer} from "./explorer/setup"
+import { default as Explorer } from './explorer/present'
 
 const FILE_LOCAL_VERBOSE_BUGS = false
 
@@ -40,11 +42,11 @@ function setupBackground() {
   /**
    * Also, kernel tap-into-store
    */
-  tapOnOutgoingKernelMessages(chrome.devtools.inspectedWindow.tabId)
-  setupConnectorToStore(backgroundPageConnection, chrome.devtools.inspectedWindow.tabId)
-  store.dispatch(setInspectedTab(chrome.devtools.inspectedWindow.tabId))
+  tapOnOutgoingKernelMessages()
+  setupExplorer(backgroundPageConnection, chrome.devtools.inspectedWindow.tabId)
+  createExplorerStore().dispatch(setInspectedTab(chrome.devtools.inspectedWindow.tabId))
 
-  mapSections.Status.component = Status
+  mapSections.Status.component = Explorer
   mapSections.Networking.component = Networking
 
   /**
