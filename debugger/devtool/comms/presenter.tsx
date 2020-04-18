@@ -23,13 +23,11 @@ export function Networking(props: { windowContext: Window; commsStore: Store<Com
     // eslint-disable-next-line react-hooks/rules-of-hooks
     callbacks[type] = useCallback(() => setType(type), [type])
   }
-  const history = state.history.filter(
-    (_) => (_ && _.statsByType && selectedType === 'all') || _.statsByType[selectedType]
-  )
-  const values = useMemo(
-    () => history.map((_) => (selectedType === 'all' ? _ : _.statsByType[selectedType])[selectedStat]),
-    [selectedStat, selectedType, history]
-  )
+  const history =
+    state && state.history
+      ? state.history.map(_ => _[selectedType])
+      : []
+  const values = useMemo(() => history.map((_) => _[selectedStat]), [selectedStat, selectedType, history])
   return (
     <div>
       <h2>Networking stats ({history.length} entry points)</h2>

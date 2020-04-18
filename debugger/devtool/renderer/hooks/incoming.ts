@@ -1,7 +1,8 @@
 import { tapFunction } from '../../jslibs/tapFunction'
 
-export function setup(tap: Function) {
+export function setup(connection: any, tap: Function) {
   tapFunction(
+    connection,
     'incoming',
     tap,
     `
@@ -11,18 +12,22 @@ export function setup(tap: Function) {
         }
         if (window.browserInterface && !window.__browserSendMessage) {
           console.log("ℹ️ browser interface intervened");
-          window.__browserSendMessage = window.browserInterface.SendMessage;
-          window.browserInterface.SendMessage = function() {
+          const backup = window.browserInterface.OnMessage;
+          window.browserInterface.OnMessage = function(a, b, c, d) {
+            console.log("ℹ️ ---", a, b)
             try {
               window.postMessage({
                 name: 'dcl-explorer-incoming',
                 source: 'dcl-debugger',
-                payload: arguments
+                 payload: {
+                   name: a
+                   key: b
+                 }
               })
             } catch (e) {
               console.log(e)
             }
-            window.__browserSendMessage.apply(window.browserInterface, arguments)
+            backup.apply(window.browserInterface, [a, b, c, d])
           }
         } else if (window.browserInterface) {
           console.log("ℹ️ browser interface inject called twice");
@@ -31,6 +36,7 @@ export function setup(tap: Function) {
           setTimeout(tryInject, 1000)
         }
      }
+     console.log('🥂')
      tryInject()
     `
   )

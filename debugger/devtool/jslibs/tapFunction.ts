@@ -1,8 +1,9 @@
 import { GlobalChrome } from 'dcl/debugger/types/chrome'
+import { clientLog } from './clientLog'
 declare var chrome: GlobalChrome
 
 let done: Record<string, boolean> = {}
-export function tapFunction(messageName: string, hook: Function, inject?: string) {
+export function tapFunction(connection: any, messageName: string, hook: Function, inject?: string) {
   if (done[messageName]) {
     return
   }
@@ -10,28 +11,17 @@ export function tapFunction(messageName: string, hook: Function, inject?: string
   if (inject) {
     chrome.devtools.inspectedWindow.eval(inject)
   }
-  chrome.devtools.inspectedWindow.eval(`
-  window.addEventListener('dcl-explorer-${messageName}', (event: any) => {
-    console.log(event, ${hook.toString()})
+  connection.onMessage.addListener((event: any) => {
     try {
-      if (typeof event === 'object') {
+      if (typeof event === 'object' && event.name === 'dcl-explorer-' + messageName) {
         const data = event.payload
         if (typeof data !== 'object') {
           throw new Error()
         }
-        ${hook.toString}(event.payload)
+        hook(event.payload)
       }
     } catch (e) {
-      clientLog('Could not parse message from client:', event)
+      clientLog(`Could not parse message from client:`, event)
     }
-  })`)
-  return (fun: string) => {
-    chrome.devtools.inspectedWindow.eval(
-      `window.postMessage({
-        name: 'dcl-explorer-${messageName}',
-        source: 'dcl-debugger',
-        payload: ${fun}
-      }, '*')`
-    )
-  }
+  })
 }

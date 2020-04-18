@@ -42,15 +42,11 @@ export type SetPreferencesAction = {
   }
 }
 
-export const MessageTypeFilterList = ['all', 'profile', 'position', 'sceneComms', 'parcelUpdate', 'chat']
+export const MessageTypeFilterList = ['all', 'received', 'sent', 'relayed']
 export const StatTypeFilterList = [
-  'expired',
-  'expiredPercentage',
-  'packetDuplicates',
-  'duplicatePercentage',
   'averagePacketSize',
-  'optimistic',
-  'packets',
+  'lastPeriodUpdate',
+  'totalPackets',
   'totalBytes',
 ]
 function GetStatFilter(key: number) {

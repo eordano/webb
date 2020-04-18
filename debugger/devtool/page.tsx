@@ -21,6 +21,7 @@ import { setup as setupRenderer } from './renderer/setup'
  * Renderer module
  */
 import { createStore as createRenderStore } from './renderer/store'
+import * as Renderer from './renderer/present'
 
 export declare const chrome: GlobalChrome
 const FILE_LOCAL_VERBOSE_BUGS = false
@@ -57,11 +58,13 @@ function setupBackground() {
   /**
    * Tap for renderer messages
    */
-  setupRenderer()
+  setupRenderer(backgroundPageConnection)
   const rendererStore = createRenderStore()
 
   mapSections.Status.component = Explorer
   mapSections.Networking.component = CommsPresenter
+  mapSections.Outgoing.component = Renderer.Outgoing
+  mapSections.Incoming.component = Renderer.Incoming
 
   /**
    * Create a panel and continue there
