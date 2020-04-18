@@ -39,15 +39,7 @@ export const Sections: Section[] = [
       {
         section: 'Running scenes',
         logo: '👟',
-      },
-      {
-        section: 'ECS State',
-        logo: '⏯',
-      },
-      {
-        section: 'Messages',
-        logo: '📨',
-      },
+      }
     ],
   },
   {

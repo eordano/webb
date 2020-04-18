@@ -22,6 +22,12 @@ import { setup as setupRenderer } from './renderer/setup'
  */
 import { createStore as createRenderStore } from './renderer/store'
 import * as Renderer from './renderer/present'
+/**
+ * Scenes module
+ */
+import { setup as setupScenes } from './scenes/setup'
+import { createStore as createSceneStore } from './scenes/store'
+import { Scenes } from './scenes/present'
 
 export declare const chrome: GlobalChrome
 const FILE_LOCAL_VERBOSE_BUGS = false
@@ -60,11 +66,17 @@ function setupBackground() {
    */
   setupRenderer(backgroundPageConnection)
   const rendererStore = createRenderStore()
+  /**
+   * Tap for scene messages
+   */
+  setupScenes(backgroundPageConnection, chrome.devtools.inspectedWindow.tabId)
+  const scenesStore = createSceneStore()
 
   mapSections.Status.component = Explorer
   mapSections.Networking.component = CommsPresenter
   mapSections.Outgoing.component = Renderer.Outgoing
   mapSections.Incoming.component = Renderer.Incoming
+  mapSections['Running scenes'].component = Scenes
 
   /**
    * Create a panel and continue there
@@ -77,6 +89,7 @@ function setupBackground() {
           explorerStore={explorerStore}
           commsStore={commsStore}
           rendererStore={rendererStore}
+          scenesStore={scenesStore}
         />,
         panelWin.document.getElementById('root')
       )

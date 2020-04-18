@@ -1,13 +1,26 @@
 import { clientLog } from '../jslibs/clientLog'
 import { store } from './store'
 import { GlobalChrome } from '../../types/chrome'
-import { setInspectedTab } from './actions/actionCreators'
+import { setInspectedTab } from '../explorer/actions/actionCreators'
 
 export declare const chrome: GlobalChrome
 
-function sendStoreInfo(object, path) {
+function sendSceneInfo(object: any, path: string) {
   const parts = path.split('.').filter((_) => _ !== '')
-  const end = parts.reduce((prev, next) => prev[next], object)
+  if (!parts.length) {
+    const ret = {
+      path: path,
+      hasKeys: true,
+      keys: Array.from(object.keys()),
+      values: Array.from(object.keys()).reduce((prev, next: string) => {
+        prev[next] = { hasKeys: false }
+        return prev
+      }, {}),
+    }
+    return ret
+  }
+  const obj = object.get(parts[0])
+  const end = parts.slice(1).reduce((prev, next) => prev[next], obj)
   const canExpand = end !== undefined && end !== null && typeof end === 'object'
   return {
     path: path,
@@ -38,10 +51,10 @@ function sendStoreInfo(object, path) {
 }
 
 export function setup(connection: any, tabId: number) {
-  chrome.devtools.inspectedWindow.eval(`window.__sendStoreInfo = ${sendStoreInfo.toString()}`)
+  chrome.devtools.inspectedWindow.eval(`window.__sendSceneInfo = ${sendSceneInfo.toString()}`)
   connection.onMessage.addListener((event: any) => {
     try {
-      if (typeof event === 'object' && event.name === 'dcl-explorer-state') {
+      if (typeof event === 'object' && event.name === 'dcl-explorer-scenes') {
         const data = event.payload
         if (typeof data !== 'object') {
           throw new Error()

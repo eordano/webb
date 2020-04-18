@@ -16,7 +16,7 @@ export function Reducer(state: RendererState, action: RendererAction | AnyAction
     case INCOMING_MESSAGE:
       return { ...state, incoming: [action.payload, ...state.incoming.slice(0, 9)] }
     case OUTGOING_MESSAGE:
-      return { ...state, incoming: [action.payload, ...state.incoming.slice(0, 9)] }
+      return { ...state, outgoing: [action.payload, ...state.outgoing.slice(0, 9)] }
     default:
       return state
   }

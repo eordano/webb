@@ -1,4 +1,5 @@
 
+export type ScenesState = ExplorableTree
 export type ExplorerState = ExplorableTree
 export const EmptyTree = { expanded: false, hasKeys: false }
 export const InitialExplorerState = {

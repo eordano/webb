@@ -7,12 +7,19 @@ ts_library(
     srcs = glob(
         include = [
             "*.ts",
+            "*.tsx",
+            "**/*.ts",
+            "**/*.tsx",
         ],
     ),
     module_name = "@dcl/debugger/devtool/scenes",
     deps = [
+        "//debugger/devtool/explorer",
+        "//debugger/devtool/jslibs",
         "//debugger/types",
         "//jslibs/hooks",
+        "@npm//@types/react",
+        "@npm//react",
         "@npm//redux",
     ],
 )
