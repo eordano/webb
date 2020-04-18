@@ -14,7 +14,7 @@ export function MainArea(
     if (Component) {
       return (
         <div className='mainArea'>
-          <Component {...props.state} windowContext={props.windowContext} />
+          <Component navigation={props.state} {...props} />
         </div>
       )
     }
@@ -22,6 +22,7 @@ export function MainArea(
   return (
     <div className='mainArea'>
       <h1>{props.state.currentSection}</h1>
+      <h2>Under construction</h2>
     </div>
   )
 }

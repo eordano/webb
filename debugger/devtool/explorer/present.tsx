@@ -1,69 +1,74 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { collapseAction, expandAction } from "./actions/actionCreators";
-import { store } from "./store";
-import { EmptyTree, ExplorableTree } from "../../types/explorer";
+import { useStore2 } from '../../../jslibs/hooks/useStore2'
+import React, { useCallback } from 'react'
+import { Store } from 'redux'
+import { ExplorableTree, ExplorerState } from '../../types/explorer'
+import { collapseAction, expandAction, loadAction } from './actions/actionCreators'
 
 export function ExploreTree(props: {
-  name: string;
-  tree: ExplorableTree;
-  path: string;
-  offset: number;
+  name: string
+  tree: ExplorableTree
+  dispatch: any
+  path: string
+  offset: number
 }) {
   if (!props.tree) {
     return <pre>Error</pre>
   }
-  const { loading, hasKeys, expanded } = props.tree;
+  const { loading, hasKeys, expanded } = props.tree
 
-  const toggle = useCallback(
-    () =>
-      store.dispatch((expanded ? collapseAction : expandAction)(props.path)),
-    [props.path, expanded]
-  );
+  const toggle = useCallback(() => props.dispatch((expanded ? collapseAction : expandAction)(props.path)), [
+    props.path,
+    expanded,
+  ])
+  const reload = useCallback(() => {
+    props.dispatch(loadAction(props.path))
+  }, [props.path])
+  const isFinalValue = typeof props.tree.values !== 'object'
   return (
-    <div style={{ marginLeft: props.offset + "px" }}>
-      <pre onClick={toggle}>
-        {loading ? "loading" : expanded ? "-" : "+"}{" "}
+    <div style={{ marginLeft: props.offset + 'px' }} className='renderer-section'>
+      <span onClick={toggle}>
+        {loading ? 'loading' : expanded ? '-' : '+'}{' '}
         {hasKeys
           ? `${props.name}: ${
-              typeof props.tree.values === "object"
-                ? props.tree.keys?.length + " values"
-                : props.tree.values
+              isFinalValue ? props.tree.values : props.tree.keys?.length + ' values'
             }`
           : `${props.name}: [?]`}
-      </pre>
+      </span>
+      {
+        (hasKeys && !!expanded && !isFinalValue) ? <span className='reload' onClick={reload}>[reload]</span> :<span/> 
+      }
       {!loading &&
         hasKeys &&
         expanded &&
-        typeof props.tree.values === "object" &&
+        typeof props.tree.values === 'object' &&
         props.tree.keys!.map((name) => {
+          const leaf = props.tree.values![name]
           return (
             <ExploreTree
               name={name}
-              tree={props.tree.values![name]}
-              path={props.path + "." + name}
+              dispatch={props.dispatch}
+              tree={typeof leaf === 'object' ? leaf : { expanded: true, hasKeys: true, values: leaf }}
+              path={props.path + '.' + name}
               key={name}
               offset={props.offset + 8}
             />
-          );
+          )
         })}
     </div>
-  );
+  )
 }
 
-export function Status(props: { windowContext: Window }) {
-  const [tree, setTree] = useState(EmptyTree as ExplorableTree);
-
-  useEffect(() => {
-    return store.subscribe(() => {
-      setTree(store.getState());
-    });
-  });
+export function Status(props: { windowContext: Window; explorerStore: Store<ExplorerState> }) {
+  if (!props.explorerStore) {
+    return <h2>Loading...</h2>
+  }
+  const [tree, dispatch] = useStore2(props.explorerStore)
   return (
     <div>
       <h2>Explorer info</h2>
-      <ExploreTree name="Root" tree={tree} path="" offset={8} />
+      <ExploreTree name='Root' dispatch={dispatch} tree={tree} path='' offset={8} />
     </div>
-  );
+  )
 }
 
-export default ExploreTree
+export default Status

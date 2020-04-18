@@ -1,9 +1,6 @@
 import Chart from 'chart.js'
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { deepEqual } from '../../../jslibs/deepEqual/index'
-import { useStore2 } from '../../../jslibs/hooks/useStore2'
-import { CommsState } from '../../types/comms'
-import { Store } from 'redux'
 
 /**
  * Get a `2d` canvas out of an element, extracted by its id.
@@ -22,9 +19,7 @@ function getContextFromCanvas(windowContext: Window, id: string = 'canvas') {
 /**
  * Creates a chart using hard-coded data (see `initialConfig` in `//devtool/comms/chart.tsx`)
  */
-export function LineChart(props: { windowContext: Window; id: string, store: Store<CommsState> }) {
-  const store = props.store
-  const [state] = useStore2(store)
+export function LineChart(props: { values: number[]; windowContext: Window; id: string }) {
   const [context, setContext] = useState(null as CanvasRenderingContext2D | null)
   useEffect(() => {
     if (!context) {
@@ -35,7 +30,7 @@ export function LineChart(props: { windowContext: Window; id: string, store: Sto
     }
   })
   const [myLine, setMyLine] = useState(null as Chart | null)
-  const lineData = useMemo(() => buildConfigFromNumberArray(state.history.map((_) => 1)), state.history)
+  const lineData = useMemo(() => buildConfigFromNumberArray(props.values), [props.values])
   useEffect(() => {
     if (context && !myLine) {
       setMyLine(new Chart(context, lineData))
@@ -48,32 +43,10 @@ export function LineChart(props: { windowContext: Window; id: string, store: Sto
       setConfig(lineData)
       myLine.update()
     }
-  }, [config, myLine, state.history])
-  return (
-    <ul>
-      {state &&
-        state.history &&
-        state.history.map((_: any, index: number | string) => {
-          return <li key={index}>{_.totalBytes}</li>
-        })}
-    </ul>
-  )
+  }, [config, myLine, props.values])
+  return <span></span>
 }
 
-export var MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
 function buildConfigFromNumberArray(array: number[]) {
   return {
     type: 'line',
@@ -81,41 +54,45 @@ function buildConfigFromNumberArray(array: number[]) {
       labels: array.map((_, index) => index),
       datasets: [
         {
-          label: 'Data Series #1',
-          labels: MONTHS,
-          backgroundColor: '#ffffff',
-          borderColor: '#ff0000',
-          data: array,
           fill: false,
+          lineTension: 0,
+          backgroundColor: 'rgba(75,192,192,0.4)',
+          borderColor: 'rgba(75,192,192,1)',
+          borderCapStyle: 'butt' as any,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter' as any,
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          animation: {
+            duration: 0,
+          },
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: array,
         },
       ],
+      animation: {
+        duration: 0,
+      },
+      options: {
+        animation: {
+          duration: 0
+        }
+      }
+    },
+    animation: {
+      duration: 0,
     },
     options: {
-      responsive: true,
-      title: {
-        display: true,
-        text: 'Provided data',
-      },
-      scales: {
-        xAxes: [
-          {
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Order',
-            },
-          },
-        ],
-        yAxes: [
-          {
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Value',
-            },
-          },
-        ],
-      },
-    },
+      animation: {
+        duration: 0
+      }
+    }
   }
 }

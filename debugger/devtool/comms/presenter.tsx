@@ -1,11 +1,16 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useMemo } from 'react'
 import { LineChart } from './LineChart'
 import { MessageTypeFilterList, StatTypeFilterList, CommsState } from '../../types/comms'
 import { Store } from 'redux'
+import { useStore2 } from '../../../jslibs/hooks/useStore2'
 
 export function Networking(props: { windowContext: Window; commsStore: Store<CommsState> }) {
+  if (!props.commsStore) {
+    return <h2>Loading</h2>
+  }
   const [selectedStat, setStat] = useState('totalBytes')
   const [selectedType, setType] = useState('all')
+  const [state] = useStore2(props.commsStore)
 
   const callbacks: Record<string, any> = {}
   for (let stat of StatTypeFilterList) {
@@ -18,9 +23,16 @@ export function Networking(props: { windowContext: Window; commsStore: Store<Com
     // eslint-disable-next-line react-hooks/rules-of-hooks
     callbacks[type] = useCallback(() => setType(type), [type])
   }
+  const history = state.history.filter(
+    (_) => (_ && _.statsByType && selectedType === 'all') || _.statsByType[selectedType]
+  )
+  const values = useMemo(
+    () => history.map((_) => (selectedType === 'all' ? _ : _.statsByType[selectedType])[selectedStat]),
+    [selectedStat, selectedType, history]
+  )
   return (
     <div>
-      <h2>Networking stats</h2>
+      <h2>Networking stats ({history.length} entry points)</h2>
       <div className='netSection'>
         <div className='netSidebar'>
           <h3>Filter</h3>
@@ -50,7 +62,7 @@ export function Networking(props: { windowContext: Window; commsStore: Store<Com
           </div>
         </div>
         <div className='netGraphs'>
-          <LineChart windowContext={props.windowContext} id='netgraph' store={props.commsStore} />
+          <LineChart windowContext={props.windowContext} id='netgraph' values={values} />
           <canvas id='netgraph'></canvas>
         </div>
       </div>

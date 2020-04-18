@@ -18,8 +18,6 @@ const middleWare = (api: any) => (next: any) => (action?: StateAction | OtherAct
     }
     return result
   }
-  if (action.type === 'Set Inspected Tab') {
-  }
   if (action.type === 'Loading') {
     const tabId = api.getState().inspectedTab
     if (tabId) {

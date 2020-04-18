@@ -6,7 +6,7 @@ export type ExplorableTree = {
   values?: Record<string, any>
 }
 
-const LOCAL_VERBOSE_DEBUG = false
+const LOCAL_VERBOSE_DEBUG = true
 function withoutInitialDot(str: string): string {
   if (str.startsWith('.')) {
     return withoutInitialDot(str.slice(1))
@@ -16,7 +16,10 @@ function withoutInitialDot(str: string): string {
 
 export function getTreeInfo(tree: ExplorableTree, path: string | string[]) {
   const leave = (typeof path === 'string' ? withoutInitialDot(path).split('.') : path).reduce(
-    (prev, next) => (prev === undefined || prev.values === undefined ? undefined : prev.values[next]),
+    (prev, next) =>
+      prev === undefined || prev.values === undefined
+        ? prev
+        : prev.values[next],
     tree
   )
 

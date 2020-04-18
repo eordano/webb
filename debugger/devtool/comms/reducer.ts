@@ -32,7 +32,7 @@ export function CommsReducer(
     case COMMS_REPORT:
       return {
         ...state,
-        history: [action.payload, ...(state.history || [])].filter((_, index) => index < historyLength),
+        history: [...(state.history || []).slice(0 - historyLength), action.payload],
       }
     case COMMS_SET_PREFERENCES:
       return {

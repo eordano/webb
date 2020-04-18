@@ -1,14 +1,14 @@
 import { tapFunction } from '../../jslibs/tapFunction'
-import { clientLog } from '../../jslibs/clientLog'
 
-export function setup() {
+export function setup(tap: Function) {
   tapFunction(
     'incoming',
-    (data: any) => {
-      clientLog(`incoming log` + JSON.stringify(data))
-    },
+    tap,
     `
       function tryInject() {
+        if (typeof window === undefined) {
+          console.log("ℹ️ tried to inject into undefined window :/");
+        }
         if (window.browserInterface && !window.__browserSendMessage) {
           console.log("ℹ️ browser interface intervened");
           window.__browserSendMessage = window.browserInterface.SendMessage;
