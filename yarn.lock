@@ -5147,10 +5147,10 @@ decamelize@^1.1.1, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decentraland-renderer@1.8.16142:
-  version "1.8.16142"
-  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.16142.tgz#06b2afbeba292e9e0d030d1651e1c6f18565adb3"
-  integrity sha512-ufbBk6PC1mfv3A7vxuVkZI9Bft3CVz1hmQ5Kjm4+4fFvoQv4tJ/vwrHDZRt7XgndavlOdaUBfoQ3rJvPsssbIA==
+decentraland-renderer@1.8.70752:
+  version "1.8.70752"
+  resolved "https://registry.yarnpkg.com/decentraland-renderer/-/decentraland-renderer-1.8.70752.tgz#56a7fb98c14583cb59c8072c5f66137219d973a0"
+  integrity sha512-DHPqzlr0EXcPutBBvl6mSCD0mPvIcxSPYlozvI+K75X/lql/+bRkPUHA5hecrqMLa0ZenRWgtPC3Lpwl5ZvR/w==
 
 decentraland-ui@^2.17.0:
   version "2.17.0"
