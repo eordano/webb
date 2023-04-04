@@ -58,10 +58,10 @@ install_bazel_dependencies()
 
 http_archive(
     name = "rules_typescript_proto",
-    sha256 = "de7dff874d6b851ba38ff78cfd5335e62efdd5d260e1bbb3e32d5907fa28f578",
-    strip_prefix = "rules_typescript_proto-85e4734d638b8d6d928861952236969b54e45681",
+    sha256 = "928f16d6455dcee2fab2642aa604c81cddcedf827d3ff3ee65c44535465af473",
+    strip_prefix = "rules_typescript_proto-de5cde32e871849fa693b1453db50d3a9643039d",
     urls = [
-        "https://github.com/Dig-Doug/rules_typescript_proto/archive/85e4734d638b8d6d928861952236969b54e45681.tar.gz",
+        "https://github.com/Dig-Doug/rules_typescript_proto/archive/de5cde32e871849fa693b1453db50d3a9643039d.tar.gz",
     ],
 )
 
