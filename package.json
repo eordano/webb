@@ -80,7 +80,7 @@
     "google-protobuf": "3.11.4",
     "http-proxy": "1.18.0",
     "http-server": "^0.12.1",
-    "ipfs-unixfs-importer": "1.0.3",
+    "ipfs-unixfs-importer": "1.0.4",
     "ipld": "0.25.3",
     "ipld-in-memory": "3.0.2",
     "jasmine": "3.5.0",
