@@ -78,7 +78,7 @@
     "gatsby": "^2.20.10",
     "gltf-pipeline": "2.1.9",
     "google-protobuf": "3.11.4",
-    "http-proxy": "1.18.0",
+    "http-proxy": "1.18.1",
     "http-server": "^0.12.1",
     "ipfs-unixfs-importer": "1.0.3",
     "ipld": "0.25.3",
