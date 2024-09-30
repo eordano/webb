@@ -7,10 +7,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "rules_proto",
-    sha256 = "6117a0f96af1d264747ea3f3f29b7b176831ed8acfd428e04f17c48534c83147",
-    strip_prefix = "rules_proto-8b81c3ccfdd0e915e46ffa888d3cdb6116db6fa5",
+    sha256 = "93f343cfe1d70086e30811236ff1be291fbac862cd41cfe6fb41d7ac0600b6d3",
+    strip_prefix = "rules_proto-07cdde807a02f7f4baa714f9f1e1c26f02148d51",
     urls = [
-        "https://github.com/bazelbuild/rules_proto/archive/8b81c3ccfdd0e915e46ffa888d3cdb6116db6fa5.tar.gz",
+        "https://github.com/bazelbuild/rules_proto/archive/07cdde807a02f7f4baa714f9f1e1c26f02148d51.tar.gz",
     ],
 )
 
