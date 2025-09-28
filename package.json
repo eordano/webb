@@ -75,7 +75,7 @@
     "file-type": "14.1.4",
     "form-data": "^3.0.0",
     "fp-future": "1.0.1",
-    "gatsby": "^2.20.10",
+    "gatsby": "^4.0.0",
     "gltf-pipeline": "2.1.9",
     "google-protobuf": "3.11.4",
     "http-proxy": "1.18.0",
