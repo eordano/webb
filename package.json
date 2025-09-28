@@ -142,7 +142,7 @@
     "web3x-codegen": "4.0.6",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
+    "webpack-dev-server": "^5.0.0",
     "webrtc-adapter": "7.5.1",
     "webworker-threads": "0.7.17",
     "wrtc": "0.4.4",
